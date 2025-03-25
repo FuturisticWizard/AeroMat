@@ -1,21 +1,302 @@
-@tailwind base;
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Yesteryear&display=swap');
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./components/PerspectiveEffect/PerspectiveEffect.scss"
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;  /* Define the --border variable */
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%; /* Define the --border variable */
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .border-border {
+    border: 1px solid hsl(var(--border)); /* Use the CSS variable */
+  }
+  .paused {
+    animation-play-state: paused;
+  }
+  .bentogrid-body {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2%;
+  }
+  
+  .box {
+    background-color: #0071ff;
+  
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+  }
 }
+
+@layer base {
+  /* * {
+    @apply border-border; Now it will work
+  } */
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-poppins-sans);
+  }
+  :root {
+    --font-poppins-sans: 'Poppins', sans-serif;
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+  
+}
+
+@layer utilities {
+
+  .fancy-text {
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+    font-family: "Anton", sans-serif;
+    
+  }
+  .yesteryear-regular {
+    font-family: "Yesteryear", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .allura {
+    font-family: "Allura", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .anton-regular {
+    font-family: "Anton", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .anton-regular-strokeW {
+    -webkit-text-stroke: 4px rgb(158, 146, 146);
+    font-family: "Anton", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .anton-regular-strokeB {
+    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.879);
+    font-family: "Anton", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .custom-shape-divider-top-1740008698 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .gradient-new {
+    background: hsla(0, 0%, 0%, 1);
+
+    background: linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
+
+    background: -moz-linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
+
+    background: -webkit-linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#FFFFFF", GradientType=1 );
+  }
+}
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+
+.animate-scroll {
+  animation: scroll 20s linear infinite; /* Adjust duration for speed */
+}
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  backface-visibility: hidden;
+
+}
+.gradient {
+  background-image: linear-gradient(to bottom,
+    transparent 47%, /* Gradient jest przezroczysty do około 2/3 wysokości */
+    rgba(0, 0, 0, 0.745) 90%, /* Od około 70% wysokości zaczyna się ciemniejszy kolor */
+    black); /* Na samym dole jest pełna czerń */
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.bentogrid-body {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+}
+
+.box {
+  background-color: #0071ff;
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1em;
+}
+
+.my-masonry-grid {
+  display: flex;
+  width: 100%;
+  gap: 1em;
+   /* gutter size offset */
+}
+
+.my-masonry-grid_column {
+  gap: 1em;
+
+}
+
+.my-masonry-grid_column > div {
+  margin-bottom: 15px; /* space between items */
+}
+.my-masonry-grid_column > img {
+  padding-bottom: 15px; /* space between items */
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Adjust height as needed */
+}
+
+.image-container img {
+  object-fit: cover; /* Use contain to maintain aspect ratio */
+  /* object-fit: cover; */ /* Use cover to fill the container, cropping if necessary */
+  width: 100%;
+  height: 100%;
+}
+.service-tab {
+  writing-mode: sideways-lr;
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #0e2f56;
+  letter-spacing: 0.1em;
+  padding: 20px 10px 20px 10px;
+  line-height: 100%;
+  color: white;
+}
+.service-tab2 {
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #0e2f56;
+  letter-spacing: 0.1em;
+  padding: 20px 10px 20px 10px;
+  line-height: 100%;
+  color: white;
+  display: inline-block;
+}
+
+@layer base {
+  /* * {
+    @apply outline-ring/50;
+  } */
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
