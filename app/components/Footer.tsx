@@ -38,6 +38,7 @@ const Footer = () => {
       </div>
       <div className=" mt-8 pt-8 text-center text-muted-foreground">
         <p>© {new Date().getFullYear()} Aeromat. All rights reserved.</p>
+        <p>Icons by <span className='underline'>icons8</span></p>
       </div>
     </div>
   </footer>

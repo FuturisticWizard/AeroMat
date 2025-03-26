@@ -18,6 +18,7 @@ import MapComponent from "./components/MapComponent";
 import WhoAmI from "./components/WhoAmI";
 import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
+import Services2 from "./components/Services2";
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
 
@@ -30,7 +31,7 @@ export default function Home() {
         <VideoHero />
         <TrustedBy />
         <WhoAmI2 />
-        <Services />
+        <Services2 />
         <HowItWorks />
         {/* <section className=" flex justify-center items-center  py-20  ">
           <TextImageRight number='01' imageSrc='/images/szyld4.jpg' accentColor="#0C8FC3" title="Przyciągnij klientów!" subtitle='Stwórz miejsce, które przyciąga uwagę i zwiększ sprzedaż.' description='Zwiększaj widoczność i przyciągaj klientów dzięki unikalnym muralom i szyldom. Nasze rozwiązania pomagają zwiększyć ruch w Twoim lokalu i poprawić wyniki sprzedażowe.' />
@@ -48,8 +49,8 @@ export default function Home() {
         <Portfolio />
         </div> */}
         <section className="w-full bg-black">
-        <h3 className="text-white text-3xl text-center pt-12 anton-regular uppercase ">PORTFOLIO</h3>
-        <div id='portfolio' className="container pt-12 pb-24 max-w-5xl mx-auto ">
+        <h3 className="text-white text-3xl text-center pt-12 font-bold uppercase ">Portfolio</h3>
+        <div id='portfolio' className="container pt-12 pb-24 max-w-6xl mx-auto ">
          <Portfolio2 />
         </div>
         </section>
@@ -59,7 +60,7 @@ export default function Home() {
         <MapComponent />
         {/* <CarouselPhotoHero images={images}/> */}
 
-        <section id="testimonials" className=" py-20">
+        <section id="testimonials" className=" max-w-6xl mx-auto px-8 md:px-0 py-20">
             <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>
             <TestimonialsCarousel2 />
             

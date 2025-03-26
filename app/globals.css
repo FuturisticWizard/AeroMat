@@ -93,6 +93,58 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    /* New colors */
+    --green-light: 140 50% 60%;
+    --green-medium: 120 50% 40%;
+    --green-dark: 100 50% 30%;
+    --yellow-light: 55 100% 90%;
+    --yellow-medium: 55 100% 70%;
+    --yellow-dark: 55 100% 50%;
+    --blue-light: 210 80% 90%;
+    --blue-medium: 210 80% 70%;
+    --blue-dark: 210 80% 50%;
+    --red-light: 0 90% 70%;
+    --red-medium: 0 90% 50%;
+    --red-dark: 0 90% 30%;
+    --purple-light: 270 80% 90%;
+    --purple-medium: 270 80% 70%;
+    --purple-dark: 270 80% 50%;
+    --orange-light: 30 100% 90%;
+    --orange-medium: 30 100% 70%;
+    --orange-dark: 30 100% 50%;
+    --teal-light: 160 100% 80%;
+    --teal-medium: 160 100% 60%;
+    --teal-dark: 160 100% 40%;
+    --cyan-light: 180 100% 90%;
+    --cyan-medium: 180 100% 70%;
+    --cyan-dark: 180 100% 50%;
+    --magenta-light: 300 100% 90%;
+    --magenta-medium: 300 100% 70%;
+    --magenta-dark: 300 100% 50%;
+    --brown-light: 25 50% 70%;
+    --brown-medium: 25 50% 50%;
+    --brown-dark: 25 50% 30%;
+    --silver-light: 0 0% 95%;
+    --silver-medium: 0 0% 80%;
+    --silver-dark: 0 0% 60%;
+    --gray-light: 0 0% 90%;
+    --gray-medium: 0 0% 50%;
+    --gray-dark: 0 0% 20%;
+    --bronze-light: 35 50% 70%;
+    --bronze-medium: 35 50% 50%;
+    --bronze-dark: 35 50% 30%;
+
+    --cream: 55 100% 95%;
+    --ivory: 40 100% 98%;
+    --misty-blue: 210 100% 95%;
+    --pale-lavender: 270 100% 95%;
+    --powder-pink: 340 100% 95%;
+    
+    --soft-peach: 20 100% 90%;
+    --light-mint: 140 100% 90%;
+    --frosted-teal: 160 100% 90%;
+    --dewy-green: 120 100% 90%;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -119,8 +171,49 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    /* Adjust new colors for dark mode */
+    --green-light: 140 50% 40%;
+    --green-medium: 120 50% 30%;
+    --green-dark: 100 50% 20%;
+    --yellow-light: 55 100% 80%;
+    --yellow-medium: 55 100% 60%;
+    --yellow-dark: 55 100% 40%;
+    --blue-light: 210 80% 80%;
+    --blue-medium: 210 80% 60%;
+    --blue-dark: 210 80% 40%;
+    --red-light: 0 90% 60%;
+    --red-medium: 0 90% 40%;
+    --red-dark: 0 90% 20%;
+    --purple-light: 270 80% 80%;
+    --purple-medium: 270 80% 60%;
+    --purple-dark: 270 80% 40%;
+    --orange-light: 30 100% 80%;
+    --orange-medium: 30 100% 60%;
+    --orange-dark: 30 100% 40%;
+    --teal-light: 160 100% 70%;
+    --teal-medium: 160 100% 50%;
+    --teal-dark: 160 100% 30%;
+    --cyan-light: 180 100% 80%;
+    --cyan-medium: 180 100% 60%;
+    --cyan-dark: 180 100% 40%;
+    --magenta-light: 300 100% 80%;
+    --magenta-medium: 300 100% 60%;
+    --magenta-dark: 300 100% 40%;
+    --brown-light: 25 50% 60%;
+    --brown-medium: 25 50% 40%;
+    --brown-dark: 25 50% 20%;
+
+    --cream: 55 100% 80%;
+    --ivory: 40 100% 85%;
+    --misty-blue: 210 100% 80%;
+    --pale-lavender: 270 100% 80%;
+    --powder-pink: 340 100% 80%;
+    
+    --soft-peach: 20 100% 75%;
+    --light-mint: 140 100% 75%;
+    --frosted-teal: 160 100% 75%;
+    --dewy-green: 120 100% 75%;
   }
-  
 }
 
 @layer utilities {

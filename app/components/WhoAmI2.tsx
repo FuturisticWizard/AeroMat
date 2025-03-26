@@ -20,11 +20,11 @@ const WhoAmI2 = () => {
         className='absolute w-full h-[320px] bg-no-repeat bg-center bg-contain top-0 left-0 ' 
         style={{ backgroundImage: "url('/pngs/line.png')" }}
         /> */}
-        <div className='absolute col-span-2 flex justify-center -left-0 py-4 z-10'>
+        <div className='absolute col-span-2 flex justify-center -left-0  lg: py-4 z-10'>
             <Image 
-            src='/pngs/line.png' 
+            src='/pngs/line.png'
             alt='decorative line' 
-            width={1200} 
+            width={1600} 
             height={250} 
             className='z-20'
             />

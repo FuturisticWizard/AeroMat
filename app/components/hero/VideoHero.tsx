@@ -38,7 +38,7 @@ const VideoHero = ({
   </video>
 
   {/* Gradient Overlay */}
-  <div className="absolute inset-0 h-full bg-gradient-to-br from-black/60 via-black/80 to-black/90 z-10"  />
+  <div className="absolute inset-0 h-full bg-gradient-to-br from-black/50 via-black/70 to-black/80 z-10"  />
 
   {/* Heading Section */}
   <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 max-w-[60svh] mx-auto lg:inset-auto lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2">
@@ -55,7 +55,7 @@ const VideoHero = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="anton-regular shadow-inner outline-1 outline-orange-400 text-white/80 xxs:text-2xl xs:text-3xl sm:text-4xl xl:text-4xl z-10  text-left px-4"
+        className="anton-regular shadow-inner outline-1 outline-orange-400 text-white/80 xxs:text-2xl xs:text-3xl sm:text-4xl lg:text-4xl xl:text-5xl z-10  text-left px-4"
       >
         {title} <br/>
         {subtitle}

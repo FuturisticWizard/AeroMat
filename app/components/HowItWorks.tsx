@@ -42,7 +42,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <div className='px-8 py-8 sm:py-12 md:py-24 max-w-5xl mx-auto  '>
+    <div className='px-8 py-8 md:px-0 sm:py-12 md:py-24 max-w-6xl mx-auto  '>
         <div className='flex flex-col pb-10  '>
             <span className='font-semibold text-red-400 text-md uppercase'>jak pracuję?</span>
             <div className='grid grid-cols-1 xsm:grid-cols-2  justify-center gap-2 sm:gap-4 m '>
