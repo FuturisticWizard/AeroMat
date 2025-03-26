@@ -4,7 +4,7 @@ import SpraySplash from './SpraySplash'
 
 const WhoAmI2 = () => {
   return (
-    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-5xl mx-auto px-4 xs:px-8  lmd:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28  '>
+    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-5xl mx-auto px-8  lmd:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28  '>
 
         
       <div className='flex flex-col order-2 sm:order-1 py-12 '>

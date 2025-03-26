@@ -20,12 +20,12 @@ const CardFlip = ({ icon='/placeholders/64x64.svg', imageFront='/images/SpaceCit
   }
 
   return (
-    <div className={clsx(`grid grid-cols-1  items-center justify-center cursor-pointer`, classname)}>
+    <div className={clsx(`grid grid-cols-1  items-center justify-center cursor-pointer `, classname)}>
       
       <div className="flip-card w-full h-full  rounded-md" onClick={handleFlip}> 
         
         <motion.div 
-        className='flip-card-inner grid grid-rows-subgrid gap-2 grid-rows-2 py-4 border-[1px] rounded-xl w-[100%] h-[100%]  '
+        className='flip-card-inner grid grid-rows-subgrid gap-2 grid-auto-row py-4 border-[1px] rounded-xl w-[100%] h-[100%]  '
         initial="false"
         animate={{rotateY: isFlipped ? 180 : 360}}
         transition={{ duration: 0.6, animationDirection: "normal"}}
@@ -53,7 +53,7 @@ const CardFlip = ({ icon='/placeholders/64x64.svg', imageFront='/images/SpaceCit
                   </div>
                 </div> */}
 
-                  <div className="w-full flex flex-col items-center justify-center">
+                  <div className="w-full flex flex-col items-center justify-center ">
                     {/* Icon */}
                     <div
                       className={`rounded-full px-4 py-4 group-hover:bg-white bg-${color}`}
@@ -116,7 +116,7 @@ const CardFlip = ({ icon='/placeholders/64x64.svg', imageFront='/images/SpaceCit
               {/* </div> */}
 
               <div 
-              className='flex group flip-card-back w-[100%] h-[100%] flex-col bg-cover bg-center  border-[1px] text-white/90 rounded-lg p-4 z-10 hover'
+              className='flex group flip-card-back w-[100%] h-[100%] flex-col bg-cover bg-right  border-[1px] text-white/90 rounded-lg p-4 z-10 hover'
               style={{      
                   backgroundImage: `url(${imageBack})`
                 }}>   

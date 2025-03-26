@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
+import { FlipWords } from "@/components/ui/flip-words";
 
 const VideoHero = ({
   videoUrl = "/hero.mp4",
@@ -13,7 +14,12 @@ const VideoHero = ({
   const [muted, setMuted] = useState(true);
   const videoVolumeRef = useRef<HTMLVideoElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const words = [
+    "przyciągają wzrok i klientów",
+    "pomagają w budowaniu silnego wizerunku",
+    "zwiększają widoczność Twojej marki"
 
+  ]
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = muted;
@@ -41,7 +47,7 @@ const VideoHero = ({
   <div className="absolute inset-0 h-full bg-gradient-to-br from-black/50 via-black/70 to-black/80 z-10"  />
 
   {/* Heading Section */}
-  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 max-w-[60svh] mx-auto lg:inset-auto lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2">
+  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 max-w-[60svh] mx-auto lg:inset-auto lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 gap-2">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -60,17 +66,30 @@ const VideoHero = ({
         {title} <br/>
         {subtitle}
       </motion.h1>
-
-      {/* Subheading */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative  text-left font-bold text-white xxs:text-sm xs:text-base  md:text-md lg:text-md  z-20 px-4 "
-      >
-        Tworzę murale które przyciągają wzrok i klientów.
-      </motion.h2>
-
+      <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="min-h-[75px]"
+    > 
+        {/* Subheading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative  text-left font-bold text-white xxs:text-sm xs:text-base  md:text-md lg:text-md  z-20 px-4 "
+        >
+          Tworzę murale które...
+        </motion.h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="relative text-left font-bold text-white xxs:text-sm xs:text-base  md:text-md lg:text-md z-20 px-4 "
+        >
+          <FlipWords words={words} duration={2500} className='px-0 text-white text-[#FE9100]'/>
+        </motion.h2>
+      </motion.div>
       {/* Button */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
