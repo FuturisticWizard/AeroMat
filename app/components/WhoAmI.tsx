@@ -5,7 +5,7 @@ const WhoAmI = () => {
   return (
     <div className="flex flex-col py-10 max-w-5xl mx-auto  px-3 xxsm:px-6 sm:px-8  ">
         <div className="flex flex-col  font-semibold">
-          <h3 className="text-right uppercase text-red-500">Kim jestem?</h3>
+          <h3 className="text-right  text-red-400">Kim jestem?</h3>
           
         </div>
         <div className="flex flex-col sm:flex-row items-center">  

@@ -1,18 +1,20 @@
 import Image from 'next/image'
 import React from 'react'
-import SpraySplash from './SpraySplash'
+
 
 const WhoAmI2 = () => {
   return (
-    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-5xl mx-auto px-8  lmd:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28  '>
+    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-6xl mx-auto px-8  lg:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28  '>
 
-        
+ 
       <div className='flex flex-col order-2 sm:order-1 py-12 '>
-        <span className='text-red-500 uppercase text-bold'>Kim jestem?</span>
-        <h2 className='text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-2' >
-        Zwiększ moc swojej marki <br/> <span className='text-[#FF6800]'>dzięki muralom z duszą</span>
-        </h2>
-        <p className='text-sm md:text-base text-semibold text-gray-600 pr-0 sm:pr-12 z-30'>Jestem Mateusz, a Twoje zadowolenie jest dla mnie priorytetem. Z AeroMat Twój biznes zyska nie tylko piękną oprawę wizualną, ale także silny i pozytywny wizerunek, który przyciągnie nowych klientów i zbuduje lojalność wśród obecnych.</p>
+        <h2 className='text-red-400 text-lg text-semibold'>Kim jestem?</h2>
+        <h3 className='text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-2' >
+        Nazywam się Mateusz, malarstwo  <br/> <span className='text-[#FF6800]'>to moja pasja i sposób na życie.</span>
+        </h3>
+        <p className='text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 pr-0 sm:pr-12 z-30'>
+        Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich klientów miałem okazję sprawdzić się w różnych technikach i kombinacjach. Podejmowanie nowych wyzwań pozwalało mi stale przekraczać własne granice i odkrywać nowe obszary mojej kreatywności.
+        </p>
       </div>
       {/* Decorative line */}
 

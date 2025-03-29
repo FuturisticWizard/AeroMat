@@ -4,8 +4,8 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css"; // Import styles
 
 const MapComponent = () => {
-  const mapContainer = useRef(null);
-  const mapRef = useRef(null); // Ref to store the map instance
+  const mapContainer = useRef<HTMLDivElement | null>(null); // Ref for the map container
+  const mapRef = useRef<maplibregl.Map | null>(null); // Ref to store the map instance
 
   useEffect(() => {
     if (mapRef.current) return; // Prevent re-initialization if map already exists
@@ -114,7 +114,7 @@ const MapComponent = () => {
         maxWidth: "64rem",
         margin: "0 auto",
         padding: "0 24",
-        border: "1px solid black",
+        border: "1px solid black mt-24 ",
       }}
     />
   );

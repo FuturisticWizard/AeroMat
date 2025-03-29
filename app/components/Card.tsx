@@ -8,7 +8,7 @@ import clsx from 'clsx';
 const Card = ({ imageFront='/images/SpaceCity.jpg', title='title', color = 'purple'}) => {
   const [ isFlipped, setIsFlipped ] = useState(false)
   const [ isAnimating, setIsAnimating ] = useState(false) 
-
+  console.log(color)
   function handleFlip () {
     if(!isAnimating) {
       setIsFlipped(!isFlipped)
@@ -37,13 +37,13 @@ const Card = ({ imageFront='/images/SpaceCity.jpg', title='title', color = 'purp
               >   
                 <div className="absolute inset-0 h-full   " />
                   
-                  {/* <div className=' flex w-full h-full justify-center items-center  text-white/70 z-10'> 
+                <div className=' flex w-full h-full justify-center items-center  text-white/70 z-10'> 
                     <div className='block md:hidden  group-hover:block '>
                       <div className='flex flex-col items-center text-center justify-center '>
                         <h2 className="items-center uppercase font-bold text-2xl z-20">{title}</h2>
                       </div>
                     </div>
-                  </div>  */}
+                </div>  
                
 
               </div>

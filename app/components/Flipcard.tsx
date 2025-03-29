@@ -7,7 +7,50 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 // import Rotate from '@/public/icons/rotate.svg'
 
-const Flipcard = ({ icon, imageFront, imageBack, title, description, color, classname }) => {
+const colorMap = {
+  'green-light': 'rgba(140, 255, 140, 0.5)',
+  'green-medium': 'rgba(120, 255, 120, 0.5)',
+  'green-dark': 'rgba(100, 255, 100, 0.5)',
+  'yellow-light': 'rgba(255, 255, 140, 0.5)',
+  'yellow-medium': 'rgba(255, 255, 120, 0.5)',
+  'yellow-dark': 'rgba(255, 255, 100, 0.5)',
+  'blue-light': 'rgba(140, 140, 255, 0.5)',
+  'blue-medium': 'rgba(120, 120, 255, 0.5)',
+  'blue-dark': 'rgba(100, 100, 255, 0.5)',
+  'red-light': 'rgba(255, 140, 140, 0.5)',
+  'red-medium': 'rgba(255, 120, 120, 0.5)',
+  'red-dark': 'rgba(255, 100, 100, 0.5)',
+  'purple-light': 'rgba(200, 140, 255, 0.5)',
+  'purple-medium': 'rgba(180, 120, 255, 0.5)',
+  'purple-dark': 'rgba(160, 100, 255, 0.5)',
+  'orange-light': 'rgba(255, 200, 140, 0.5)',
+  'orange-medium': 'rgba(255, 180, 120, 0.5)',
+  'orange-dark': 'rgba(255, 160, 100, 0.5)',
+  'teal-light': 'rgba(140, 255, 200, 0.5)',
+  'teal-medium': 'rgba(120, 255, 180, 0.5)',
+  'teal-dark': 'rgba(100, 255, 160, 0.5)',
+  'cyan-light': 'rgba(140, 255, 255, 0.5)',
+  'cyan-medium': 'rgba(120, 255, 255, 0.5)',
+  'cyan-dark': 'rgba(100, 255, 255, 0.5)',
+  'magenta-light': 'rgba(255, 140, 255, 0.5)',
+  'magenta-medium': 'rgba(255, 120, 255, 0.5)',
+  'magenta-dark': 'rgba(255, 100, 255, 0.5)',
+  'brown-light': 'rgba(200, 180, 140, 0.5)',
+  'brown-medium': 'rgba(180, 160, 120, 0.5)',
+  'brown-dark': 'rgba(160, 140, 100, 0.5)',
+};
+
+interface FlipcardProps {
+  icon: string; // Assuming the icon is a string (e.g., a URL or path to an image)
+  imageFront: string;
+  imageBack: string;
+  title: string;
+  description: string;
+  color: keyof typeof colorMap | string;
+  classname?: string; // Optional prop
+}
+
+const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title, description, color, classname }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -17,38 +60,7 @@ const Flipcard = ({ icon, imageFront, imageBack, title, description, color, clas
       setIsAnimating(true);
     }
   }
-  const colorMap = {
-    'green-light': 'rgba(140, 255, 140, 0.5)',
-    'green-medium': 'rgba(120, 255, 120, 0.5)',
-    'green-dark': 'rgba(100, 255, 100, 0.5)',
-    'yellow-light': 'rgba(255, 255, 140, 0.5)',
-    'yellow-medium': 'rgba(255, 255, 120, 0.5)',
-    'yellow-dark': 'rgba(255, 255, 100, 0.5)',
-    'blue-light': 'rgba(140, 140, 255, 0.5)',
-    'blue-medium': 'rgba(120, 120, 255, 0.5)',
-    'blue-dark': 'rgba(100, 100, 255, 0.5)',
-    'red-light': 'rgba(255, 140, 140, 0.5)',
-    'red-medium': 'rgba(255, 120, 120, 0.5)',
-    'red-dark': 'rgba(255, 100, 100, 0.5)',
-    'purple-light': 'rgba(200, 140, 255, 0.5)',
-    'purple-medium': 'rgba(180, 120, 255, 0.5)',
-    'purple-dark': 'rgba(160, 100, 255, 0.5)',
-    'orange-light': 'rgba(255, 200, 140, 0.5)',
-    'orange-medium': 'rgba(255, 180, 120, 0.5)',
-    'orange-dark': 'rgba(255, 160, 100, 0.5)',
-    'teal-light': 'rgba(140, 255, 200, 0.5)',
-    'teal-medium': 'rgba(120, 255, 180, 0.5)',
-    'teal-dark': 'rgba(100, 255, 160, 0.5)',
-    'cyan-light': 'rgba(140, 255, 255, 0.5)',
-    'cyan-medium': 'rgba(120, 255, 255, 0.5)',
-    'cyan-dark': 'rgba(100, 255, 255, 0.5)',
-    'magenta-light': 'rgba(255, 140, 255, 0.5)',
-    'magenta-medium': 'rgba(255, 120, 255, 0.5)',
-    'magenta-dark': 'rgba(255, 100, 255, 0.5)',
-    'brown-light': 'rgba(200, 180, 140, 0.5)',
-    'brown-medium': 'rgba(180, 160, 120, 0.5)',
-    'brown-dark': 'rgba(160, 140, 100, 0.5)',
-  };
+
   return (
     <div className={clsx(`grid grid-cols-1 items-center justify-center cursor-pointer`, classname)}>
       <div className="flip-card w-full h-full rounded-md" onClick={handleFlip}>
@@ -61,24 +73,24 @@ const Flipcard = ({ icon, imageFront, imageBack, title, description, color, clas
         >
           {/* Front Side */}
           <div
-            className="flip-card-front bg-white hover:bg-[#4C40F7] hover:text-white inner-shadow shadow-lg transition-colors duration-600 ease-in-out w-[100%] h-[100%] grid grid-rows-subgrid gap-2 rounded-xl"
+            className="flip-card-front bg-white lsm:hover:bg-[#4C40F7] lsm:hover:text-white inner-shadow shadow-lg transition-colors duration-600 ease-in-out w-[100%] h-[100%] grid grid-rows-subgrid gap-2 rounded-xl"
             style={{
               backgroundImage: `url(${imageFront})`,
             }}
           >
             <div className="flex items-center justify-center">
-              <div className={`group-hover:bg-white rounded-full px-4 py-4 bg-${color}`}>
+              <div className={`lsm:group-hover:bg-white rounded-full px-4 py-4 bg-${color}`}>
                 <Image src={icon} alt={title} width={64} height={64} />
               </div>
             </div>
             <div className="flex flex-col items-center justify-center min-h-[200px] text-center">
               <h3 className="text-2xl font-semibold pt-4 pb-2 ">{title}</h3>
-              <p className="lg:text-lg text-[#6B6B6B] group-hover:text-white leading-normal px-4 py-4">{description}</p>
+              <p className="lg:text-lg text-[#6B6B6B] lsm:group-hover:text-white leading-normal px-4 py-4">{description}</p>
             </div>
-              <Button size='icon'  className={`py-2 px-2  bg-${color} shadow-inner border-1 border-gray-500 border-solid mx-auto rounded-full group-hover:bg-red-600 `} style={{
+              <Button size='icon'  className={`py-2 px-2  bg-${color} shadow-inner border-1 border-gray-500 border-solid mx-auto rounded-full lsm:group-hover:bg-red-600 `} style={{
               transform: 'translate3d(0, 0, 0)', // Force GPU rendering
               backfaceVisibility: 'hidden',     // Prevent rendering artifacts
-              boxShadow: `0 4px 6px ${colorMap[color] || 'rgba(0, 0, 0, 0.5)'}`, // Fallback to black shadow
+              boxShadow: `0 4px 6px ${ color in colorMap ? colorMap[color as keyof typeof colorMap] : 'rgba(0, 0, 0, 0.5)'}`, 
               WebkitFontSmoothing: 'antialiased', // Improve font clarity
               MozOsxFontSmoothing: 'grayscale', // Optimize font rendering in Firefox
               }}>               

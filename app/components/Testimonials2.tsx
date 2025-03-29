@@ -7,6 +7,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
+import Image from "next/image";
 
 // Testimonial data with work images
 const testimonials = [
@@ -133,7 +134,22 @@ export default function TestimonialsCarousel() {
   const createInfiniteWheelItems = () => {
     // Number of repeats before and after the main set
     const repeats = 3;
-    const wheelItems = [];
+
+    const wheelItems: {
+      id: number;
+      type: string;
+      name: string;
+      role: string;
+      company: string;
+      image: string;
+      content: string;
+      rating: number;
+      workImage: string;
+      workTitle: string;
+      key: string;
+      visualIndex: number;
+      wheelPosition: number;
+    }[] = [];
     
     // Create repeated sets of items for visual infinite effect
     for (let r = -repeats; r <= repeats; r++) {
@@ -209,7 +225,7 @@ export default function TestimonialsCarousel() {
                   return (
                     <motion.button
                       key={item.key}
-                      className={`w-14 h-14 rounded-full transition-all duration-300 relative ${
+                      className={`relative w-14 h-14 rounded-full transition-all duration-300 relative ${
                         isActive ? "z-20 scale-105 opacity-100" : "opacity-75 hover:opacity-100 z-10"
                       }`}
                       onClick={() => scrollToIndex(item.visualIndex)}
@@ -220,12 +236,13 @@ export default function TestimonialsCarousel() {
                           isActive ? "scale-105 shadow-md" : ""
                         }`}
                       >
-                        <img
+                        <Image
                           src={testimonials[item.visualIndex].image}
                           alt=""
                           className={`w-full h-full ${
                             isActive ? "scale-105" : "opacity-70"
                           } object-cover`}
+                          fill
                         />
                       </div>
                     </motion.button>
@@ -249,10 +266,11 @@ export default function TestimonialsCarousel() {
             <CarouselItem key={testimonial.id} className="w-full">
               <div className="relative min-w-[220px] h-full xxs:h-[350px] md:h-[400px] lg:h-[600px] rounded-xl overflow-hidden">
                 {/* Full-size background image */}
-                <img
+                <Image
                   src={testimonial.workImage}
                   alt={testimonial.workTitle}
                   className="absolute inset-0 w-full h-full object-cover"
+                  fill
                 />
 
                 {/* Gradient overlay for better text visibility */}

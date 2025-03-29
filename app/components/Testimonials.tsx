@@ -90,7 +90,7 @@ const StarRating = ({ rating }: { rating: number }) => {
 export default function TestimonialsCarousel3() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [api, setApi] = useState<UseEmblaCarouselType[1]>()
-  const [direction, setDirection] = useState(0) // 1 for forward, -1 for backward
+  // const [direction, setDirection] = useState(0) // 1 for forward, -1 for backward
   const buttonHeight = 64 // Height of button (56px) + gap (8px)
   const buttonContainerRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)

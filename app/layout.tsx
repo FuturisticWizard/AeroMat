@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {  Geist_Mono, Inter, Outfit, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -16,21 +16,21 @@ const poppins = Poppins({
   subsets: ['latin'], // Specify the subsets
 });
 
-const interSans = Inter({
-  variable: "--font-inter-sans",
-  subsets: ["latin"],
-});
+// const interSans = Inter({
+//   variable: "--font-inter-sans",
+//   subsets: ["latin"],
+// });
 
-const outfit = Outfit({
-  variable: "--font-outfit-sans",
-  subsets: ["latin"],
-});
+// const outfit = Outfit({
+//   variable: "--font-outfit-sans",
+//   subsets: ["latin"],
+// });
 
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",

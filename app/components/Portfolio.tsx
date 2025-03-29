@@ -1,6 +1,7 @@
 "use client";
+import Image from 'next/image';
 import React from 'react'
-import Card from './Card'
+
 import Masonry from 'react-masonry-css'
 const items = [
    {
@@ -71,7 +72,7 @@ const Portfolio = () => {
       <div className='py-48 bg-black'>
         <Masonry breakpointCols={breakpointColumnsObj} className="my-masonry-grid max-w-6xl mx-auto" columnClassName="my-masonry-grid_column">
           {items.map((item, index) => (
-            <img key={index} src={item.imageFront} alt={item.title} />
+            <Image key={index} src={item.imageFront} alt={item.title} width={64} height={64} />
           ))}
         </Masonry>
       </div>

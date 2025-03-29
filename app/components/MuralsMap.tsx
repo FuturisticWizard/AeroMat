@@ -1,14 +1,14 @@
 "use client"
-import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react'
-import Head from 'next/head';
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 // import {Map, Marker} from 'react-map-gl/maplibre';
-import {Map, Marker, Popup} from '@vis.gl/react-maplibre';
+import {Map, Marker} from '@vis.gl/react-maplibre';
 import maplibregl from 'maplibre-gl';
 // import 'mapbox-gl/dist/mapbox-gl.css';        
 
-const MAPBOX_TOKEN = ''; // Set your mapbox token here
+const MAPBOX_TOKEN = '9S9fXnl3QBvnUZXAddkV'; // Set your mapbox token here
 import 'maplibre-gl/dist/maplibre-gl.css';
 import Image from 'next/image';
+
 
 const MuralsMap = () => {
     // const [viewState, setViewState] = useState({
@@ -16,15 +16,15 @@ const MuralsMap = () => {
     //     latitude: 40,
     //     zoom: 3.5
     //   });
-    const [isMounted, setIsMounted] = useState(false);
+    // const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => {
-      setIsMounted(true);
-    }, []);
+    // useEffect(() => {
+    //   setIsMounted(true);
+    // }, []);
 
-    const markerRef = useRef<maplibregl.Marker>();
+    const markerRef = useRef<maplibregl.Marker>(null);
     const mapRef = useRef(null);
-    const popupRef = useRef<maplibregl.Popup>();
+
     const [showPopup, setShowPopup] = useState<boolean>(false);
     // const popup = useMemo(() => {
     //   return new maplibregl.Popup().setHTML('<div className="relative w-full h-full !maplibre-popup-content"><Image src="/images/mural-starowka.jpg" alt="pin" className="maplibre-popup-content" fill style="width: 600px; height: 300px;" />Mural dla kogoś z okazji czegoś przy ulicy Wiercieńskiego</div>');
@@ -60,11 +60,11 @@ const MuralsMap = () => {
         zoom: 10
       }}
       style={{width: '100%', height: '100%'}}
-      mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=9S9fXnl3QBvnUZXAddkV`}
+      mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${MAPBOX_TOKEN}`}
       >
           <Marker  popup={popup}  longitude={22.549362477912645} latitude={51.24115775093139} anchor="bottom" ref={markerRef} >
             <button onClick={togglePopup}>
-              <img src="/pin2.png" alt="pin" className='w-16 h-16' />
+              <Image src="/pin2.png" alt="pin" width={64} height={64} className='' />
             </button>
             {/* {showPopup && (
                         <Popup
@@ -84,10 +84,10 @@ const MuralsMap = () => {
             )} */}
           </Marker>
           <Marker longitude={22.639776012728912} latitude={51.24014353801986} anchor="bottom" >
-            <img src="/pin2.png" alt="pin" className='w-16 h-16' />
+            <Image src="/pin2.png" alt="pin" width={64} height={64} className='' />
           </Marker>
           <Marker longitude={22.5321568429688} latitude={51.25610918106192} anchor="bottom" >
-            <img src="/pin2.png" alt="pin" className='w-16 h-16' />
+            <Image src="/pin2.png" alt="pin" width={64} height={64} className='' />
           </Marker>
       </Map>
 

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 const icons = [
@@ -27,13 +28,12 @@ const TrustedBy = () => {
             icons.map((item, index) => (
                 <div key={index} className='flex flex-row justify-center items-center'>
                     {/* <p>{item.name}</p> */}
-                    <img key={index} src={item.icon} alt={item.name} className='w-24 h-12 mx-4 hover:scale-105  transition-transform duration-300 ease-in-out'/>
+                    <Image key={index} src={item.icon} alt={item.name} width={96} height={48} className='w-24 h-12 mx-4 hover:scale-105  transition-transform duration-300 ease-in-out'/>
                 </div>
             ))
         }
       </div>
     </div>
-
   )
 }
 

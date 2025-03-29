@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 // import Rotate from '@/public/icons/rotate.svg'
 
-const CardFlip = ({ icon='/placeholders/64x64.svg', imageFront='/images/SpaceCity.jpg', imageBack='/images/SpaceCity1.jpg', title='title', description='description' , color = 'purple' , classname='' }) => {
+const CardFlip = ({ icon='/placeholders/64x64.svg', imageBack='/images/SpaceCity1.jpg', title='title', description='description' , color = 'purple' , classname='' }) => {
   const [ isFlipped, setIsFlipped ] = useState(false)
   const [ isAnimating, setIsAnimating ] = useState(false) 
 

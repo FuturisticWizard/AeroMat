@@ -1,5 +1,5 @@
 import React from 'react'
-import CardFlip from './CardFlip'
+
 import Flipcard from './Flipcard'
 
 const cards = [
@@ -12,8 +12,8 @@ const cards = [
         color: 'magenta-light'
     },
     {
-        title: 'Szyldy reklamowe',
-        desc: "Zwiększ widoczność swojej firmy dzięki profesjonalnym szyldom reklamowym. Nasze projekty są estetyczne, trwałe i skutecznie przyciągają klientów.",
+        title: 'Szyldy reklamowe', 
+        desc: "Oferuję profesjonalne szyldy reklamowe, które są estetyczne, trwałe i skutecznie przyciągają klientów. Zwiększ widoczność swojej firmy i zyskaj przewagę nad konkurencją.",
         icon: '/icons/szyld1.png',
         imageFront: '/images/',
         imageBack: '/images/szyld3.jpg',
@@ -21,7 +21,7 @@ const cards = [
     },
     {
         title: 'Samochody osobowe ',
-        desc: 'Zamień swój pojazd w mobilną reklamę! Oferujemy profesjonalne malowanie samochodów , które zwiększy rozpoznawalność Twojej marki w każdym miejscu.',
+        desc: 'Zamień swój pojazd w mobilną reklamę! Oferuję profesjonalne malowanie samochodów, które zwiększy rozpoznawalność Twojej marki w każdym miejscu.',
         icon: '/icons/car-painting.png',
         imageFront: '/images/',
         imageBack: '/images/samochod1.jpg',
@@ -29,7 +29,7 @@ const cards = [
     },
     {
         title: 'Wnętrza',
-        desc: 'Stwórz wyjątkowe wnętrza, które zachwycą Twoich klientów i pracowników. Nasze dekoracje ścienne i wykończenia dodadzą charakteru każdej przestrzeni.',
+        desc: 'Stwórz wyjątkowe wnętrza, które zachwycą Twoich klientów i pracowników. Moje malowidła ścienne i wykończenia dodadzą charakteru każdej przestrzeni. ',
         icon: '/icons/paint-roller-96.png',
         imageFront: '/images/',
         imageBack: '/images/mural-lester.jpg',
@@ -37,7 +37,7 @@ const cards = [
     },
     {
         title: 'Systemy informacji wizualnej',
-        desc: 'Ułatw orientację i popraw komunikację dzięki naszym systemom informacji wizualnej. Tworzymy czytelne i estetyczne rozwiązania dla każdej przestrzeni.',
+        desc: 'Ułatw orientację i popraw komunikację dzięki moim systemom informacji wizualnej. Tworzymy czytelne i estetyczne rozwiązania dla każdej przestrzeni.',
         icon: '/icons/exit-96.png',
         imageFront: '/images/',
         imageBack: '/images/visual-information-system.jpg',
@@ -45,7 +45,7 @@ const cards = [
     },
     {
         title: 'Projekty Niestandardowe',
-        desc: 'Masz nietypowy pomysł? Zrealizujemy go! Specjalizujemy się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
+        desc: 'Masz nietypowy pomysł? Eko mural? Mural UV? spróbuj mnie zaskoczyć !  Specjalizuję się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
         icon: '/icons/impossible-shapes.png',
         imageFront: '/images/',
         imageBack: '/images/',
@@ -57,11 +57,11 @@ const cards = [
 
 const Services2 = () => {
   return (
-    <div className='px-8 py-24 md:px-0 flex flex-col max-w-6xl mx-auto '>
+    <div className='flex flex-col max-w-6xl mx-auto px-8 lg:px-0 py-12  '>
         
-        <div className='py-4 md:py-8 text-center '>
+        <div className='py-8 sm:py-12 md:py-24 text-center '>
             <span className='text-red-500  text-base text-semibold' >Moje Usługi</span>
-            <h2 className='text-2xl text-bold max-w-xl mx-auto'>Różne usługi, które świadczymy, aby zwiększyć rozpoznawalność Twojej firmy</h2>
+            <h2 className='text-2xl text-bold max-w-xl mx-auto'>Różne usługi, które śwadczę, aby zwiększyć rozpoznawalność Twojej firmy</h2>
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 w-full h-full content-center gap-2 md:gap-8'>
         {

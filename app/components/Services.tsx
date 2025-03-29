@@ -1,130 +1,97 @@
-import { BackgroundGradient } from '@/components/ui/background-gradient'
-import Image from 'next/image'
-import React, { ReactNode } from 'react'
-import { Tabs } from './ui/tabs'
-import Link from 'next/link'
+import React from 'react'
 
+import Flipcard from './Flipcard'
 
-const services = [
-    {   
-        title: "Murale Reklamowe",
-        image: "/images/"
+const cards = [
+    {
+        title: 'Murale',
+        desc: 'Przyciągnij uwagę unikalnymi muralami, które ożywią przestrzeń i wyróżnią Twoją markę. Tworzymy artystyczne dzieła, które inspirują i budują pozytywne emocje.',
+        icon: '/icons/graffiti-64.png',
+        imageFront: '/images/',
+        imageBack: '/images/mural-lpec.jpg',
+        color: 'magenta-light'
     },
     {
-        title: "Murale Artystyczne"
+        title: 'Szyldy reklamowe',
+        desc: "Zwiększ widoczność swojej firmy dzięki profesjonalnym szyldom reklamowym. Nasze projekty są estetyczne, trwałe i skutecznie przyciągają klientów.",
+        icon: '/icons/szyld1.png',
+        imageFront: '/images/',
+        imageBack: '/images/szyld3.jpg',
+        color: 'yellow-medium'
     },
     {
-        title: "Malowanie Pojazdów"
+        title: 'Samochody osobowe ',
+        desc: 'Zamień swój pojazd w mobilną reklamę! Oferujemy profesjonalne malowanie samochodów , które zwiększy rozpoznawalność Twojej marki w każdym miejscu.',
+        icon: '/icons/car-painting.png',
+        imageFront: '/images/',
+        imageBack: '/images/samochod1.jpg',
+        color: 'red-light'
     },
     {
-        title: "Artystyczne malowanie wnętrz"
+        title: 'Wnętrza',
+        desc: 'Stwórz wyjątkowe wnętrza, które zachwycą Twoich klientów i pracowników. Nasze dekoracje ścienne i wykończenia dodadzą charakteru każdej przestrzeni.',
+        icon: '/icons/paint-roller-96.png',
+        imageFront: '/images/',
+        imageBack: '/images/mural-lester.jpg',
+        color: 'teal-light'
     },
+    {
+        title: 'Systemy informacji wizualnej',
+        desc: 'Ułatw orientację i popraw komunikację dzięki naszym systemom informacji wizualnej. Tworzymy czytelne i estetyczne rozwiązania dla każdej przestrzeni.',
+        icon: '/icons/exit-96.png',
+        imageFront: '/images/',
+        imageBack: '/images/visual-information-system.jpg',
+        color: 'purple-light'
+    },
+    {
+        title: 'Projekty Niestandardowe',
+        desc: 'Masz nietypowy pomysł? Zrealizujemy go! Specjalizujemy się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
+        icon: '/icons/impossible-shapes.png',
+        imageFront: '/images/',
+        imageBack: '/images/',
+        color: 'green-medium'
+    },
+
 ]
-const DummyContent = ({image}) => {
-    return (
-      <Image
-        src={`${image}`}
-        alt="dummy image"
-        fill
-        className="object-cover object-center  h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 -inset-y-1  w-[90%] rounded-xl mx-auto z-10"
-      />
-    )
-  }
-  
-  
-const tabs = [
-    {
-      title: "Murale Reklamowe",
-      value: "product",
-      content: (
-        <div className="w-full overflow-hidden relative h-full border-solid border-1 border-gray-400 rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-">
-          {/* <p className='service-tab2 z-40 relative  text-black'>Murale Reklamowe</p> */}
-          <div className='absolute bottom-0 right-0 bg-[#0e2f56]  z-40 inline-block w-1/2 px-2  py-4  sm:px-10 sm:py-8'>
-            <h3 className='text-2xl uppercase'>Murale Reklamowe</h3>
-            <p className='text-base'>Pozwolają skutecznie się wyróżnić i przyciągnąć klientów.</p>
-            <Link href='#portfolio'>Zobacz więcej</Link>
-          </div>
-          <DummyContent image='/images/lpec.jpg' />
-        </div>
-      ),
-    },
-    {
-      title: "Murale Artystyczne",
-      value: "services",
-      content: (
-        <div className="w-full overflow-hidden relative h-full border-solid border-1 border-gray-400 rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-">
-          {/* <p className='service-tab2 z-40 relative  text-black'>Murale Artystyczne</p> */}
-          <div className='absolute bottom-0 right-0 bg-[#0e2f56]  z-40 inline-block w-1/2 px-2  py-4  sm:px-10 sm:py-8'>
-            <h3 className='text-2xl uppercase'>Murale Artystyczne</h3>
-            <p className='text-base'>Pozwolają skutecznie się wyróżnić i przyciągnąć klientów.</p>
-            <Link href='#portfolio'>Zobacz więcej</Link>
-          </div>
-          <DummyContent image='/images/staremiasto.jpg' />
-        </div>
-      ),
-    },
-    {
-      title: "Malowanie Pojazdów",
-      value: "playground",
-      content: (
-        <div className="w-full overflow-hidden relative h-full border-solid border-1 border-gray-400 rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-">
-          {/* <p className='service-tab2 z-40 relative text-black'>Malowanie Pojazdów</p> */}
-          <div className='absolute bottom-0 right-0 bg-[#0e2f56]  z-40 inline-block w-1/2 px-2 py-4 sm:px-10 sm:py-8'>
-            <h3 className='text-2xl uppercase'>Malowanie Pojazdów</h3>
-            <p className='text-base '>Pozwolają skutecznie się wyróżnić i przyciągnąć klientów.</p>
-            <Link href='#portfolio'>Zobacz więcej</Link>
-          </div>
-          <DummyContent image='/images/camper.jpg' />
-        </div>
-      ),
-    },
-    {
-      title: "Malowanie Wnętrz",
-      value: "content",
-      content: (
-        <div className="w-full overflow-hidden relative h-full border-solid border-1 border-gray-400 rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-">
-           */}
-          <div className='absolute bottom-0 right-0 bg-[#0e2f56]  z-40 inline-block w-1/2 px-2 py-4  sm:px-10 sm:py-8'>
-            <h3 className='text-2xl uppercase'>Malowanie Wnętrz</h3>
-            <p className='text-base'>Pozwolają skutecznie się wyróżnić i przyciągnąć klientów.</p>
-            <Link href='#portfolio'>Zobacz więcej</Link>
-          </div>
-          <DummyContent image='/images/basen1.jpg'/>
-        </div>
-      ),
-    },
-]
+
 
 const Services = () => {
-//   return (
-//     <div id='card' className=' flex flex-col sm:flex-row max-w-5xl mx-auto justify-center items-center gap-2 '>
-
-
-//     {
-//         services.map( (service, index) => (
-//             <div key={index} className=''>
-//                 <BackgroundGradient className='flex h-64 w-full justify-center items-center px-8'>
-//                     <h2 className='text-center font-bold uppercase text-xl anton-regular'>{service.title}</h2>
-
-//                 </BackgroundGradient>
-//             </div>
-//         ))
-//     }
-
-
-//     </div>
-//   )
-
-    return (
-      <div>
-        
-        <div className="h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-40 px-8 lg:px-0">
-        <span className='font-semibold text-red-400 text-md uppercase py-1'>co robię?</span>
-          <Tabs tabs={tabs} />
+  return (
+    <div className='px-8 py-16 lg:px-0 flex flex-col   max-w-6xl mx-auto '>
+        <div className='py-4'>
+            <h2 className='text-red-500  text-lg text-bold' >Moje Usługi</h2>
+            <div className='flex flex-col lsm:flex-row py-2 gap-2 md:gap-4'>
+                {/* Header */}
+                <div className='flex flex-col'>
+                    <h3 className='font-bold text-2xl sm:text-3xl '> Świadczę całą paletę usług dzięki którym poprawisz wizerunek, zwiększysz rozpoznawalność oraz sprzedaż Twojego biznesu.</h3>
+                </div>
+                {/* Paragraph */}
+                <div className='flex '>  
+                    <p className='font text-gray-600 text-sm xsm:text-base md:text-md lg:text-lg '>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, eos itaque aperiam porro officia aliquid saepe repellendus incidunt, unde reprehenderit animi amet, cupiditate veritatis mollitia!
+                    </p>
+                </div>
+            </div>
+            
         </div>
-      </div>
 
-    )
+
+        {/* Cards */}
+        <div className='grid grid-cols-1 xsm:grid-cols-2  md:grid-cols-3 w-full h-full content-center gap-2 md:gap-8'>
+        {
+            cards.map((card, index) => (
+                <div
+                    key={index}
+                    className="flex items-center justify-center w-full h-full"
+                >
+                <Flipcard  title={card.title} icon={card.icon} description={card.desc} color={card.color} imageFront={card.imageFront} imageBack={card.imageBack} classname='w-[352px] h-[458px] '/>
+                </div>
+            ))
+        }
+        </div>
+
+    </div>
+  )
 }
 
 export default Services
