@@ -31,7 +31,7 @@ const steps = [
 
 const Process = () => {
   return (
-    <div className='flex flex-col sm:flex-row max-w-6xl mx-auto  justify-center items-center py-8 md:py-16 gap-6'>
+    <div className='grid grid-cols-1 xxsm:grid-cols-2  sm:flex sm:flex-row max-w-6xl mx-auto  justify-center items-center py-8 md:py-16 gap-6'>
       {
         steps.map((step, index) => (
             <div key={index} className='flex flex-col justify-center items-center px-4 py-2 max-w-md  '>
@@ -44,7 +44,7 @@ const Process = () => {
                     />
                 </div>
 
-                <h3 className='text-base'>{step.title}</h3>
+                <h3 className='text-base text-center'>{step.title}</h3>
             </div>
         ))
       }
