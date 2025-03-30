@@ -517,46 +517,78 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
             }}
         />
 
-        <div className={`controls ${controlsVisible ? 'visible' : 'hidden'}`}>
-            <Button onClick={() => setPlaying(!playing)}>
-                {playing ? <PauseWhiteIcon /> : <PlayWhiteIcon />}
-            </Button>
-            <div className="time-display">
-                <FormattedTime numSeconds={played * duration} /> /{' '}
-                <FormattedTime numSeconds={duration} />
-            </div>
-            <Slider
-                direction={Direction.HORIZONTAL}
-                value={played}
-                onChange={(v: number) => playerRef.current?.seekTo(v, 'fraction')}
-            />
-            <Button onClick={() => setMuted(!muted)}>
-                {muted ? <SoundOffWhite /> : <SoundOnWhite />}
-            </Button>
-            <Slider
-                direction={Direction.HORIZONTAL}
-                value={volume}
-                onChange={(v: number) => setVolume(v)}
+<div className={`controls ${controlsVisible ? 'visible' : 'hidden'}`}>
+    {/* Play/Pause Button */}
+    <Button onClick={() => setPlaying(!playing)}>
+        {playing ? <PauseWhiteIcon /> : <PlayWhiteIcon />}
+    </Button>
+
+    {/* Current Time / Duration */}
+    <div className="time-display px-2">
+        <FormattedTime numSeconds={played * duration} /> / <FormattedTime numSeconds={duration} />
+    </div>
+
+    {/* Timeline (Progress Bar) */}
+        <Slider
+            direction={Direction.HORIZONTAL}
+            value={played} // Current playback progress (fraction)
+            onChange={(v: number) => playerRef.current?.seekTo(v, 'fraction')} // Seek to the selected position
+            style={{
+                width: '100%',
+                height: '8px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '4px',
+                position: 'relative',
+                cursor: 'pointer',
+            }}
+        >
+            {/* Progress Indicator */}
+            <div
                 style={{
-                    width: '10%',
-                    height: '8px',
-                    background: 'rgba(255, 255, 255, 0.2)',
+                    width: `${played * 100}%`, // Convert fraction to percentage
+                    height: '100%',
+                    background: '#4CAF50', // Green progress bar
+                    borderRadius: '4px',
+                    position: 'absolute',
+                    top: 0,
+                    padding: '0 10px' ,
+                    left: 0,
+                }}
+            />
+        </Slider>
+
+        {/* Mute/Unmute Button */}
+        <Button onClick={() => setMuted(!muted)} className='px-2'>
+            {muted ? <SoundOffWhite /> : <SoundOnWhite />}
+        </Button>
+
+        {/* Volume Control */}
+        <Slider
+            direction={Direction.HORIZONTAL}
+            value={volume}
+            onChange={(v: number) => setVolume(v)}
+            style={{
+                width: '10%',
+                height: '8px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '4px',
+            }}
+        >
+            <div
+                style={{
+                    width: `${volume * 100}%`,
+                    height: '100%',
+                    background: '#ddd',
                     borderRadius: '4px',
                 }}
-            >
-                <div
-                    style={{
-                        width: `${volume * 100}%`,
-                        height: '100%',
-                        background: '#ddd',
-                        borderRadius: '4px',
-                    }}
-                />
-            </Slider>
-            <Button onClick={toggleFullscreen}>
-                {isFullscreen ? <MinimizeWhite /> : <MaximizeWhite />}
-            </Button>
-        </div>
+            />
+        </Slider>
+
+        {/* Fullscreen Button */}
+        <Button onClick={toggleFullscreen} className='px-2'>
+            {isFullscreen ? <MinimizeWhite /> : <MaximizeWhite />}
+        </Button>
+    </div>
     </div>
     );
 };

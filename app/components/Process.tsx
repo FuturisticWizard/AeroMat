@@ -1,33 +1,50 @@
+import Image from 'next/image'
 import React from 'react'
 
 const steps = [
     {
-        title:"Przygotowanie projektu"
+        title:"Przygotowanie projektu",
+        icon: '/icons/icons8-design-100.png',
+        desc: ''
     },
     {
-        title: "Wizualizacja wybranego projektu na docelowej powierzchni"
+        title: "Wizualizacja projektu ",
+        icon: '/icons/mapping96.png',
+        desc: ''
     },
     {
-        title: "Wycena i podpisanie umowy"
+        title: "Wycena i podpisanie umowy",
+        icon: '/icons/handshake.png',
+        desc: ''
     },
     {
-        title: "Realizacja"
+        title: "Realizacja",
+        icon: '/icons/wall-painting.png',
+        desc: ''
     },
     {
-        title: "Odbiór wykonanego zlecenia"
-    },
-    {
-        title: "Rozliczenie"
+        title: "Rozliczenie",
+        icon: '/icons/icons8-payment-100-color.png',
+        desc: ''
     }
-
 ]
+
 const Process = () => {
   return (
-    <div>
+    <div className='flex flex-col sm:flex-row max-w-6xl mx-auto  justify-center items-center py-8 md:py-16 gap-6'>
       {
         steps.map((step, index) => (
-            <div key={index} className='border-1 border-solid border-gray-400 flex justify-center items-center px-2 py-2 '>
-                <h3>{step.title}</h3>
+            <div key={index} className='flex flex-col justify-center items-center px-4 py-2 max-w-md  '>
+                <div className='relative w-16 h-16 ' >
+                    <Image 
+                    src={step.icon}
+                    alt={step.title}
+                    fill
+                    object-fit='cover'
+                    />
+                </div>
+
+                <h3 className='text-base'>{step.title}</h3>
             </div>
         ))
       }

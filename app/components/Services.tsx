@@ -58,17 +58,17 @@ const cards = [
 const Services = () => {
   return (
     <div className='px-8 py-16 lg:px-0 flex flex-col   max-w-6xl mx-auto '>
-        <div className='py-4'>
+        <div className='py-8 md:py-16'>
             <h2 className='text-red-500  text-lg text-bold' >Moje Usługi</h2>
             <div className='flex flex-col lsm:flex-row py-2 gap-2 md:gap-4'>
                 {/* Header */}
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/2'>
                     <h3 className='font-bold text-2xl sm:text-3xl '> Świadczę całą paletę usług dzięki którym poprawisz wizerunek, zwiększysz rozpoznawalność oraz sprzedaż Twojego biznesu.</h3>
                 </div>
                 {/* Paragraph */}
-                <div className='flex '>  
-                    <p className='font text-gray-600 text-sm xsm:text-base md:text-md lg:text-lg '>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, eos itaque aperiam porro officia aliquid saepe repellendus incidunt, unde reprehenderit animi amet, cupiditate veritatis mollitia!
+                <div className='flex w-1/2'>  
+                    <p className='font text-gray-600 text-sm xsm:text-base md:text-md lg:text-md '>
+                    Od tworzenia unikalnych murali po profesjonalne grafiki ścienne, każde zlecenie jest dla mnie okazją do stworzenia czegoś wyjątkowego. Dzięki moim usługom możesz nie tylko poprawić wizerunek swojej firmy, ale także zwiększyć zaufanie klientów i przyciągnąć nowych. Razem możemy stworzyć strategię wizualną, która przyniesie Twojemu biznesowi sukces i rozpoznawalność.
                     </p>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 import React from 'react'
 
 import VideoPlayer from './VideoPlayer/VideoPlayer'
+import Process from './Process'
 
 
 
@@ -66,6 +67,7 @@ const HowItWorks = () => {
                 </button> 
             </motion.div>
         </ImagesSlider> */}
+        <Process />
         <div className=' relative max-w-full max-h-[320px] md:max-h-[580px] z-30'>
             <VideoPlayer url='/movies/reel.mov' />
             

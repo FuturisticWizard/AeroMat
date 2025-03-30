@@ -4,12 +4,12 @@ import React from 'react'
 
 const WhoAmI2 = () => {
   return (
-    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-6xl mx-auto px-8  lg:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28  '>
+    <div className='h-full w-full  grid grid-cols-1 sm:grid-cols-2  items-center max-w-6xl mx-auto px-8  lg:px-0  py-20 xs:py-16 md:py-36 gap-2 sm:gap-4 lsm:gap-16 md:gap-28 mt-28 '>
 
  
-      <div className='flex flex-col order-2 sm:order-1 py-12 '>
+      <div className='flex flex-col order-2 sm:order-1 py-12 z-30 '>
         <h2 className='text-red-400 text-lg text-semibold'>Kim jestem?</h2>
-        <h3 className='text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-2' >
+        <h3 className='text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-2 z-30' >
         Nazywam się Mateusz, malarstwo  <br/> <span className='text-[#FF6800]'>to moja pasja i sposób na życie.</span>
         </h3>
         <p className='text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 pr-0 sm:pr-12 z-30'>
@@ -26,7 +26,7 @@ const WhoAmI2 = () => {
             <Image 
             src='/pngs/line.png'
             alt='decorative line' 
-            width={1600} 
+            width={1800} 
             height={250} 
             className='z-20'
             />
@@ -34,13 +34,13 @@ const WhoAmI2 = () => {
 
       <div className=' order-1  md:order-2 py-6 flex justify-center items-center '>
         <div className='relative aspect-square size-72 md:size-96 flex  justify-center items-center '>
-            <div className={`absolute w-[620px] h-[620px] sm:w-[620px] sm:h-[620px] md:w-[920] md:h-[920px] -top-36 -left-36 md:-top-56 md:-left-72 lg:-top-56 lg:-left-64 z-10`}>
+            <div className={`absolute w-[500px] h-[500px] -top-36 xs:w-[600px] xs:h-[600px]  sm:w-[700px] sm:h-[700px] md:w-[750px] md:h-[750px] sm:-top-36 md:-top-36 md:-left-54 lg:-top-36 lg:-left-54 z-10`}>
                   <Image 
                     src={`/pngs/spreje2.png`}
                     alt='black paint spray splash'
                     fill
                     style={{
-                        objectFit: 'contain'
+                        objectFit: 'cover'
                     }} 
                   />
                                       {/* */}

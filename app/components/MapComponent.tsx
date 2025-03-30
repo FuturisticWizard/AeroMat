@@ -31,11 +31,9 @@ const MapComponent = () => {
             latitude: 51.24014353801986,
             popupContent: `
             <div style=" max-width: 600px;">
-                <button id="close-popup">Close</button>
-                <p>Mural dla kogoś z okazji czegoś przy ulicy Wiercieńskiego</p>
-                <iframe width="100%" height="220" src="https://www.youtube.com/embed/FpFBhlD7cOU" frameborder="0" allowfullscreen></iframe>
-                <a href="https://example.com/mural-details">Learn More</a>
-                
+                <button id="close-popup" className='px-2 py-2' >X</button>
+                <p>Mural dla KOM-EKO - Największy mural w Lublinie!</p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8-QLpd97bo" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             `,
           },
@@ -43,22 +41,22 @@ const MapComponent = () => {
         longitude: 22.5321568429688,
         latitude: 51.25610918106192,
         popupContent: `
-          <div class="relative">
-            <button id="close-popup">Close</button>
-            <img src="/images/mural-starowka.jpg" alt="pin" style="width: 100%; height: auto;" />
-            ul.Wiercieńskiego 
-          </div>
+            <div style=" max-width: 600px;">
+                <button id="close-popup" className='px-2 py-2 ' >X</button>
+                <p>Mural Antysmogowy dla LPEC - Mural antysmogowy przy  ul.Puławskiej 28 </p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/hNWmk-VJZ6c" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
         `,
       },
       {
         longitude: 22.549362477912645,
         latitude: 51.24115775093139,
         popupContent: `
-          <div class="relative">
-            <button id="close-popup">Close</button>
-            <img src="/images/mural-starowka.jpg" alt="pin" style="width: 100%; height: auto;" />
-            Mural dla kogoś z okazji czegoś przy ulicy Wiercieńskiego
-          </div>
+            <div style=" max-width: 600px;">
+                <button id="close-popup" className='px-2 py-2' >X</button>
+                <p>Lublin Stare Miasto - Mural przy ul. Wiercieńskiego 5 </p>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/FpFBhlD7cOU" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
         `,
       },
     ];
@@ -111,55 +109,12 @@ const MapComponent = () => {
       ref={mapContainer}
       style={{
         height: "600px",
-        maxWidth: "64rem",
+        maxWidth: "72rem",
         margin: "0 auto",
-        padding: "0 24",
-        border: "1px solid black mt-24 ",
+        border: "1px solid black ",
       }}
     />
   );
 };
 
 export default MapComponent;
-
-
-// import { useEffect, useRef } from "react";
-// import maplibregl from "maplibre-gl";
-
-// const MapComponent = () => {
-//   const mapContainer = useRef(null);
-
-//   useEffect(() => {
-//     if (!mapContainer.current) return;
-
-//     // Initialize the map
-//     const map = new maplibregl.Map({
-//       container: mapContainer.current, // container element
-//       style: "https://api.maptiler.com/maps/streets/style.json?key=9S9fXnl3QBvnUZXAddkV", // style URL
-//       center: [22.568445, 51.246452], // starting position [lng, lat]
-//       zoom: 16, // starting zoom
-//       pitch: 60, // pitch to show 3D buildings
-//     });
-
-//     // Add navigation control
-//     map.addControl(new maplibregl.NavigationControl());
-
-//     // Clean up on unmount
-//     return () => {
-//       if (map) map.remove();
-//     };
-//   }, []);
-
-//   return (
-//     <div
-//       ref={mapContainer}
-//       style={{
-//         height: "600px",
-//         width: "100%",
-//         border: "1px solid black",
-//       }}
-//     />
-//   );
-// };
-
-// export default MapComponent;

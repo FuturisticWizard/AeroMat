@@ -1,13 +1,12 @@
-"use client"
 import VideoHero from "./components/hero/VideoHero";
 import TestimonialsCarousel2 from './components/Testimonials2';
 import Portfolio2 from './components/Portfolio2';
 import TrustedBy from "./components/TrustedBy";
 import HowItWorks from "./components/HowItWorks";
-import MapComponent from "./components/MapComponent";
 import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
-import Process from "./components/Process";
+import MuralsMap from "./components/MuralsMap";
+
 
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
@@ -26,15 +25,10 @@ export default function Home() {
         <HowItWorks />
 
         <Portfolio2 />
+        <MuralsMap />
 
 
- 
-        <Process />
-        {/* <MuralsMap /> */}
-        <MapComponent />
-        {/* <CarouselPhotoHero images={images}/> */}
-
-        <section id="testimonials" className=" max-w-6xl mx-auto px-8 md:px-0 py-20">
+        <section id="testimonials" className=" max-w-6xl mx-auto items-center justify-center px-8 md:px-0 py-20">
             <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>
             <TestimonialsCarousel2 />
             

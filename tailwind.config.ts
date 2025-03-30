@@ -42,6 +42,18 @@ export default {
 	'bg-misty-blue-light',
 	'bg-pale-lavender-medium',
 	'bg-light-mint-dark',
+	'w-[620px]',
+    'h-[620px]',
+    'sm:w-[620px]',
+    'sm:h-[620px]',
+    'md:w-[920px]',
+    'md:h-[920px]',
+    '-top-36',
+    '-left-36',
+    'md:-top-56',
+    'md:-left-72',
+    'lg:-top-56',
+    'lg:-left-64',
   ],
   theme: {
 	container: {
@@ -54,6 +66,11 @@ export default {
   	extend: {
 		fontSize: {
 			'tiny': '0.775rem', // 10px
+		},
+		aspectRatio: {
+			'21': '21',
+			'32': '32',
+			'64':'64',
 		},
   		screens: {
   			xxs: '320px',
@@ -260,6 +277,6 @@ export default {
   	}
   },
   plugins: [
-    
+	require('@tailwindcss/aspect-ratio'),
 ],
 } satisfies Config;

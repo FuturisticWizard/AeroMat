@@ -59,9 +59,9 @@ const Services2 = () => {
   return (
     <div className='flex flex-col max-w-6xl mx-auto px-8 lg:px-0 py-12  '>
         
-        <div className='py-8 sm:py-12 md:py-24 text-center '>
+        <div className='py-8 sm:py-12 md:py-24 text-center z-30'>
             <span className='text-red-500  text-base text-semibold' >Moje Usługi</span>
-            <h2 className='text-2xl text-bold max-w-xl mx-auto'>Różne usługi, które śwadczę, aby zwiększyć rozpoznawalność Twojej firmy</h2>
+            <h2 className='text-2xl text-bold max-w-xl mx-auto'>Mogę Ci pomóc z ...</h2>
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 w-full h-full content-center gap-2 md:gap-8'>
         {
