@@ -20,8 +20,6 @@ interface NavbarProps {
 const defaultItems: NavItem[] = [
 //   { label: "Home", href: "#home" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Blog", href: "/blog" },
-  { label: "Firma", href: "/firma" },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
@@ -50,7 +48,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
         "z-50"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-50 ">
+      <div className="max-w-7xl mx-auto  md:px-4 lmd:px-2  z-50 ">
         <div className="flex items-center justify-between h-20 ">
           {/* Logo */}
           <div className="flex-shrink-0  z-50">
@@ -76,8 +74,9 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden px-2">
             <Button
+              className=""
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -85,7 +84,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-6 w-6 " />
               )}
             </Button>
           </div>

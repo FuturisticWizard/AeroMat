@@ -44,7 +44,7 @@ const Footer = () => {
           <div className="flex space-x-4">
             {
               socials.map((social, index) => (
-                <Link key={index} href={social.link} className=" text-muted-foreground hover:text-foreground ">
+                <Link key={index} href={social.link}  target="_blank"  className=" text-muted-foreground hover:text-foreground ">
                  <div className='relative w-16 h-16'>
                   <Image src={social.icon} alt={social.title} fill />
                  </div> 
@@ -60,7 +60,7 @@ const Footer = () => {
 
       <div className=" mt-8 pt-8 text-center text-white">
         <p>© {new Date().getFullYear()} Aeromat. All rights reserved.</p>
-        <p>Icons by <span className='underline'>icons8</span></p>
+        <p>Icons by <Link href='https://www.icons8.com' className='underline'>icons8</Link></p>
       </div>
     </div>
   </footer>

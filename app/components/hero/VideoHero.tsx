@@ -6,7 +6,7 @@ import { Volume2, VolumeX } from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
 
 const VideoHero = ({
-  videoUrl = "/hero.mp4",
+  videoUrl = "/movies/hero_compressed.mp4",
   title = "Przekształć swoją przestrzeń ",
   subtitle = "w dzieło sztuki",
   ctaText = "Zamów",
@@ -39,7 +39,7 @@ const VideoHero = ({
   return (
 <div className="relative w-full h-screen max-w-8xl justify-center items-center overflow-hidden">
   {/* Video Background */}
-  <video ref={videoVolumeRef} autoPlay muted={muted} loop playsInline className="w-full h-full object-cover object-center">
+  <video ref={videoVolumeRef} autoPlay muted={true} loop playsInline className="w-full h-full object-cover object-center">
     <source src={videoUrl} type="video/mp4" />
   </video>
 

@@ -1,9 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Yesteryear&display=swap');
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Yesteryear&display=swap');
+
+
 
 @import "./components/PerspectiveEffect/PerspectiveEffect.scss"
 /* @tailwind base;
@@ -363,6 +365,10 @@
   line-height: 100%;
   color: white;
   display: inline-block;
+}
+.leaflet-overlay-pane path,
+.leaflet-marker-icon {
+  cursor: pointer;
 }
 
 @layer base {

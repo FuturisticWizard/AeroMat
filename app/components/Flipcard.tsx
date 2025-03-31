@@ -48,9 +48,10 @@ interface FlipcardProps {
   description: string;
   color: keyof typeof colorMap | string;
   classname?: string; // Optional prop
+  video?: boolean;
 }
 
-const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title, description, color, classname }) => {
+const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title, description, color, classname, video = true}) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -73,7 +74,7 @@ const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title,
         >
           {/* Front Side */}
           <div
-            className="flip-card-front bg-white lsm:hover:bg-[#4C40F7] lsm:hover:text-white inner-shadow shadow-lg transition-colors duration-600 ease-in-out w-[100%] h-[100%] grid grid-rows-subgrid gap-2 rounded-xl"
+            className="flip-card-front bg-white lsm:group-hover:bg-[#4C40F7] lsm:group-hover:text-white inner-shadow shadow-lg transition-colors duration-600 ease-in-out w-[100%] h-[100%] grid grid-rows-subgrid gap-2 rounded-xl"
             style={{
               backgroundImage: `url(${imageFront})`,
             }}
@@ -100,7 +101,7 @@ const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title,
 
           {/* Back Side */}
           <div
-            className="flip-card-back w-[100%] h-[100%] flex flex-col bg-cover bg-right border-[1px] text-white/90 rounded-lg p-4 z-10 hover"
+            className={`flip-card-back w-[100%] h-[100%] flex flex-col bg-cover bg-right border-[1px] text-white/90 rounded-lg p-2 z-10 hover`}
             style={{
               backgroundImage: `url(${imageBack})`,
             }}
@@ -109,6 +110,7 @@ const Flipcard: React.FC<FlipcardProps> = ({ icon, imageFront, imageBack, title,
             <div className="flex flex-col h-full px-4 text-center font-semibold justify-center items-center z-20">
               <p className="px-2 py-2">{description}</p>
             </div> */}
+           
           </div>
           
         </motion.div>

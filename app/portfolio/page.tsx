@@ -18,11 +18,11 @@ import { portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
 
 export default function PhotoPortfolio() {
-  const categories = ["Wszystkie", "Murale", "Wnętrza", "Samochody", "Eko"];
+  const categories = ["Wszystkie", "Murale", "Wnętrza", "Samochody"];
   const [index, setIndex] = useState(-1);
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen bg-background py-8 mt-12">
       <header className="container mx-auto py-12 px-4 md:py-20">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
@@ -33,17 +33,17 @@ export default function PhotoPortfolio() {
             malarskie, aby ożywić przestrzeń i wyróżnić Twoją markę. Od tradycyjnych pędzli po nowoczesne techniki
             sprayu i aerografu, nasze dzieła sztuki są wyrazem nieograniczonej kreatywności.
           </p>
-          <Button size="lg" className="group">
+          {/* <Button size="lg" className="group">
             Zobacz nasze usługi
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+          </Button> */}
         </div>
       </header>
 
       <main className="container mx-auto px-4 pb-20">
         <Tabs defaultValue="Wszystkie" className="mb-12">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Moje prace</h2>
+          <div className="flex flex-col py-2 xsm:flex-row items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold py-2">Moje prace</h2>
             <TabsList>
               {categories.map((category) => (
                 <TabsTrigger key={category} value={category}>
@@ -75,26 +75,26 @@ export default function PhotoPortfolio() {
           ))}
         </Tabs>
 
-        <section className="bg-muted rounded-xl p-8 md:p-12">
+        <section className="bg-muted rounded-xl p-8 md:p-12 overflow-hidden ">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4">Zacznijmy współpracować</h2>
-              <p className="text-muted-foreground mb-6">
+            <div className="container flex flex-col px-4">
+              <h2 className="text-3xl font-bold pb-4">Chcesz nawiązać kontakt ?</h2>
+              <p className="text-muted-foreground pb-6">
                 Niezależnie od tego, czy potrzebujesz fotografii produktowej dla swojego sklepu internetowego,
                 profesjonalnych portretów dla swojego zespołu czy relacja z wydarzenia, jesteśmy tutaj, aby ożywić Twoją
                 wizję.
               </p>
-              <Button asChild>
+              <Button className="w-auto">
                 <Link href="/contact">Kontakt</Link>
               </Button>
             </div>
-            <div className="relative">
+            <div className="relative w-72 h-64 max-h-[60%]">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/images/wall-painting.jpg"
                 alt="Photographer at work"
-                width={800}
-                height={600}
+                fill
                 className="rounded-lg"
+                objectFit="cover"
               />
             </div>
           </div>

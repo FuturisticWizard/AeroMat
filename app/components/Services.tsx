@@ -44,16 +44,24 @@ const cards = [
         color: 'purple-light'
     },
     {
-        title: 'Projekty Niestandardowe',
-        desc: 'Masz nietypowy pomysł? Zrealizujemy go! Specjalizujemy się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
-        icon: '/icons/impossible-shapes.png',
-        imageFront: '/images/',
-        imageBack: '/images/',
-        color: 'green-medium'
+            title: 'Kinematografia',
+            desc: 'Filmy i zdjęcia, zarówno z ziemi jak i powietrza. Tworzę kinematografię na najwyższym poziomie! ',
+            icon: '/icons/icons8-camera-100.png',
+            imageFront: '/images/',
+            imageBack: '/images/',
+            color: 'green-medium',
+            video: 'https://www.youtube.com/watch?v=eZf9TLA2Ur8'
     },
 
 ]
-
+// {
+//     title: 'Projekty Niestandardowe',
+//     desc: 'Masz nietypowy pomysł? Zrealizujemy go! Specjalizujemy się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
+//     icon: '/icons/impossible-shapes.png',
+//     imageFront: '/images/',
+//     imageBack: '/images/',
+//     color: 'green-medium'
+// },
 
 const Services = () => {
   return (
@@ -68,7 +76,7 @@ const Services = () => {
                 {/* Paragraph */}
                 <div className='flex lsm:w-1/2'>  
                     <p className='font text-gray-600 text-sm xsm:text-base md:text-md lg:text-md '>
-                    Od tworzenia unikalnych murali po profesjonalne grafiki ścienne, każde zlecenie jest dla mnie okazją do stworzenia czegoś wyjątkowego. Dzięki moim usługom możesz nie tylko poprawić wizerunek swojej firmy, ale także zwiększyć zaufanie klientów i przyciągnąć nowych. Razem możemy stworzyć strategię wizualną, która przyniesie Twojemu biznesowi sukces i rozpoznawalność.
+                    Od tworzenia unikalnych murali i profesjonalnych grafik ściennych po filmy i kinematografię na najwyższym poziomie, każde zlecenie jest dla mnie okazją do stworzenia czegoś wyjątkowego. Dzięki moim usługom możesz nie tylko poprawić wizerunek swojej firmy, ale także zwiększyć zaufanie klientów i przyciągnąć nowych. 
                     </p>
                 </div>
             </div>
@@ -85,7 +93,10 @@ const Services = () => {
                     className="flex items-center justify-center w-full h-full"
                 >
                 <Flipcard  title={card.title} icon={card.icon} description={card.desc} color={card.color} imageFront={card.imageFront} imageBack={card.imageBack} classname='w-[352px] h-[458px] '/>
+
+                
                 </div>
+
             ))
         }
         </div>

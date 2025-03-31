@@ -36,6 +36,7 @@ const MapComponent = () => {
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8-QLpd97bo" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             `,
+
           },
       {
         longitude: 22.5321568429688,
@@ -47,6 +48,7 @@ const MapComponent = () => {
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/hNWmk-VJZ6c" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         `,
+
       },
       {
         longitude: 22.549362477912645,
@@ -58,6 +60,7 @@ const MapComponent = () => {
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/FpFBhlD7cOU" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         `,
+
       },
     ];
 
@@ -73,7 +76,9 @@ const MapComponent = () => {
       new maplibregl.Marker()
         .setLngLat([markerData.longitude, markerData.latitude])
         .setPopup(popup) // sets a popup on this marker
-        .addTo(map);
+        .addTo(map)
+        .getElement().className += ' cursor-pointer';
+        ;
 
       // Explicitly handle close button click (if necessary)
         popup.on('open', () => {
@@ -92,7 +97,9 @@ const MapComponent = () => {
         const element = document.querySelector(
           `.maplibregl-marker[data-longitude="${markerData.longitude}"][data-latitude="${markerData.latitude}"]`,
         );
+
         if (element) {
+          
           element.remove();
         }
       });
@@ -101,6 +108,7 @@ const MapComponent = () => {
         mapRef.current.remove();
         mapRef.current = null; // Reset the ref
       }
+      
     };
   }, []);
 

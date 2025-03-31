@@ -33,7 +33,7 @@ const HowItWorks = () => {
 
         <Process />
         <div className=' relative max-w-full max-h-[320px] md:max-h-[580px] z-30'>
-            <VideoPlayer url='/movies/reel.mov' />
+            <VideoPlayer url='/movies/reel_compressed.mp4' />
             
         </div>
         
