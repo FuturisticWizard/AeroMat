@@ -466,9 +466,26 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
     const [played, setPlayed] = useState(0);
     const [duration, setDuration] = useState(0);
     const [controlsVisible, setControlsVisible] = useState(true);
-    const playerRef = useRef<ReactPlayerProps | null>(null);
+
     const { elementRef, isFullscreen, toggleFullscreen } = useFullscreen();
     const hideControlsTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const playerRef = useRef(null);
+
+    const handleProgressChange = (value: number) => {
+        if (playerRef.current) {
+            // Use seekTo with the fractional value
+            playerRef.current.seekTo(value);
+        }
+        setPlayed(value);
+    };
+
+    const handleProgress = (state: { played: number }) => {
+        setPlayed(state.played);
+    };
+
+    const handleDuration = (duration: number) => {
+        setDuration(duration);
+    };
 
     const showControls = () => {
         setControlsVisible(true);
@@ -508,8 +525,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
             muted={muted}
             volume={volume}
             controls={false}
-            onProgress={({ played }) => setPlayed(played)}
-            onDuration={setDuration}
+            onProgress={handleProgress}
+            onDuration={handleDuration}
             width="100%"
             height="100%"
             config={{

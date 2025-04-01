@@ -44,14 +44,22 @@ const cards = [
         color: 'purple-light'
     },
     {
-            title: 'Kinematografia',
-            desc: 'Filmy i zdjęcia, zarówno z ziemi jak i powietrza. Tworzę kinematografię na najwyższym poziomie! ',
-            icon: '/icons/icons8-camera-100.png',
+            title: 'Projekty Niestandardowe',
+            desc: 'Masz nietypowy pomysł? Zrealizujemy go! Specjalizujemy się w unikalnych projektach, które spełniają indywidualne potrzeby i przekraczają oczekiwania.',
+            icon: '/icons/impossible-shapes.png',
             imageFront: '/images/',
             imageBack: '/images/',
-            color: 'green-medium',
-            video: 'https://www.youtube.com/watch?v=eZf9TLA2Ur8'
-    },
+            color: 'green-medium'
+        },
+    // {
+    //         title: 'Kinematografia',
+    //         desc: 'Filmy i zdjęcia, zarówno z ziemi jak i powietrza. Tworzę kinematografię na najwyższym poziomie! ',
+    //         icon: '/icons/icons8-camera-100.png',
+    //         imageFront: '/images/',
+    //         imageBack: '/images/',
+    //         color: 'green-medium',
+    //         video: 'https://www.youtube.com/watch?v=eZf9TLA2Ur8'
+    // },
 
 ]
 // {

@@ -48,7 +48,6 @@ const Footer = () => {
                  <div className='relative w-16 h-16'>
                   <Image src={social.icon} alt={social.title} fill />
                  </div> 
-                 
                 </Link>
               ))
             }

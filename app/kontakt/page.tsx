@@ -68,6 +68,7 @@ export default function ContactForm() {
     send(values);
     console.log(values)
   }
+  
   return (
     <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-full px-4 md:px-6 lg:px-8 py-24 md:py-20 lg:py-28 overflow-y-auto">
     <div className="w-full max-w-md mb-6 md:mb-0 md:mr-6">

@@ -48,7 +48,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
         "z-50"
       )}
     >
-      <div className="max-w-7xl mx-auto  md:px-4 lmd:px-2  z-50 ">
+      <div className="max-w-7xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-50 ">
         <div className="flex items-center justify-between h-20 ">
           {/* Logo */}
           <div className="flex-shrink-0  z-50">
@@ -74,7 +74,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden px-2">
+          <div className="md:hidden ">
             <Button
               className=""
               variant="ghost"

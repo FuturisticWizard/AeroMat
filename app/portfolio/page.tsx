@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RowsPhotoAlbum } from "react-photo-album";
 import { portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
+import { Compare } from "@/components/ui/compare";
 
 export default function PhotoPortfolio() {
   const categories = ["Wszystkie", "Murale", "Wnętrza", "Samochody"];
@@ -75,20 +76,18 @@ export default function PhotoPortfolio() {
           ))}
         </Tabs>
 
-        <section className="bg-muted rounded-xl p-8 md:p-12 overflow-hidden ">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+        <section className="bg-[#FDE6C6] rounded-xl p-8 md:p-12 overflow-hidden ">
+          <div className="grid grid-cols-1 gap-8 items-center">
             <div className="container flex flex-col px-4">
               <h2 className="text-3xl font-bold pb-4">Chcesz nawiązać kontakt ?</h2>
               <p className="text-muted-foreground pb-6">
-                Niezależnie od tego, czy potrzebujesz fotografii produktowej dla swojego sklepu internetowego,
-                profesjonalnych portretów dla swojego zespołu czy relacja z wydarzenia, jesteśmy tutaj, aby ożywić Twoją
-                wizję.
+              Niezależnie od tego, czy potrzebujesz muralu dla swojego biura, profesjonalnego malowania fasady czy unikalnej dekoracji wnętrz, jesteśmy tutaj, aby ożywić Twoją przestrzeń.
               </p>
-              <Button className="w-auto">
-                <Link href="/contact">Kontakt</Link>
+              <Button className="inline-block">
+                <Link href="/kontakt">Kontakt</Link>
               </Button>
             </div>
-            <div className="relative w-72 h-64 max-h-[60%]">
+            {/* <div className="relative flex  mx-auto  aspect-video  w-[280px] h-[220px] sm:w-[540px] sm:h-[440px]   md:w-[440px] md:h-[340px] justify-center items-center ">
               <Image
                 src="/images/wall-painting.jpg"
                 alt="Photographer at work"
@@ -96,7 +95,15 @@ export default function PhotoPortfolio() {
                 className="rounded-lg"
                 objectFit="cover"
               />
-            </div>
+            </div> */}
+                <Compare
+                    firstImage="/images/komeko-old.jpg"
+                    secondImage="/images/komeko-new.jpg"
+                    firstImageClassName="object-cover object-left-top"
+                    secondImageClassname="object-cover object-left-top"
+                    className="h-[150px] w-[300px] xsm:h-[250px] xsm:w-[500px] md:h-[400px] md:w-[900px] lg:h-[500px] lg:w-[1280px] mx-auto "
+                    slideMode="hover"
+                  />
           </div>
         </section>
       </main>
