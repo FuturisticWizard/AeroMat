@@ -507,7 +507,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
             playing={playing}
             muted={muted}
             volume={volume}
-            controls={false}
+            controls={true}
             onProgress={({ played }) => setPlayed(played)}
             onDuration={setDuration}
             width="100%"
@@ -516,79 +516,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
                 file: { attributes: { playsInline: true, webkitplaysinline: 'true' } },
             }}
         />
-
-<div className={`controls ${controlsVisible ? 'visible' : 'hidden'}`}>
-    {/* Play/Pause Button */}
-    <Button onClick={() => setPlaying(!playing)}>
-        {playing ? <PauseWhiteIcon /> : <PlayWhiteIcon />}
-    </Button>
-
-    {/* Current Time / Duration */}
-    <div className="time-display px-2">
-        <FormattedTime numSeconds={played * duration} /> / <FormattedTime numSeconds={duration} />
-    </div>
-
-    {/* Timeline (Progress Bar) */}
-        <Slider
-            direction={Direction.HORIZONTAL}
-            value={played} // Current playback progress (fraction)
-            onChange={(v: number) => playerRef.current?.seekTo(v, 'fraction')} // Seek to the selected position
-            style={{
-                width: '100%',
-                height: '8px',
-                background: 'rgba(255, 255, 255, 0.2)',
-                borderRadius: '4px',
-                position: 'relative',
-                cursor: 'pointer',
-            }}
-        >
-            {/* Progress Indicator */}
-            <div
-                style={{
-                    width: `${played * 100}%`, // Convert fraction to percentage
-                    height: '100%',
-                    background: '#4CAF50', // Green progress bar
-                    borderRadius: '4px',
-                    position: 'absolute',
-                    top: 0,
-                    padding: '0 10px' ,
-                    left: 0,
-                }}
-            />
-        </Slider>
-
-        {/* Mute/Unmute Button */}
-        <Button onClick={() => setMuted(!muted)} className='px-2'>
-            {muted ? <SoundOffWhite /> : <SoundOnWhite />}
-        </Button>
-
-        {/* Volume Control */}
-        <Slider
-            direction={Direction.HORIZONTAL}
-            value={volume}
-            onChange={(v: number) => setVolume(v)}
-            style={{
-                width: '10%',
-                height: '8px',
-                background: 'rgba(255, 255, 255, 0.2)',
-                borderRadius: '4px',
-            }}
-        >
-            <div
-                style={{
-                    width: `${volume * 100}%`,
-                    height: '100%',
-                    background: '#ddd',
-                    borderRadius: '4px',
-                }}
-            />
-        </Slider>
-
-        {/* Fullscreen Button */}
-        <Button onClick={toggleFullscreen} className='px-2'>
-            {isFullscreen ? <MinimizeWhite /> : <MaximizeWhite />}
-        </Button>
-    </div>
     </div>
     );
 };
