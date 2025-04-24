@@ -47,7 +47,7 @@ const VideoHero = ({
   <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10"  />
 
   {/* Heading Section */}
-  <div className="absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-2 max-w-[60svh] mx-auto lg:inset-auto lg:bottom-12 gap-1">
+  <div className="absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-2 max-w-[60svh] mx-auto lg:bottom-12 gap-1">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

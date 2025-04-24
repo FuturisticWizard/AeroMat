@@ -110,7 +110,7 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
                 <p className="text-xl font-bold">{poi.name}</p>
                 <iframe
                   width="560"
-                  height="315"
+                  height="415"
                   src={poi.src}
                   title={poi.name}
                   frameBorder="0"

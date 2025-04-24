@@ -1,9 +1,17 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, MouseEventHandler } from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
-const Card = ({
+interface CardProps {
+  image?: string;
+  title?: string;
+  color?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>; // Type for the onClick handler
+}
+
+
+const Card: React.FC<CardProps>  = ({
   image = '/images/SpaceCity.jpg',
   title = 'Title',
   color = 'purple',

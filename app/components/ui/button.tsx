@@ -47,7 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        href={`tel:+48780428883`}
+        {...(asChild ? { href: 'tel:+48780428883' } : {})}
         {...props}
       />
     )

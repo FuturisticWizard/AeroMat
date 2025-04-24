@@ -21,7 +21,7 @@ const BentoGrid = () => {
         >
           <img
             src={photo.src}
-            alt={photo.alt}
+            alt={photo.title}
             className="w-full h-full object-cover"
           />
         </div>

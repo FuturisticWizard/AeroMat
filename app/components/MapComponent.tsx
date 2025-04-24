@@ -86,7 +86,7 @@ const MapComponent = () => {
                 <button id="close-popup"    >
                   <img src="/pngs/icons8-close-24.png" alt="aeromatka" className="w-8 h-8" />
                 </button>
-                <p id="marker-title">>Lublin Stare Miasto - Mural przy ul.Wiercieńskiego 5 </p>
+                <p id="marker-title">Lublin Stare Miasto - Mural przy ul.Wiercieńskiego 5 </p>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/FpFBhlD7cOU" title="Stare Miasto - Mural przy ul.Wiercieńskiego 5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         `,
