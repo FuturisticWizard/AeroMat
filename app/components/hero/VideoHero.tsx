@@ -9,7 +9,7 @@ const VideoHero = ({
   videoUrl = "/movies/hero_compressed.mp4",
   title = "Przekształć swoją przestrzeń ",
   subtitle = "w dzieło sztuki",
-  ctaText = "Zamów",
+  ctaText = "Zadzwoń",
 }) => {
   const [muted, setMuted] = useState(true);
   const videoVolumeRef = useRef<HTMLVideoElement>(null);
@@ -44,10 +44,10 @@ const VideoHero = ({
   </video>
 
   {/* Gradient Overlay */}
-  <div className="absolute inset-0 h-full bg-gradient-to-br from-black/50 via-black/70 to-black/80 z-10"  />
+  <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10"  />
 
   {/* Heading Section */}
-  <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 max-w-[60svh] mx-auto lg:inset-auto lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 gap-2">
+  <div className="absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-2 max-w-[60svh] mx-auto lg:inset-auto lg:bottom-12 gap-1">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -57,15 +57,14 @@ const VideoHero = ({
       <div className="absolute left-0 -top-4 border-t-4 border-l-4 border-solid border-white w-16 h-16"/>
       <div className="absolute right-0 -top-4 border-t-4 border-r-4 border-solid border-white w-16 h-16"/>
       {/* Main heading */}
-      <motion.h1
+      {/* <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="anton-regular shadow-inner outline-1 outline-orange-400 text-white/80 xxs:text-2xl xs:text-3xl sm:text-4xl lg:text-4xl xl:text-5xl z-10  text-left px-4"
+        className="anton-regular shadow-inner outline-1 outline-orange-400 text-white xxs:text-2xl xs:text-3xl sm:text-4xl lg:text-4xl xl:text-5xl z-10  text-center px-4"
       >
-        {title} <br/>
-        {subtitle}
-      </motion.h1>
+        AEROMAT
+      </motion.h1> */}
       <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -77,7 +76,7 @@ const VideoHero = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative  text-left font-bold text-white xxs:text-sm xs:text-base  md:text-md lg:text-md  z-20 px-4 "
+          className="relative  text-left font-bold text-white xxs:text-md xs:text-md  md:text-md lg:text-md  z-20 px-4 "
         >
           Tworzę murale które...
         </motion.h2>
@@ -85,7 +84,7 @@ const VideoHero = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative text-left font-bold text-white xxs:text-sm xs:text-base  md:text-md lg:text-md z-20 px-4 "
+          className="relative text-left font-bold text-white xxs:text-md xs:text-md  md:text-md lg:text-md z-20 px-4 "
         >
           <FlipWords words={words} duration={2500} className='px-0 text-white text-[#FE9100]'/>
         </motion.h2>
@@ -102,6 +101,7 @@ const VideoHero = ({
           backfaceVisibility: 'hidden',     // Prevent rendering artifacts
           WebkitFontSmoothing: 'antialiased', // Improve font clarity
           MozOsxFontSmoothing: 'grayscale', // Optimize font rendering in Firefox
+
         }}>
           {ctaText}
         </Button>

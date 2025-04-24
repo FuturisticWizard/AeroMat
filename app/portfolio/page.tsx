@@ -96,14 +96,14 @@ export default function PhotoPortfolio() {
                 objectFit="cover"
               />
             </div> */}
-                <Compare
+                {/* <Compare
                     firstImage="/images/komeko-old.jpg"
                     secondImage="/images/komeko-new.jpg"
                     firstImageClassName="object-cover object-left-top"
                     secondImageClassname="object-cover object-left-top"
                     className="h-[150px] w-[300px] xsm:h-[250px] xsm:w-[500px] md:h-[400px] md:w-[900px] lg:h-[500px] lg:w-[1280px] mx-auto "
                     slideMode="hover"
-                  />
+                  /> */}
           </div>
         </section>
       </main>

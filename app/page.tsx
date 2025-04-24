@@ -1,12 +1,14 @@
 import VideoHero from "./components/hero/VideoHero";
 import TestimonialsCarousel2 from './components/Testimonials2';
-import Portfolio2 from './components/Portfolio2';
+import Portfolio from './components/Portfolio';
 import TrustedBy from "./components/TrustedBy";
 import HowItWorks from "./components/HowItWorks";
 import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
-
+import BentoGrid  from "./components/BentoGrid";
+import {portfolioPhotos} from "@/app/lib/photos"
+import GoogleMap from "./components/GoogleMap/GoogleMap";
 
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
@@ -18,21 +20,24 @@ export default function Home() {
       <main className=" flex-1 items-center sm:items-start  h-screen overflow-hidden">
 
         <VideoHero />
+
+        <Portfolio />
+        <Services />
         <TrustedBy />
         <WhoAmI2 />
-        <Services />
+        
 
         <HowItWorks />
 
-        <Portfolio2 />
+        
         <MuralsMap />
-
-
+        <GoogleMap />
+{/* 
         <section id="testimonials" className=" max-w-6xl mx-auto items-center justify-center px-8 md:px-0 py-20">
             <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>
             <TestimonialsCarousel2 />
             
-        </section>
+        </section> */}
 
       </main>
     </div>

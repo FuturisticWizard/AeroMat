@@ -22,7 +22,7 @@ const Portfolio2 = () => {
   return (
 
     <div id="portfolio" className=' pb-24 w-full bg-black  items-center ' >
-        <div className=' px-8 lg:px-0 max-w-6xl mx-auto'>
+        <div className=' px-8 lg:px-0 max-w-9xl mx-auto'>
             {/* Header */}
             <div className='pb-8  '>
                 <p className=" text-lg text-red-400 text-center pt-12 pb-2 ">Moje Prace</p>

@@ -34,14 +34,14 @@ const HowItWorks = () => {
             <VideoPlayer url='/movies/reel_compressed.mp4' />
         </div>
     </div>
-    <div className='relative w-[1200px] h-[280px] -top-64 right-0'>
+    {/* <div className='relative w-[1200px] h-[280px] -top-64 right-0'>
         <Image
          src='/pngs/black-spill.png'
          alt='paint spill'
          fill
          objectFit='cover'
          />
-    </div>
+    </div> */}
     <div className='absolute h-[200px] bg-black bottom-0  w-full z-10' />
     </div>
   )
