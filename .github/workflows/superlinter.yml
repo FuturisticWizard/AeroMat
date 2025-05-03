@@ -19,10 +19,4 @@ jobs:
         env: 
             DEFAULT_BRANCH: main
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-<<<<<<< HEAD
 
-
-            
-    
-=======
->>>>>>> da72b51 (minor changes)
