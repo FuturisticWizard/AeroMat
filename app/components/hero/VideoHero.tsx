@@ -53,12 +53,12 @@ const VideoHero = ({
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />
 
       {/* Heading Section */}
-      <div className="absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-6 min-w-[60svh]  mx-auto lg:bottom-12 gap-1">
+      <div className=" absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-6 min-w-[60svh]  mx-auto lg:bottom-12 gap-1">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative mb-6 "
+          className="relative mb-6"
         >
           <div className="absolute left-0 -top-4 border-t-4 border-l-4 border-solid border-white w-16 h-16" />
           <div className="absolute right-0 -top-4 border-t-4 border-r-4 border-solid border-white w-16 h-16" />
@@ -67,7 +67,7 @@ const VideoHero = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="min-h-[75px]"
+            className="h-[75px] w-[250px] sm:h-[75px] sm:w-[400px] mx-auto "
           >
             {/* Subheading */}
             <motion.h2
