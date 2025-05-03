@@ -4,6 +4,7 @@ const config = {
     "postcss-import": {},
     "tailwindcss/nesting": {},
     tailwindcss: {},
+    "@tailwindcss/postcss": {},
     autoprefixer: {},
   },
 };
