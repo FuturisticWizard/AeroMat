@@ -1,6 +1,5 @@
-import React from 'react'
-import TapeRightSection from './TapeRight';
-
+import React from "react";
+import TapeRightSection from "./TapeRight";
 
 const Collaborations = () => {
   return (
@@ -9,9 +8,7 @@ const Collaborations = () => {
           <h3 className='rounded-full text-base lg:text-xl xxs:px-6 shadow-lg py-2 sm:py-3 truncate bg-white font-semibold z-10'>Zaufało Nam 100+ Firm</h3>
       </div> */}
       <TapeRightSection />
-      
     </div>
-
   );
 };
 

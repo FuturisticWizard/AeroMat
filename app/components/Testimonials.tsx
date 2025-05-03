@@ -1,13 +1,19 @@
-"use client"
-import { motion } from "framer-motion"
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Badge } from "@/components/ui/badge"
-import { Star } from "lucide-react"
-import type { UseEmblaCarouselType } from "embla-carousel-react"
+"use client";
+import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Badge } from "@/components/ui/badge";
+import { Star } from "lucide-react";
+import type { UseEmblaCarouselType } from "embla-carousel-react";
 // Testimonial data with work images
 const testimonials = [
   {
@@ -69,47 +75,51 @@ const testimonials = [
     role: "UX Designer",
     company: "Magiczny Świat",
     image: "/Collaborations/logo6.png",
-    content: "Doskonały mural, dzieciaki co chwila wbiegają w ścianę w miejscu gdzie jest wjazd do tunelu ...  ",
+    content:
+      "Doskonały mural, dzieciaki co chwila wbiegają w ścianę w miejscu gdzie jest wjazd do tunelu ...  ",
     rating: 4,
     workImage: "/images/magiczny-swiat.jpg",
     workTitle: "Mural dla Magiczny Świat",
   },
-]
+];
 
 // Star Rating component
 const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center gap-0.5 mt-2">
       {[...Array(5)].map((_, i) => (
-        <Star key={i} className={`w-4 h-4 ${i < rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`} />
+        <Star
+          key={i}
+          className={`w-4 h-4 ${i < rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
+        />
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default function TestimonialsCarousel3() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [api, setApi] = useState<UseEmblaCarouselType[1]>()
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<UseEmblaCarouselType[1]>();
   // const [direction, setDirection] = useState(0) // 1 for forward, -1 for backward
-  const buttonHeight = 64 // Height of button (56px) + gap (8px)
-  const buttonContainerRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const totalTestimonials = testimonials.length
+  const buttonHeight = 64; // Height of button (56px) + gap (8px)
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const totalTestimonials = testimonials.length;
 
   // Create a circular wheel by adding extra items for seamless looping
   const createCircularWheel = () => {
     // We need to show at least 6 buttons at a time, so add 6 before and 6 after
     // This ensures smooth scrolling in either direction
-    const visibleCount = 6
+    const visibleCount = 6;
 
-    const wheel = []
+    const wheel = [];
 
     // Add items from the end to the beginning for seamless backward scrolling
     for (let i = totalTestimonials - visibleCount; i < totalTestimonials; i++) {
       wheel.push({
         ...testimonials[i],
         key: `before-${i}`,
-      })
+      });
     }
 
     // Add all original items
@@ -118,27 +128,27 @@ export default function TestimonialsCarousel3() {
         ...item,
         key: `original-${i}`,
       })),
-    )
+    );
 
     // Add items from the beginning to the end for seamless forward scrolling
     for (let i = 0; i < visibleCount; i++) {
       wheel.push({
         ...testimonials[i],
         key: `after-${i}`,
-      })
+      });
     }
-    console.log("wheel",wheel)
-    return wheel
-  }
+    console.log("wheel", wheel);
+    return wheel;
+  };
 
-  const circularWheel = createCircularWheel()
+  const circularWheel = createCircularWheel();
 
   useEffect(() => {
     if (!api) return;
-  
+
     const handleSelect = () => {
       const newIndex = api.selectedScrollSnap();
-  
+
       // If at the last item, go to the first
       if (newIndex === totalTestimonials) {
         api.scrollTo(0, false); // Transition to the first item
@@ -152,9 +162,9 @@ export default function TestimonialsCarousel3() {
         setActiveIndex(newIndex);
       }
     };
-  
+
     api.on("select", handleSelect);
-  
+
     return () => {
       api?.off("select", handleSelect);
     };
@@ -162,17 +172,21 @@ export default function TestimonialsCarousel3() {
   // Calculate the position for the current active index to center it
   const calculatePosition = () => {
     if (!containerRef.current) return 0;
-  
+
     const containerHeight = containerRef.current.clientHeight;
     const middlePosition = containerHeight / 2;
     const activeButtonOffset = activeIndex * buttonHeight;
-  
+
     return middlePosition - buttonHeight / 2 - activeButtonOffset;
   };
 
   return (
     <div className="max-w-7xl mx-auto py-6 bg-background flex items-center overflow-hidden">
-      <Carousel setApi={setApi} opts={{ loop: true }} className="w-full flex flex-row">
+      <Carousel
+        setApi={setApi}
+        opts={{ loop: true }}
+        className="w-full flex flex-row"
+      >
         <div className="flex flex-col gap-2 items-center md:justify-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -184,7 +198,10 @@ export default function TestimonialsCarousel3() {
           </motion.div>
 
           {/* Navigation buttons container - circular wheel style */}
-          <div ref={containerRef} className="relative h-[336px] w-full overflow-visible px-4 flex  items-center">
+          <div
+            ref={containerRef}
+            className="relative h-[336px] w-full overflow-visible px-4 flex  items-center"
+          >
             {/* Mask for top fade effect */}
             <div className="absolute top-0 left-0 right-0 h-[80px] bg-gradient-to-b from-background to-transparent z-10 pointer-events-none"></div>
 
@@ -212,8 +229,10 @@ export default function TestimonialsCarousel3() {
                   const realIndex = wheelIndex % totalTestimonials;
 
                   // Normalize the index to be within the bounds of the original array
-                  const normalizedIndex = ((realIndex % totalTestimonials) + totalTestimonials) % totalTestimonials
-   
+                  const normalizedIndex =
+                    ((realIndex % totalTestimonials) + totalTestimonials) %
+                    totalTestimonials;
+
                   return (
                     <motion.button
                       key={item.key}
@@ -225,13 +244,18 @@ export default function TestimonialsCarousel3() {
                       onClick={() => api?.scrollTo(normalizedIndex)}
                       aria-label={`Go to testimonial ${normalizedIndex + 1}`}
                     >
-                      <div 
+                      <div
                         className={`w-full h-full rounded-full overflow-hidden transition-all duration-300 ${
-                          activeIndex === wheelIndex ? " scale-105 shadow-md " : ""
+                          activeIndex === wheelIndex
+                            ? " scale-105 shadow-md "
+                            : ""
                         }`}
                       >
                         <Image
-                          src={testimonials[normalizedIndex].image || "/placeholder.svg"}
+                          src={
+                            testimonials[normalizedIndex].image ||
+                            "/placeholder.svg"
+                          }
                           alt=""
                           width={380}
                           height={380}
@@ -243,7 +267,7 @@ export default function TestimonialsCarousel3() {
                         />
                       </div>
                     </motion.button>
-                  )
+                  );
                 })}
               </motion.div>
             </div>
@@ -278,20 +302,31 @@ export default function TestimonialsCarousel3() {
                 {/* Content overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
                   <Badge className="mb-4 self-start">{testimonial.type}</Badge>
-                  <h3 className="text-white font-bold text-sm sm:text-2xl md:text-3xl mb-4">{testimonial.workTitle}</h3>
+                  <h3 className="text-white font-bold text-sm sm:text-2xl md:text-3xl mb-4">
+                    {testimonial.workTitle}
+                  </h3>
 
                   {/* Testimonial card */}
                   <Card className="bg-transparent backdrop-blur-sm border-0 shadow-lg w-full md:max-w-[600px]">
                     <CardContent className="p-2 sm:p-6">
                       <div className="flex items-start gap-2 sm:gap-4 mb-2 sm:mb-4">
                         <Avatar className="h-12 w-12 border-2 border-primary/10 text-sm">
-                          <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                          <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                          <AvatarImage
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                          />
+                          <AvatarFallback>
+                            {testimonial.name.charAt(0)}
+                          </AvatarFallback>
                         </Avatar>
                         <div>
-                          <h4 className="text-gray-200 font-semibold text-sm sm:text-lg">{testimonial.name}</h4>
+                          <h4 className="text-gray-200 font-semibold text-sm sm:text-lg">
+                            {testimonial.name}
+                          </h4>
                           <div className="text-sm text-muted-foreground flex flex-wrap items-center gap-1 sm:gap-2">
-                            <span className="text-gray-400">{testimonial.role}</span>
+                            <span className="text-gray-400">
+                              {testimonial.role}
+                            </span>
                             <span className="text-xs">•</span>
                             <Badge variant="secondary" className="font-normal">
                               {testimonial.company}
@@ -312,6 +347,5 @@ export default function TestimonialsCarousel3() {
         </CarouselContent>
       </Carousel>
     </div>
-  )
+  );
 }
-

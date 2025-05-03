@@ -1,1 +1,1 @@
-declare module 'react-player-controls';
+declare module "react-player-controls";

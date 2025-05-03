@@ -1,121 +1,119 @@
-
-  export const portfolioPhotos = [
-    {
-      index: 1,
-      src: '/images/komeko-mural.jpg',
-      title: 'komeko',
-      category: 'Murale',
-      width: 9315,
-      height: 2196,
-      smcolspan: 10,
-      smrowspan: 1,
-      colspan: 10,
-      rowspan: 1, // Adjusted for aspect ratio
-      gridArea: 'photo1'
-    },
-    {
-      index: 2,
-      src: '/images/szyld5.jpg',
-      title: 'szyld5',
-      category: 'Wnętrza',
-      width: 3868,
-      height: 2928,
-      smcolspan: 4,
-      smrowspan: 1,
-      colspan: 5,
-      rowspan: 1, // Adjusted for aspect ratio
-      gridArea: 'photo2'
-    },
-    {
-      index: 3,
-      src: '/Portfolio/mural-akwarium.jpg',
-      title: 'akwarium',
-      category: 'Wnętrza',
-      width: 5776,
-      height: 4314,
-      smcolspan: 6,
-      smrowspan: 1,
-      colspan: 5,
-      rowspan: 1, // Adjusted for aspect ratio
-      gridArea: 'photo3'
-    },
-    {
-      index: 4,
-      src: '/images/lpec-dom1.jpg',
-      title: 'lpec',
-      category: 'Murale',
-      width: 4337,
-      height: 5776,
-      smcolspan: 4,
-      smrowspan: 3,
-      colspan: 5,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo4'
-    },
-    {
-      index: 5,
-      src: '/images/1b.jpg',
-      title: 'soldiers',
-      category: 'Murale',
-      width: 5776,
-      height:  4337,
-      smcolspan: 4,
-      smrowspan: 1,
-      colspan: 5,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo5'
-    },
-    {
-      index: 6,
-      src: '/Portfolio/mural-spongebob.jpg',
-      title: 'stare miasto 2',
-      category: 'Murale',
-      width: 4337,
-      height: 5776,
-      smcolspan: 3,
-      smrowspan: 2,
-      colspan: 2,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo6'
-    },
-    {
-      index: 7,
-      src: '/Portfolio/mural-stare-miasto.jpg',
-      title: 'stare miasto 2',
-      category: 'Murale',
-      width: 5776,
-      height: 4337,
-      smcolspan: 7,
-      smrowspan: 2,
-      colspan: 5,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo7'
-    },
-    {
-      index: 8,
-      src: '/images/dogs.jpg',
-      title: 'dogs',
-      category: 'Murale',
-      width: 5776,
-      height: 4337,
-      smcolspan: 10,
-      smrowspan: 1,
-      colspan: 5,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo8'
-    },
-    {
-      index: 9,
-      src: '/Portfolio/mural-stare-miasto-lublin.jpg',
-      title: 'staremiasto',
-      category: 'Murale',
-      width: 4336,
-      height: 5776,
-      smcolspan: 6,
-      smrowspan: 1,
-      colspan: 3,
-      rowspan: 2, // Adjusted for aspect ratio
-      gridArea: 'photo9'
-    },
-  ];
-
+export const portfolioPhotos = [
+  {
+    index: 1,
+    src: "/images/komeko-mural.jpg",
+    title: "komeko",
+    category: "Murale",
+    width: 9315,
+    height: 2196,
+    smcolspan: 10,
+    smrowspan: 1,
+    colspan: 10,
+    rowspan: 1, // Adjusted for aspect ratio
+    gridArea: "photo1",
+  },
+  {
+    index: 2,
+    src: "/images/szyld5.jpg",
+    title: "szyld5",
+    category: "Wnętrza",
+    width: 3868,
+    height: 2928,
+    smcolspan: 4,
+    smrowspan: 1,
+    colspan: 5,
+    rowspan: 1, // Adjusted for aspect ratio
+    gridArea: "photo2",
+  },
+  {
+    index: 3,
+    src: "/Portfolio/mural-akwarium.jpg",
+    title: "akwarium",
+    category: "Wnętrza",
+    width: 5776,
+    height: 4314,
+    smcolspan: 6,
+    smrowspan: 1,
+    colspan: 5,
+    rowspan: 1, // Adjusted for aspect ratio
+    gridArea: "photo3",
+  },
+  {
+    index: 4,
+    src: "/images/lpec-dom1.jpg",
+    title: "lpec",
+    category: "Murale",
+    width: 4337,
+    height: 5776,
+    smcolspan: 4,
+    smrowspan: 3,
+    colspan: 5,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo4",
+  },
+  {
+    index: 5,
+    src: "/images/1b.jpg",
+    title: "soldiers",
+    category: "Murale",
+    width: 5776,
+    height: 4337,
+    smcolspan: 4,
+    smrowspan: 1,
+    colspan: 5,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo5",
+  },
+  {
+    index: 6,
+    src: "/Portfolio/mural-spongebob.jpg",
+    title: "stare miasto 2",
+    category: "Murale",
+    width: 4337,
+    height: 5776,
+    smcolspan: 3,
+    smrowspan: 2,
+    colspan: 2,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo6",
+  },
+  {
+    index: 7,
+    src: "/Portfolio/mural-stare-miasto.jpg",
+    title: "stare miasto 2",
+    category: "Murale",
+    width: 5776,
+    height: 4337,
+    smcolspan: 7,
+    smrowspan: 2,
+    colspan: 5,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo7",
+  },
+  {
+    index: 8,
+    src: "/images/dogs.jpg",
+    title: "dogs",
+    category: "Murale",
+    width: 5776,
+    height: 4337,
+    smcolspan: 10,
+    smrowspan: 1,
+    colspan: 5,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo8",
+  },
+  {
+    index: 9,
+    src: "/Portfolio/mural-stare-miasto-lublin.jpg",
+    title: "staremiasto",
+    category: "Murale",
+    width: 4336,
+    height: 5776,
+    smcolspan: 6,
+    smrowspan: 1,
+    colspan: 3,
+    rowspan: 2, // Adjusted for aspect ratio
+    gridArea: "photo9",
+  },
+];

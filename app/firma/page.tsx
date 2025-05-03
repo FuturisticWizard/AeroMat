@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Firma = () => {
-  return (
-    <div>
-      Firma
-    </div>
-  )
-}
+  return <div>Firma</div>;
+};
 
-export default Firma
+export default Firma;

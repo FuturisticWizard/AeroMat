@@ -9,11 +9,10 @@ import Footer from "./components/Footer";
 //   subsets: ["latin"],
 // });
 
-
 const poppins = Poppins({
   variable: "--font-poppins-sans",
-  weight: ['400', '500', '600', '700'], // Add the weights you need
-  subsets: ['latin'], // Specify the subsets
+  weight: ["400", "500", "600", "700"], // Add the weights you need
+  subsets: ["latin"], // Specify the subsets
 });
 
 // const interSans = Inter({
@@ -25,7 +24,6 @@ const poppins = Poppins({
 //   variable: "--font-outfit-sans",
 //   subsets: ["latin"],
 // });
-
 
 // const geistMono = Geist_Mono({
 //   variable: "--font-geist-mono",
@@ -44,11 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} overflow-y-auto antialiased `}
-      >
+      <body className={`${poppins.variable} overflow-y-auto antialiased `}>
         <Navbar />
-          {children}
+        {children}
         <Footer />
       </body>
     </html>

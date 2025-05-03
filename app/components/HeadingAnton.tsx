@@ -55,11 +55,15 @@
 // }
 
 // export default HeadingAnton;
-"use client"
-import { motion } from "framer-motion"
+"use client";
+import { motion } from "framer-motion";
 import { Button } from "@/app/components/ui/button";
 
-const HeadingAnton = ({ firstPart='firstpart', secondPart='secondpart', ctaText = "Skontaktuj się" }) => {
+const HeadingAnton = ({
+  firstPart = "firstpart",
+  secondPart = "secondpart",
+  ctaText = "Skontaktuj się",
+}) => {
   return (
     <div className="flex flex-col w-full">
       <motion.div
@@ -97,14 +101,17 @@ const HeadingAnton = ({ firstPart='firstpart', secondPart='secondpart', ctaText 
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-8 text-right"
         >
-          <Button variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 text-white border-white/20">
+          <Button
+            variant="outline"
+            size="lg"
+            className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+          >
             {ctaText}
           </Button>
         </motion.div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default HeadingAnton
-
+export default HeadingAnton;

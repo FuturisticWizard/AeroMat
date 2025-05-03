@@ -8,7 +8,6 @@
 //     interval?: number
 //   }
 
-
 // const CarouselPhotoHero: React.FC<CarouselPhotoHeroProps>  = ({ images, interval = 5000 }) => {
 //     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -16,25 +15,23 @@
 //         const timer = setInterval(() => {
 //           setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
 //         }, interval)
-    
+
 //         return () => clearInterval(timer)
 //       }, [images.length, interval])
-    
 
 //     const goToPrevious = () => {
 //         setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length )
 //     }
-    
+
 //     const goToNext = () => {
 //         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length )
 //     }
-
 
 //   return (
 //     <div className=" flex w-full max-h-[1020px] min-w-screen xl:min-w-7xl">
 //     <div className="overflow-hidden rounded-lg aspect-video">
 //       {images.map((image, index) => (
-        
+
 //             <div className='' key={index}>
 //                 <div className=' w-full h-screen bg-black/50 z-30'/>
 //                 <Image
@@ -50,10 +47,9 @@
 //                     index === currentIndex ? "opacity-100" : "opacity-0"
 //                 }`}>{image.title}</h1>
 //                 </div>
-      
 
 //       ))}
-     
+
 //     </div>
 //     <button
 //       onClick={goToPrevious}

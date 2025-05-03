@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css"; // Import styles
@@ -26,10 +26,10 @@ const MapComponent = () => {
 
     // Define marker data with popup content
     const markersData = [
-        {
-            longitude: 22.63971477127678,
-            latitude: 51.240019578067155,
-            popupContent: `
+      {
+        longitude: 22.63971477127678,
+        latitude: 51.240019578067155,
+        popupContent: `
             <div style="max-width: 600px; font-size: 1.2rem;">
                 <button id="close-popup" >
                   <img src="/pngs/icons8-close-24.png" alt="aeromatka" className="w-8 h-8" />
@@ -38,10 +38,10 @@ const MapComponent = () => {
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/Y8-QLpd97bo&t=10s" title="mural Kom-Eko" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             `,
-          },
+      },
       {
         longitude: 22.532630754596873,
-        latitude: 51.256905603294754, 
+        latitude: 51.256905603294754,
         popupContent: `
             <div style=" max-width: 600px; font-size: 1.2rem;">
                 <button id="close-popup"   >
@@ -53,7 +53,7 @@ const MapComponent = () => {
         `,
       },
       {
-        longitude:  22.532542268736847,
+        longitude: 22.532542268736847,
         latitude: 51.25626810489018,
         popupContent: `
             <div style=" max-width: 600px; font-size: 1.2rem;">
@@ -117,8 +117,7 @@ const MapComponent = () => {
     //     el.style.backgroundRepeat = 'no-repeat';
     //     el.style.cursor = 'pointer';
 
-
-    //   const popup = new maplibregl.Popup({ 
+    //   const popup = new maplibregl.Popup({
     //     offset: 25,
     //     closeButton: false,
     //  }).setMaxWidth('600px').setHTML(
@@ -134,7 +133,7 @@ const MapComponent = () => {
     //     popup.addTo(map);
     //     popup.setLngLat([markerData.longitude, markerData.latitude]);
     //   });
-  
+
     //   // Explicitly handle close button click (if necessary)
     //     popup.on('open', () => {
     //         const closeButton = document.getElementById('close-popup');
@@ -154,7 +153,7 @@ const MapComponent = () => {
       el.style.backgroundSize = "contain";
       el.style.backgroundRepeat = "no-repeat";
       el.style.cursor = "pointer";
-    
+
       // Create a popup
       const popup = new maplibregl.Popup({
         offset: [0, 25],
@@ -162,14 +161,13 @@ const MapComponent = () => {
       })
         .setMaxWidth("600px")
         .setHTML(markerData.popupContent);
-    
+
       // Create a marker with the custom element
       const marker = new maplibregl.Marker({ element: el })
         .setLngLat([markerData.longitude, markerData.latitude])
-        .setPopup(popup) 
+        .setPopup(popup)
         .addTo(map);
 
-    
       // Explicitly handle close button click (if necessary)
       popup.on("open", () => {
         const closeButton = document.getElementById("close-popup");
@@ -189,7 +187,6 @@ const MapComponent = () => {
         );
 
         if (element) {
-          
           element.remove();
         }
       });
@@ -198,7 +195,6 @@ const MapComponent = () => {
         mapRef.current.remove();
         mapRef.current = null; // Reset the ref
       }
-      
     };
   }, []);
 

@@ -1,7 +1,7 @@
-'use client'
-import Image from 'next/image';
-import { FC } from 'react';
-import { useEffect, useState } from 'react';
+"use client";
+import Image from "next/image";
+import { FC } from "react";
+import { useEffect, useState } from "react";
 interface ImagesProps {
   data: {
     index: number;
@@ -42,10 +42,10 @@ const Images: FC<ImagesProps> = (props) => {
     };
 
     handleResize(); // Check on initial render
-    window.addEventListener('resize', handleResize);
-    
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -53,10 +53,9 @@ const Images: FC<ImagesProps> = (props) => {
     onClick(index);
   };
 
-  
-  console.log('isXsmScreen', isXsmScreen)
+  console.log("isXsmScreen", isXsmScreen);
   return (
-    <div className='flex flex-col mx-auto h-auto w-full items-center sm:max-w-6xl lg:max-w-full xxs:py-4 px-2'>
+    <div className="flex flex-col mx-auto h-auto w-full items-center sm:max-w-6xl lg:max-w-full xxs:py-4 px-2">
       {/* <div className={`grid xxs:grid-cols-1 grid-rows-${length} xsm:grid-cols-10 xsm:auto-rows-auto md:grid-cols-10 md:auto-rows-[minmax(100px, auto)] gap-1 sm:gap-2 md:gap-4 lg:gap-2 w-full py-2`}>
         {data.map((slide, index) => (
 
@@ -82,20 +81,19 @@ const Images: FC<ImagesProps> = (props) => {
       </div> */}
       <div className={`grid grid-container`}>
         {data.map((slide, index) => (
-
           <div
             onClick={() => handleClickImage(index)}
             key={index}
             className={`relative`}
-            style={{  gridArea: `${slide.gridArea}` }}
+            style={{ gridArea: `${slide.gridArea}` }}
           >
             <Image
-              src={slide.src} 
-              alt={slide.title} 
+              src={slide.src}
+              alt={slide.title}
               width={slide.width}
-              height={slide.height} 
+              height={slide.height}
               className="w-full h-full object-cover"
-              />
+            />
           </div>
         ))}
       </div>

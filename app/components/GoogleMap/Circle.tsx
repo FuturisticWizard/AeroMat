@@ -1,14 +1,14 @@
-'use client'
+"use client";
 import {
   forwardRef,
   useContext,
   useEffect,
   useImperativeHandle,
-  useRef
-} from 'react';
+  useRef,
+} from "react";
 
-import type {Ref} from 'react';
-import {GoogleMapsContext, latLngEquals} from '@vis.gl/react-google-maps';
+import type { Ref } from "react";
+import { GoogleMapsContext, latLngEquals } from "@vis.gl/react-google-maps";
 
 type CircleEventProps = {
   onClick?: (e: google.maps.MapMouseEvent) => void;
@@ -17,8 +17,8 @@ type CircleEventProps = {
   onDragEnd?: (e: google.maps.MapMouseEvent) => void;
   onMouseOver?: (e: google.maps.MapMouseEvent) => void;
   onMouseOut?: (e: google.maps.MapMouseEvent) => void;
-  onRadiusChanged?: (r: ReturnType<google.maps.Circle['getRadius']>) => void;
-  onCenterChanged?: (p: ReturnType<google.maps.Circle['getCenter']>) => void;
+  onRadiusChanged?: (r: ReturnType<google.maps.Circle["getRadius"]>) => void;
+  onCenterChanged?: (p: ReturnType<google.maps.Circle["getCenter"]>) => void;
 };
 
 export type CircleProps = google.maps.CircleOptions & CircleEventProps;
@@ -49,7 +49,7 @@ function useCircle(props: CircleProps) {
     onMouseOver,
     onMouseOut,
     onRadiusChanged,
-    onCenterChanged
+    onCenterChanged,
   });
 
   const circle = useRef(new google.maps.Circle()).current;
@@ -74,7 +74,7 @@ function useCircle(props: CircleProps) {
   useEffect(() => {
     if (!map) {
       if (map === undefined)
-        console.error('<Circle> has to be inside a Map component.');
+        console.error("<Circle> has to be inside a Map component.");
 
       return;
     }
@@ -93,23 +93,23 @@ function useCircle(props: CircleProps) {
     // Add event listeners
     const gme = google.maps.event;
     [
-      ['gmp-click', 'onClick'],
-      ['drag', 'onDrag'],
-      ['dragstart', 'onDragStart'],
-      ['dragend', 'onDragEnd'],
-      ['mouseover', 'onMouseOver'],
-      ['mouseout', 'onMouseOut']
+      ["gmp-click", "onClick"],
+      ["drag", "onDrag"],
+      ["dragstart", "onDragStart"],
+      ["dragend", "onDragEnd"],
+      ["mouseover", "onMouseOver"],
+      ["mouseout", "onMouseOut"],
     ].forEach(([eventName, eventCallback]) => {
       gme.addListener(circle, eventName, (e: google.maps.MapMouseEvent) => {
         const callback = callbacks.current[eventCallback];
         if (callback) callback(e);
       });
     });
-    gme.addListener(circle, 'radius_changed', () => {
+    gme.addListener(circle, "radius_changed", () => {
       const newRadius = circle.getRadius();
       callbacks.current.onRadiusChanged?.(newRadius);
     });
-    gme.addListener(circle, 'center_changed', () => {
+    gme.addListener(circle, "center_changed", () => {
       const newCenter = circle.getCenter();
       callbacks.current.onCenterChanged?.(newCenter);
     });

@@ -1,13 +1,13 @@
-'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import clsx from 'clsx';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import clsx from "clsx";
 
 const Card = ({
-  imageFront = '/images/SpaceCity.jpg',
-  imageBack = '/images/BackImage.jpg',
-  title = 'Title',
-  color = 'purple',
+  imageFront = "/images/SpaceCity.jpg",
+  imageBack = "/images/BackImage.jpg",
+  title = "Title",
+  color = "purple",
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -20,7 +20,11 @@ const Card = ({
   };
 
   return (
-    <div className={clsx('relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden')}>
+    <div
+      className={clsx(
+        "relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden",
+      )}
+    >
       <div className="relative w-full h-full" onClick={handleFlip}>
         <motion.div
           className="relative w-full h-full"
@@ -29,7 +33,7 @@ const Card = ({
           transition={{ duration: 0.6 }}
           onAnimationComplete={() => setIsAnimating(false)}
           style={{
-            transformStyle: 'preserve-3d', // Ensures 3D flipping
+            transformStyle: "preserve-3d", // Ensures 3D flipping
           }}
         >
           {/* Front Side */}
@@ -37,7 +41,7 @@ const Card = ({
             className="absolute w-full h-full backface-hidden flex flex-col bg-cover bg-center border-[1px] text-white p-4"
             style={{
               backgroundImage: `url(${imageFront})`,
-              backfaceVisibility: 'hidden', // Hides the back side when flipped
+              backfaceVisibility: "hidden", // Hides the back side when flipped
             }}
           >
             <div className="absolute inset-0 h-full" />
@@ -55,8 +59,8 @@ const Card = ({
             className="absolute w-full h-full backface-hidden flex flex-col bg-cover bg-center border-[1px] text-white p-4"
             style={{
               backgroundImage: `url(${imageBack})`,
-              transform: 'rotateY(180deg)', // Rotates the back side
-              backfaceVisibility: 'hidden', // Hides the front side when flipped
+              transform: "rotateY(180deg)", // Rotates the back side
+              backfaceVisibility: "hidden", // Hides the front side when flipped
             }}
           >
             <div className="absolute inset-0 h-full" />

@@ -1,9 +1,9 @@
-"use client"
-import { Star } from "lucide-react"
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+"use client";
+import { Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const sliderImages = [
   {
@@ -29,46 +29,46 @@ const sliderImages = [
     alt: "School playground mural",
     title: "Kinematografia",
     desc: "Dzięki swojej unikalności i artystycznego podejścia Moje filmy przyciągają uwagę  i zapewniają skuteczną reklamę oraz gwarantują pozytywny wizerunek marki.",
-
   },
   {
     src: "/images/kinematografia2.jpg",
     alt: "School playground mural",
     title: "",
     desc: "Dzięki swojej unikalności i artystycznego podejścia Moje filmy przyciągają uwagę  i zapewniają skuteczną reklamę oraz gwarantują pozytywny wizerunek marki.",
-
   },
-]
+];
 
 export default function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [autoplay, setAutoplay] = useState(true)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [autoplay, setAutoplay] = useState(true);
 
   // Autoplay functionality
   useEffect(() => {
-    if (!autoplay) return
+    if (!autoplay) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % sliderImages.length)
-    }, 5000)
+      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
+    }, 5000);
 
-    return () => clearInterval(interval)
-  }, [autoplay])
+    return () => clearInterval(interval);
+  }, [autoplay]);
 
   const nextSlide = () => {
-    setAutoplay(false)
-    setCurrentSlide((prev) => (prev + 1) % sliderImages.length)
-  }
+    setAutoplay(false);
+    setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
+  };
 
   const prevSlide = () => {
-    setAutoplay(false)
-    setCurrentSlide((prev) => (prev - 1 + sliderImages.length) % sliderImages.length)
-  }
+    setAutoplay(false);
+    setCurrentSlide(
+      (prev) => (prev - 1 + sliderImages.length) % sliderImages.length,
+    );
+  };
 
   const goToSlide = (index: number) => {
-    setAutoplay(false)
-    setCurrentSlide(index)
-  }
+    setAutoplay(false);
+    setCurrentSlide(index);
+  };
 
   return (
     <section className="w-full bg-background">
@@ -76,18 +76,56 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Column */}
           <div className="order-2 lg:order-1">
-            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_221_10)"> <path d="M0 0H100C155.228 0 200 44.7715 200 100V200H100C44.7715 200 0 155.228 0 100V0Z" fill="url(#paint0_linear_221_10)"/> </g> <defs> <linearGradient id="paint0_linear_221_10" x1="100" y1="0" x2="100" y2="200" gradientUnits="userSpaceOnUse"> <stop stop-color="#A7B5FF"/> <stop offset="1" stop-color="#F3ACFF"/> </linearGradient> <clipPath id="clip0_221_10"> <rect width="200" height="200" fill="white"/> </clipPath> </defs> </svg>
-            
+            <svg
+              width="200"
+              height="200"
+              viewBox="0 0 200 200"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {" "}
+              <g clip-path="url(#clip0_221_10)">
+                {" "}
+                <path
+                  d="M0 0H100C155.228 0 200 44.7715 200 100V200H100C44.7715 200 0 155.228 0 100V0Z"
+                  fill="url(#paint0_linear_221_10)"
+                />{" "}
+              </g>{" "}
+              <defs>
+                {" "}
+                <linearGradient
+                  id="paint0_linear_221_10"
+                  x1="100"
+                  y1="0"
+                  x2="100"
+                  y2="200"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  {" "}
+                  <stop stop-color="#A7B5FF" />{" "}
+                  <stop offset="1" stop-color="#F3ACFF" />{" "}
+                </linearGradient>{" "}
+                <clipPath id="clip0_221_10">
+                  {" "}
+                  <rect width="200" height="200" fill="white" />{" "}
+                </clipPath>{" "}
+              </defs>{" "}
+            </svg>
+
             <h2 className="text-2xl font-semibold md:text-3xl lg:text-4xl text-dark mb-4">
-            <span className="text-5xl anton-regular text-orange-500">AEROMAT </span> to ...
+              <span className="text-5xl anton-regular text-orange-500">
+                AEROMAT{" "}
+              </span>{" "}
+              to ...
             </h2>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 transition-opacity duration-300">
               {sliderImages[currentSlide].title}
             </h1>
 
-
             <p className="text-xl text-muted-foreground mb-8 max-w-xl">
-                Tworzę niestandardowe murale, które opowiadają historię, inspirują odbiorców i przekształcają zwykłe ściany w niezwykłe dzieła sztuki.
+              Tworzę niestandardowe murale, które opowiadają historię, inspirują
+              odbiorców i przekształcają zwykłe ściany w niezwykłe dzieła
+              sztuki.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -103,13 +141,19 @@ export default function HeroSection() {
             <div className="flex items-center gap-4  ">
               <div className="flex -space-x-2">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-10 w-10 rounded-full border-2 border-background overflow-hidden">
+                  <div
+                    key={i}
+                    className="h-10 w-10 rounded-full border-2 border-background overflow-hidden"
+                  >
                     <Star key={i} className={`w-6 h-6 text-yellow-500`} />
                   </div>
                 ))}
               </div>
               <p className="text-sm text-muted-foreground">
-                <span className="font-bold text-foreground">100+ projektów</span> ukończonych na całym świecie
+                <span className="font-bold text-foreground">
+                  100+ projektów
+                </span>{" "}
+                ukończonych na całym świecie
               </p>
             </div>
           </div>
@@ -121,7 +165,9 @@ export default function HeroSection() {
                 <div
                   key={index}
                   className={`absolute inset-0 transition-opacity duration-500 ${
-                    index === currentSlide ? "opacity-100" : "opacity-0 pointer-events-none"
+                    index === currentSlide
+                      ? "opacity-100"
+                      : "opacity-0 pointer-events-none"
                   }`}
                 >
                   <Image
@@ -171,6 +217,5 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

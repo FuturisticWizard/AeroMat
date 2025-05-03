@@ -1,7 +1,7 @@
-'use client';
-import React, { useState, MouseEventHandler } from 'react';
-import { motion } from 'framer-motion';
-import clsx from 'clsx';
+"use client";
+import React, { useState, MouseEventHandler } from "react";
+import { motion } from "framer-motion";
+import clsx from "clsx";
 
 interface CardProps {
   image?: string;
@@ -10,27 +10,26 @@ interface CardProps {
   onClick?: MouseEventHandler<HTMLDivElement>; // Type for the onClick handler
 }
 
-
-const Card: React.FC<CardProps>  = ({
-  image = '/images/SpaceCity.jpg',
-  title = 'Title',
-  color = 'purple',
-  onClick 
+const Card: React.FC<CardProps> = ({
+  image = "/images/SpaceCity.jpg",
+  title = "Title",
+  color = "purple",
+  onClick,
 }) => {
-
   return (
-    <div className={clsx('relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden')}>
-      <div className="relative w-full h-full" >
-        <motion.div
-          className="relative w-full h-full"
-
-        >
+    <div
+      className={clsx(
+        "relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden",
+      )}
+    >
+      <div className="relative w-full h-full">
+        <motion.div className="relative w-full h-full">
           {/* Front Side */}
           <div
             className="absolute w-full h-full flex flex-col bg-cover bg-center border-[1px] text-white p-4"
             style={{
               backgroundImage: `url(${image})`,
-              backfaceVisibility: 'hidden', // Hides the back side when flipped
+              backfaceVisibility: "hidden", // Hides the back side when flipped
             }}
             onClick={onClick}
           >
@@ -43,8 +42,6 @@ const Card: React.FC<CardProps>  = ({
               </div>
             </div>
           </div>
-
-         
         </motion.div>
       </div>
     </div>

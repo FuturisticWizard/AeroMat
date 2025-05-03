@@ -4,7 +4,9 @@ type CallButtonProps = {
   phoneNumber?: string; // Optional prop for the phone number
 };
 
-const CallButton: React.FC<CallButtonProps> = ({ phoneNumber = "+48780428883" }) => {
+const CallButton: React.FC<CallButtonProps> = ({
+  phoneNumber = "+48780428883",
+}) => {
   return (
     <a
       href={`tel:${phoneNumber}`}

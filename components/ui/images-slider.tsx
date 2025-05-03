@@ -26,18 +26,18 @@ const ImagesSlider = ({
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === images.length ? 0 : prevIndex + 1
+      prevIndex + 1 === images.length ? 0 : prevIndex + 1,
     );
   };
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
   useEffect(() => {
-    console.log(loading)
+    console.log(loading);
     loadImages();
   });
 
@@ -121,7 +121,7 @@ const ImagesSlider = ({
     <div
       className={cn(
         "overflow-hidden h-full w-full relative flex items-center justify-center",
-        className
+        className,
       )}
       style={{
         perspective: "1000px",
@@ -151,4 +151,4 @@ const ImagesSlider = ({
   );
 };
 
-export default ImagesSlider
+export default ImagesSlider;

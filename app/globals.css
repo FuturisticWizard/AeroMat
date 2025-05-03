@@ -1,17 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Yesteryear&display=swap");
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
+@import url("tailwindcss/base");
+@import url("tailwindcss/components");
+@import url("tailwindcss/utilities");
 
 @layer components {
   .border-border {
     border: 1px solid hsl(var(--border)); /* Use the CSS variable */
   }
+
   .paused {
     animation-play-state: paused;
   }
+
   .bentogrid-body {
     min-height: 100dvh;
     display: flex;
@@ -19,12 +20,11 @@
     justify-content: center;
     padding: 2%;
   }
-  
+
   .box {
     background-color: #0071ff;
-  
   }
-  
+
   .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -34,15 +34,14 @@
 }
 
 @layer base {
-  /* * {
-    @apply border-border; Now it will work
-  } */
   body {
     @apply bg-background text-foreground;
+
     font-family: var(--font-poppins-sans);
   }
+
   :root {
-    --font-poppins-sans: 'Poppins', sans-serif;
+    --font-poppins-sans: "Poppins", sans-serif;
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
@@ -109,18 +108,17 @@
     --bronze-light: 35 50% 70%;
     --bronze-medium: 35 50% 50%;
     --bronze-dark: 35 50% 30%;
-
     --cream: 55 100% 95%;
     --ivory: 40 100% 98%;
     --misty-blue: 210 100% 95%;
     --pale-lavender: 270 100% 95%;
     --powder-pink: 340 100% 95%;
-    
     --soft-peach: 20 100% 90%;
     --light-mint: 140 100% 90%;
     --frosted-teal: 160 100% 90%;
     --dewy-green: 120 100% 90%;
   }
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
@@ -146,6 +144,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
     /* Adjust new colors for dark mode */
     --green-light: 140 50% 40%;
     --green-medium: 120 50% 30%;
@@ -177,13 +176,11 @@
     --brown-light: 25 50% 60%;
     --brown-medium: 25 50% 40%;
     --brown-dark: 25 50% 20%;
-
     --cream: 55 100% 80%;
     --ivory: 40 100% 85%;
     --misty-blue: 210 100% 80%;
     --pale-lavender: 270 100% 80%;
     --powder-pink: 340 100% 80%;
-    
     --soft-peach: 20 100% 75%;
     --light-mint: 140 100% 75%;
     --frosted-teal: 160 100% 75%;
@@ -192,39 +189,43 @@
 }
 
 @layer utilities {
-
   .fancy-text {
-    -webkit-text-stroke: 1px rgb(255, 255, 255);
-    font-family: "Anton", sans-serif;
-    
+    -webkit-text-stroke: 1px rgb(255 255 255);
+    font-family: Anton, sans-serif;
   }
+
   .yesteryear-regular {
-    font-family: "Yesteryear", serif;
+    font-family: Yesteryear, serif;
     font-weight: 400;
     font-style: normal;
   }
+
   .allura {
-    font-family: "Allura", serif;
+    font-family: Allura, serif;
     font-weight: 400;
     font-style: normal;
   }
+
   .anton-regular {
-    font-family: "Anton", serif;
+    font-family: Anton, serif;
     font-weight: 400;
     font-style: normal;
   }
+
   .anton-regular-strokeW {
-    -webkit-text-stroke: 4px rgb(158, 146, 146);
-    font-family: "Anton", serif;
+    -webkit-text-stroke: 4px rgb(158 146 146);
+    font-family: Anton, serif;
     font-weight: 400;
     font-style: normal;
   }
+
   .anton-regular-strokeB {
-    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.879);
-    font-family: "Anton", serif;
+    -webkit-text-stroke: 2px rgb(0 0 0 / 87.9%);
+    font-family: Anton, serif;
     font-weight: 400;
     font-style: normal;
   }
+
   .custom-shape-divider-top-1740008698 {
     position: absolute;
     top: 0;
@@ -235,26 +236,35 @@
   }
 
   .gradient-new {
-    background: hsla(0, 0%, 0%, 1);
-
-    background: linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
-
-    background: -moz-linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
-
-    background: -webkit-linear-gradient(360deg, hsla(0, 0%, 0%, 1) 10%, hsla(0, 0%, 100%, 1) 100%);
-
+    background: hsl(0deg 0% 0% / 100%);
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#FFFFFF", GradientType=1 );
   }
 }
+
 @keyframes scroll {
   0% {
     transform: translateX(100%);
   }
+
   100% {
     transform: translateX(-100%);
   }
 }
-
 
 .animate-scroll {
   animation: scroll 20s linear infinite; /* Adjust duration for speed */
@@ -262,21 +272,20 @@
 
 #close-popup {
   position: absolute;
-  font-weight: 700; 
-  right: 0.25rem; 
-  top: 0.25rem; 
-  font-size: 1.25rem; 
+  font-weight: 700;
+  font-size: 1.25rem;
   outline: none;
   top: 0;
   right: 0;
   padding: 10px;
   cursor: pointer;
 }
-#marker-title {
 
-  font-weight: 700; 
-  padding: 8px 0px; 
+#marker-title {
+  font-weight: 700;
+  padding: 8px 0;
 }
+
 .flip-card {
   perspective: 1000px;
 }
@@ -284,21 +293,24 @@
 .flip-card-inner {
   transition: transform 0.6s;
   transform-style: preserve-3d;
-
 }
 
 .flip-card-front,
 .flip-card-back {
   position: absolute;
   backface-visibility: hidden;
+}
 
-}
 .gradient {
-  background-image: linear-gradient(to bottom,
-    transparent 47%, /* Gradient jest przezroczysty do około 2/3 wysokości */
-    rgba(0, 0, 0, 0.745) 90%, /* Od około 70% wysokości zaczyna się ciemniejszy kolor */
-    black); /* Na samym dole jest pełna czerń */
+  background-image: linear-gradient(
+    to bottom,
+    transparent 47%,
+    /* Gradient jest przezroczysty do około 2/3 wysokości */ rgb(0 0 0 / 74.5%)
+      90%,
+    /* Od około 70% wysokości zaczyna się ciemniejszy kolor */ black
+  ); /* Na samym dole jest pełna czerń */
 }
+
 .flip-card-back {
   transform: rotateY(180deg);
 }
@@ -313,26 +325,24 @@
 
 .box {
   background-color: #0071ff;
-
 }
-
-
 
 .my-masonry-grid {
   display: flex;
   width: 100%;
   gap: 1em;
-   /* gutter size offset */
+
+  /* gutter size offset */
 }
 
 .my-masonry-grid_column {
   gap: 1em;
-
 }
 
 .my-masonry-grid_column > div {
   margin-bottom: 15px; /* space between items */
 }
+
 .my-masonry-grid_column > img {
   padding-bottom: 15px; /* space between items */
 }
@@ -359,66 +369,74 @@
 
 .image-container img {
   object-fit: cover; /* Use contain to maintain aspect ratio */
-  /* object-fit: cover; */ /* Use cover to fill the container, cropping if necessary */
+
+  /* object-fit: cover; */
+
+  /* Use cover to fill the container, cropping if necessary */
   width: 100%;
   height: 100%;
 }
+
 .service-tab {
   writing-mode: sideways-lr;
   font-size: 1em;
   text-transform: uppercase;
   background: #0e2f56;
   letter-spacing: 0.1em;
-  padding: 20px 10px 20px 10px;
+  padding: 20px 10px;
   line-height: 100%;
   color: white;
 }
+
 .service-tab2 {
   font-size: 1em;
   text-transform: uppercase;
   background: #0e2f56;
   letter-spacing: 0.1em;
-  padding: 20px 10px 20px 10px;
+  padding: 20px 10px;
   line-height: 100%;
   color: white;
   display: inline-block;
 }
+
 .leaflet-overlay-pane path,
 .leaflet-marker-icon {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
-
+@media (width <= 768px) {
   .grid-container {
-    grid-template-columns: 1fr 1fr 1fr ; /* Change to a single column on smaller screens */
+    grid-template-columns: 1fr 1fr 1fr; /* Change to a single column on smaller screens */
     grid-template-rows: auto; /* Adjust rows as needed */
     gap: 2px;
-    grid-template-areas: "photo1 photo1 photo1" 
-    "photo2 photo3 photo3"
-    "photo5 photo5 photo4"
-    "photo6 photo7 photo7"
-    "photo8 photo8 photo8"
-    "photo9 photo10 photo11"
-    "photo9 photo12 photo12"
-    ;
+    grid-template-areas:
+      "photo1 photo1 photo1"
+      "photo2 photo3 photo3"
+      "photo5 photo5 photo4"
+      "photo6 photo7 photo7"
+      "photo8 photo8 photo8"
+      "photo9 photo10 photo11"
+      "photo9 photo12 photo12";
   }
+
   .image-container {
     height: 40vh; /* Adjust height for smaller screens */
   }
 }
-@media (min-width: 769px) {
 
+@media (width >= 769px) {
   .grid-container {
-    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto; /* Adjust rows as needed */
     gap: 2px;
-    grid-template-areas: "photo1 photo1 photo1 photo1" 
-    "photo2 photo2 photo3 photo3"
-    "photo2 photo2 photo5 photo5"
-    "photo4 photo6 photo7 photo7"
-    "photo4 photo8 photo8 photo9";
+    grid-template-areas:
+      "photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo3 photo3"
+      "photo2 photo2 photo5 photo5"
+      "photo4 photo6 photo7 photo7"
+      "photo4 photo8 photo8 photo9";
   }
+
   .image-container {
     height: 40vh; /* Adjust height for smaller screens */
   }

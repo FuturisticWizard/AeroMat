@@ -30,9 +30,11 @@ export default function PhotoPortfolio() {
             AeroMat - Kreatywność Bez Granic
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            W AeroMat nie ma granic dla Twojej wyobraźni. Tworzymy unikalne murale, wykorzystując różnorodne techniki
-            malarskie, aby ożywić przestrzeń i wyróżnić Twoją markę. Od tradycyjnych pędzli po nowoczesne techniki
-            sprayu i aerografu, nasze dzieła sztuki są wyrazem nieograniczonej kreatywności.
+            W AeroMat nie ma granic dla Twojej wyobraźni. Tworzymy unikalne
+            murale, wykorzystując różnorodne techniki malarskie, aby ożywić
+            przestrzeń i wyróżnić Twoją markę. Od tradycyjnych pędzli po
+            nowoczesne techniki sprayu i aerografu, nasze dzieła sztuki są
+            wyrazem nieograniczonej kreatywności.
           </p>
           {/* <Button size="lg" className="group">
             Zobacz nasze usługi
@@ -58,14 +60,16 @@ export default function PhotoPortfolio() {
             <TabsContent key={category} value={category} className="mt-0">
               <RowsPhotoAlbum
                 photos={portfolioPhotos.filter(
-                  (photo) => category === "Wszystkie" || photo.category === category
+                  (photo) =>
+                    category === "Wszystkie" || photo.category === category,
                 )}
                 targetRowHeight={250}
                 onClick={({ index }) => setIndex(index)}
               />
               <Lightbox
                 slides={portfolioPhotos.filter(
-                  (photo) => category === "Wszystkie" || photo.category === category
+                  (photo) =>
+                    category === "Wszystkie" || photo.category === category,
                 )}
                 open={index >= 0}
                 index={index}
@@ -79,9 +83,13 @@ export default function PhotoPortfolio() {
         <section className="bg-[#FDE6C6] rounded-xl p-8 md:p-12 overflow-hidden ">
           <div className="grid grid-cols-1 gap-8 items-center">
             <div className="container flex flex-col px-4">
-              <h2 className="text-3xl font-bold pb-4">Chcesz nawiązać kontakt ?</h2>
+              <h2 className="text-3xl font-bold pb-4">
+                Chcesz nawiązać kontakt ?
+              </h2>
               <p className="text-muted-foreground pb-6">
-              Niezależnie od tego, czy potrzebujesz muralu dla swojego biura, profesjonalnego malowania fasady czy unikalnej dekoracji wnętrz, jesteśmy tutaj, aby ożywić Twoją przestrzeń.
+                Niezależnie od tego, czy potrzebujesz muralu dla swojego biura,
+                profesjonalnego malowania fasady czy unikalnej dekoracji wnętrz,
+                jesteśmy tutaj, aby ożywić Twoją przestrzeń.
               </p>
               <Button className="inline-block">
                 <Link href="/kontakt">Kontakt</Link>
@@ -96,7 +104,7 @@ export default function PhotoPortfolio() {
                 objectFit="cover"
               />
             </div> */}
-                {/* <Compare
+            {/* <Compare
                     firstImage="/images/komeko-old.jpg"
                     secondImage="/images/komeko-new.jpg"
                     firstImageClassName="object-cover object-left-top"

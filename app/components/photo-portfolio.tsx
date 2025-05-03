@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, ChevronLeft, ChevronRight, Download, X } from "lucide-react"
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  X,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs"
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 export default function PhotoPortfolio() {
-  const [activeImage, setActiveImage] = useState<number | null>(null)
-  const categories = ["All", "Commercial", "Portrait", "Landscape", "Event"]
+  const [activeImage, setActiveImage] = useState<number | null>(null);
+  const categories = ["All", "Commercial", "Portrait", "Landscape", "Event"];
 
   const photos = [
     {
@@ -19,7 +25,8 @@ export default function PhotoPortfolio() {
       alt: "Commercial photography of a product",
       category: "Commercial",
       title: "Product Showcase",
-      description: "Premium product photography with attention to detail and lighting",
+      description:
+        "Premium product photography with attention to detail and lighting",
       width: 800,
       height: 600,
     },
@@ -29,7 +36,8 @@ export default function PhotoPortfolio() {
       alt: "Portrait of a business professional",
       category: "Portrait",
       title: "Executive Portrait",
-      description: "Professional headshot with natural lighting and composition",
+      description:
+        "Professional headshot with natural lighting and composition",
       width: 600,
       height: 800,
     },
@@ -49,7 +57,8 @@ export default function PhotoPortfolio() {
       alt: "Corporate event photography",
       category: "Event",
       title: "Annual Conference",
-      description: "Dynamic event coverage capturing key moments and atmosphere",
+      description:
+        "Dynamic event coverage capturing key moments and atmosphere",
       width: 700,
       height: 700,
     },
@@ -99,31 +108,32 @@ export default function PhotoPortfolio() {
       alt: "Food photography for restaurant",
       category: "Commercial",
       title: "Culinary Showcase",
-      description: "Appetizing food photography highlighting texture and presentation",
+      description:
+        "Appetizing food photography highlighting texture and presentation",
       width: 800,
       height: 800,
     },
-  ]
+  ];
 
   const handleImageClick = (index: number) => {
-    setActiveImage(index)
-  }
+    setActiveImage(index);
+  };
 
   const handleCloseModal = () => {
-    setActiveImage(null)
-  }
+    setActiveImage(null);
+  };
 
   const handlePrevImage = () => {
     if (activeImage !== null) {
-      setActiveImage(activeImage === 0 ? photos.length - 1 : activeImage - 1)
+      setActiveImage(activeImage === 0 ? photos.length - 1 : activeImage - 1);
     }
-  }
+  };
 
   const handleNextImage = () => {
     if (activeImage !== null) {
-      setActiveImage(activeImage === photos.length - 1 ? 0 : activeImage + 1)
+      setActiveImage(activeImage === photos.length - 1 ? 0 : activeImage + 1);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -133,8 +143,9 @@ export default function PhotoPortfolio() {
             Capturing moments that tell your story
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Professional photography services for businesses and individuals. We specialize in commercial, portrait,
-            landscape, and event photography.
+            Professional photography services for businesses and individuals. We
+            specialize in commercial, portrait, landscape, and event
+            photography.
           </p>
           <Button size="lg" className="group">
             View our services
@@ -160,7 +171,10 @@ export default function PhotoPortfolio() {
             <TabsContent key={category} value={category} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {photos
-                  .filter((photo) => category === "All" || photo.category === category)
+                  .filter(
+                    (photo) =>
+                      category === "All" || photo.category === category,
+                  )
                   .map((photo, index) => (
                     <div
                       key={photo.id}
@@ -177,8 +191,12 @@ export default function PhotoPortfolio() {
                         />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <h3 className="text-white font-bold text-xl mb-1">{photo.title}</h3>
-                        <p className="text-white/80 text-sm">{photo.description}</p>
+                        <h3 className="text-white font-bold text-xl mb-1">
+                          {photo.title}
+                        </h3>
+                        <p className="text-white/80 text-sm">
+                          {photo.description}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -190,10 +208,13 @@ export default function PhotoPortfolio() {
         <section className="bg-muted rounded-xl p-8 md:p-12">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-4">Let&apos;s work together</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                Let&apos;s work together
+              </h2>
               <p className="text-muted-foreground mb-6">
-                Whether you need product photography for your e-commerce store, professional portraits for your team, or
-                event coverage, we&apos;re here to bring your vision to life.
+                Whether you need product photography for your e-commerce store,
+                professional portraits for your team, or event coverage,
+                we&apos;re here to bring your vision to life.
               </p>
               <Button asChild>
                 <Link href="/contact">Contact us</Link>
@@ -235,27 +256,45 @@ export default function PhotoPortfolio() {
               />
 
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                <h3 className="text-white font-bold text-xl">{photos[activeImage].title}</h3>
-                <p className="text-white/80">{photos[activeImage].description}</p>
+                <h3 className="text-white font-bold text-xl">
+                  {photos[activeImage].title}
+                </h3>
+                <p className="text-white/80">
+                  {photos[activeImage].description}
+                </p>
               </div>
             </div>
 
             <div className="absolute left-4 top-1/2 -translate-y-1/2">
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={handlePrevImage}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:bg-white/20"
+                onClick={handlePrevImage}
+              >
                 <ChevronLeft className="h-8 w-8" />
                 <span className="sr-only">Previous image</span>
               </Button>
             </div>
 
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
-              <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={handleNextImage}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:bg-white/20"
+                onClick={handleNextImage}
+              >
                 <ChevronRight className="h-8 w-8" />
                 <span className="sr-only">Next image</span>
               </Button>
             </div>
 
             <div className="absolute bottom-4 right-4">
-              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white/20">
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-white border-white hover:bg-white/20"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Download
               </Button>
@@ -270,7 +309,8 @@ export default function PhotoPortfolio() {
             <div>
               <h3 className="font-bold text-lg mb-4">Company Name</h3>
               <p className="text-muted-foreground">
-                Professional photography services capturing moments that matter since 2010.
+                Professional photography services capturing moments that matter
+                since 2010.
               </p>
             </div>
             <div>
@@ -285,24 +325,34 @@ export default function PhotoPortfolio() {
             <div>
               <h3 className="font-bold text-lg mb-4">Follow Us</h3>
               <div className="flex space-x-4">
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Instagram
                 </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Facebook
                 </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   Twitter
                 </Link>
               </div>
             </div>
           </div>
           <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-            <p>© {new Date().getFullYear()} Company Name. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Company Name. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
-

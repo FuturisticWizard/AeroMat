@@ -5,4 +5,4 @@ export const formSchema = z.object({
   email: z.string().email().min(2).max(250),
   title: z.string().min(2).max(250),
   message: z.string().min(2),
-})
+});
