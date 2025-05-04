@@ -8,26 +8,26 @@ import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
 import BentoGrid from "./components/BentoGrid";
 import { portfolioPhotos } from "@/app/lib/photos";
-import GoogleMap from "./components/GoogleMap/GoogleMap";
-
+import { Youtube } from "lucide-react";
+import YouTubeGrid from "./components/YoutubeVideosGrid";
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
 
 export default function Home() {
   return (
     <div className="flex flex-col   font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
-      <main className=" flex-1 items-center sm:items-start  h-screen overflow-hidden">
+      <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
         <VideoHero />
 
         <Portfolio />
         <Services />
+        <YouTubeGrid />
         <TrustedBy />
         <WhoAmI2 />
 
         <HowItWorks />
 
         <MuralsMap />
-        <GoogleMap />
         {/* 
         <section id="testimonials" className=" max-w-6xl mx-auto items-center justify-center px-8 md:px-0 py-20">
             <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>

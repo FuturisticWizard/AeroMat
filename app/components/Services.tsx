@@ -123,7 +123,7 @@ const cards = [
 
 const Services = () => {
   return (
-    <div className="px-8 py-16 lg:px-0 flex flex-col   max-w-6xl mx-auto ">
+    <div className="px-8 py-16 lg:px-0 flex flex-col   max-w-7xl mx-auto ">
       <div className="py-8 md:py-16">
         <h2 className="text-red-500  text-lg text-bold">Moje Usługi</h2>
         <div className="flex flex-col lsm:flex-row py-2 gap-2 md:gap-4">
@@ -131,18 +131,13 @@ const Services = () => {
           <div className="flex flex-col lsm:w-1/2">
             <h3 className="font-bold text-2xl sm:text-3xl ">
               {" "}
-              Świadczę całą paletę usług dzięki którym poprawisz wizerunek,
-              zwiększysz rozpoznawalność oraz sprzedaż Twojego biznesu.
+              Oferuję  paletę usług, które poprawią wizerunek, zwiększą rozpoznawalność i sprzedaż Twojego biznesu.
             </h3>
           </div>
           {/* Paragraph */}
           <div className="flex lsm:w-1/2">
-            <p className="font text-gray-600 text-sm xsm:text-base md:text-md lg:text-md ">
-              Od tworzenia unikalnych murali i profesjonalnych grafik ściennych
-              po filmy i kinematografię na najwyższym poziomie, każde zlecenie
-              jest dla mnie okazją do stworzenia czegoś wyjątkowego. Dzięki moim
-              usługom możesz nie tylko poprawić wizerunek swojej firmy, ale
-              także zwiększyć zaufanie klientów i przyciągnąć nowych.
+            <p className="font text-gray-600 text-sm xsm:text-base md:text-md lg:text-lg ">
+            Tworzę unikalne murale, profesjonalne grafiki ścienne oraz filmy na najwyższym poziomie. Moje usługi pomagają poprawić wizerunek firmy, zwiększyć zaufanie klientów i przyciągnąć nowych.
             </p>
           </div>
         </div>
