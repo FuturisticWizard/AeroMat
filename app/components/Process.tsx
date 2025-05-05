@@ -31,7 +31,7 @@ const steps = [
 
 const Process = () => {
   return (
-    <div className="grid grid-cols-1 xxsm:grid-cols-2  sm:flex sm:flex-row max-w-6xl mx-auto  justify-center items-center py-8 md:py-16 gap-6">
+    <div className="grid grid-cols-2  sm:flex sm:flex-row max-w-6xl mx-auto  justify-center items-center py-8 md:py-16 gap-6">
       {steps.map((step, index) => (
         <div
           key={index}

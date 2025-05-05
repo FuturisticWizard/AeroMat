@@ -53,7 +53,7 @@ const VideoHero = ({
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />
 
       {/* Heading Section */}
-      <div className=" absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-6 min-w-[60svh]  mx-auto lg:bottom-12 gap-1">
+      <div className=" absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-6 min-w-[60svh]  mx-auto lg:bottom-20 gap-1">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ const VideoHero = ({
             transition={{ duration: 0.8, delay: 0.4 }}
             className="my-2 pl-4 text-left flex flex-row items-center w-full sm:w-1/2"
           >
-            <Button
+            {/* <Button
               variant="outline"
               size="lg"
               className="bg-white/90 hover:bg-white font-bold shadow-inner transition-transform duration-300  text-black hover:text-black/95 border-black/20"
@@ -110,7 +110,21 @@ const VideoHero = ({
               }}
             >
               {ctaText}
-            </Button>
+            </Button> */}
+            {/* Call Button for Mobile */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="fixed bottom-4 left-4 right-4 sm:hidden z-50"
+          >
+            <a
+              href="tel:+48780428883"
+              className="block w-full text-center bg-[#FE9100] text-white font-bold py-3 rounded-lg shadow-lg hover:bg-[#e87f00] transition-colors duration-300"
+            >
+              Zadzwoń: +48 780 428 883
+            </a>
+          </motion.div>
             <div className="leading-tight">
               <p className="text-red-500 text-tiny text-left pl-3  ">
                 Zaufało Mi już 200+ klientów!

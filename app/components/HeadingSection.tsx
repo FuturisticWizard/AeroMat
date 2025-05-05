@@ -2,27 +2,28 @@ import Image from "next/image";
 import React from "react";
 
 const HeadingSection = ({
-  img = "/pngs/yellow-spray.png",
+  img = "purple",
   subheading = "Subheading",
   content = "Content",
   heading = "Heading",
+
 }) => {
   return (
     <div className="relative max-w-6xl mx-auto justify-center items-center px-4 lsm:px-8 py-8 md:py-16">
       {/* Spray splash */}
-      <div className="absolute -top-10 -left-20 lg:top-2 lg:-left-16 w-[280px] h-[280px] z-0 opacity-80 ">
+      <div className="absolute -top-10 -left-20 lg:-top-2 lg:-left-16 w-[320px] h-[320px] z-0 ">
         <Image
-          src={img}
-          alt="Black spray paint splash"
+          src={`/pngs/${img}-spray.png`}
+          alt={`${img} spray paint splash`}
           height={400}
           width={400}
-          className="z-0"
+          className="z-0 opacity-30 "
         />
       </div>
 
       {/* Content */}
       <div className="relative  z-10">
-        <h2 id="subheading" className="text-red-400 text-lg font-bold">
+        <h2 id="subheading" className={` ${ img == 'purple' || 'black' ? 'text-white' : 'text-orange-400' } text-lg font-bold`}>
           {subheading}
         </h2>
         <div className="flex flex flex-col sm:flex-row order-2 sm:order-1 pb-4 lsm:pb-8 gap-4">

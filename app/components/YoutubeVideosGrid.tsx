@@ -10,6 +10,7 @@ interface VideoItem {
 }
 
 export default function YouTubeGrid() {
+  
   // Instead of conditionally rendering iframes, we'll use a more direct approach
   const videos: VideoItem[] = [
     {
@@ -58,28 +59,32 @@ export default function YouTubeGrid() {
   ]
 
   return (
-    <section className="py-16 from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 max-w-6xl mx-auto mb-12">
+    <section className="py-16 from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 max-w-7xl mx-auto mb-12">
       <div className="container px-4 mx-auto relative">
-        <div className="absolute -left-10 top-1/4  transform -translate-y-1/2 -translate-x-full hidden lg:block" >
+        {/* <div className="absolute -left-10 top-1/4  transform -translate-y-1/2 -translate-x-full hidden lg:block" >
           <h2 className="text-8xl anton-regular font-bold tracking-tight transform -rotate-90 origin-right whitespace-nowrap text-gray-800 opacity-10">
-          Za kulisami
+          ZA KULISAMI
           </h2>
-        </div>
+        </div> */}
         
         {/* Mobile/tablet heading (visible on smaller screens) */}
-        <div className="lg:hidden text-center " > 
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">BackStage</h2>
+        <div className=" py-4  " > 
+        
+          <h2 className="text-7xl md:text-8xl anton-regular text-left font-bold tracking-tight transform origin-right whitespace-nowrap text-gray-800 opacity-10">
+          ZA KULISAMI
+          </h2>
+        
           <p className="text-lg text-slate-600 dark:text-slate-400">
             Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.
           </p>
         </div>
 
         {/* Desktop description (visible only on large screens) */}
-        <div className="hidden lg:block max-w-3xl mx-auto text-center mb-12">
+        {/* <div className="hidden lg:block max-w-6xl mx-auto text-left mb-12">
           <p className="text-lg text-slate-600 dark:text-slate-400">
           Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.
           </p>
-        </div>
+        </div> */}
         
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 " >

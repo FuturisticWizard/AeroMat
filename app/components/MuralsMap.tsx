@@ -10,6 +10,7 @@ const MuralsMap = () => {
         subheading="Gdzie są moje murale?"
         heading="Przeglądaj naszą interaktywną mapę, aby odkryć piękno street artu w mieście."
         content="Murale AeroMat to nie tylko dzieła sztuki, ale także elementy, które ożywiają przestrzeń publiczną i tworzą unikalny charakter miasta. Na AeroMapie znajdziesz wiele moich murali, każdy jest opisany i zlokalizowany,dzięki czemu możesz łatwo odnaleźć je podczas spaceru po mieście."
+        img="yellow"
       />
       <MapComponent />
     </div>

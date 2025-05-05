@@ -1,6 +1,7 @@
 import React from "react";
 
 import Flipcard from "./Flipcard";
+import HeadingSection from "./HeadingSection";
 
 const cards2 = [
   {
@@ -124,25 +125,12 @@ const cards = [
 const Services = () => {
   return (
     <div className="px-8 py-16 lg:px-0 flex flex-col   max-w-7xl mx-auto ">
-      <div className="py-8 md:py-16">
-        <h2 className="text-red-500  text-lg text-bold">Moje Usługi</h2>
-        <div className="flex flex-col lsm:flex-row py-2 gap-2 md:gap-4">
-          {/* Header */}
-          <div className="flex flex-col lsm:w-1/2">
-            <h3 className="font-bold text-2xl sm:text-3xl ">
-              {" "}
-              Oferuję  paletę usług, które poprawią wizerunek, zwiększą rozpoznawalność i sprzedaż Twojego biznesu.
-            </h3>
-          </div>
-          {/* Paragraph */}
-          <div className="flex lsm:w-1/2">
-            <p className="font text-gray-600 text-sm xsm:text-base md:text-md lg:text-lg ">
-            Tworzę unikalne murale, profesjonalne grafiki ścienne oraz filmy na najwyższym poziomie. Moje usługi pomagają poprawić wizerunek firmy, zwiększyć zaufanie klientów i przyciągnąć nowych.
-            </p>
-          </div>
-        </div>
-      </div>
-
+      <HeadingSection
+        subheading="Co robię?"
+        heading="Oferuję paletę usług, które poprawią wizerunek, zwiększą rozpoznawalność i sprzedaż Twojego biznesu."
+        content="Tworzę unikalne murale, profesjonalne grafiki ścienne oraz filmy na najwyższym poziomie. Moje usługi pomagają poprawić wizerunek firmy, zwiększyć zaufanie klientów i przyciągnąć nowych."
+        img="black"
+      />
       {/* Cards */}
       <div className="grid grid-cols-1 xsm:grid-cols-2  md:grid-cols-3 w-full h-full content-center gap-2 md:gap-8">
         {cards2.map((card, index) => (
