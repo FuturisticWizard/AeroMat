@@ -53,8 +53,8 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           <div className="flex-shrink-0  z-50">
             <Link href="/">
               <Image
-                src="/logo-horizontal.png"
-                width={100}
+                src="/images/logo-horizontal-black2.png"
+                width={175}
                 height="0"
                 style={{ height: "auto" }}
                 alt="Logo"
