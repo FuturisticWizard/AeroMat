@@ -26,9 +26,9 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex w-full justify-center items-center">
-            <div className="relative w-32 h-20">
+            <div className="relative w-48 h-20">
               <Image
-                src="/logo-horizontal.png"
+                src="/images/logo-horizontal-black2.png"
                 alt="logo-aeromat"
                 fill
                 object-fit="cover"

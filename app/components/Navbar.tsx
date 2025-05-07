@@ -47,7 +47,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
         "z-50",
       )}
     >
-      <div className="max-w-7xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-50 ">
+      <div className="max-w-6xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-50 ">
         <div className="flex items-center justify-between h-20 ">
           {/* Logo */}
           <div className="flex-shrink-0  z-50">
