@@ -9,7 +9,7 @@ const HeadingSection = ({
 
 }) => {
   return (
-    <div className="relative max-w-6xl mx-auto justify-center items-center px-4 lsm:px-8 py-8 md:py-16">
+    <div className="relative max-w-7xl mx-auto justify-center items-center lsm:px-8 py-8 md:py-16">
       {/* Spray splash */}
       <div className="absolute -top-10 -left-20 lg:-top-2 lg:-left-16 w-[320px] h-[320px] z-0 ">
         <Image

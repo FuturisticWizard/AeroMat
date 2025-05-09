@@ -7,7 +7,7 @@ import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
 import BentoGrid from "./components/BentoGrid";
-import { portfolioPhotos } from "@/app/lib/photos";
+import { portfolioPhotos, PtasieMurale } from "@/app/lib/photos";
 import { Youtube } from "lucide-react";
 import YouTubeGrid from "./components/YoutubeVideosGrid";
 // import Hero from "./components/Hero";
@@ -19,8 +19,14 @@ export default function Home() {
       <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
         <VideoHero />
 
-        <Portfolio />
+        <Portfolio 
+          data={portfolioPhotos} 
+        />
         <Services />
+
+        <Portfolio 
+          data={PtasieMurale} 
+        />
         <YouTubeGrid />
         <TrustedBy />
         <WhoAmI2 />

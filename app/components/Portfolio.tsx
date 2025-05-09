@@ -32,8 +32,23 @@ interface ImagesProps {
   }[];
   onClick: (index: number) => void;
 }
+interface PortfolioProps {
+  data: {
+    index: number;
+    src: string;
+    title: string;
+    category: string;
+    width: number;
+    height: number;
+    smcolspan: number;
+    smrowspan: number;
+    colspan: number;
+    rowspan: number;
+    gridArea: string;
+  }[];
+}
 
-const Portfolio = () => {
+const Portfolio = ({ data = portfolioPhotos}: PortfolioProps) => {
   // const { data, onClick } = props;
   const [index, setIndex] = useState<number>(-1);
   // const handleClickImage = (index: number) => {
@@ -70,12 +85,12 @@ const Portfolio = () => {
     // </div>
     <div className="xl:mx-auto xl:max-w-7xl">
       <Images
-        data={portfolioPhotos}
+        data={data}
         onClick={(currentIndex) => setIndex(currentIndex)}
         length={portfolioPhotos.length}
       />
       <Lightbox
-        slides={portfolioPhotos}
+        slides={data}
         open={index >= 0}
         index={index}
         close={() => setIndex(-1)}

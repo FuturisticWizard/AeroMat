@@ -4,7 +4,7 @@ import HeadingSection from "./HeadingSection";
 
 const WhoAmI2 = () => {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-12 lsm:px-20 py-12 xs:py-20 sm:py-24 md:py-20 gap-8 sm:gap-16 lg:gap-32">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-12 lsm:px-20 lg:px-0 py-12 xs:py-20 sm:py-24 md:py-20 gap-4 sm:gap-8 lg:gap-32">
       <div className="flex relative flex-col order-1 sm:order-2 py-12 z-30 ">
       <div className="absolute -top-10 -left-20 lg:-top-6 lg:-left-24 w-[320px] h-[320px] z-0 opacity-70 ">
               <Image
@@ -22,7 +22,7 @@ const WhoAmI2 = () => {
             to moja pasja i sposób na życie.
           </span>
         </h3>
-        <p className="text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 pr-0 sm:pr-12 z-30">
+        <p className="text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 pr-2 sm:pr-0 z-30">
           Od ponad 25 lat zajmuję się tym , co kocham, i dzięki zaufaniu moich
           klientów miałem okazję sprawdzić się w różnych technikach i
           kombinacjach. Podejmowanie nowych wyzwań pozwalało mi stale

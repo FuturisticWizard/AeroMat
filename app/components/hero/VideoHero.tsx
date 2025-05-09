@@ -112,7 +112,7 @@ const VideoHero = ({
               {ctaText}
             </Button> */}
             {/* Call Button for Mobile */}
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -126,6 +126,7 @@ const VideoHero = ({
             </a>
           </motion.div>
             <div className="leading-tight">
+
               <p className="text-red-500 text-tiny text-left pl-3  ">
                 Zaufało Mi już 200+ klientów!
               </p>
