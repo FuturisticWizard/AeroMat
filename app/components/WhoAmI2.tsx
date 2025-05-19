@@ -4,9 +4,9 @@ import HeadingSection from "./HeadingSection";
 
 const WhoAmI2 = () => {
   return (
-    <div className="w-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-12 lsm:px-20 lg:px-0 py-12 xs:py-20 sm:py-24 md:py-20 gap-4 sm:gap-8 lg:gap-32">
+    <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-8 lsm:px-8 py-8 md:py-16 gap-4 sm:gap-8 lg:gap-32 mt-12">
       <div className="flex relative flex-col order-1 sm:order-2 py-12 z-30 ">
-      <div className="absolute -top-10 -left-20 lg:-top-6 lg:-left-24 w-[320px] h-[320px] z-0 opacity-70 ">
+      <div className="absolute -top-12 -left-32 lg:-top-6 lg:-left-25 w-[320px] h-[320px] z-0 opacity-70 ">
               <Image
                 src={`/pngs/yellow-spray.png`}
                 alt={`Yellow spray paint splash`}
@@ -17,9 +17,9 @@ const WhoAmI2 = () => {
       </div>
         <h2 className="text-red-800 text-lg font-bold">Kim jestem?</h2>
         <h3 className="text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-1 z-30">
-          Nazywam się Mateusz, malarstwo <br />{" "}
+          Nazywam się Mateusz, malarstwo to moja pasja<br />{" "}
           <span className="text-[#FF6800]">
-            to moja pasja i sposób na życie.
+            i sposób na życie.
           </span>
         </h3>
         <p className="text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 pr-2 sm:pr-0 z-30">

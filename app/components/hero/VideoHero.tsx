@@ -4,6 +4,7 @@ import { Button } from "@/app/components/ui/button";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
+import { useRouter } from "next/navigation";
 
 const VideoHero = ({
   videoUrl = "/movies/hero_compressed.mp4",
@@ -19,6 +20,7 @@ const VideoHero = ({
     "pomagają w budowaniu silnego wizerunku",
     "zwiększają widoczność Twojej marki",
   ];
+  const router = useRouter(); 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = muted;
@@ -41,7 +43,7 @@ const VideoHero = ({
       <video
         ref={videoVolumeRef}
         autoPlay
-        muted={true}
+        muted={muted}
         loop
         playsInline
         className="w-full h-full object-cover object-center"
@@ -53,7 +55,7 @@ const VideoHero = ({
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />
 
       {/* Heading Section */}
-      <div className=" absolute inset-x-12 bottom-20 z-20 flex flex-col items-center justify-center text-center px-6 min-w-[60svh]  mx-auto lg:bottom-20 gap-1">
+      <div className=" absolute inset-x-0 bottom-40 lsm:bottom-20 z-20 flex flex-col items-center justify-center text-center px-4 mx-auto lg:bottom-20 gap-1">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,8 +127,13 @@ const VideoHero = ({
               Zadzwoń: +48 780 428 883
             </a>
           </motion.div>
-            <div className="leading-tight">
-
+            <div className="leading-tight flex flex-row">
+            <button
+              className="mt-2 px-4 py-2 bg-[#FE9100] text-white font-bold rounded-lg shadow-md hover:bg-[#e87f00] transition-colors duration-300"
+              onClick={() => router.push("/kontakt")} 
+            >
+              Kontakt
+            </button>
               <p className="text-red-500 text-tiny text-left pl-3  ">
                 Zaufało Mi już 200+ klientów!
               </p>
