@@ -93,7 +93,7 @@ const Images: FC<ImagesProps> = (props) => {
               alt={slide.title}
               width={slide.width}
               height={slide.height}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover cursor-pointer"
             />
           </div>
         ))}
