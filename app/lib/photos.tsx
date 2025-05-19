@@ -134,11 +134,11 @@ export const PtasieMurale = [
   },
   {
     index: 2,
-    src: "/images/ptasie/00.jpg",
+    src: "/images/ptasie/kogut1.jpg",
     title: "szyld5",
     category: "Wnętrza",
     width: 3868,
-    height: 2928,
+    height: 3730,
     smcolspan: 4,
     smrowspan: 1,
     colspan: 5,
@@ -147,11 +147,11 @@ export const PtasieMurale = [
   },
   {
     index: 3,
-    src: "/images/ptasie/000.jpg",
+    src: "/images/ptasie/CZAPLA3.jpg",
     title: "akwarium",
     category: "Wnętrza",
-    width: 5776,
-    height: 4314,
+    width: 1080,
+    height: 1350,
     smcolspan: 6,
     smrowspan: 1,
     colspan: 5,
@@ -160,7 +160,7 @@ export const PtasieMurale = [
   },
   {
     index: 4,
-    src: "/images/ptasie/3.jpg",
+    src: "/images/ptasie/4a.JPG",
     title: "lpec",
     category: "Murale",
     width: 4337,
@@ -173,7 +173,7 @@ export const PtasieMurale = [
   },
   {
     index: 5,
-    src: "/images/ptasie/3a.jpg",
+    src: "/images/ptasie/3.jpg",
     title: "soldiers",
     category: "Murale",
     width: 5776,
@@ -186,7 +186,7 @@ export const PtasieMurale = [
   },
   {
     index: 6,
-    src: "/images/ptasie/CZAPLA3.jpg",
+    src: "/images/ptasie/D1a.jpg",
     title: "stare miasto 2",
     category: "Murale",
     width: 4337,
@@ -212,7 +212,7 @@ export const PtasieMurale = [
   },
   {
     index: 8,
-    src: "/images/ptasie/kogut1.jpg",
+    src: "/images/ptasie/5.jpg",
     title: "dogs",
     category: "Murale",
     width: 5776,
@@ -222,18 +222,5 @@ export const PtasieMurale = [
     colspan: 5,
     rowspan: 2, // Adjusted for aspect ratio
     gridArea: "photo8",
-  },
-  {
-    index: 9,
-    src: "/images/ptasie/5.jpg",
-    title: "staremiasto",
-    category: "Murale",
-    width: 4336,
-    height: 5776,
-    smcolspan: 6,
-    smrowspan: 1,
-    colspan: 3,
-    rowspan: 2, // Adjusted for aspect ratio
-    gridArea: "photo9",
   },
 ];
