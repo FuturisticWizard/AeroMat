@@ -9,7 +9,7 @@ import HeadingSection from "./HeadingSection";
 const HowItWorks = () => {
   return (
     <div className="relative w-full h-full">
-      <div className="absolute bg-black w-full bottom-0 h-1/3" />
+      {/* <div className="absolute bg-black w-full bottom-0 h-1/3" /> */}
       <div className="relative px-8  lmd:px-8 lg:px-0 max-w-7xl h-auto mx-auto">
         <HeadingSection
             subheading="Jak pracuję?"
