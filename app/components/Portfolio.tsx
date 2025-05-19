@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-
 import Masonry from "react-masonry-css";
 import Card from "./Card";
 import CardFlip from "./CardFlip";

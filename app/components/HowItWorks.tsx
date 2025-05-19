@@ -24,7 +24,7 @@ const HowItWorks = () => {
           />
         <Process />
         <div className=" relative max-w-full max-h-[320px] md:max-h-[580px] z-30">
-          <VideoPlayer url="/movies/reel_compressed.mp4" />
+          <VideoPlayer url="/movies/reel_output.mp4" />
         </div>
       </div>
       {/* <div className='relative w-[1200px] h-[280px] -top-64 right-0'>

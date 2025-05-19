@@ -7,7 +7,7 @@ import { FlipWords } from "@/components/ui/flip-words";
 import { useRouter } from "next/navigation";
 
 const VideoHero = ({
-  videoUrl = "/movies/hero_compressed.mp4",
+  videoUrl = "/movies/hero_output.mp4", // https://www.youtube.com/embed/_Ur0BpsVwQE?autoplay=1 , /movies/hero_compressed.mp4
   title = "Przekształć swoją przestrzeń ",
   subtitle = "w dzieło sztuki",
   ctaText = "Zadzwoń",
@@ -45,11 +45,22 @@ const VideoHero = ({
         autoPlay
         muted={muted}
         loop
+        preload="auto"
         playsInline
         className="w-full h-full object-cover object-center"
       >
         <source src={videoUrl} type="video/mp4" />
       </video>
+{/* <div className="relative w-full h-full">
+  <iframe
+    src={`${videoUrl}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&playlist=_Ur0BpsVwQE&controls=0&modestbranding=1&showinfo=0&rel=0&fs=0`}
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    className="w-full h-full object-cover"
+  ></iframe>
+</div> */}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />

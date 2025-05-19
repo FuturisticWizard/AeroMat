@@ -4,7 +4,7 @@ import HeadingSection from "./HeadingSection";
 
 const WhoAmI2 = () => {
   return (
-    <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-8 lsm:px-8 py-8 md:py-16 gap-4 sm:gap-8 lg:gap-32 mt-12">
+    <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 items-center max-w-7xl mx-auto px-8 lsm:px-8 py-8 md:py-16 gap-4 sm:gap-8 lg:gap-48 mt-12">
       <div className="flex relative flex-col order-1 sm:order-2 py-12 z-30 ">
       <div className="absolute -top-12 -left-32 lg:-top-6 lg:-left-25 w-[320px] h-[320px] z-0 opacity-70 ">
               <Image
@@ -51,8 +51,8 @@ const WhoAmI2 = () => {
         />
       </div> */}
         {/* Image */}
-      <div className="order-2 sm:oder-1 py-6 flex justify-center items-center ">
-        <div className="relative aspect-square size-72 md:size-96 flex  justify-center items-center ">
+      <div className="order-2 sm:oder-1 py-6 flex justify-center items-center">
+        <div className="relative aspect-video size-72 md:size-96 flex ">
           {/* <div
             className={`absolute w-[500px] h-[500px] -top-36 xs:w-[600px] xs:h-[600px]  sm:w-[700px] sm:h-[700px] md:w-[750px] md:h-[750px] sm:-top-36 md:-top-36 md:-left-54 lg:-top-36 lg:-left-54 z-10`}
           >
@@ -67,7 +67,7 @@ const WhoAmI2 = () => {
 
           </div> */}
           <div
-            className="relative w-full h-full z-40"
+            className="relative w-full h-full z-40 "
             style={{
               WebkitMaskImage: "url('/pngs/mati-shape.png')", // Mask image
               WebkitMaskRepeat: "no-repeat",

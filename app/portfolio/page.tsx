@@ -14,12 +14,12 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RowsPhotoAlbum } from "react-photo-album";
-import { portfolioPhotos } from "@/app/lib/photos";
+import { allPhotos, portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
 import { Compare } from "@/components/ui/compare";
 
 export default function PhotoPortfolio() {
-  const categories = ["Wszystkie", "Murale", "Wnętrza", "Samochody"];
+  const categories = ["Wszystkie", "Birds", "Murale", "Samochody"];
   const [index, setIndex] = useState(-1);
 
   return (
@@ -59,7 +59,7 @@ export default function PhotoPortfolio() {
           {categories.map((category) => (
             <TabsContent key={category} value={category} className="mt-0">
               <RowsPhotoAlbum
-                photos={portfolioPhotos.filter(
+                photos={allPhotos.filter(
                   (photo) =>
                     category === "Wszystkie" || photo.category === category,
                 )}
@@ -67,7 +67,7 @@ export default function PhotoPortfolio() {
                 onClick={({ index }) => setIndex(index)}
               />
               <Lightbox
-                slides={portfolioPhotos.filter(
+                slides={allPhotos.filter(
                   (photo) =>
                     category === "Wszystkie" || photo.category === category,
                 )}

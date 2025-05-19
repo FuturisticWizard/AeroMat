@@ -1,3 +1,4 @@
+import React from "react";
 import VideoHero from "./components/hero/VideoHero";
 import TestimonialsCarousel2 from "./components/Testimonials2";
 import Portfolio from "./components/Portfolio";
@@ -15,7 +16,7 @@ import YouTubeGrid from "./components/YoutubeVideosGrid";
 
 export default function Home() {
   return (
-    <div className="flex flex-col   font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
+    <div className="flex flex-col font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
       <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
         <VideoHero />
 
