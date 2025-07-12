@@ -3,16 +3,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
-import { FlipWords } from "@/components/ui/flip-words";
+import { FlipWords } from "@/app/components/ui/flip-words";
 import { useRouter } from "next/navigation";
 
 const VideoHero = ({
-  videoUrl = "/movies/hero_output.mp4", // https://www.youtube.com/embed/_Ur0BpsVwQE?autoplay=1 , /movies/hero_compressed.mp4
+  videoUrl = "/movies/hero_compressed.mp4", // Changed to compressed version
   title = "Przekształć swoją przestrzeń ",
   subtitle = "w dzieło sztuki",
   ctaText = "Zadzwoń",
 }) => {
   const [muted, setMuted] = useState(true);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const videoVolumeRef = useRef<HTMLVideoElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const words = [
@@ -21,6 +23,23 @@ const VideoHero = ({
     "zwiększają widoczność Twojej marki",
   ];
   const router = useRouter(); 
+
+  // Load video after component mounts (lazy loading)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 100); // Small delay to prioritize other page elements
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Preload the poster image
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = "/images/mural-starowka-zwyzka.jpg";
+  }, []);
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.muted = muted;
@@ -40,27 +59,32 @@ const VideoHero = ({
   return (
     <div className="relative w-full h-screen max-w-8xl justify-center items-center overflow-hidden">
       {/* Video Background */}
-      <video
-        ref={videoVolumeRef}
-        autoPlay
-        muted={muted}
-        loop
-        preload="auto"
-        playsInline
-        className="w-full h-full object-cover object-center"
-      >
-        <source src={videoUrl} type="video/mp4" />
-      </video>
-{/* <div className="relative w-full h-full">
-  <iframe
-    src={`${videoUrl}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&playlist=_Ur0BpsVwQE&controls=0&modestbranding=1&showinfo=0&rel=0&fs=0`}
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-    className="w-full h-full object-cover"
-  ></iframe>
-</div> */}
+      {shouldLoadVideo ? (
+        <motion.video
+          ref={videoVolumeRef}
+          autoPlay
+          muted={muted}
+          loop
+          preload="metadata" // Changed from "auto" to "metadata"
+          playsInline
+          poster="/images/mural-starowka-zwyzka.jpg" // Add poster image while video loads
+          className="w-full h-full object-cover object-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: imageLoaded ? 1 : 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          {/* Multiple sources for better compression */}
+          <source src="/movies/hero_medium.webm" type="video/webm" />
+        </motion.video>
+      ) : (
+        <motion.div 
+          className="w-full h-full object-cover object-center bg-cover bg-center" 
+          style={{ backgroundImage: 'url(/images/mural-starowka-zwyzka.jpg)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: imageLoaded ? 1 : 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        />
+      )}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />
@@ -129,7 +153,7 @@ const VideoHero = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="fixed bottom-4 left-4 right-4 sm:hidden z-50"
+            className="fixed bottom-4 left-4 right-4 sm:hidden z-[90]"
           >
             <a
               href="tel:+48780428883"

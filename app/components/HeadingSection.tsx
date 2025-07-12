@@ -22,7 +22,7 @@ const HeadingSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative  z-10">
+      <div className="relative  z-[1]">
         <h2 id="subheading"   className={`${
     img === 'purple' || img === 'black' ? 'text-white' : 'text-orange-400'
   } text-lg font-bold`}>

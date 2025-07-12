@@ -1,0 +1,17 @@
+.pixelBackground {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+
+    .column{
+        width: 5vw;
+        height: 100%;
+
+        .block{
+            width: 5vw;
+            height: 100%;
+            background-color: #FF4500;
+        }
+    }
+}
+

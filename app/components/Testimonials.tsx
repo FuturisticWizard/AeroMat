@@ -2,16 +2,16 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/app/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Badge } from "@/components/ui/badge";
+} from "@/app/components/ui/carousel";
+import { Badge } from "@/app/components/ui/badge";
 import { Star } from "lucide-react";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
 // Testimonial data with work images
@@ -137,7 +137,6 @@ export default function TestimonialsCarousel3() {
         key: `after-${i}`,
       });
     }
-    console.log("wheel", wheel);
     return wheel;
   };
 

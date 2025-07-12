@@ -11,12 +11,12 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/app/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { RowsPhotoAlbum } from "react-photo-album";
 import { allPhotos, portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
-import { Compare } from "@/components/ui/compare";
+import { Compare } from "@/app/components/ui/compare";
 
 export default function PhotoPortfolio() {
   const categories = ["Wszystkie", "Birds", "Murale", "Samochody"];

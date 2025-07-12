@@ -1,6 +1,5 @@
 import React from "react";
 import VideoHero from "./components/hero/VideoHero";
-import TestimonialsCarousel2 from "./components/Testimonials2";
 import Portfolio from "./components/Portfolio";
 import TrustedBy from "./components/TrustedBy";
 import HowItWorks from "./components/HowItWorks";
@@ -38,7 +37,7 @@ export default function Home() {
         {/* 
         <section id="testimonials" className=" max-w-6xl mx-auto items-center justify-center px-8 md:px-0 py-20">
             <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>
-            <TestimonialsCarousel2 />
+       
             
         </section> */}
       </main>

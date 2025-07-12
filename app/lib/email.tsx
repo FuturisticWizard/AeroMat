@@ -11,7 +11,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const send = async (emailForm: z.infer<typeof formSchema>) => {
   try {
     //TODO Add this emailForm data to some database
-    console.log(emailForm);
     const emailTemplate = await EmailTemplate({
       firstName: emailForm.firstName,
       message: emailForm.message,

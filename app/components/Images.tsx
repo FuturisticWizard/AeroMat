@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import Image from "next/image";
 import { FC } from "react";
 import { useEffect, useState } from "react";
@@ -56,7 +56,6 @@ import { useEffect, useState } from "react";
 //     onClick(index);
 //   };
 
-//   console.log("isXsmScreen", isXsmScreen);
 //   return (
 //     <div className="flex flex-col mx-auto h-auto w-full items-center sm:max-w-6xl lg:max-w-full xxs:py-4 px-2">
 //       {/* <div className={`grid xxs:grid-cols-1 grid-rows-${length} xsm:grid-cols-10 xsm:auto-rows-auto md:grid-cols-10 md:auto-rows-[minmax(100px, auto)] gap-1 sm:gap-2 md:gap-4 lg:gap-2 w-full py-2`}>
@@ -124,10 +123,20 @@ interface ImageSlideProps {
 const Images: FC<ImageSlideProps> = (props) => {
   const { data, onClick } = props;
 
-  const handleClickImage = (index: number) => {
+  const handleClickImage = useCallback((index: number) => {
     onClick(index);
-  };
+  }, [onClick]);
 
+  const fadeAnimationVariants = {
+    initial: { opacity: 0, y: 100 },
+    animate: (index: number) => ({ 
+      opacity: 1, 
+      y: 40,
+      transition: {
+        delay: 0.05 * index, // Each image delays by 0.15s more than the previous
+      }
+    }),
+  }
   return (
     <div className="flex flex-col mx-auto h-auto w-full items-center sm:max-w-6xl lg:max-w-full xxs:py-4 px-2">
       <div className="grid grid-container">
@@ -137,9 +146,11 @@ const Images: FC<ImageSlideProps> = (props) => {
             onClick={() => handleClickImage(index)}
             className="relative"
             style={{ gridArea: `${slide.gridArea}` }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.4 }} // Delay based on index
+            variants={fadeAnimationVariants}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            custom={index}
           >
             <Image
               src={slide.src}

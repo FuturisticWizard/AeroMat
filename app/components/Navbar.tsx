@@ -30,7 +30,6 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      console.log("scrolling!");
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -44,13 +43,13 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
       className={cn(
         "fixed  top-0 left-0 right-0 bg-white transition-all duration-300 overflow-hidden shadow-lg",
         isScrolled ? "shadow-lg" : "",
-        "z-50",
+        "z-[100]",
       )}
     >
-      <div className="max-w-7xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-50 ">
+      <div className="max-w-7xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-[110] ">
         <div className="flex items-center justify-between h-20 ">
           {/* Logo */}
-          <div className="flex-shrink-0  z-50">
+          <div className="flex-shrink-0  z-[120]">
             <Link href="/">
               <Image
                 src="/images/logo-horizontal-black2.png"
@@ -104,7 +103,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           open: { height: "auto", opacity: 1 },
           closed: { height: 0, opacity: 0 },
         }}
-        className="md:hidden overflow-hidden z-50"
+        className="md:hidden overflow-hidden z-[120]"
       >
         <div className="px-2 pt-2 pb-3 space-y-1 ">
           {items.map((item) => (

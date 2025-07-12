@@ -102,7 +102,6 @@ function VideoCard({ video }: { video: VideoItem }) {
     const [isPlaying, setIsPlaying] = useState(false);
   
     const handlePlay = () => {
-      console.log(`Playing video: ${video.id}`);
       setIsPlaying(true);
     };
   

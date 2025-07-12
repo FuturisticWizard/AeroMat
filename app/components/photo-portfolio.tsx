@@ -11,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 export default function PhotoPortfolio() {
@@ -234,7 +234,7 @@ export default function PhotoPortfolio() {
       </main>
 
       {activeImage !== null && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/90 z-[90] flex items-center justify-center">
           <div className="relative w-full max-w-5xl px-4">
             <Button
               variant="ghost"

@@ -3,10 +3,10 @@
 import type React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Input } from "@/app/components/ui/input";
+import { Textarea } from "@/app/components/ui/textarea";
+import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 import {
   Form,
@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/app/components/ui/form";
 
 import { z } from "zod";
 import { formSchema } from "../lib/schemas";
@@ -44,7 +44,6 @@ export default function ContactForm() {
   // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault()
   //   // Here you would typically send the form data to your backend
-  //   console.log("Form submitted:", formData)
   //   // Reset form after submission
   //   setFormData({ firstName: "",  email: "", message: "" })
   // }
@@ -64,7 +63,6 @@ export default function ContactForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     send(values);
-    console.log(values);
   }
 
   return (

@@ -39,7 +39,6 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
   const handleClick = useCallback(
     (poi: Poi) => {
       if (!map) return;
-      console.log("Marker clicked:", poi.name);
       map.panTo(poi.location); // Pan the map to the marker's location
       // Optionally set the circle center
       setSelectedPoi(poi); // Update the state with the clicked marker's details
@@ -48,7 +47,6 @@ const PoiMarkers = (props: { pois: Poi[] }) => {
     [map, setSelectedPoi],
   );
   const handleMarkerClick = useCallback(() => {
-    console.log("Marker clicked");
     setInfoWindowOpen(true);
   }, []);
 
@@ -129,7 +127,7 @@ const GoogleMap = () => {
     <div className="flex flex-col mx-auto h-auto w-full items-center sm:max-w-5xl md:max-w-6xl border border-0.5 border-black">
       <APIProvider
         apiKey={"AIzaSyAR7h_0EaMtlx3FtElu7aVAL3z0VX5d1hg"}
-        onLoad={() => console.log("Maps API has loaded.")}
+        onLoad={() => {}}
       >
         <div className="w-full h-[400px] sm:h-[500px] lg:h-[800px]">
           {" "}
@@ -137,14 +135,7 @@ const GoogleMap = () => {
           <Map
             defaultZoom={11}
             defaultCenter={{ lat: 51.2469, lng: 22.5833 }}
-            onCameraChanged={(ev: MapCameraChangedEvent) =>
-              console.log(
-                "camera changed:",
-                ev.detail.center,
-                "zoom:",
-                ev.detail.zoom,
-              )
-            }
+            onCameraChanged={(ev: MapCameraChangedEvent) => {}}
             mapId="da37f3254c6a6d1c"
             className="relative w-full h-full" // Ensure the map takes up the full container
           >

@@ -2,7 +2,7 @@
 import { Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const sliderImages = [

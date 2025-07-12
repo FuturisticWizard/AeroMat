@@ -73,9 +73,6 @@ function useCircle(props: CircleProps) {
   // create circle instance and add to the map once the map is available
   useEffect(() => {
     if (!map) {
-      if (map === undefined)
-        console.error("<Circle> has to be inside a Map component.");
-
       return;
     }
 

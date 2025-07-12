@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
   Button,
   Slider,
@@ -22,6 +22,13 @@ import { ReactPlayerProps } from "react-player";
 
 interface VideoPlayerProps {
   url: string; // Define the type for the `url` prop
+}
+
+interface ProgressState {
+  played: number;
+  playedSeconds: number;
+  loaded: number;
+  loadedSeconds: number;
 }
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
@@ -133,15 +140,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
         muted={muted}
         volume={volume}
         controls={true}
-        onProgress={({ played }) => setPlayed(played)}
+        onProgress={useCallback(({ played }: ProgressState) => setPlayed(played), [])}
         onDuration={setDuration}
         width="100%"
         height="100%"
-        config={{
+        config={useMemo(() => ({
           file: {
             attributes: { playsInline: true, webkitplaysinline: "true" },
           },
-        }}
+        }), [])}
       />
     </div>
   );
