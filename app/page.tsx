@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import VideoHero from "./components/hero/VideoHero";
 import Portfolio from "./components/Portfolio";
 import TrustedBy from "./components/TrustedBy";
@@ -10,6 +11,10 @@ import BentoGrid from "./components/BentoGrid";
 import { portfolioPhotos, PtasieMurale } from "@/app/lib/photos";
 import { Youtube } from "lucide-react";
 import YouTubeGrid from "./components/YoutubeVideosGrid";
+
+const ThreeCanvas = dynamic(() => import("./components/ThreeCanvas"), {
+  ssr: false,
+});
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
 
@@ -40,6 +45,7 @@ export default function Home() {
        
             
         </section> */}
+        {/* <ThreeCanvas /> */}
       </main>
     </div>
   );

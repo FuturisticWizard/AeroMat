@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { FlipWords } from "@/app/components/ui/flip-words";
 import { useRouter } from "next/navigation";
+import CallButtonPortal from "../CallButtonPortal";
 
 const VideoHero = ({
   videoUrl = "/movies/hero_compressed.mp4", // Changed to compressed version
@@ -148,20 +149,8 @@ const VideoHero = ({
             >
               {ctaText}
             </Button> */}
-            {/* Call Button for Mobile */}
-            <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="fixed bottom-4 left-4 right-4 sm:hidden z-[90]"
-          >
-            <a
-              href="tel:+48780428883"
-              className="block w-full text-center bg-[#FE9100] text-white font-bold py-3 rounded-lg shadow-lg hover:bg-[#e87f00] transition-colors duration-300"
-            >
-              Zadzwoń: +48 780 428 883
-            </a>
-          </motion.div>
+            {/* Call Button for Mobile - Portal Version (Top Layer Guaranteed) */}
+            <CallButtonPortal phoneNumber="+48780428883" />
             <div className="leading-tight flex flex-row">
             <button
               className="mt-2 px-4 py-2 bg-[#FE9100] text-white font-bold rounded-lg shadow-md hover:bg-[#e87f00] transition-colors duration-300"

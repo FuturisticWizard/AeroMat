@@ -15,8 +15,41 @@
     -webkit-text-stroke: 1px rgb(255 255 255);
     font-family: Anton, sans-serif;
   }
+  
+  /* Blur effects for AppleCards - Production fix */
+  .blur-sm {
+    filter: blur(4px);
+  }
+  .blur-0 {
+    filter: blur(0);
+  }
+  .backdrop-blur-lg {
+    backdrop-filter: blur(16px);
+  }
+  
+  /* Apple Cards drag improvements */
+  .apple-cards-carousel {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    scrollbar-width: none;
+  }
+  
+  .apple-cards-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Force call button to top layer */
+  .call-button-force {
+    z-index: 9999 !important;
+    position: fixed !important;
+    isolation: isolate;
+    transform: translateZ(0);
+  }
+}
 
-  .yesteryear-regular {
+.yesteryear-regular {
     font-family: Yesteryear, serif;
     font-weight: 400;
     font-style: normal;
@@ -76,7 +109,6 @@
     );
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#FFFFFF", GradientType=1 );
   }
-}
 
 @layer components {
   .border-border {

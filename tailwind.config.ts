@@ -54,6 +54,10 @@ export default {
     "md:-left-72",
     "lg:-top-56",
     "lg:-left-64",
+    // Blur classes for AppleCards component
+    "blur-sm",
+    "blur-0",
+    "backdrop-blur-lg",
   ],
   theme: {
     container: {
