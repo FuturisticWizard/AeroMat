@@ -8,14 +8,12 @@ import CallButtonPortal from "../CallButtonPortal";
 import { useAudio } from "@/app/context/AudioContext";
 
 const VideoHero = ({
-  videoUrl = "/movies/hero_compressed.mp4", // Changed to compressed version
+  videoUrl = "/movies/hero_compressed.mp4",
   title = "Przekształć swoją przestrzeń ",
   subtitle = "w dzieło sztuki",
   ctaText = "Zadzwoń",
 }) => {
   const { muted } = useAudio();
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const videoVolumeRef = useRef<HTMLVideoElement>(null);
   const words = [
@@ -25,27 +23,9 @@ const VideoHero = ({
   ];
   const router = useRouter(); 
 
-  // Load video after component mounts (lazy loading)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShouldLoadVideo(true);
-    }, 100); // Small delay to prioritize other page elements
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Preload the poster image
-  useEffect(() => {
-    const img = new Image();
-    img.onload = () => setImageLoaded(true);
-    img.src = "/images/mural-starowka-zwyzka.jpg";
-  }, []);
-
-  // Synchronizuj stan muted z video elementem - ale tylko po tym jak wideo jest gotowe
+  // Synchronizuj stan muted z video elementem
   useEffect(() => {
     if (videoVolumeRef.current && videoReady) {
-      // Próbuj odmutować tylko jeśli użytkownik tego chce
-      // Przeglądarki mogą to zablokować bez interakcji
       if (!muted) {
         videoVolumeRef.current.muted = false;
         videoVolumeRef.current.volume = 0.2;
@@ -55,63 +35,51 @@ const VideoHero = ({
     }
   }, [muted, videoReady]);
   
-  // Wymuszenie odtwarzania wideo po załadowaniu
+  // Wymuszenie odtwarzania wideo po zamontowaniu
   useEffect(() => {
-    if (shouldLoadVideo && videoVolumeRef.current) {
-      const video = videoVolumeRef.current;
-      
-      // Funkcja do próby odtworzenia
-      const attemptPlay = async () => {
-        try {
-          // Najpierw upewnij się, że wideo jest wyciszone (wymagane dla autoplay)
-          video.muted = true;
-          await video.play();
-          console.log("Video autoplay started successfully");
-          setVideoReady(true);
-        } catch (error) {
-          console.log("Autoplay failed, trying with user interaction:", error);
-          // Jeśli autoplay nie działa, wideo pokaże poster
-        }
-      };
-      
-      // Poczekaj aż wideo będzie gotowe
-      if (video.readyState >= 3) {
-        attemptPlay();
-      } else {
-        video.addEventListener('canplay', attemptPlay, { once: true });
+    const video = videoVolumeRef.current;
+    if (!video) return;
+    
+    const attemptPlay = async () => {
+      try {
+        video.muted = true;
+        await video.play();
+        console.log("Video autoplay started successfully");
+      } catch (error) {
+        console.log("Autoplay failed:", error);
       }
+    };
+    
+    if (video.readyState >= 3) {
+      attemptPlay();
+    } else {
+      video.addEventListener('canplay', attemptPlay, { once: true });
     }
-  }, [shouldLoadVideo]);
+  }, []);
 
   return (
-    <div className="relative w-full h-screen max-w-8xl justify-center items-center overflow-hidden">
-      {/* Video Background */}
-      {shouldLoadVideo ? (
-        <video
-          ref={videoVolumeRef}
-          autoPlay
-          muted
-          loop
-          preload="auto"
-          playsInline
-          webkit-playsinline="true"
-          poster="/images/mural-starowka-zwyzka.jpg"
-          className="w-full h-full object-cover object-center"
-          onCanPlay={() => {
-            console.log("Video can play");
-            setVideoReady(true);
-          }}
-          onError={(e) => console.error("Video error:", e)}
-        >
-          <source src="/movies/hero_compressed.mp4" type="video/mp4" />
-          <source src="/movies/hero_compressed.webm" type="video/webm" />
-        </video>
-      ) : (
-        <div 
-          className="w-full h-full bg-cover bg-center" 
-          style={{ backgroundImage: 'url(/images/mural-starowka-zwyzka.jpg)' }}
-        />
-      )}
+    <div className="relative w-full h-screen max-w-8xl justify-center items-center overflow-hidden bg-black">
+      {/* Video Background - zawsze renderowane, opacity kontroluje widoczność */}
+      <video
+        ref={videoVolumeRef}
+        autoPlay
+        muted
+        loop
+        preload="auto"
+        playsInline
+        webkit-playsinline="true"
+        className={`w-full h-full object-cover object-center transition-opacity duration-1000 ease-out ${
+          videoReady ? "opacity-100" : "opacity-0"
+        }`}
+        onCanPlay={() => {
+          console.log("Video can play");
+          setVideoReady(true);
+        }}
+        onError={(e) => console.error("Video error:", e)}
+      >
+        <source src="/movies/hero_compressed.mp4" type="video/mp4" />
+        <source src="/movies/hero_compressed.webm" type="video/webm" />
+      </video>
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 h-full bg-gradient-to-b from-black/10 via-black/20 to-black z-10" />
