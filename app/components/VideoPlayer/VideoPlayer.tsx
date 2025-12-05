@@ -1,24 +1,14 @@
 "use client";
 import dynamic from "next/dynamic";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import {
-  Button,
-  Slider,
-  FormattedTime,
-  Direction,
-} from "react-player-controls";
 import "./VideoPlayer.css";
 
 import PlayWhiteIcon from "../icons/PlayWhiteIcon";
-
 import PauseWhiteIcon from "../icons/PauseWhiteIcon";
-
 import SoundOnWhite from "../icons/SoundOnWhite";
-
 import SoundOffWhite from "../icons/SoundOffWhite";
 import MinimizeWhite from "../icons/MinimizeWhite";
 import MaximizeWhite from "../icons/MaximizeWhite";
-import { ReactPlayerProps } from "react-player";
 
 interface VideoPlayerProps {
   url: string; // Define the type for the `url` prop
@@ -89,43 +79,10 @@ const useFullscreen = () => {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true); // Start muted for autoplay
   const [volume, setVolume] = useState(0.5);
-  const [played, setPlayed] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [controlsVisible, setControlsVisible] = useState(true);
-  const playerRef = useRef<ReactPlayerProps | null>(null);
+  const playerRef = useRef<any>(null);
   const { elementRef, isFullscreen, toggleFullscreen } = useFullscreen();
-  const hideControlsTimeout = useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
-
-  const showControls = () => {
-    setControlsVisible(true);
-    if (hideControlsTimeout.current) {
-      clearTimeout(hideControlsTimeout.current);
-    }
-    hideControlsTimeout.current = setTimeout(
-      () => setControlsVisible(false),
-      3000,
-    );
-  };
-  useEffect(() => {
-    setVolume(0.5);
-    const handleUserInteraction = () => showControls();
-    const playerElement = elementRef.current;
-    if (!playerElement) return;
-
-    playerElement.addEventListener("mousemove", handleUserInteraction);
-    playerElement.addEventListener("touchstart", handleUserInteraction);
-
-    return () => {
-      if (playerElement) {
-        playerElement.removeEventListener("mousemove", handleUserInteraction);
-        playerElement.removeEventListener("touchstart", handleUserInteraction);
-      }
-    };
-  }, [elementRef]);
 
   return (
     <div
@@ -135,20 +92,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
       ref={elementRef}
     >
       <ReactPlayer
+        ref={playerRef}
         url={url}
         playing={playing}
         muted={muted}
         volume={volume}
         controls={true}
-        onProgress={useCallback(({ played }: ProgressState) => setPlayed(played), [])}
-        onDuration={setDuration}
         width="100%"
         height="100%"
         config={useMemo(() => ({
           file: {
-            attributes: { playsInline: true, webkitplaysinline: "true" },
+            attributes: { 
+              playsInline: true, 
+              webkitplaysinline: "true",
+              preload: "metadata"
+            },
           },
         }), [])}
+        onReady={() => {
+          console.log("Video player ready");
+        }}
+        onError={(error) => {
+          console.error("Video player error:", error);
+        }}
       />
     </div>
   );

@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAudio } from "@/app/context/AudioContext";
 
 interface NavItem {
   label: string;
@@ -26,6 +27,7 @@ const defaultItems: NavItem[] = [
 const Navbar = ({ items = defaultItems }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { muted, toggleMute } = useAudio();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,8 +43,8 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        "fixed  top-0 left-0 right-0 bg-white transition-all duration-300 overflow-hidden shadow-lg",
-        isScrolled ? "shadow-lg" : "",
+        "fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-sm transition-all duration-300 overflow-hidden border-b border-neutral-800",
+        isScrolled ? "shadow-lg shadow-black/50" : "",
         "z-[100]",
       )}
     >
@@ -62,25 +64,52 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block z-5">
+          <div className="hidden md:flex items-center z-5">
             <div className="ml-10 flex items-center space-x-8">
               {items.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                  className="text-[#ff7302] hover:text-orange-400 transition-colors duration-200"
                 >
                   {item.label}
                 </a>
               ))}
-              {/* <Button>Zacznij współprace</Button> */}
             </div>
+            {/* Sound Toggle Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-6 rounded-full h-10 w-10 bg-neutral-800 hover:bg-[#ff7302] text-white hover:text-white transition-colors"
+              onClick={toggleMute}
+              aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
+            >
+              {muted ? (
+                <VolumeX className="h-5 w-5" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden ">
+          <div className="md:hidden flex items-center gap-2">
+            {/* Sound Toggle Button - Mobile */}
             <Button
-              className=""
+              variant="ghost"
+              size="icon"
+              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-[#ff7302] text-white hover:text-white transition-colors"
+              onClick={toggleMute}
+              aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
+            >
+              {muted ? (
+                <VolumeX className="h-5 w-5" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </Button>
+            <Button
+              className="text-white hover:text-[#ff7302]"
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -105,12 +134,12 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
         }}
         className="md:hidden overflow-hidden z-[120]"
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 ">
+        <div className="px-2 pt-2 pb-3 space-y-1">
           {items.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="block px-3 py-2 text-base font-medium text-foreground/70 hover:text-primary hover:bg-primary/10 rounded-md"
+              className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.label}

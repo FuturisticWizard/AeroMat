@@ -1,7 +1,6 @@
 import React from "react";
-import MapComponent from "./MapComponent";
-import Image from "next/image";
 import HeadingSection from "./HeadingSection";
+import { LazyMuralsMapWithIntersection } from "./LazyComponents";
 
 const MuralsMap = () => {
   return (
@@ -12,7 +11,7 @@ const MuralsMap = () => {
         content="Murale AeroMat to nie tylko dzieła sztuki, ale także elementy, które ożywiają przestrzeń publiczną i tworzą unikalny charakter miasta. Na AeroMapie znajdziesz wiele moich murali, każdy jest opisany i zlokalizowany,dzięki czemu możesz łatwo odnaleźć je podczas spaceru po mieście."
         img="yellow"
       />
-      <MapComponent />
+      <LazyMuralsMapWithIntersection />
     </div>
   );
 };

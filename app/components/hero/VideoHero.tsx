@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { motion } from "framer-motion";
-import { Volume2, VolumeX } from "lucide-react";
 import { FlipWords } from "@/app/components/ui/flip-words";
 import { useRouter } from "next/navigation";
 import CallButtonPortal from "../CallButtonPortal";
+import { useAudio } from "@/app/context/AudioContext";
 
 const VideoHero = ({
   videoUrl = "/movies/hero_compressed.mp4", // Changed to compressed version
@@ -13,11 +13,11 @@ const VideoHero = ({
   subtitle = "w dzieło sztuki",
   ctaText = "Zadzwoń",
 }) => {
-  const [muted, setMuted] = useState(true);
+  const { muted } = useAudio();
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const videoVolumeRef = useRef<HTMLVideoElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const words = [
     "przyciągają wzrok i klientów",
     "pomagają w budowaniu silnego wizerunku",
@@ -41,49 +41,75 @@ const VideoHero = ({
     img.src = "/images/mural-starowka-zwyzka.jpg";
   }, []);
 
+  // Synchronizuj stan muted z video elementem - ale tylko po tym jak wideo jest gotowe
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = muted;
+    if (videoVolumeRef.current && videoReady) {
+      // Próbuj odmutować tylko jeśli użytkownik tego chce
+      // Przeglądarki mogą to zablokować bez interakcji
+      if (!muted) {
+        videoVolumeRef.current.muted = false;
+        videoVolumeRef.current.volume = 0.2;
+      } else {
+        videoVolumeRef.current.muted = true;
+      }
     }
-    if (!muted && videoVolumeRef.current) {
-      videoVolumeRef.current.volume = 0.2; // Set volume to half
+  }, [muted, videoReady]);
+  
+  // Wymuszenie odtwarzania wideo po załadowaniu
+  useEffect(() => {
+    if (shouldLoadVideo && videoVolumeRef.current) {
+      const video = videoVolumeRef.current;
+      
+      // Funkcja do próby odtworzenia
+      const attemptPlay = async () => {
+        try {
+          // Najpierw upewnij się, że wideo jest wyciszone (wymagane dla autoplay)
+          video.muted = true;
+          await video.play();
+          console.log("Video autoplay started successfully");
+          setVideoReady(true);
+        } catch (error) {
+          console.log("Autoplay failed, trying with user interaction:", error);
+          // Jeśli autoplay nie działa, wideo pokaże poster
+        }
+      };
+      
+      // Poczekaj aż wideo będzie gotowe
+      if (video.readyState >= 3) {
+        attemptPlay();
+      } else {
+        video.addEventListener('canplay', attemptPlay, { once: true });
+      }
     }
-  }, [muted]);
-
-  const toggleMute = () => {
-    if (!muted && videoVolumeRef.current) {
-      videoVolumeRef.current.volume = 0.2; // Set volume to half
-    }
-    setMuted(!muted);
-  };
+  }, [shouldLoadVideo]);
 
   return (
     <div className="relative w-full h-screen max-w-8xl justify-center items-center overflow-hidden">
       {/* Video Background */}
       {shouldLoadVideo ? (
-        <motion.video
+        <video
           ref={videoVolumeRef}
           autoPlay
-          muted={muted}
+          muted
           loop
-          preload="metadata" // Changed from "auto" to "metadata"
+          preload="auto"
           playsInline
-          poster="/images/mural-starowka-zwyzka.jpg" // Add poster image while video loads
+          webkit-playsinline="true"
+          poster="/images/mural-starowka-zwyzka.jpg"
           className="w-full h-full object-cover object-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: imageLoaded ? 1 : 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          onCanPlay={() => {
+            console.log("Video can play");
+            setVideoReady(true);
+          }}
+          onError={(e) => console.error("Video error:", e)}
         >
-          {/* Multiple sources for better compression */}
-          <source src="/movies/hero_medium.webm" type="video/webm" />
-        </motion.video>
+          <source src="/movies/hero_compressed.mp4" type="video/mp4" />
+          <source src="/movies/hero_compressed.webm" type="video/webm" />
+        </video>
       ) : (
-        <motion.div 
-          className="w-full h-full object-cover object-center bg-cover bg-center" 
+        <div 
+          className="w-full h-full bg-cover bg-center" 
           style={{ backgroundImage: 'url(/images/mural-starowka-zwyzka.jpg)' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: imageLoaded ? 1 : 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
         />
       )}
 
@@ -98,8 +124,8 @@ const VideoHero = ({
           transition={{ duration: 0.8 }}
           className="relative mb-6"
         >
-          <div className="absolute left-0 -top-4 border-t-4 border-l-4 border-solid border-white w-16 h-16" />
-          <div className="absolute right-0 -top-4 border-t-4 border-r-4 border-solid border-white w-16 h-16" />
+          {/* <div className="absolute left-0 -top-4 border-t-4 border-l-4 border-solid border-white w-16 h-16" />
+          <div className="absolute right-0 -top-4 border-t-4 border-r-4 border-solid border-white w-16 h-16" /> */}
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -163,32 +189,11 @@ const VideoHero = ({
               </p>
             </div>
           </motion.div>
-          <div className="absolute left-0 -bottom-4 border-b-4 border-l-4 border-solid border-white w-16 h-16" />
-          <div className="absolute right-0 -bottom-4 border-b-4 border-r-4 border-solid border-white w-16 h-16" />
+          {/* <div className="absolute left-0 -bottom-4 border-b-4 border-l-4 border-solid border-white w-16 h-16" />
+          <div className="absolute right-0 -bottom-4 border-b-4 border-r-4 border-solid border-white w-16 h-16" /> */}
         </motion.div>
       </div>
 
-      {/* Mute Button */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        className="absolute top-12 right-4 z-30"
-      >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full h-12 w-12 bg-black/80 hover:bg-white/10 text-white mt-12"
-          onClick={toggleMute}
-          aria-label={muted ? "Unmute video" : "Mute video"}
-        >
-          {muted ? (
-            <VolumeX className="h-8 w-8" />
-          ) : (
-            <Volume2 className="h-8 w-8" />
-          )}
-        </Button>
-      </motion.div>
     </div>
   );
 };

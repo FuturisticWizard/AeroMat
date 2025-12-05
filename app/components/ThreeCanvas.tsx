@@ -8,19 +8,19 @@ import * as THREE from 'three';
 export function SprayCan() {
   return (
     <group>
-      {/* Can Body */}
+      {/* Can Body - reduced segments for better performance */}
       <mesh position={[0, 1, 0]}>
-        <cylinderGeometry args={[0.5, 0.5, 2, 32]} />
+        <cylinderGeometry args={[0.5, 0.5, 2, 16]} />
         <meshStandardMaterial color="#cccccc" />
       </mesh>
-      {/* Can Top */}
+      {/* Can Top - reduced segments */}
       <mesh position={[0, 2.1, 0]}>
-        <sphereGeometry args={[0.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <sphereGeometry args={[0.5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color="#999999" />
       </mesh>
-      {/* Nozzle */}
+      {/* Nozzle - reduced segments */}
       <mesh position={[0, 2.3, 0]}>
-        <cylinderGeometry args={[0.15, 0.15, 0.2, 32]} />
+        <cylinderGeometry args={[0.15, 0.15, 0.2, 8]} />
         <meshStandardMaterial color="#222222" />
       </mesh>
 
@@ -38,31 +38,40 @@ export function AnimatedSprayCan() {
   const canRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
+    let animation: gsap.core.Tween;
+    
     if (canRef.current) {
-      gsap.to(canRef.current.rotation, {
+      animation = gsap.to(canRef.current.rotation, {
         y: Math.PI * 2,
         duration: 2,
         repeat: -1,
         ease: 'linear',
       });
     }
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      if (animation) {
+        animation.kill();
+      }
+    };
   }, []);
 
   return (
     <group ref={canRef}>
-      {/* Can Body */}
+      {/* Can Body - reduced segments for better performance */}
       <mesh position={[0, 1, 0]}>
-        <cylinderGeometry args={[0.5, 0.5, 2, 32]} />
+        <cylinderGeometry args={[0.5, 0.5, 2, 16]} />
         <meshStandardMaterial color="#cccccc" />
       </mesh>
-      {/* Can Top */}
+      {/* Can Top - reduced segments */}
       <mesh position={[0, 2.1, 0]}>
-        <sphereGeometry args={[0.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <sphereGeometry args={[0.5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
         <meshStandardMaterial color="#999999" />
       </mesh>
-      {/* Nozzle */}
+      {/* Nozzle - reduced segments */}
       <mesh position={[0, 2.3, 0]}>
-        <cylinderGeometry args={[0.15, 0.15, 0.2, 32]} />
+        <cylinderGeometry args={[0.15, 0.15, 0.2, 8]} />
         <meshStandardMaterial color="#222222" />
       </mesh>
     </group>

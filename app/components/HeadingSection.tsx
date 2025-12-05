@@ -23,19 +23,17 @@ const HeadingSection = ({
 
       {/* Content */}
       <div className="relative  z-[1]">
-        <h2 id="subheading"   className={`${
-    img === 'purple' || img === 'black' ? 'text-white' : 'text-orange-400'
-  } text-lg font-bold`}>
+        <h2 id="subheading" className="text-[#ff7302] text-lg font-bold uppercase tracking-wider">
           {subheading}
         </h2>
         <div className="flex flex flex-col sm:flex-row order-2 sm:order-1 pb-4 lsm:pb-8 gap-4">
           <div className="sm:w-1/2">
-            <h3 className="text-2xl sm:text-2xl lsm:text-3xl font-semibold leading-snug">
+            <h3 className="text-2xl sm:text-2xl lsm:text-3xl font-semibold leading-snug text-white">
               {heading}
             </h3>
           </div>
 
-          <p className="text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-600 sm:w-1/2">
+          <p className="text-sm xsm:text-base md:text-md lg:text-lg text-semibold text-gray-200 sm:w-1/2">
             {content}
           </p>
         </div>

@@ -59,22 +59,15 @@ export default function YouTubeGrid() {
   ]
 
   return (
-    <section className="py-16 from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 max-w-7xl mx-auto mb-12">
+    <section className="py-16 max-w-7xl mx-auto mb-12">
       <div className="container px-4 mx-auto relative">
-        {/* <div className="absolute -left-10 top-1/4  transform -translate-y-1/2 -translate-x-full hidden lg:block" >
-          <h2 className="text-8xl anton-regular font-bold tracking-tight transform -rotate-90 origin-right whitespace-nowrap text-gray-800 opacity-10">
-          ZA KULISAMI
-          </h2>
-        </div> */}
-        
         {/* Mobile/tablet heading (visible on smaller screens) */}
-        <div className=" py-4  " > 
-        
-          <h2 className="text-7xl md:text-8xl anton-regular text-left font-bold tracking-tight transform origin-right whitespace-nowrap text-gray-800 opacity-10">
+        <div className="py-4"> 
+          <h2 className="text-7xl md:text-8xl anton-regular text-left font-bold tracking-tight transform origin-right whitespace-nowrap text-[#ff7302] opacity-30">
           ZA KULISAMI
           </h2>
         
-          <p className="text-lg text-slate-600 dark:text-slate-400">
+          <p className="text-lg text-gray-200">
             Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.
           </p>
         </div>
@@ -106,7 +99,7 @@ function VideoCard({ video }: { video: VideoItem }) {
     };
   
     return (
-      <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-800">
+      <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 bg-neutral-900/80 border border-neutral-700 hover:border-[#ff7302]/40">
         {/* Ensure the aspect ratio is maintained */}
         <div className="relative pb-[56.25%] overflow-hidden">
           {!isPlaying ? (
@@ -120,8 +113,8 @@ function VideoCard({ video }: { video: VideoItem }) {
                 alt={`${video.title} thumbnail`}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-[#ff7302] flex items-center justify-center shadow-lg shadow-orange-500/30 transform group-hover:scale-110 transition-transform duration-300">
                   <Play className="w-8 h-8 text-white fill-current ml-1" />
                 </div>
               </div>
@@ -139,8 +132,8 @@ function VideoCard({ video }: { video: VideoItem }) {
           )}
         </div>
         <div className="p-4">
-          <h3 className="font-semibold text-lg mb-1">{video.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">{video.description}</p>
+          <h3 className="font-semibold text-lg mb-1 text-white">{video.title}</h3>
+          <p className="text-gray-300 text-sm">{video.description}</p>
         </div>
       </div>
     );

@@ -22,10 +22,10 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#FF7300] py-12 px-4">
+    <footer className="bg-gradient-to-b from-black to-[#2d1a0a] pt-[190px] pb-12 px-4">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="flex w-full justify-center items-center">
+          <div className="flex w-full justify-center items-center pt-[50px]">
             <div className="relative w-48 h-20">
               <Image
                 src="/images/logo-horizontal-black2.png"
@@ -64,7 +64,7 @@ const Footer = () => {
         </div>
 
         <div className=" mt-8 pt-8 text-center text-white">
-          <p>© {new Date().getFullYear()} Aeromat. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Made by . All rights reserved.</p>
           <p>
             Icons by{" "}
             <Link href="https://www.icons8.com" className="underline">

@@ -137,6 +137,113 @@
     grid-template-rows: 1fr 1fr;
     gap: 1em;
   }
+
+  .panorama-card {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    padding: 1.5em;
+    background-color: #050505;
+  }
+
+  .panorama-img-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 150px;
+    overflow: hidden;
+  }
+
+  .panorama-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: scale(2);
+    transform-origin: center;
+  }
+
+  .panorama-filter {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at 30% 20%,
+        rgba(255, 190, 120, 0.2),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 70% 80%,
+        rgba(80, 180, 255, 0.25),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(5, 8, 18, 0.55),
+        rgba(1, 4, 10, 0.85)
+      );
+    mix-blend-mode: multiply;
+  }
+
+  .panorama-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    pointer-events: none;
+    padding: 2rem;
+  }
+
+  .panorama-caption {
+    position: absolute;
+    color: #eaf3ff;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+  .panorama-caption:nth-child(1) {
+    left: 8%;
+    top: 20%;
+    text-align: left;
+  }
+  .panorama-caption:nth-child(2) {
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+  }
+  .panorama-caption:nth-child(3) {
+    left: 15%;
+    bottom: 15%;
+    text-align: left;
+  }
+
+  .panorama-caption h2 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 1rem;
+    color: #e2c72b;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 0.1rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .panorama-caption .char {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .panorama-caption .char span {
+    display: inline-block;
+  }
+
+  .panorama-caption p {
+    text-transform: none;
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    letter-spacing: 0.05rem;
+    line-height: 1.4;
+    color: rgba(238, 244, 255, 0.92);
+  }
 }
 
 @layer base {
@@ -147,7 +254,7 @@
 
   :root {
     --font-poppins-sans: "Poppins", sans-serif;
-    --background: 0 0% 100%;
+    --background: 0 0% 0%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
@@ -225,7 +332,7 @@
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
+    --background: 0 0% 0%;
     --foreground: 60 9.1% 97.8%;
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
@@ -406,9 +513,6 @@
 
 .image-container img {
   object-fit: cover; /* Use contain to maintain aspect ratio */
-
-  /* object-fit: cover; */
-
   /* Use cover to fill the container, cropping if necessary */
   width: 100%;
   height: 100%;
@@ -490,4 +594,245 @@
   .image-container {
     height: 40vh; /* Adjust height for smaller screens */
   }
+
+  .img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  h1 {
+  font-size: 5rem;
+  font-weight: 500;
+  letter-spacing: -0.1rem;
+  line-height: 1.25;
+  }
+
+  p {
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.25;
+
+  }
+
+
+  .intro,
+  .outro,
+  .cards,
+  .panorama-section {
+    position: relative;
+    width: 100vw;
+    background-color: #000000;
+    color: #fff;
+  }
+
+  .intro,
+  .outro {
+    height: 100svh;
+    padding: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .intro h1,
+  .outro h1 {
+    width: 60%;
+    text-align: center;
+    line-height: 1.1;
+  }
+  
+  .cards {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25svh;
+  }
+  .card-marquee {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    overflow: hidden;
+  }
+
+  .card-marquee .marquee {
+    display: flex;
+  }
+
+  .card-marquee .marquee h1 {
+    white-space: nowrap;
+    font-size: 10vw;
+    font-weight: 600;
+    margin-right: 30px;
+  }
+  .card {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    padding: 1.5em;
+  }
+  .card-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+  } 
+  .card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 150px;
+    overflow: hidden;
+  }
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(2);
+    transform-origin: center;
+  }
+  .card-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 3rem;
+    z-index: 1;
+  }
+  .card-content .card-title {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: inherit;
+    transform: none;
+  }
+  .card-content .card-title h1 {
+    width: 100%;
+  }
+  .card-content .card-description {
+    position: relative;
+    width: min(55ch, 70%);
+    text-align: inherit;
+    opacity: 0;
+  }
+
+  .card:nth-child(2) {
+    margin-top: 50vh;
+  }
+
+  .card:nth-child(1) .card-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .card:nth-child(1) .card-title {
+    justify-content: flex-start;
+  }
+  .card:nth-child(1) .card-title h1,
+  .card:nth-child(1) .card-description {
+    align-self: flex-start;
+    width: 100%;
+    text-align: left;
+  }
+  .card:nth-child(1) .card-description {
+    width: min(50ch, 55%);
+  }
+
+  .card:nth-child(2) .card-content,
+  .card:nth-child(3) .card-content {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .card:nth-child(2) .card-title,
+  .card:nth-child(3) .card-title {
+    justify-content: center;
+  }
+  .card:nth-child(2) .card-title h1,
+  .card:nth-child(2) .card-description,
+  .card:nth-child(3) .card-title h1,
+  .card:nth-child(3) .card-description {
+    align-self: stretch;
+    width: 100%;
+    text-align: center;
+  }
+
+  .card:nth-child(4) .card-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .card:nth-child(4) .card-title {
+    justify-content: flex-start;
+  }
+  .card:nth-child(4) .card-title h1,
+  .card:nth-child(4) .card-description {
+    align-self: stretch;
+    width: 100%;
+    text-align: left;
+  }
+
+  .char {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .char span {
+    transform: translateX(100%);
+    display: inline-block;
+    will-change: transform;
+  }
+
+  @media (max-width: 900px) {
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 0;
+    }
+
+    .intro h1,
+    .outro h1 {
+      width: 100%;
+    }
+
+    .card-content .card-description {
+      width: 90%;
+
+    }
+  }
+}
+
+/* Google Maps InfoWindow dark mode styling */
+.gm-style .gm-style-iw-c {
+  background-color: #171717 !important;
+  border: 1px solid #404040 !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-tc::after {
+  background: #171717 !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: linear-gradient(45deg, #171717 50%, transparent 50%) !important;
+}
+
+.gm-style button.gm-ui-hover-effect {
+  top: 4px !important;
+  right: 4px !important;
+}
+
+.gm-style button.gm-ui-hover-effect > span {
+  background-color: #fff !important;
 }
