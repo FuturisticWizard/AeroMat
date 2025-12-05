@@ -39,7 +39,8 @@ const nextConfig = {
       "gsap",
     ],
     scrollRestoration: true,
-    useLightningcss: true,
+    // useLightningcss disabled - causes issues with Vercel Linux builds
+    // useLightningcss: true,
   },
 
   // Transpile packages dla lepszej kompatybilności
