@@ -23,13 +23,13 @@ export default function PhotoPortfolio() {
   const [index, setIndex] = useState(-1);
 
   return (
-    <div className="min-h-screen bg-background py-8 mt-12">
+    <div className="min-h-screen bg-black py-8 mt-12">
       <header className="container mx-auto py-12 px-4 md:py-20">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white">
             AeroMat - Kreatywność Bez Granic
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl text-gray-300 mb-8">
             W AeroMat nie ma granic dla Twojej wyobraźni. Tworzymy unikalne
             murale, wykorzystując różnorodne techniki malarskie, aby ożywić
             przestrzeń i wyróżnić Twoją markę. Od tradycyjnych pędzli po
@@ -46,10 +46,14 @@ export default function PhotoPortfolio() {
       <main className="container mx-auto px-4 pb-20">
         <Tabs defaultValue="Wszystkie" className="mb-12">
           <div className="flex flex-col py-2 xsm:flex-row items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold py-2">Moje prace</h2>
-            <TabsList>
+            <h2 className="text-3xl font-bold py-2 text-white">Moje prace</h2>
+            <TabsList className="bg-neutral-800 border border-neutral-700">
               {categories.map((category) => (
-                <TabsTrigger key={category} value={category}>
+                <TabsTrigger 
+                  key={category} 
+                  value={category}
+                  className="text-gray-300 data-[state=active]:bg-[#ff7302] data-[state=active]:text-white"
+                >
                   {category}
                 </TabsTrigger>
               ))}
@@ -80,18 +84,18 @@ export default function PhotoPortfolio() {
           ))}
         </Tabs>
 
-        <section className="bg-[#FDE6C6] rounded-xl p-8 md:p-12 overflow-hidden ">
+        <section className="bg-neutral-900 border border-neutral-700 rounded-xl p-8 md:p-12 overflow-hidden">
           <div className="grid grid-cols-1 gap-8 items-center">
             <div className="container flex flex-col px-4">
-              <h2 className="text-3xl font-bold pb-4">
+              <h2 className="text-3xl font-bold pb-4 text-white">
                 Chcesz nawiązać kontakt ?
               </h2>
-              <p className="text-muted-foreground pb-6">
+              <p className="text-gray-300 pb-6">
                 Niezależnie od tego, czy potrzebujesz muralu dla swojego biura,
                 profesjonalnego malowania fasady czy unikalnej dekoracji wnętrz,
                 jesteśmy tutaj, aby ożywić Twoją przestrzeń.
               </p>
-              <Button className="inline-block">
+              <Button className="inline-block bg-[#ff7302] hover:bg-[#e56502] text-white w-fit">
                 <Link href="/kontakt">Kontakt</Link>
               </Button>
             </div>

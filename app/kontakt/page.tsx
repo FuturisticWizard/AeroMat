@@ -66,7 +66,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-full px-4 md:px-6 lg:px-8 py-24 md:py-20 lg:py-28 overflow-y-auto">
+    <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-full px-4 md:px-6 lg:px-8 py-24 md:py-20 lg:py-28 overflow-y-auto bg-black min-h-screen">
       <div className="w-full max-w-md mb-6 md:mb-0 md:mr-6">
         <div className="relative w-full h-32 md:h-96">
           <Image
@@ -77,9 +77,9 @@ export default function ContactForm() {
           />
         </div>
       </div>
-      <Card className="w-full max-w-md ">
+      <Card className="w-full max-w-md bg-neutral-900 border-neutral-700">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
+          <CardTitle className="text-2xl font-bold text-center text-white">
             Napisz do Mnie!
           </CardTitle>
         </CardHeader>
@@ -93,9 +93,13 @@ export default function ContactForm() {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel className="text-gray-200">Imię</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your first name" {...field} />
+                        <Input 
+                          placeholder="Twoje imię" 
+                          className="bg-neutral-800 border-neutral-600 text-white placeholder:text-gray-500 focus:border-[#ff7302] focus:ring-[#ff7302]"
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -108,9 +112,13 @@ export default function ContactForm() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-gray-200">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your email" {...field} />
+                        <Input 
+                          placeholder="Twój email" 
+                          className="bg-neutral-800 border-neutral-600 text-white placeholder:text-gray-500 focus:border-[#ff7302] focus:ring-[#ff7302]"
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -123,9 +131,13 @@ export default function ContactForm() {
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Temat</FormLabel>
+                      <FormLabel className="text-gray-200">Temat</FormLabel>
                       <FormControl>
-                        <Input placeholder="Temat wiadomości" {...field} />
+                        <Input 
+                          placeholder="Temat wiadomości" 
+                          className="bg-neutral-800 border-neutral-600 text-white placeholder:text-gray-500 focus:border-[#ff7302] focus:ring-[#ff7302]"
+                          {...field} 
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,12 +150,12 @@ export default function ContactForm() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Message</FormLabel>
+                      <FormLabel className="text-gray-200">Wiadomość</FormLabel>
                       <FormControl>
                         <Textarea
                           id="message"
-                          placeholder="Type your message here"
-                          className="min-h-[100px]"
+                          placeholder="Napisz swoją wiadomość..."
+                          className="min-h-[100px] bg-neutral-800 border-neutral-600 text-white placeholder:text-gray-500 focus:border-[#ff7302] focus:ring-[#ff7302]"
                           {...field}
                         />
                       </FormControl>
@@ -152,8 +164,11 @@ export default function ContactForm() {
                   )}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Submit
+              <Button 
+                type="submit" 
+                className="w-full bg-[#ff7302] hover:bg-[#e56502] text-white font-semibold"
+              >
+                Wyślij wiadomość
               </Button>
             </form>
           </Form>

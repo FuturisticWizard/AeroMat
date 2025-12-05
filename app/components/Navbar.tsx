@@ -48,17 +48,18 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
         "z-[100]",
       )}
     >
-      <div className="max-w-7xl mx-auto  px-3 md:px-4 lmd:px-2 lg:px-0  z-[110] ">
-        <div className="flex items-center justify-between h-20 ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-4 z-[110]">
+        <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
           {/* Logo */}
-          <div className="flex-shrink-0  z-[120]">
+          <div className="flex-shrink-0 z-[120]">
             <Link href="/">
               <Image
                 src="/images/logo-horizontal-black2.png"
                 width={175}
-                height="0"
+                height={0}
                 style={{ height: "auto" }}
                 alt="Logo"
+                className="w-[130px] sm:w-[150px] md:w-[175px]"
               />
             </Link>
           </div>
