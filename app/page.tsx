@@ -29,13 +29,23 @@ import { Noto_Sans_Multani } from "next/font/google";
 export default function Home() {
   
   useEffect(() => {
-
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     // 
     gsap.registerPlugin(ScrollTrigger, SplitText);
     console.log("Plugins registered");
     // setTimeout(() => {
     //   setupMarqueeAnimation();
     // }, 100);
+
+    // Mobile: pomijamy ciężkie scroll/pin + SplitText, zostawiamy statyczny układ
+    if (isMobile) {
+      setupMarqueeAnimation();
+      // Upewnij się, że treści są widoczne bez animacji
+      gsap.set(".card-title .char span", { x: "0%" });
+      gsap.set(".card-content .card-description", { x: 0, opacity: 1 });
+      return;
+    }
+
     const lenis = new Lenis();
     lenis.on("scroll", ScrollTrigger.update);
     

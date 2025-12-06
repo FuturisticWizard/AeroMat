@@ -71,11 +71,26 @@ const VideoHero = ({
         className={`w-full h-full object-cover object-center transition-opacity duration-1000 ease-out ${
           videoReady ? "opacity-100" : "opacity-0"
         }`}
-        onCanPlay={() => {
-          console.log("Video can play");
+      onCanPlay={() => {
+        console.log("Video can play");
+        setVideoReady(true);
+      }}
+      onLoadedData={() => {
+        // Niektóre przeglądarki szybciej wywołują loadeddata niż canplay
+        if (!videoReady) {
           setVideoReady(true);
-        }}
-        onError={(e) => console.error("Video error:", e)}
+        }
+      }}
+      onCanPlayThrough={() => {
+        if (!videoReady) {
+          setVideoReady(true);
+        }
+      }}
+      onError={(e) => {
+        console.error("Video error:", e);
+        // Pokazujemy co mamy – unikamy wiecznego opacity-0
+        setVideoReady(true);
+      }}
       >
         <source src="/movies/hero_compressed.mp4" type="video/mp4" />
         <source src="/movies/hero_compressed.webm" type="video/webm" />

@@ -805,6 +805,90 @@
 
     }
   }
+
+  /* Mobile-friendly karty: kolumna, większa wysokość obrazu, brak pina/skalowania */
+  @media (max-width: 768px) {
+    .cards {
+      gap: 8vh;
+    }
+
+    .card {
+      height: auto;
+      min-height: 90vh;
+      padding: 1.25rem;
+    }
+
+    .card:nth-child(2) {
+      margin-top: 0;
+    }
+
+    .card-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: auto;
+    }
+
+    .card-img {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      min-height: 70vh;
+      border-radius: 28px;
+    }
+
+    .card-img img {
+      transform: scale(1);
+    }
+
+    .card-content {
+      position: relative;
+      inset: auto;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem 2rem;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .card-content .card-title {
+      justify-content: center;
+    }
+
+    .card-content .card-description {
+      width: 100%;
+      text-align: center;
+      opacity: 1; /* animacje JS wyłączone na mobile */
+    }
+
+    /* ujednolicamy wyrównanie na mobile */
+    .card:nth-child(1) .card-content,
+    .card:nth-child(2) .card-content,
+    .card:nth-child(3) .card-content,
+    .card:nth-child(4) .card-content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .card:nth-child(1) .card-title,
+    .card:nth-child(2) .card-title,
+    .card:nth-child(3) .card-title,
+    .card:nth-child(4) .card-title {
+      justify-content: center;
+    }
+
+    .card:nth-child(1) .card-title h1,
+    .card:nth-child(2) .card-title h1,
+    .card:nth-child(3) .card-title h1,
+    .card:nth-child(4) .card-title h1,
+    .card:nth-child(1) .card-description,
+    .card:nth-child(2) .card-description,
+    .card:nth-child(3) .card-description,
+    .card:nth-child(4) .card-description {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
 
 /* Google Maps InfoWindow dark mode styling */
