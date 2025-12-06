@@ -131,7 +131,8 @@ export default function Home() {
         end: isPanorama ? "+=200%" : (isLastCard ? "+=100vh" : "top top"),
         endTrigger: (isLastCard || isPanorama) ? null : cards[cards.length - 1],
         pin: true,
-        pinSpacing: isLastCard || isPanorama,
+        // pinSpacing false powodowało nakładanie się na hero; włączone dla wszystkich
+        pinSpacing: true,
       });
     });
 

@@ -648,6 +648,8 @@
     display: flex;
     flex-direction: column;
     gap: 25svh;
+    padding-top: 6vh; /* dodatkowy odstęp od sekcji hero, by uniknąć nachodzenia */
+    isolation: isolate;
   }
   .card-marquee {
     width: 100%;
