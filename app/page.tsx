@@ -29,34 +29,6 @@ import { Noto_Sans_Multani } from "next/font/google";
 export default function Home() {
   
   useEffect(() => {
-    const isMobile =
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 768px)").matches;
-
-    // Mobile: bez ciężkich animacji, ustawiamy statyczny układ i kadrowanie środka zdjęcia
-    if (isMobile) {
-      setupMarqueeAnimation();
-      gsap.set(".card-title .char span", { x: "0%" });
-      gsap.set(".card-content .card-description", { x: 0, opacity: 1 });
-      gsap.set(".card-img", {
-        clearProps: "all",
-        position: "relative",
-        inset: "auto",
-        width: "100%",
-        height: "75vh",
-        borderRadius: "32px",
-      });
-      gsap.set(".card-img img", {
-        clearProps: "all",
-        scale: 1.35,
-        objectFit: "cover",
-        objectPosition: "50% 50%",
-        transformOrigin: "center center",
-      });
-      return;
-    }
-
-    // Desktop animacje
     gsap.registerPlugin(ScrollTrigger, SplitText);
     console.log("Plugins registered");
     const lenis = new Lenis();
