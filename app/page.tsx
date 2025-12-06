@@ -30,6 +30,7 @@ export default function Home() {
   
   useEffect(() => {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
     // 
     gsap.registerPlugin(ScrollTrigger, SplitText);
     console.log("Plugins registered");
@@ -37,7 +38,7 @@ export default function Home() {
     //   setupMarqueeAnimation();
     // }, 100);
 
-    // Mobile: pomijamy ciężkie scroll/pin + SplitText, zostawiamy statyczny układ
+    // Mobile: wyłączamy ciężkie animacje (pin/ScrollTrigger/SplitText) i zostawiamy statyczny slider
     if (isMobile) {
       setupMarqueeAnimation();
       // Upewnij się, że treści są widoczne bez animacji
@@ -45,7 +46,6 @@ export default function Home() {
       gsap.set(".card-content .card-description", { x: 0, opacity: 1 });
       return;
     }
-
     const lenis = new Lenis();
     lenis.on("scroll", ScrollTrigger.update);
     
@@ -203,7 +203,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
-      <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
+      <main className="flex-1 items-center sm:items-start min-h-screen overflow-visible">
         <VideoHero />
         <Intro />
         <Cards />

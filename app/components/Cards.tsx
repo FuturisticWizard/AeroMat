@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
+import { InterpolateLinear } from "three";
 
-// Mały ciemny blur placeholder (base64)
-const blurPlaceholder = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAgEDBAMBAAAAAAAAAAAAAQIDAAQRBRIhMQYTQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAADBf/EABkRAAIDAQAAAAAAAAAAAAAAAAECAAMRIf/aAAwDAQACEQMRAD8AzPT9Rv7e0tbaO9uEhgjWOJBKwVFAwABngAVZHkOp/wA7/v8AVKVKhZO5Nlblp//Z";
 
 const Cards = () => {
   return (
@@ -25,15 +24,13 @@ const Cards = () => {
                         <p>Przekształcam szare ściany w żywe dzieła sztuki. Każdy mural to opowieść wyrażona kolorem i formą na wielkim płótnie miasta.</p>
                     </div>
                 </div>
-                <div className="card-img bg-neutral-900">
+                <div className="card-img">
                     <Image
                         src="/images/s2a.jpg"
                         alt="Murale Wielkoformatowe"
                         fill
                         priority
                         sizes="100vw"
-                        placeholder="blur"
-                        blurDataURL={blurPlaceholder}
                     />
                 </div>
             </div>
@@ -48,14 +45,12 @@ const Cards = () => {
                         <p>Ręcznie malowane szyldy i logotypy, które wyróżnią Twój biznes. Unikalne projekty łączące tradycyjne rzemiosło z nowoczesnym designem.</p>
                     </div>
                 </div>
-                <div className="card-img bg-neutral-900">
+                <div className="card-img">
                     <Image
                         src="/images/magiczny-swiat.jpg"
                         alt="Szyldy i Logotypy"
                         fill
                         sizes="100vw"
-                        placeholder="blur"
-                        blurDataURL={blurPlaceholder}
                     />
                 </div>
             </div>
@@ -70,14 +65,12 @@ const Cards = () => {
                         <p>Artystyczne malunki ścienne do domu, biura czy lokalu. Tworzę niepowtarzalne klimaty – od subtelnych wzorów po odważne kompozycje.</p>
                     </div>
                 </div>
-                <div className="card-img bg-neutral-900">
+                <div className="card-img">
                     <Image
                         src="/images/mural-starowka.jpg"
                         alt="Wnętrza i Dekoracje"
                         fill
                         sizes="100vw"
-                        placeholder="blur"
-                        blurDataURL={blurPlaceholder}
                     />
                 </div>
             </div>
@@ -92,14 +85,12 @@ const Cards = () => {
                         <p>Eventy, festiwale, akcje artystyczne. Realizuję niestandardowe projekty – live painting, warsztaty graffiti i współpraca z markami.</p>
                     </div>
                 </div>
-                <div className="card-img bg-neutral-900">
+                <div className="card-img">
                     <Image
                         src="/images/5.jpg"
                         alt="Projekty Specjalne"
                         fill
                         sizes="100vw"
-                        placeholder="blur"
-                        blurDataURL={blurPlaceholder}
                     />
                 </div>
             </div>
