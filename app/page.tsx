@@ -29,7 +29,6 @@ import { Noto_Sans_Multani } from "next/font/google";
 export default function Home() {
   
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     // 
     gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -37,15 +36,6 @@ export default function Home() {
     // setTimeout(() => {
     //   setupMarqueeAnimation();
     // }, 100);
-
-    // Mobile: wyłączamy ciężkie animacje (pin/ScrollTrigger/SplitText) i zostawiamy statyczny slider
-    if (isMobile) {
-      setupMarqueeAnimation();
-      // Upewnij się, że treści są widoczne bez animacji
-      gsap.set(".card-title .char span", { x: "0%" });
-      gsap.set(".card-content .card-description", { x: 0, opacity: 1 });
-      return;
-    }
     const lenis = new Lenis();
     lenis.on("scroll", ScrollTrigger.update);
     
@@ -131,8 +121,7 @@ export default function Home() {
         end: isPanorama ? "+=200%" : (isLastCard ? "+=100vh" : "top top"),
         endTrigger: (isLastCard || isPanorama) ? null : cards[cards.length - 1],
         pin: true,
-        // pinSpacing false powodowało nakładanie się na hero; włączone dla wszystkich
-        pinSpacing: true,
+        pinSpacing: isLastCard || isPanorama,
       });
     });
 
@@ -204,7 +193,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
-      <main className="flex-1 items-center sm:items-start min-h-screen overflow-visible">
+      <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
         <VideoHero />
         <Intro />
         <Cards />
