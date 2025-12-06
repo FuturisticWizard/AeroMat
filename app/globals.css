@@ -806,9 +806,10 @@
     }
 
     .card-img img {
-      object-fit: contain;
+      /* Pokaż centralny fragment: przytnij krawędzie i skup się na środku */
+      object-fit: cover;
       object-position: center;
-      transform: none;
+      transform: scale(1.15);
     }
 
     .card-content {
