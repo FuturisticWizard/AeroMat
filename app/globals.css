@@ -143,7 +143,9 @@
     width: 100vw;
     height: 100svh;
     padding: 1.5em;
-    background-color: #050505;
+    padding-top: 0;
+    margin-top: 0;
+ 
   }
 
   .panorama-img-wrapper {
@@ -151,9 +153,31 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 150px;
+    border-radius: 150px 150px 0 0;
     overflow: hidden;
   }
+
+/* Panorama has a special top-only radius, match the dim layer to it */
+.panorama-card .card-dim {
+  border-radius: 150px 150px 0 0;
+}
+
+/* Ensure panorama layers stack deterministically */
+.panorama-card .panorama-img-wrapper {
+  z-index: 0;
+}
+
+.panorama-card .card-dim {
+  z-index: 1;
+}
+
+.panorama-card .panorama-filter {
+  z-index: 2;
+}
+
+.panorama-card .panorama-overlay {
+  z-index: 10;
+}
 
   .panorama-canvas {
     position: absolute;
@@ -414,6 +438,202 @@
   animation: scroll 20s linear infinite; /* Adjust duration for speed */
 }
 
+/* Cards marquee: make sure it's positioned and stacked correctly on BOTH desktop and mobile.
+   Without these base styles, `.card-marquee` ends up in normal flow on mobile and is often
+   covered by `.card-img`, so the text appears "missing". */
+.card-marquee {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  overflow: hidden;
+  /* Behind the image layer so it doesn't sit on top of the photo while it scales in */
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card-marquee .marquee {
+  display: flex;
+  width: max-content;
+}
+
+.card-marquee .marquee h1 {
+  white-space: nowrap;
+  margin-right: 30px;
+  /* Reasonable default for mobile + desktop; can be overridden later if needed */
+  font-size: clamp(2.25rem, 10vw, 6rem);
+  font-weight: 600;
+}
+
+/* Cards base layout (must NOT be desktop-only, otherwise mobile ends up with dark text on dark bg) */
+.intro,
+.outro,
+.cards,
+.panorama-section {
+  position: relative;
+  width: 100vw;
+  background-color: #000000;
+  color: #fff;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+}
+
+.card {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  --card-radius: 150px;
+  /* Create a stacking context so negative z-index children (like marquee) stay within the card */
+  isolation: isolate;
+  padding: 1.5em;
+}
+
+.card-wrapper {
+  /* Cover the full card area (including padding) so bg layers (image/dim) don't leave gaps */
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+  z-index: 0;
+}
+
+.card-dim {
+  position: absolute;
+  inset: 0;
+  /* Between image (0) and content (10) */
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: var(--card-radius);
+  /* Slight vignette/gradient for better text readability */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem;
+  /* Always above dim layer */
+  z-index: 10;
+}
+
+.card-content .card-title h1 {
+  color: #ffffff;
+}
+
+/* SplitText chars for card titles must be clipped on all viewports (mobile included),
+   otherwise the translated spans can still be visible and the title looks "always on". */
+.card-title .char {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.card-title .char span {
+  display: inline-block;
+}
+
+/* IMPORTANT: this needs to be a top-level media query.
+   The previous CSS had `@media (max-width: 768px)` nested inside `@media (width >= 769px)`,
+   which resolves to an impossible condition and never matches on mobile. */
+@media (max-width: 768px) {
+  /* Intro mobile typography + layout */
+  .intro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  .intro h1 {
+    width: 100%;
+    font-size: clamp(2rem, 7.5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Outro mobile typography + layout (match Intro) */
+  .outro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  .outro h1 {
+    width: 100%;
+    font-size: clamp(2rem, 7.5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Typography tweaks for mobile Cards */
+  .card-marquee .marquee h1 {
+    font-size: clamp(1.5rem, 9vw, 3.25rem);
+    letter-spacing: -0.02em;
+  }
+
+  .card-content .card-title h1 {
+    font-size: clamp(1.6rem, 7vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .card-content .card-description p {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  /* More left/right breathing room for descriptions on mobile */
+  .card-content .card-description {
+    padding-inline: 0.75rem;
+  }
+
+  /* Fullscreen cards on mobile (avoid fixed 450px that breaks pin + 100svh layout) */
+  .card {
+    height: 100svh;
+    min-height: 480px;
+    --card-radius: 32px;
+    padding: 1.25rem;
+  }
+
+  .card-img img {
+    object-position: center;
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 1.5rem 1rem 2rem;
+  }
+}
+
 #close-popup {
   position: absolute;
   font-weight: 700;
@@ -647,7 +867,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 25svh;
+    gap: 10vh;
   }
   .card-marquee {
     width: 100%;
@@ -687,6 +907,7 @@
     height: 100%;
     border-radius: 150px;
     overflow: hidden;
+    z-index: 0;
   }
   .card-img img {
     width: 100%;
@@ -700,22 +921,23 @@
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     gap: 1.5rem;
     padding: 3rem;
-    z-index: 1;
+    z-index: 3;
   }
   .card-content .card-title {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
-    text-align: inherit;
+    text-align: center;
     transform: none;
   }
   .card-content .card-title h1 {
     width: 100%;
+    color: #ffffff;
   }
   .card-content .card-description {
     position: relative;
@@ -729,17 +951,18 @@
   }
 
   .card:nth-child(1) .card-content {
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .card:nth-child(1) .card-title {
-    justify-content: flex-start;
+    justify-content: center;
   }
   .card:nth-child(1) .card-title h1,
   .card:nth-child(1) .card-description {
-    align-self: flex-start;
+    align-self: center;
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
   .card:nth-child(1) .card-description {
     width: min(50ch, 55%);
@@ -786,14 +1009,13 @@
   .char span {
     transform: translateX(100%);
     display: inline-block;
-    will-change: transform;
   }
 
   /* Mobile: obraz w kartach ma pokazywać centrum i mieć pełną szerokość */
   @media (max-width: 768px) {
     .card {
-      height: auto;
-      min-height: 100svh;
+      height: 450px !important;
+      min-height: 450px !important;
       padding: 1.25rem;
     }
 
@@ -801,21 +1023,28 @@
       position: relative;
       inset: auto;
       width: 100%;
-      height: 70vh;
+      height: 450px !important;
       border-radius: 32px;
     }
 
     .card-img img {
-      /* Pokaż centralny fragment: przytnij krawędzie i skup się na środku */
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       object-fit: cover;
       object-position: center;
-      transform: scale(1.15);
+      transform: scale(1.05);
     }
 
     .card-content {
-      position: relative;
-      inset: auto;
+      position: absolute;
+      inset: 0;
       padding: 1.5rem 1rem 2rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 

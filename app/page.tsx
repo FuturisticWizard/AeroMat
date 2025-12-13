@@ -31,57 +31,133 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, SplitText);
     console.log("Plugins registered");
-    const lenis = new Lenis();
-    lenis.on("scroll", ScrollTrigger.update);
-    
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
+    const mm = gsap.matchMedia();
+    const isMobile = window.innerWidth < 900;
+    console.log("[Viewport] isMobile:", isMobile);
+
+    let lenis: Lenis | null = null;
+    let currentScroll = 0;
+    const scroller = document.documentElement;
+
+    if (!isMobile) {
+      lenis = new Lenis();
+      lenis.on("scroll", ({ scroll }) => {
+        currentScroll = scroll;
+        ScrollTrigger.update();
+      });
+      console.log("[Lenis] init, start scroll:", currentScroll);
+
+      ScrollTrigger.scrollerProxy(scroller, {
+        scrollTop(value) {
+          if (arguments.length) {
+            lenis!.scrollTo(value as number, { immediate: true, duration: 0 });
+            console.log("[scrollerProxy] set scrollTop ->", value);
+          }
+          return currentScroll;
+        },
+        getBoundingClientRect() {
+          return {
+            top: 0,
+            left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+          };
+        },
+        pinType: scroller.style.transform ? "transform" : "fixed",
+      });
+      console.log("[ScrollTrigger] scrollerProxy set on <html>");
+
+      ScrollTrigger.defaults({ scroller });
+      ScrollTrigger.refresh();
+      console.log("[ScrollTrigger] defaults set + refresh");
+      
+      gsap.ticker.add((time) => lenis!.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      ScrollTrigger.defaults({ scroller: window });
+      ScrollTrigger.refresh();
+      console.log("[ScrollTrigger] mobile defaults set (no Lenis) + refresh");
+    }
 
     const cards = gsap.utils.toArray<HTMLElement>(".card");
     const introCard = cards[0];
+    console.log("[Cards] found:", cards.length);
+    console.log("[Cards] isMobile:", isMobile);
+    
+    const introEndValue = isMobile ? "+=120vh" : "+=300vh";
+    if (isMobile) {
+      gsap.set(".card", { height: "100vh", minHeight: "480px" });
+      gsap.set(".card-img", { height: "100vh", minHeight: "480px" });
+      gsap.set(".card-img img", { height: "100%", minHeight: "100%", scale: 1 });
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      setTimeout(() => ScrollTrigger.refresh(), 200);
+    }
+    
     const titles = gsap.utils.toArray<HTMLElement>(".card-title h1");
-    titles.forEach((title) => {
+    console.log("[Titles] found:", titles.length);
+    
+    titles.forEach((title, index) => {
+      console.log(`[Title ${index}] text:`, title.textContent);
       const split = new SplitText(title, {
         type: "chars",
         charsClass: "char",
         tag: "div",
       });
+      console.log(`[Title ${index}] split chars:`, split.chars.length);
       split.chars.forEach((char) => {
         char.innerHTML = `<span>${char.textContent}</span>`;
       });
     });
-        // Ukryj wszystkie znaki tytułów i opisy na starcie
-        gsap.set(".card-title .char span", { x: "100%" });
-        gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
-    // Sprawdź co znajduje
-    const allSpans = document.querySelectorAll(".card-title .char span");
-    console.log("Znaleziono spanów:", allSpans.length);
-    console.log("Spany:", allSpans);
+    
+    // Ukryj wszystkie znaki tytułów i opisy na starcie
+    gsap.set(".card-title .char span", { x: "100%" });
+    gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
+    gsap.set(".card-dim", { opacity: 0 });
+    
+    // (debug logs removed)
     
     const cardImgWrapper = introCard.querySelector(".card-img");
     const cardImg = introCard.querySelector(".card-img img");
-    gsap.set(cardImgWrapper, { scale: 0.5, borderRadius: "400px" });
-    gsap.set(cardImg, { scale: 1.5 });
+    const introDim = introCard.querySelector(".card-dim");
+    const startWrapperScale = isMobile ? 0.35 : 0.5;
+    const endWrapperScale = isMobile ? 1.05 : 1.0;
+    const startInnerScale = isMobile ? 1.8 : 1.5;
+    const endInnerScale = 1.0;
+    gsap.set(cardImgWrapper, { scale: startWrapperScale, borderRadius: "420px" });
+    if (introDim) {
+      gsap.set(introDim, {
+        scale: startWrapperScale,
+        borderRadius: "420px",
+        transformOrigin: "center",
+      });
+    }
+    gsap.set(cardImg, { scale: startInnerScale });
 
     const marquee = introCard.querySelector(".card-marquee .marquee");
-    const titleChars = introCard.querySelectorAll(".char span");
+    const titleChars = introCard.querySelectorAll(".card-title .char span");
     const description = introCard.querySelector(".card-description");
-    let introContentRevealed = false;
+    let introTextRevealed = false;
 
     ScrollTrigger.create({
       trigger: introCard,
       start: "top top",
-      end: "+=300vh",
+      end: introEndValue,
       onUpdate: (self) => {
         const progress = self.progress;
-        const imgScale = 0.5 + progress * 0.5;
-        const borderRadius = 400 - progress * 375;
-        const innerImgScale = 1.5 - progress * 0.5;
+        const imgScale = startWrapperScale + progress * (endWrapperScale - startWrapperScale);
+        const borderRadius = 420 - progress * 370;
+        const innerImgScale = startInnerScale - progress * (startInnerScale - endInnerScale);
 
         gsap.set(cardImgWrapper, {
           scale: imgScale,
           borderRadius: borderRadius + "px",
         });
+        if (introDim) {
+          gsap.set(introDim, {
+            scale: imgScale,
+            borderRadius: borderRadius + "px",
+          });
+        }
         gsap.set(cardImg, { scale: innerImgScale });
 
         if (imgScale >= 0.5 && imgScale <= 0.75) {
@@ -93,94 +169,243 @@ export default function Home() {
           gsap.set(marquee, { opacity: 0 });
         }
 
-        if (progress >= 1 && !introContentRevealed) {
-          introContentRevealed = true;
-          animateContentIn(titleChars, description);
-        }
-        if (progress < 1 && introContentRevealed) {
-          introContentRevealed = false;
-          animateContentOut(titleChars, description);
+        // Reveal intro text only once the image has (almost) reached fullscreen scale.
+        // Use hysteresis to avoid flicker near the threshold when scrolling slowly.
+        const showAt = endWrapperScale - 0.03;
+        const hideAt = endWrapperScale - 0.08;
+        if (!introTextRevealed && imgScale >= showAt) {
+          introTextRevealed = true;
+          animateContentIn(titleChars, description, introDim);
+        } else if (introTextRevealed && imgScale <= hideAt) {
+          introTextRevealed = false;
+          animateContentOut(titleChars, description, introDim);
         }
       },
     });
 
-    cards.forEach((card, index) => {
-      const cardEl = card as HTMLElement;
-      const isLastCard = index === cards.length - 1;
-      const isPanorama = cardEl.classList?.contains("panorama-card");
-      
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top top",
-        // Panorama potrzebuje dłuższego pinowania na wewnętrzny scroll
-        end: isPanorama ? "+=200%" : (isLastCard ? "+=100vh" : "top top"),
-        endTrigger: (isLastCard || isPanorama) ? null : cards[cards.length - 1],
-        pin: true,
-        pinSpacing: isLastCard || isPanorama,
+    mm.add("(min-width: 768px)", () => {
+      const pins: ScrollTrigger[] = [];
+      cards.forEach((card, index) => {
+        const cardEl = card as HTMLElement;
+        const isLastCard = index === cards.length - 1;
+        const isPanorama = cardEl.classList?.contains("panorama-card");
+
+        const st = ScrollTrigger.create({
+          trigger: card,
+          start: "top top",
+          end: isPanorama ? "+=200%" : isLastCard ? "+=100vh" : "top top",
+          endTrigger: isLastCard || isPanorama ? null : cards[cards.length - 1],
+          pin: true,
+          pinSpacing: isLastCard || isPanorama,
+          onToggle: (self) => {
+            if (self.isActive) {
+              console.log("[Card pin][desktop] active index", index);
+            }
+          },
+        });
+        pins.push(st);
       });
+      return () => pins.forEach((st) => st.kill());
     });
 
+    mm.add("(max-width: 767px)", () => {
+      const pins: ScrollTrigger[] = [];
+      const contentRevealStates: boolean[] = new Array(cards.length).fill(false);
+      
+      cards.forEach((card, index) => {
+        const cardEl = card as HTMLElement;
+        const isLastCard = index === cards.length - 1;
+        const isPanorama = cardEl.classList?.contains("panorama-card");
+        const cardDescription = card.querySelector(".card-description");
+        const cardTitleChars = card.querySelectorAll(".card-title .char span");
+        const dimLayer = card.querySelector(".card-dim");
+        const reveal = () => {
+          if (contentRevealStates[index]) return;
+          contentRevealStates[index] = true;
+          if (cardTitleChars?.length) animateContentIn(cardTitleChars, cardDescription, dimLayer);
+          else if (dimLayer) gsap.to(dimLayer, { opacity: 1, duration: 0.45, ease: "power2.out", overwrite: true });
+        };
+        const hide = () => {
+          if (!contentRevealStates[index]) return;
+          contentRevealStates[index] = false;
+          if (cardTitleChars?.length) animateContentOut(cardTitleChars, cardDescription, dimLayer);
+          else if (dimLayer) gsap.to(dimLayer, { opacity: 0, duration: 0.35, ease: "power2.out", overwrite: true });
+        };
+        
+        // Intro card text is handled by the dedicated intro ScrollTrigger above.
+        // Still pin it here like the other cards so it stays fullscreen for the expected duration.
+        if (index === 0) {
+          const st = ScrollTrigger.create({
+            trigger: card,
+            start: "top top",
+            end: introEndValue,
+            pin: true,
+            // For the first pinned card, keep spacing so it doesn't overlap the Intro section.
+            // Without spacing, the pinned element can cover the previous section visually.
+            pinSpacing: true,
+            anticipatePin: 0.6,
+            // For the intro card, text reveal is driven by the image scale (see intro onUpdate).
+            onLeave: hide,
+            onLeaveBack: hide,
+          });
+          pins.push(st);
+          return;
+        }
+
+        const st = ScrollTrigger.create({
+          trigger: card,
+          start: "top top",
+          end: isPanorama
+            ? () => "+=" + window.innerHeight * 2.4
+            : isLastCard
+            ? () => "+=" + window.innerHeight * 2.0
+            : "bottom top+=80%",
+          endTrigger: isPanorama || isLastCard ? null : (cards[index + 1] as HTMLElement),
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 0.6,
+          // Text should animate in when the card becomes pinned (active) and out when it unpins.
+          onEnter: reveal,
+          onEnterBack: reveal,
+          onLeave: hide,
+          onLeaveBack: hide,
+          onToggle: (self) => {
+            if (self.isActive) {
+              console.log("[Card pin][mobile] active index", index);
+            }
+          },
+        });
+
+        pins.push(st);
+      });
+      return () => pins.forEach((st) => st.kill());
+    });
+
+    // Fade/scale out przypiętej karty podczas wjazdu kolejnej (desktop + mobile, łagodniejsze na mobile)
     cards.forEach((card, index) => {
       if (index < cards.length - 1) {
         const cardWrapper = card.querySelector(".card-wrapper");
+        const endPos = "top top";
+        const scaleFactor = isMobile ? 0.85 : 0.75;
+        const opacityFactor = isMobile ? 0.0 : 0.0;
         ScrollTrigger.create({
           trigger: cards[index + 1],
           start: "top bottom",
-          end: "top top",
+          end: endPos,
           onUpdate: (self) => {
             const progress = self.progress;
+            const scaleVal = 1 - progress * (1 - scaleFactor);
+            const opacityVal = 1 - progress * (1 - opacityFactor);
             gsap.set(cardWrapper, {
-              scale: 1 - progress * 0.25,
-              opacity: 1 - progress,
+              scale: scaleVal,
+              opacity: opacityVal,
             });
           },
         });
       }
     });
 
+    // Delikatny scale obrazka podczas wyjazdu przypiętej karty (desktop + mobile)
     cards.forEach((card, index) => {
       if (index > 0) {
         const cardEl = card as HTMLElement;
         const isPanorama = cardEl.classList?.contains("panorama-card");
-        const cardImg = isPanorama 
+        const cardImg = isPanorama
           ? cardEl.querySelector(".panorama-canvas")
           : cardEl.querySelector(".card-img img");
         const imgContainer = isPanorama
           ? cardEl.querySelector(".panorama-img-wrapper")
           : cardEl.querySelector(".card-img");
+        const endPos = "top top";
+        const startScale = isMobile ? 1.05 : 2;
+        const endScale = 1.0;
         
         ScrollTrigger.create({
           trigger: card,
           start: "top bottom",
-          end: "top top",
+          end: endPos,
           onUpdate: (self) => {
             const progress = self.progress;
-            if (cardImg) gsap.set(cardImg, { scale: 2 - progress });
-            if (imgContainer) gsap.set(imgContainer, { borderRadius: 150 - progress * 125 + "px" });
+            const scaleVal = startScale - progress * (startScale - endScale);
+            if (cardImg) gsap.set(cardImg, { scale: scaleVal });
+            if (imgContainer)
+              gsap.set(imgContainer, { borderRadius: 150 - progress * 125 + "px" });
           },
         });
       }
     });
 
-    cards.forEach((card, index) => {
-      if (index === 0) return;
+    // Teksty kart – główny trigger (desktop + mobile) + inicjalizacja po refresh/ładowaniu
+    const textTriggers: {
+      st: ScrollTrigger;
+      titleChars: NodeListOf<HTMLElement>;
+      description: HTMLElement | null;
+    }[] = [];
 
-      const cardDescription = card.querySelector(".card-description");
-      const cardTitleChars = card.querySelectorAll(".char span");
+    // Remove the desktop text triggers on mobile
+    if (!isMobile) {
+      cards.forEach((card) => {
+        const cardDescription = card.querySelector<HTMLElement>(".card-description");
+        const cardTitleChars = card.querySelectorAll<HTMLElement>(".card-title .char span");
+        const dimLayer = card.querySelector<HTMLElement>(".card-dim");
+        if (!cardTitleChars.length) return;
 
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top top",
-        onEnter: () => animateContentIn(cardTitleChars, cardDescription),
-        onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription),
+        const st = ScrollTrigger.create({
+          trigger: card,
+          start: "top top",
+          onEnter: () => animateContentIn(cardTitleChars, cardDescription, dimLayer),
+          onEnterBack: () => animateContentIn(cardTitleChars, cardDescription, dimLayer),
+          onLeave: () => animateContentOut(cardTitleChars, cardDescription, dimLayer),
+          onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription, dimLayer),
+        });
+
+        textTriggers.push({ st, titleChars: cardTitleChars, description: cardDescription });
       });
-    });
+    }
+
+    const revealActiveTexts = () => {
+      textTriggers.forEach(({ st, titleChars, description }) => {
+        if (st.isActive) {
+          animateContentIn(titleChars, description);
+        }
+      });
+    };
+
+    // Natychmiast po konfiguracji
+    revealActiveTexts();
+    // Krótki timeout na przypadek, gdy layout/refresh zmieni aktywne triggery
+    setTimeout(revealActiveTexts, 50);
 
     setupMarqueeAnimation();
+    // Refresh after load to recompute pin-spacer heights once images/fonts are ready
+    const onLoadRefresh = () => {
+      console.log("[ScrollTrigger] window load -> refresh");
+      ScrollTrigger.refresh();
+      revealActiveTexts();
+    };
+    window.addEventListener("load", onLoadRefresh, { once: true });
+    ScrollTrigger.addEventListener("refresh", revealActiveTexts);
+
+    if (isMobile) {
+      // Upewnij się, że rozmiary pin-spacer są przeliczone po zmianie pinów
+      ScrollTrigger.refresh();
+    }
    // Cleanup function - wywoła się przy unmount komponentu
     return () => {
-      lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      mm.revert();
+      if (lenis) {
+        lenis.destroy();
+        ScrollTrigger.defaults({ scroller: window });
+        ScrollTrigger.scrollerProxy(scroller, {});
+        gsap.ticker.remove((time) => lenis!.raf(time * 1000));
+      } else {
+        ScrollTrigger.defaults({ scroller: window });
+      }
+      window.removeEventListener("load", onLoadRefresh);
+      ScrollTrigger.removeEventListener("refresh", revealActiveTexts);
+      if (lenis) {
+        gsap.ticker.remove((time) => lenis!.raf(time * 1000));
+      }
     };
   }, []); // Pusta tablica zależności = wykona się raz po zamontowaniu
 
@@ -188,7 +413,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
-      <main className=" flex-1 items-center sm:items-start h-screen overflow-hidden">
+      {/* ScrollTrigger needs actual scrolling. `h-screen overflow-hidden` can prevent scroll on mobile,
+          making all scroll-based animations appear "not working". */}
+      <main className="flex-1 items-center sm:items-start min-h-screen overflow-x-hidden">
         <VideoHero />
         <Intro />
         <Cards />

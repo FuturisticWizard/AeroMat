@@ -1,6 +1,4 @@
 import React from "react";
-import { InterpolateLinear } from "three";
-
 
 const Outro = () => {
   return (

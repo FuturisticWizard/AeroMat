@@ -35,6 +35,7 @@ const PanoramaScroll = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    const mm = gsap.matchMedia();
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) {
@@ -59,6 +60,7 @@ const PanoramaScroll = () => {
       | null = null;
     let texture: THREE.Texture | null = null;
     let scrollTrigger: ScrollTrigger | null = null;
+    let mobileTween: gsap.core.Tween | null = null;
     let captionEntries: Array<{
       chars: NodeListOf<HTMLElement>;
       description: HTMLElement | null;
@@ -186,17 +188,51 @@ const PanoramaScroll = () => {
         updatePlanePosition(0);
         // Nie wywołujemy updateCaptions(0) - napisy pojawią się dopiero przy scrollowaniu
 
-        // ScrollTrigger bez pinowania - pinowanie robi główna logika w page.tsx
-        // Animacja panoramy uruchamia się gdy sekcja jest w widoku
-        scrollTrigger = ScrollTrigger.create({
-          trigger: container,
-          start: "top top",
-          end: "+=200%",
-          scrub: true,
-          onUpdate: (self) => {
-            updatePlanePosition(self.progress);
-            updateCaptions(self.progress);
-          },
+        // Desktop: pełny scrub + dłuższy zakres
+        mm.add("(min-width: 768px)", () => {
+          scrollTrigger = ScrollTrigger.create({
+            trigger: container,
+            start: "top top",
+            end: "+=200%",
+            scrub: true,
+            onUpdate: (self) => {
+              updatePlanePosition(self.progress);
+              updateCaptions(self.progress);
+            },
+          });
+
+          return () => {
+            scrollTrigger?.kill();
+            scrollTrigger = null;
+          };
+        });
+
+        // Mobile: brak pinowania/scrub – krótszy, jednorazowy tween po wejściu
+        mm.add("(max-width: 767px)", () => {
+          const state = { progress: 0 };
+          const trigger = ScrollTrigger.create({
+            trigger: container,
+            start: "top 80%",
+            once: true,
+            onEnter: () => {
+              mobileTween?.kill();
+              mobileTween = gsap.to(state, {
+                progress: 1,
+                duration: 1.4,
+                ease: "power1.out",
+                onUpdate: () => {
+                  updatePlanePosition(state.progress);
+                  updateCaptions(state.progress);
+                },
+              });
+            },
+          });
+
+          return () => {
+            trigger.kill();
+            mobileTween?.kill();
+            mobileTween = null;
+          };
         });
       },
       undefined,
@@ -214,9 +250,11 @@ const PanoramaScroll = () => {
     animate();
 
     return () => {
+      mm.revert();
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       scrollTrigger?.kill();
+      mobileTween?.kill();
       captionEntries = [];
       if (plane) {
         plane.geometry.dispose();
@@ -238,6 +276,7 @@ const PanoramaScroll = () => {
         <div className="card-img panorama-img-wrapper">
           <canvas ref={canvasRef} className="panorama-canvas" />
         </div>
+        <div className="card-dim" aria-hidden />
         <div className="panorama-filter" aria-hidden />
         <div className="panorama-overlay">
           {CAPTIONS.map((caption) => (

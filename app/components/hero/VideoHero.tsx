@@ -28,9 +28,11 @@ const VideoHero = ({
     if (videoVolumeRef.current && videoReady) {
       if (!muted) {
         videoVolumeRef.current.muted = false;
+        videoVolumeRef.current.defaultMuted = false;
         videoVolumeRef.current.volume = 0.2;
       } else {
         videoVolumeRef.current.muted = true;
+        videoVolumeRef.current.defaultMuted = true;
       }
     }
   }, [muted, videoReady]);
@@ -39,6 +41,8 @@ const VideoHero = ({
   useEffect(() => {
     const video = videoVolumeRef.current;
     if (!video) return;
+    // Ensure muted autoplay works consistently (especially iOS/Safari) without using unsupported JSX props.
+    video.defaultMuted = true;
     
     const attemptPlay = async () => {
       try {
@@ -63,7 +67,7 @@ const VideoHero = ({
       <video
         ref={videoVolumeRef}
         autoPlay
-        muted
+        muted={muted}
         loop
         preload="auto"
         playsInline
