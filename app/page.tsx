@@ -238,11 +238,12 @@ export default function Home() {
           const st = ScrollTrigger.create({
             trigger: card,
             start: "top top",
-            end: introEndValue,
+            // Match desktop behavior: keep the first card pinned until the end trigger (last card)
+            // so it feels like the desktop pinned sequence.
+            end: "top top",
+            endTrigger: cards[cards.length - 1] as HTMLElement,
             pin: true,
-            // For the first pinned card, keep spacing so it doesn't overlap the Intro section.
-            // Without spacing, the pinned element can cover the previous section visually.
-            pinSpacing: true,
+            pinSpacing: false,
             anticipatePin: 0.6,
             // For the intro card, text reveal is driven by the image scale (see intro onUpdate).
             onLeave: hide,
