@@ -36,15 +36,24 @@ Jako użytkownik strony Aeromat chcę aby strona ładowała się szybko i dział
 ### 2. Optymalizacja Obrazów i Media
 **Jako użytkownik** chcę aby obrazy w galerii ładowały się szybko, aby móc sprawnie przeglądać portfolio.
 
-**Acceptance Criteria:**
-- [ ] Wszystkie obrazy w formacie WebP/AVIF
-- [ ] Implementacja lazy loading dla galerii
-- [ ] Responsive images (różne rozmiary dla różnych urządzeń)
-- [ ] Blur placeholder podczas ładowania
-- [ ] Kompresja video files (hero section)
-- [ ] Image optimization w next.config.js
+**Status:** Do realizacji | **Raport audytu:** `docs/RAPORT-OPTYMALIZACJA-ZDJEC.md`
 
-**Estimate:** 13 SP | **Priority:** High | **Zespół:** Frontend
+**Stan obecny (audyt 2026-03-08):** 234 pliki multimedialne, łącznie 346 MB. Portfolio: 92 MB (zdjęcia w rozdzielczości aparatu do 12 MB/plik). Dekoracyjne PNG: 45 MB. 5 komponentów omija optymalizację Next.js (`<img>` zamiast `<Image>`).
+
+**Acceptance Criteria:**
+- [ ] Konwersja plików PNG z `/pngs/` do WebP (oszczędność ~42 MB)
+- [ ] Konwersja zdjęć portfolio do WebP 2400px (oszczędność ~87 MB)
+- [ ] Konwersja galerii JPEG do WebP 1920px (oszczędność ~40 MB)
+- [ ] Usunięcie 4 par zduplikowanych plików (~7 MB)
+- [ ] Zamiana `<img>` na `<Image>` w: BentoGrid, Services, AppleCards, apple-cards-carousel
+- [ ] Naprawa `object-fit="cover"` w Process.tsx
+- [ ] Konfiguracja `remotePatterns` dla YouTube
+- [ ] Konsolidacja plików wideo hero (oszczędność ~18 MB)
+- [ ] Łączny rozmiar zasobów < 120 MB (z 346 MB)
+
+**Estimate:** 21 SP | **Priority:** Krytyczny | **Zespół:** Frontend + Performance
+
+**Szczegółowy plan:** `docs/stories/story-image-optimization.md`
 
 ---
 

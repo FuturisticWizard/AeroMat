@@ -87,7 +87,7 @@ const PoiMarkers = memo((props: { pois: Poi[] }) => {
         map: map,
         title: poi.name,
         icon: {
-          url: "/pngs/aeromatka-refactored.png",
+          url: "/pngs/aeromatka-refactored.webp",
           scaledSize: new google.maps.Size(40, 40),
         },
       });

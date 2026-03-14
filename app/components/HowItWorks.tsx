@@ -29,7 +29,7 @@ const HowItWorks = () => {
       </div>
       {/* <div className='relative w-[1200px] h-[280px] -top-64 right-0'>
         <Image
-         src='/pngs/black-spill.png'
+         src='/pngs/black-spill.webp'
          alt='paint spill'
          fill
          objectFit='cover'

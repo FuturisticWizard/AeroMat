@@ -8,7 +8,7 @@ const WhoAmI2 = () => {
       <div className="flex relative flex-col order-1 sm:order-2 py-12 z-30 ">
       <div className="absolute -top-12 -left-32 lg:-top-6 lg:-left-25 w-[320px] h-[320px] z-0 opacity-70 ">
               <Image
-                src={`/pngs/yellow-spray.png`}
+                src={`/pngs/yellow-spray.webp`}
                 alt={`Yellow spray paint splash`}
                 height={400}
                 width={400}
@@ -39,11 +39,11 @@ const WhoAmI2 = () => {
 
       {/* <div 
         className='absolute w-full h-[320px] bg-no-repeat bg-center bg-contain top-0 left-0 ' 
-        style={{ backgroundImage: "url('/pngs/line.png')" }}
+        style={{ backgroundImage: "url('/pngs/line.webp')" }}
         /> */}
       {/* <div className="absolute col-span-2 flex justify-center -left-0  lg: py-4 z-10">
         <Image
-          src="/pngs/line.png"
+          src="/pngs/line.webp"
           alt="decorative line"
           width={1800}
           height={250}
@@ -57,7 +57,7 @@ const WhoAmI2 = () => {
             className={`absolute w-[500px] h-[500px] -top-36 xs:w-[600px] xs:h-[600px]  sm:w-[700px] sm:h-[700px] md:w-[750px] md:h-[750px] sm:-top-36 md:-top-36 md:-left-54 lg:-top-36 lg:-left-54 z-10`}
           >
             <Image
-              src={`/pngs/spreje2.png`}
+              src={`/pngs/spreje2.webp`}
               alt="black paint spray splash"
               fill
               style={{
@@ -69,17 +69,17 @@ const WhoAmI2 = () => {
           <div
             className="relative w-full h-full z-40 "
             style={{
-              WebkitMaskImage: "url('/pngs/mati-shape.png')", // Mask image
+              WebkitMaskImage: "url('/pngs/mati-shape.webp')", // Mask image
               WebkitMaskRepeat: "no-repeat",
               WebkitMaskSize: "cover",
-              maskImage: "url('/pngs/mati-shape.png')", // Fallback for other browsers
+              maskImage: "url('/pngs/mati-shape.webp')", // Fallback for other browsers
               maskRepeat: "no-repeat",
               maskSize: "cover",
             }} 
           >
             {/* Content inside the mask */}
             <Image
-              src="/images/zwyzka.jpg"
+              src="/images/zwyzka.webp"
               alt="Masked content"
               fill
               style={{ objectFit: "cover" }}

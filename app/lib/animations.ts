@@ -55,7 +55,7 @@ export function animateContentOut(
   }
 
   gsap.to(titleChars, {
-    x: "100%",
+    x: "110%",
     duration: 0.75,
     ease: "power4.out",
     overwrite: true,

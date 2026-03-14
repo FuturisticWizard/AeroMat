@@ -60,7 +60,6 @@ const PanoramaScroll = () => {
       | null = null;
     let texture: THREE.Texture | null = null;
     let scrollTrigger: ScrollTrigger | null = null;
-    let mobileTween: gsap.core.Tween | null = null;
     let captionEntries: Array<{
       chars: NodeListOf<HTMLElement>;
       description: HTMLElement | null;
@@ -109,7 +108,7 @@ const PanoramaScroll = () => {
             char.innerHTML = `<span>${char.textContent}</span>`;
           });
           const chars = caption.querySelectorAll<HTMLElement>(".char span");
-          gsap.set(chars, { x: "100%" });
+          gsap.set(chars, { x: "110%" });
           if (description) {
             gsap.set(description, { x: "40px", opacity: 0 });
           }
@@ -159,7 +158,7 @@ const PanoramaScroll = () => {
 
     const loader = new THREE.TextureLoader();
     loader.load(
-      "/images/komeko-new.jpg",
+      "/Animation/Panorama/komeko-new.webp",
       (loadedTexture) => {
         texture = loadedTexture;
         texture.minFilter = THREE.LinearFilter;
@@ -193,7 +192,7 @@ const PanoramaScroll = () => {
           scrollTrigger = ScrollTrigger.create({
             trigger: container,
             start: "top top",
-            end: "+=200%",
+            end: "+=300%",
             scrub: true,
             onUpdate: (self) => {
               updatePlanePosition(self.progress);
@@ -207,31 +206,24 @@ const PanoramaScroll = () => {
           };
         });
 
-        // Mobile: brak pinowania/scrub – krótszy, jednorazowy tween po wejściu
+        // Mobile: scroll-based scrub like desktop, with pin
         mm.add("(max-width: 767px)", () => {
-          const state = { progress: 0 };
-          const trigger = ScrollTrigger.create({
+          scrollTrigger = ScrollTrigger.create({
             trigger: container,
-            start: "top 80%",
-            once: true,
-            onEnter: () => {
-              mobileTween?.kill();
-              mobileTween = gsap.to(state, {
-                progress: 1,
-                duration: 1.4,
-                ease: "power1.out",
-                onUpdate: () => {
-                  updatePlanePosition(state.progress);
-                  updateCaptions(state.progress);
-                },
-              });
+            start: "top top",
+            end: "+=150%", // Shorter than desktop but still gives good scroll range
+            pin: true,
+            pinSpacing: true,
+            scrub: 0.5, // Slight smoothing for mobile touch
+            onUpdate: (self) => {
+              updatePlanePosition(self.progress);
+              updateCaptions(self.progress);
             },
           });
 
           return () => {
-            trigger.kill();
-            mobileTween?.kill();
-            mobileTween = null;
+            scrollTrigger?.kill();
+            scrollTrigger = null;
           };
         });
       },
@@ -254,7 +246,6 @@ const PanoramaScroll = () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       scrollTrigger?.kill();
-      mobileTween?.kill();
       captionEntries = [];
       if (plane) {
         plane.geometry.dispose();

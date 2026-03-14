@@ -2,18 +2,18 @@ import Image from "next/image";
 import { Fragment } from "react";
 
 const logos = [
-  "/Collaborations/logo1.png",
-  "/Collaborations/logo2.png",
-  "/Collaborations/logo3.png",
-  "/Collaborations/logo5.jpg",
-  "/Collaborations/logo6.png",
-  "/Collaborations/logo7.png",
+  "/Collaborations/logo1.webp",
+  "/Collaborations/logo2.webp",
+  "/Collaborations/logo3.webp",
+  "/Collaborations/logo5.webp",
+  "/Collaborations/logo6.webp",
+  "/Collaborations/logo7.webp",
   "/Collaborations/logo8.png",
   "/Collaborations/logo9.png",
-  "/Collaborations/logo10.png",
-  "/Collaborations/logo11.jpg",
-  "/Collaborations/logo12.png",
-  "/Collaborations/logo13.jpg",
+  "/Collaborations/logo10.webp",
+  "/Collaborations/logo11.webp",
+  "/Collaborations/logo12.webp",
+  "/Collaborations/logo13.webp",
 ];
 
 const TapeLeftSection = () => {

@@ -11,15 +11,15 @@ const HeadingSection = ({
   return (
     <div className="relative max-w-7xl mx-auto justify-center items-center lsm:px-8 py-8 md:py-16">
       {/* Spray splash */}
-      <div className="absolute -top-10 -left-32 md:-top-6 md:-left-24 lg:-top-4 lg:-left-20 w-[320px] h-[320px] z-0 ">
+      {/* <div className="absolute -top-10 -left-32 md:-top-6 md:-left-24 lg:-top-4 lg:-left-20 w-[320px] h-[320px] z-0 ">
         <Image
-          src={`/pngs/${img}-spray.png`}
+          src={`/pngs/${img}-spray.webp`}
           alt={`${img} spray paint splash`}
           height={400}
           width={400}
           className="z-0 opacity-40"
         />
-      </div>
+      </div> */}
 
       {/* Content */}
       <div className="relative  z-[1]">

@@ -10,7 +10,7 @@ import Image from "next/image";
 //     color: '#00AFBE'
 //   },
 //   {
-//     image: <Image src='/images/happy_customer_squere.jpg' fill alt="Promo movies" />,
+//     image: <Image src='/images/happy_customer_squere.webp' fill alt="Promo movies" />,
 //   },
 //   {
 //     number: '10+',
@@ -19,10 +19,10 @@ import Image from "next/image";
 //     color: '#F6A81F'
 //   },
 //   {
-//     image: <Image src='/images/happy_customer_squere.jpg' fill alt="Promo movies" />,
+//     image: <Image src='/images/happy_customer_squere.webp' fill alt="Promo movies" />,
 //   },
 //   {
-//     image: <Image src='/images/happy_customer_squere.jpg' fill alt="Promo movies" />,
+//     image: <Image src='/images/happy_customer_squere.webp' fill alt="Promo movies" />,
 //   },
 //   {
 //     number: '200+',
@@ -31,7 +31,7 @@ import Image from "next/image";
 //     color: '#E85623'
 //   },
 //   {
-//     image: <Image src='/images/happy_customer_squere.jpg' fill alt="Promo movies" />,
+//     image: <Image src='/images/happy_customer_squere.webp' fill alt="Promo movies" />,
 //   },
 //   {
 //     number: '100+',
@@ -49,7 +49,7 @@ const items = [
     description:
       "Nasze unikalne projekty oraz indywidualne podejście do każdego zlecenia gwarantują, że Twoje oczekiwania zostaną w pełni zrealizowane.",
     image: (
-      <Image src="/images/happy_customer_squere.jpg" fill alt="Promo movies" />
+      <Image src="/images/happy_customer_squere.webp" fill alt="Promo movies" />
     ),
     color: "#00AFBE",
   },
@@ -59,7 +59,7 @@ const items = [
     description:
       "Dzięki ponad dziesięcioletniemu doświadczeniu w branży, AeroMat zdobył wiedzę i umiejętności, które pozwalają na realizację projektów na najwyższym poziomie",
     image: (
-      <Image src="/images/happy_customer_squere.jpg" fill alt="Promo movies" />
+      <Image src="/images/happy_customer_squere.webp" fill alt="Promo movies" />
     ),
     color: "#F6A81F",
   },
@@ -69,7 +69,7 @@ const items = [
     description:
       "Wybierając AeroMat, inwestujesz w unikalne rozwiązania, które skutecznie przyciągają uwagę i wzmacniają wizerunek Twojej marki!",
     image: (
-      <Image src="/images/happy_customer_squere.jpg" fill alt="Promo movies" />
+      <Image src="/images/happy_customer_squere.webp" fill alt="Promo movies" />
     ),
     color: "#E85623",
   },
@@ -79,7 +79,7 @@ const items = [
     description:
       "Dzięki nowoczesnym technologiom i kreatywnemu podejściu, tworzymy filmy, które wyróżniają się na tle konkurencji i zapadają w pamięć odbiorców",
     image: (
-      <Image src="/images/happy_customer_squere.jpg" fill alt="Promo movies" />
+      <Image src="/images/happy_customer_squere.webp" fill alt="Promo movies" />
     ),
     color: "#63B547",
   },

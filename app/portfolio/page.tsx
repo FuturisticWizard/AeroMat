@@ -101,7 +101,7 @@ export default function PhotoPortfolio() {
             </div>
             {/* <div className="relative flex  mx-auto  aspect-video  w-[280px] h-[220px] sm:w-[540px] sm:h-[440px]   md:w-[440px] md:h-[340px] justify-center items-center ">
               <Image
-                src="/images/wall-painting.jpg"
+                src="/images/wall-painting.webp"
                 alt="Photographer at work"
                 fill
                 className="rounded-lg"
@@ -109,8 +109,8 @@ export default function PhotoPortfolio() {
               />
             </div> */}
             {/* <Compare
-                    firstImage="/images/komeko-old.jpg"
-                    secondImage="/images/komeko-new.jpg"
+                    firstImage="/images/komeko-old.webp"
+                    secondImage="/images/komeko-new.webp"
                     firstImageClassName="object-cover object-left-top"
                     secondImageClassname="object-cover object-left-top"
                     className="h-[150px] w-[300px] xsm:h-[250px] xsm:w-[500px] md:h-[400px] md:w-[900px] lg:h-[500px] lg:w-[1280px] mx-auto "

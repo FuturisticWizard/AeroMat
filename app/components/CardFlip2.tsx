@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 
 const Card = ({
-  imageFront = "/images/SpaceCity.jpg",
-  imageBack = "/images/BackImage.jpg",
+  imageFront = "/images/SpaceCity.webp",
+  imageBack = "/images/BackImage.webp",
   title = "Title",
   color = "purple",
 }) => {

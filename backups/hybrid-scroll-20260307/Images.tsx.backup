@@ -1,0 +1,100 @@
+"use client";
+import React, { useCallback } from "react";
+import Image from "next/image";
+import { FC } from "react";
+import { motion } from "framer-motion";
+
+interface Slide {
+  src: string;
+  title: string;
+  width: number;
+  height: number;
+  gridArea: string;
+}
+
+interface ImageSlideProps {
+  data: Slide[];
+  onClick: (index: number) => void;
+}
+
+// Konfiguracja animacji - zoptymalizowana pod wydajność
+const ANIMATION_CONFIG = {
+  duration: 0.4,           // 400ms - szybsza animacja = mniej obciążenia
+  stagger: 0.06,           // 60ms - szybszy stagger
+  yOffset: 20,             // 20px - mniejsze przesunięcie = mniej pracy GPU
+  ease: [0.25, 0.1, 0.25, 1], // easeOut - prostsza krzywa
+};
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: ANIMATION_CONFIG.stagger,
+    },
+  },
+};
+
+// Tylko transform i opacity - najbardziej wydajne właściwości (GPU-accelerated)
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: ANIMATION_CONFIG.yOffset,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: ANIMATION_CONFIG.duration,
+      ease: ANIMATION_CONFIG.ease,
+    },
+  },
+};
+
+const Images: FC<ImageSlideProps> = (props) => {
+  const { data, onClick } = props;
+
+  const handleClickImage = useCallback(
+    (index: number) => {
+      onClick(index);
+    },
+    [onClick]
+  );
+
+  return (
+    <div className="flex flex-col mx-auto h-auto w-full items-center sm:max-w-6xl lg:max-w-full xxs:py-4 px-2">
+      <motion.div
+        className="grid grid-container"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {data.map((slide, index) => (
+          <motion.div
+            key={index}
+            onClick={() => handleClickImage(index)}
+            className="relative gpu-accelerated"
+            style={{ gridArea: slide.gridArea }}
+            variants={itemVariants}
+          >
+            <Image
+              src={slide.src}
+              alt={slide.title}
+              width={slide.width}
+              height={slide.height}
+              className="w-full h-full object-cover cursor-pointer"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              quality={85}
+              priority={false}
+              loading="lazy"
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+export default Images;

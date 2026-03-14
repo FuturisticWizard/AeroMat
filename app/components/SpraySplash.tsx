@@ -9,7 +9,7 @@ const SpraySplash = ({
   return (
     <div className={`absolute w-[${width}] h-[${height}] inset- z-10`}>
       <Image
-        src={`/pngs/${color}-spray.png`}
+        src={`/pngs/${color}-spray.webp`}
         alt="black paint spray splash"
         fill
       />

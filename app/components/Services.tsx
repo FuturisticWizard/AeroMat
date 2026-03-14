@@ -20,32 +20,32 @@ type Card = {
 //   {
 //     category: "Murale",
 //     title: "Unikalne murale, które ożywią przestrzeń i wyróżnią Twoją markę, budując pozytywne emocje.",
-//     src: "/images/mural-lpec.jpg",
+//     src: "/images/mural-lpec.webp",
 //     content: "magenta-light",
 //   },
 //   {
 //     title: "Szyldy reklamowe",
 //     desc: "Profesjonalne szyldy zwiększające widoczność firmy, estetyczne i trwałe, przyciągające klientów.",
 //     icon: "/icons/szyld1.png",
-//     src: "/images/szyld3.jpg",
+//     src: "/images/szyld3.webp",
 //     content: "yellow-medium",
 //   },
 //   {
 //     title: "Samochody",
 //     desc: "Malowanie samochodów jako mobilna reklama, zwiększająca rozpoznawalność marki wszędzie.",
-//     src: "/images/camper.jpg", // Fixed: replaced missing image with existing one
+//     src: "/images/camper.webp", // Fixed: replaced missing image with existing one
 //     content: "red-light",
 //   },
 //   {
 //     title: "Wnętrza",
 //     desc: "Wyjątkowe dekoracje ścienne i wykończenia, które dodają charakteru i zachwycają klientów.",
-//     src: "/images/mural-lester.jpg",
+//     src: "/images/mural-lester.webp",
 //     content: "teal-light",
 //   },
 //   {
 //     title: "Systemy informacji wizualnej",
 //     desc: "Czytelne i estetyczne systemy informacji ułatwiające orientację i komunikację w przestrzeni.",
-//     src: "/images/visual-information-system.jpg",
+//     src: "/images/visual-information-system.webp",
 //     content: "purple-light",
 //   },
 //   {
@@ -62,7 +62,7 @@ type Card = {
 //     desc: "Przyciągnij uwagę unikalnymi muralami, które ożywią przestrzeń i wyróżnią Twoją markę. Tworzymy artystyczne dzieła, które inspirują i budują pozytywne emocje.",
 //     icon: "/icons/graffiti-64.png",
 //     imageFront: "", // Fixed: removed problematic path
-//     imageBack: "/images/mural-lpec.jpg",
+//     imageBack: "/images/mural-lpec.webp",
 //     color: "magenta-light",
 //   },
 //   {
@@ -70,7 +70,7 @@ type Card = {
 //     desc: "Zwiększ widoczność swojej firmy dzięki profesjonalnym szyldom reklamowym. Moje projekty są estetyczne, trwałe i skutecznie przyciągają klientów.",
 //     icon: "/icons/szyld1.png",
 //     imageFront: "", // Fixed: removed problematic path
-//     imageBack: "/images/szyld3.jpg",
+//     imageBack: "/images/szyld3.webp",
 //     color: "yellow-medium",
 //   },
 //   {
@@ -78,7 +78,7 @@ type Card = {
 //     desc: "Zamień swój pojazd w mobilną reklamę! Oferujemy profesjonalne malowanie samochodów , które zwiększy rozpoznawalność Twojej marki w każdym miejscu.",
 //     icon: "/icons/car-painting.png",
 //     imageFront: "", // Fixed: removed problematic path
-//     imageBack: "/images/camper.jpg", // Fixed: replaced missing image with existing one
+//     imageBack: "/images/camper.webp", // Fixed: replaced missing image with existing one
 //     color: "red-light",
 //   },
 //   {
@@ -86,7 +86,7 @@ type Card = {
 //     desc: "Stwórz wyjątkowe wnętrza, które zachwycą Twoich klientów i pracowników. Nasze dekoracje ścienne i wykończenia dodadzą charakteru każdej przestrzeni.",
 //     icon: "/icons/paint-roller-96.png",
 //     imageFront: "", // Fixed: removed problematic path
-//     imageBack: "/images/mural-lester.jpg",
+//     imageBack: "/images/mural-lester.webp",
 //     color: "teal-light",
 //   },
 //   {
@@ -94,7 +94,7 @@ type Card = {
 //     desc: "Ułatw orientację i popraw komunikację dzięki naszym systemom informacji wizualnej. Tworzymy czytelne i estetyczne rozwiązania dla każdej przestrzeni.",
 //     icon: "/icons/exit-96.png",
 //     imageFront: "", // Fixed: removed problematic path
-//     imageBack: "/images/visual-information-system.jpg",
+//     imageBack: "/images/visual-information-system.webp",
 //     color: "purple-light",
 //   },
 //   {
@@ -127,14 +127,14 @@ const cards = [
   {
     category: "Murale",
     title: "Unikalne murale, które ożywią przestrzeń i wyróżnią Twoją markę, budując pozytywne emocje.",
-    src: "/images/mural-lpec.jpg",
+    src: "/images/mural-lpec.webp",
     content: (
       <div>
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Tworzymy artystyczne murale, które przyciągają uwagę i ożywiają każdą przestrzeń. Nasze projekty to połączenie kreatywności z profesjonalizmem, które buduje pozytywne emocje i wzmacnia wizerunek marki.
         </p>
         <img
-          src="/images/mural-lpec.jpg"
+          src="/images/mural-lpec.webp"
           alt="Mural artystyczny"
           height="500"
           width="500"
@@ -142,12 +142,12 @@ const cards = [
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
           <img
-            src="/images/mural-starowka.jpg"
+            src="/images/mural-starowka.webp"
             alt="Mural stare miasto"
             className="rounded-lg object-cover h-48 w-full"
           />
           <img
-            src="/images/mural-morze.jpg"
+            src="/images/mural-morze.webp"
             alt="Mural morze"
             className="rounded-lg object-cover h-48 w-full"
           />
@@ -158,14 +158,14 @@ const cards = [
   {
     category: "Szyldy reklamowe",
     title: "Profesjonalne szyldy zwiększające widoczność firmy, estetyczne i trwałe, przyciągające klientów.",
-    src: "/images/szyld3.jpg",
+    src: "/images/szyld3.webp",
     content: (
       <div>
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Projektujemy i wykonujemy profesjonalne szyldy reklamowe, które zwiększają widoczność Twojej firmy. Nasze realizacje są estetyczne, trwałe i skutecznie przyciągają klientów.
         </p>
         <img
-          src="/images/szyld3.jpg"
+          src="/images/szyld3.webp"
           alt="Szyld reklamowy"
           height="500"
           width="500"
@@ -173,12 +173,12 @@ const cards = [
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
           <img
-            src="/images/szyld1.jpg"
+            src="/images/szyld1.webp"
             alt="Szyld firmowy"
             className="rounded-lg object-cover h-48 w-full"
           />
           <img
-            src="/images/szyld2.jpg"
+            src="/images/szyld2.webp"
             alt="Szyld świetlny"
             className="rounded-lg object-cover h-48 w-full"
           />
@@ -189,14 +189,14 @@ const cards = [
   {
     category: "Samochody",
     title: "Malowanie samochodów jako mobilna reklama, zwiększająca rozpoznawalność marki wszędzie.",
-    src: "/images/camper.jpg", 
+    src: "/images/camper.webp", 
     content: (
       <div>
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Oferujemy profesjonalne malowanie samochodów, które zamieni Twój pojazd w mobilną reklamę. Zwiększ rozpoznawalność marki w każdym miejscu, gdzie pojawi się Twój samochód.
         </p>
         <img
-          src="/images/camper.jpg"
+          src="/images/camper.webp"
           alt="Malowanie samochodów"
           height="500"
           width="500"
@@ -204,12 +204,12 @@ const cards = [
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
           <img
-            src="/images/camper2.jpg"
+            src="/images/camper2.webp"
             alt="Pojazd reklamowy"
             className="rounded-lg object-cover h-48 w-full"
           />
           <img
-            src="/images/camper3.jpg"
+            src="/images/camper3.webp"
             alt="Oklejanie samochodów"
             className="rounded-lg object-cover h-48 w-full"
           />
@@ -220,14 +220,14 @@ const cards = [
   {
     category: "Wnętrza",
     title: "Wyjątkowe dekoracje ścienne i wykończenia, które dodają charakteru i zachwycają klientów.",
-    src: "/images/mural-lester.jpg",
+    src: "/images/mural-lester.webp",
     content: (
       <div>
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Stwarzamy wyjątkowe wnętrza, które zachwycają klientów i pracowników. Nasze dekoracje ścienne i wykończenia dodają charakteru każdej przestrzeni biznesowej.
         </p>
         <img
-          src="/images/mural-lester.jpg"
+          src="/images/mural-lester.webp"
           alt="Dekoracja wnętrz"
           height="500"
           width="500"
@@ -235,12 +235,12 @@ const cards = [
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
           <img
-            src="/images/mural-lester2.jpg"
+            src="/images/mural-lester2.webp"
             alt="Wnętrze restauracji"
             className="rounded-lg object-cover h-48 w-full"
           />
           <img
-            src="/images/basen1.jpg"
+            src="/images/basen1.webp"
             alt="Dekoracja basenu"
             className="rounded-lg object-cover h-48 w-full"
           />
@@ -251,14 +251,14 @@ const cards = [
   {
     category: "Systemy informacji wizualnej",
     title: "Czytelne i estetyczne systemy informacji ułatwiające orientację i komunikację w przestrzeni.",
-    src: "/images/visual-information-system.jpg",
+    src: "/images/visual-information-system.webp",
     content: (
       <div>
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Projektujemy systemy informacji wizualnej, które ułatwiają orientację i poprawiają komunikację w każdej przestrzeni. Tworzymy czytelne i estetyczne rozwiązania.
         </p>
         <img
-          src="/images/visual-information-system.jpg"
+          src="/images/visual-information-system.webp"
           alt="System informacji wizualnej"
           height="500"
           width="500"

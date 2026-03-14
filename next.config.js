@@ -19,13 +19,9 @@ const nextConfig = {
         : false,
   },
 
-  // Image optimization
+  // Image optimization — source images already converted to WebP, skip re-encoding
   images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
-    qualities: [75, 85],
+    unoptimized: true,
   },
 
   // Performance optimizations
@@ -158,6 +154,15 @@ const nextConfig = {
       },
       {
         source: "/images/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:dir(pngs|icons|Collaborations|Portfolio|movies)/:path*",
         headers: [
           {
             key: "Cache-Control",

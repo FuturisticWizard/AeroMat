@@ -26,7 +26,7 @@ const testimonials = [
     content:
       "Mateusz odjebał kawał dobrej roboty. Szyld przyciaga motocyklistów z całej gminy! I to wszystko za kilka flaszek naszego bimberku!",
     rating: 5,
-    workImage: "/Collaborations/riders_szyld.jpg",
+    workImage: "/Collaborations/riders_szyld.webp",
     workTitle: "Szyld dla Riders Pub",
   },
   {
@@ -35,11 +35,11 @@ const testimonials = [
     name: "Michał  Golob",
     role: "Manager",
     company: "Tifosi pizza pub",
-    image: "/Collaborations/logo13.jpg",
+    image: "/Collaborations/logo13.webp",
     content:
       "Mateusz jest bardzo utalentowanym artystą. Troche za dużo pije (do południa pół litra), ale za to później doskonale trafia przetrawioną pizzą do miednicy :D ",
     rating: 4,
-    workImage: "/images/szyld4.jpg",
+    workImage: "/images/szyld4.webp",
     workTitle: "Szyld dla pizzeri Tifosi",
   },
   {
@@ -48,11 +48,11 @@ const testimonials = [
     name: "Emily Rodriguez",
     role: "Product Manager",
     company: "Schronisko dla zwierząt w Radysach",
-    image: "/Collaborations/logo7.png",
+    image: "/Collaborations/logo7.webp",
     content:
       "Zależało nam na tanim logo dla naszego schroniska. Mateusz zrobił to za darmo, bo mu się psiak spodobał. Potem mówił że bardzo smaczny. Polecamy!",
     rating: 5,
-    workImage: "/images/logo1.jpg",
+    workImage: "/images/logo1.webp",
     workTitle: "Logo dla Schroniska dla zwierząt w Radysach",
   },
   {
@@ -61,11 +61,11 @@ const testimonials = [
     name: "David Kim",
     role: "CTO",
     company: "Premium Auto Partner",
-    image: "/Collaborations/images.jpg",
+    image: "/Collaborations/images.webp",
     content:
       "Mateusz poradził sobie z tym zadaniem doskonale. Zostało nam troche czarnej farby więc postanowiliśmy ją wykorzystac.",
     rating: 5,
-    workImage: "/images/szyld2.jpg",
+    workImage: "/images/szyld2.webp",
     workTitle: "Mural dla Premium Auto Partner",
   },
   {
@@ -74,11 +74,11 @@ const testimonials = [
     name: "Lisa Patel",
     role: "UX Designer",
     company: "Magiczny Świat",
-    image: "/Collaborations/logo6.png",
+    image: "/Collaborations/logo6.webp",
     content:
       "Doskonały mural, dzieciaki co chwila wbiegają w ścianę w miejscu gdzie jest wjazd do tunelu ...  ",
     rating: 4,
-    workImage: "/images/magiczny-swiat.jpg",
+    workImage: "/images/magiczny-swiat.webp",
     workTitle: "Mural dla Magiczny Świat",
   },
 ];

@@ -9,8 +9,8 @@ import { Button } from "./ui/button";
 
 const CardFlip = ({
   icon = "/placeholders/64x64.svg",
-  imageBack = "/images/lpec-dom1.jpg",
-  imageFront = "/images/lpec-dom2.jpg",
+  imageBack = "/images/lpec-dom1.webp",
+  imageFront = "/images/lpec-dom2.webp",
   title = "title",
   description = "description",
   color = "purple",

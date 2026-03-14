@@ -11,7 +11,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({
-  image = "/images/SpaceCity.jpg",
+  image = "/images/SpaceCity.webp",
   title = "Title",
   color = "purple",
   onClick,

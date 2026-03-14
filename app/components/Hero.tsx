@@ -7,31 +7,31 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const sliderImages = [
   {
-    src: "/images/komeko1.jpg",
+    src: "/images/komeko1.webp",
     alt: "Murale Reklamowe",
     title: "Murale Reklamowe ",
     desc: "Dzięki swojej unikalności przyciągają uwagę i budzą zainteresowanie, zapewniając skuteczną reklamę i pozytywny wizerunek marki.",
   },
   {
-    src: "/images/folklor-mural.jpg",
+    src: "/images/folklor-mural.webp",
     alt: "Murale Artystyczne",
     title: "Murale Artystyczne ",
     desc: "Nasze artystyczne murale to więcej niż zwykła dekoracja – to dzieła sztuki, które transformują przestrzenie i nadają im unikalny charakter. Poprzez malowanie murali, możesz stworzyć punkt centralny w pomieszczeniu, dodać koloru i tekstury, a także wyrazić swoją osobowość. Murale są idealnym sposobem na ożywienie wnętrz i stworzenie atmosfery, która inspiruje i angażuje",
   },
   {
-    src: "/images/mural-lpec.jpg",
+    src: "/images/mural-lpec.webp",
     alt: "Nature-inspired office mural",
     title: "Eko Murale",
     desc: "Murale oczyszczające powietrze, poprawiające jakość życia w mieście.",
   },
   {
-    src: "/images/kinematografia2.jpg",
+    src: "/images/kinematografia2.webp",
     alt: "School playground mural",
     title: "Kinematografia",
     desc: "Dzięki swojej unikalności i artystycznego podejścia Moje filmy przyciągają uwagę  i zapewniają skuteczną reklamę oraz gwarantują pozytywny wizerunek marki.",
   },
   {
-    src: "/images/kinematografia2.jpg",
+    src: "/images/kinematografia2.webp",
     alt: "School playground mural",
     title: "",
     desc: "Dzięki swojej unikalności i artystycznego podejścia Moje filmy przyciągają uwagę  i zapewniają skuteczną reklamę oraz gwarantują pozytywny wizerunek marki.",

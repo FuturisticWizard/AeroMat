@@ -1,0 +1,1110 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Allura&family=Yesteryear&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+  .fancy-text {
+    -webkit-text-stroke: 1px rgb(255 255 255);
+    font-family: Anton, sans-serif;
+  }
+  
+  /* Blur effects for AppleCards - Production fix */
+  .blur-sm {
+    filter: blur(4px);
+  }
+  .blur-0 {
+    filter: blur(0);
+  }
+  .backdrop-blur-lg {
+    backdrop-filter: blur(16px);
+  }
+  
+  /* Apple Cards drag improvements */
+  .apple-cards-carousel {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    scrollbar-width: none;
+  }
+  
+  .apple-cards-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Force call button to top layer */
+  .call-button-force {
+    z-index: 9999 !important;
+    position: fixed !important;
+    isolation: isolate;
+    transform: translateZ(0);
+  }
+
+  /* GPU acceleration for smooth animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    contain: layout style paint;
+  }
+}
+
+.yesteryear-regular {
+    font-family: Yesteryear, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .allura {
+    font-family: Allura, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .anton-regular {
+    font-family: Anton, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .anton-regular-strokeW {
+    -webkit-text-stroke: 4px rgb(158 146 146);
+    font-family: Anton, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .anton-regular-strokeB {
+    -webkit-text-stroke: 2px rgb(0 0 0 / 87.9%);
+    font-family: Anton, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .custom-shape-divider-top-1740008698 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .gradient-new {
+    background: hsl(0deg 0% 0% / 100%);
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
+    background: linear-gradient(
+      360deg,
+      hsl(0deg 0% 0% / 100%) 10%,
+      hsl(0deg 0% 100% / 100%) 100%
+    );
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#FFFFFF", GradientType=1 );
+  }
+
+@layer components {
+  .border-border {
+    border: 1px solid hsl(var(--border)); /* Use the CSS variable */
+  }
+
+  .paused {
+    animation-play-state: paused;
+  }
+
+  .bentogrid-body {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2%;
+  }
+
+  .box {
+    background-color: #0071ff;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+  }
+
+  .panorama-card {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    padding: 1.5em;
+    padding-top: 0;
+    margin-top: 0;
+ 
+  }
+
+  .panorama-img-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 150px 150px 0 0;
+    overflow: hidden;
+  }
+
+/* Panorama has a special top-only radius, match the dim layer to it */
+.panorama-card .card-dim {
+  border-radius: 150px 150px 0 0;
+}
+
+/* Ensure panorama layers stack deterministically */
+.panorama-card .panorama-img-wrapper {
+  z-index: 0;
+}
+
+.panorama-card .card-dim {
+  z-index: 1;
+}
+
+.panorama-card .panorama-filter {
+  z-index: 2;
+}
+
+.panorama-card .panorama-overlay {
+  z-index: 10;
+}
+
+  .panorama-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform: scale(2);
+    transform-origin: center;
+  }
+
+  .panorama-filter {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at 30% 20%,
+        rgba(255, 190, 120, 0.2),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 70% 80%,
+        rgba(80, 180, 255, 0.25),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(5, 8, 18, 0.55),
+        rgba(1, 4, 10, 0.85)
+      );
+    mix-blend-mode: multiply;
+  }
+
+  .panorama-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    pointer-events: none;
+    padding: 2rem;
+  }
+
+  .panorama-caption {
+    position: absolute;
+    color: #eaf3ff;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+  .panorama-caption:nth-child(1) {
+    left: 8%;
+    top: 20%;
+    text-align: left;
+  }
+  .panorama-caption:nth-child(2) {
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+  }
+  .panorama-caption:nth-child(3) {
+    left: 15%;
+    bottom: 15%;
+    text-align: left;
+  }
+
+  .panorama-caption h2 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 1rem;
+    color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .panorama-caption .char {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .panorama-caption .char span {
+    display: inline-block;
+  }
+
+  .panorama-caption p {
+    text-transform: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    letter-spacing: 0.05rem;
+    line-height: 1.4;
+    color: rgba(238, 244, 255, 0.92);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-montserrat);
+  }
+
+  h1 {
+    font-weight: 900;
+  }
+
+  :root {
+    --font-montserrat: "Montserrat", sans-serif;
+    --background: 0 0% 0%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 27 100% 50%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    /* New colors */
+    --green-light: 140 50% 60%;
+    --green-medium: 120 50% 40%;
+    --green-dark: 100 50% 30%;
+    --yellow-light: 55 100% 90%;
+    --yellow-medium: 55 100% 70%;
+    --yellow-dark: 55 100% 50%;
+    --blue-light: 210 80% 90%;
+    --blue-medium: 210 80% 70%;
+    --blue-dark: 210 80% 50%;
+    --red-light: 0 90% 70%;
+    --red-medium: 0 90% 50%;
+    --red-dark: 0 90% 30%;
+    --purple-light: 270 80% 90%;
+    --purple-medium: 270 80% 70%;
+    --purple-dark: 270 80% 50%;
+    --orange-light: 30 100% 90%;
+    --orange-medium: 30 100% 70%;
+    --orange-dark: 30 100% 50%;
+    --teal-light: 160 100% 80%;
+    --teal-medium: 160 100% 60%;
+    --teal-dark: 160 100% 40%;
+    --cyan-light: 180 100% 90%;
+    --cyan-medium: 180 100% 70%;
+    --cyan-dark: 180 100% 50%;
+    --magenta-light: 300 100% 90%;
+    --magenta-medium: 300 100% 70%;
+    --magenta-dark: 300 100% 50%;
+    --brown-light: 25 50% 70%;
+    --brown-medium: 25 50% 50%;
+    --brown-dark: 25 50% 30%;
+    --silver-light: 0 0% 95%;
+    --silver-medium: 0 0% 80%;
+    --silver-dark: 0 0% 60%;
+    --gray-light: 0 0% 90%;
+    --gray-medium: 0 0% 50%;
+    --gray-dark: 0 0% 20%;
+    --bronze-light: 35 50% 70%;
+    --bronze-medium: 35 50% 50%;
+    --bronze-dark: 35 50% 30%;
+    --cream: 55 100% 95%;
+    --ivory: 40 100% 98%;
+    --misty-blue: 210 100% 95%;
+    --pale-lavender: 270 100% 95%;
+    --powder-pink: 340 100% 95%;
+    --soft-peach: 20 100% 90%;
+    --light-mint: 140 100% 90%;
+    --frosted-teal: 160 100% 90%;
+    --dewy-green: 120 100% 90%;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    /* Adjust new colors for dark mode */
+    --green-light: 140 50% 40%;
+    --green-medium: 120 50% 30%;
+    --green-dark: 100 50% 20%;
+    --yellow-light: 55 100% 80%;
+    --yellow-medium: 55 100% 60%;
+    --yellow-dark: 55 100% 40%;
+    --blue-light: 210 80% 80%;
+    --blue-medium: 210 80% 60%;
+    --blue-dark: 210 80% 40%;
+    --red-light: 0 90% 60%;
+    --red-medium: 0 90% 40%;
+    --red-dark: 0 90% 20%;
+    --purple-light: 270 80% 80%;
+    --purple-medium: 270 80% 60%;
+    --purple-dark: 270 80% 40%;
+    --orange-light: 30 100% 80%;
+    --orange-medium: 30 100% 60%;
+    --orange-dark: 30 100% 40%;
+    --teal-light: 160 100% 70%;
+    --teal-medium: 160 100% 50%;
+    --teal-dark: 160 100% 30%;
+    --cyan-light: 180 100% 80%;
+    --cyan-medium: 180 100% 60%;
+    --cyan-dark: 180 100% 40%;
+    --magenta-light: 300 100% 80%;
+    --magenta-medium: 300 100% 60%;
+    --magenta-dark: 300 100% 40%;
+    --brown-light: 25 50% 60%;
+    --brown-medium: 25 50% 40%;
+    --brown-dark: 25 50% 20%;
+    --cream: 55 100% 80%;
+    --ivory: 40 100% 85%;
+    --misty-blue: 210 100% 80%;
+    --pale-lavender: 270 100% 80%;
+    --powder-pink: 340 100% 80%;
+    --soft-peach: 20 100% 75%;
+    --light-mint: 140 100% 75%;
+    --frosted-teal: 160 100% 75%;
+    --dewy-green: 120 100% 75%;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite; /* Adjust duration for speed */
+}
+
+/* Cards marquee: make sure it's positioned and stacked correctly on BOTH desktop and mobile.
+   Without these base styles, `.card-marquee` ends up in normal flow on mobile and is often
+   covered by `.card-img`, so the text appears "missing". */
+.card-marquee {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  overflow: hidden;
+  /* Behind the image layer so it doesn't sit on top of the photo while it scales in */
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card-marquee .marquee {
+  display: flex;
+  width: max-content;
+}
+
+.card-marquee .marquee h1 {
+  white-space: nowrap;
+  margin-right: 30px;
+  /* Reasonable default for mobile + desktop; can be overridden later if needed */
+  font-size: clamp(2.25rem, 10vw, 6rem);
+  font-weight: 600;
+}
+
+/* Cards base layout (must NOT be desktop-only, otherwise mobile ends up with dark text on dark bg) */
+.intro,
+.outro,
+.cards,
+.panorama-section {
+  position: relative;
+  width: 100vw;
+  background-color: #000000;
+  color: #fff;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+}
+
+.card {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  --card-radius: 150px;
+  /* Create a stacking context so negative z-index children (like marquee) stay within the card */
+  isolation: isolate;
+  padding: 1.5em;
+}
+
+.card-wrapper {
+  /* Cover the full card area (including padding) so bg layers (image/dim) don't leave gaps */
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+  z-index: 0;
+}
+
+.card-dim {
+  position: absolute;
+  inset: 0;
+  /* Between image (0) and content (10) */
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  /* border-radius: var(--card-radius); */
+  /* Slight vignette/gradient for better text readability */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem;
+  /* Always above dim layer */
+  z-index: 10;
+}
+
+.card-content .card-title h1 {
+  color: #ffffff;
+}
+
+/* SplitText chars for card titles must be clipped on all viewports (mobile included),
+   otherwise the translated spans can still be visible and the title looks "always on". */
+.card-title .char {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.card-title .char span {
+  display: inline-block;
+}
+
+/* IMPORTANT: this needs to be a top-level media query.
+   The previous CSS had `@media (max-width: 768px)` nested inside `@media (width >= 769px)`,
+   which resolves to an impossible condition and never matches on mobile. */
+@media (max-width: 768px) {
+  /* Intro mobile typography + layout */
+  .intro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  .intro h1 {
+    width: 100%;
+    font-size: clamp(2rem, 7.5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Outro mobile typography + layout (match Intro) */
+  .outro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  .outro h1 {
+    width: 100%;
+    font-size: clamp(2rem, 7.5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Typography tweaks for mobile Cards */
+  .card-marquee .marquee h1 {
+    font-size: clamp(1.5rem, 9vw, 3.25rem);
+    letter-spacing: -0.02em;
+  }
+
+  .card-content .card-title h1 {
+    font-size: clamp(1.6rem, 7vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .card-content .card-description p {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  /* More left/right breathing room for descriptions on mobile */
+  .card-content .card-description {
+    padding-inline: 0.75rem;
+  }
+
+  /* Fullscreen cards on mobile (avoid fixed 450px that breaks pin + 100svh layout) */
+  .card {
+    height: 100svh;
+    min-height: 480px;
+    --card-radius: 32px;
+    padding: 1.25rem;
+  }
+
+  .card-img img {
+    object-position: center;
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 1.5rem 1rem 2rem;
+  }
+}
+
+#close-popup {
+  position: absolute;
+  font-weight: 700;
+  font-size: 1.25rem;
+  outline: none;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#marker-title {
+  font-weight: 700;
+  padding: 8px 0;
+}
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.gradient {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 47%,
+    /* Gradient jest przezroczysty do około 2/3 wysokości */ rgb(0 0 0 / 74.5%)
+      90%,
+    /* Od około 70% wysokości zaczyna się ciemniejszy kolor */ black
+  ); /* Na samym dole jest pełna czerń */
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.bentogrid-body {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+}
+
+.box {
+  background-color: #0071ff;
+}
+
+.my-masonry-grid {
+  display: flex;
+  width: 100%;
+  gap: 1em;
+
+  /* gutter size offset */
+}
+
+.my-masonry-grid_column {
+  gap: 1em;
+}
+
+.my-masonry-grid_column > div {
+  margin-bottom: 15px; /* space between items */
+}
+
+.my-masonry-grid_column > img {
+  padding-bottom: 15px; /* space between items */
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Adjust height as needed */
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.image-container img {
+  object-fit: cover; /* Use contain to maintain aspect ratio */
+  /* Use cover to fill the container, cropping if necessary */
+  width: 100%;
+  height: 100%;
+}
+
+.service-tab {
+  writing-mode: sideways-lr;
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #0e2f56;
+  letter-spacing: 0.1em;
+  padding: 20px 10px;
+  line-height: 100%;
+  color: white;
+}
+
+.service-tab2 {
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #0e2f56;
+  letter-spacing: 0.1em;
+  padding: 20px 10px;
+  line-height: 100%;
+  color: white;
+  display: inline-block;
+}
+
+.leaflet-overlay-pane path,
+.leaflet-marker-icon {
+  cursor: pointer;
+}
+
+@media (width <= 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr 1fr; /* Change to a single column on smaller screens */
+    grid-template-rows: auto; /* Adjust rows as needed */
+    gap: 2px;
+    grid-template-areas:
+      "photo1 photo1 photo1"
+      "photo2 photo3 photo3"
+      "photo5 photo5 photo4"
+      "photo6 photo7 photo7"
+      "photo8 photo8 photo8"
+      "photo9 photo10 photo11"
+      "photo9 photo12 photo12";
+  }
+
+  .image-container {
+    height: 40vh; /* Adjust height for smaller screens */
+  }
+}
+
+@media (width >= 769px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto; /* Adjust rows as needed */
+    gap: 2px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo3 photo3"
+      "photo2 photo2 photo5 photo5"
+      "photo4 photo6 photo7 photo7"
+      "photo4 photo8 photo10 photo9"
+      "photo11 photo11 photo12 photo12"
+      "photo11 photo11 photo12 photo12";
+  }
+  .grid-container2 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto; /* Adjust rows as needed */
+    gap: 2px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo3 photo3"
+      "photo2 photo2 photo5 photo5"
+      "photo4 photo6 photo7 photo7"
+      "photo4 photo8 photo8 photo9"
+      "photo11 photo11 photo11 photo9";
+  }
+  .image-container {
+    height: 40vh; /* Adjust height for smaller screens */
+  }
+
+  .img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  h1 {
+  font-size: 5rem;
+  font-weight: 500;
+  letter-spacing: -0.1rem;
+  line-height: 1.25;
+  }
+
+  p {
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.25;
+
+  }
+
+
+  .intro,
+  .outro,
+  .cards,
+  .panorama-section {
+    position: relative;
+    width: 100vw;
+    background-color: #000000;
+    color: #fff;
+  }
+
+  .intro,
+  .outro {
+    height: 100svh;
+    padding: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .intro h1,
+  .outro h1 {
+    width: 60%;
+    text-align: center;
+    line-height: 1.1;
+  }
+  
+  .cards {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10vh;
+  }
+  .card-marquee {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    overflow: hidden;
+  }
+
+  .card-marquee .marquee {
+    display: flex;
+  }
+
+  .card-marquee .marquee h1 {
+    white-space: nowrap;
+    font-size: 10vw;
+    font-weight: 600;
+    margin-right: 30px;
+  }
+  .card {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    padding: 1.5em;
+  }
+  .card-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+  } 
+  .card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 150px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(2);
+    transform-origin: center;
+  }
+  .card-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 3rem;
+    z-index: 3;
+  }
+  .card-content .card-title {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    transform: none;
+  }
+  .card-content .card-title h1 {
+    width: 100%;
+    color: #ffffff;
+  }
+  .card-content .card-description {
+    position: relative;
+    width: min(55ch, 70%);
+    text-align: inherit;
+    opacity: 0;
+  }
+
+  .card:nth-child(2) {
+    margin-top: 50vh;
+  }
+
+  .card:nth-child(1) .card-content {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .card:nth-child(1) .card-title {
+    justify-content: center;
+  }
+  .card:nth-child(1) .card-title h1,
+  .card:nth-child(1) .card-description {
+    align-self: center;
+    width: 100%;
+    text-align: center;
+  }
+  .card:nth-child(1) .card-description {
+    width: min(50ch, 55%);
+  }
+
+  .card:nth-child(2) .card-content,
+  .card:nth-child(3) .card-content {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .card:nth-child(2) .card-title,
+  .card:nth-child(3) .card-title {
+    justify-content: center;
+  }
+  .card:nth-child(2) .card-title h1,
+  .card:nth-child(2) .card-description,
+  .card:nth-child(3) .card-title h1,
+  .card:nth-child(3) .card-description {
+    align-self: stretch;
+    width: 100%;
+    text-align: center;
+  }
+
+  .card:nth-child(4) .card-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .card:nth-child(4) .card-title {
+    justify-content: flex-start;
+  }
+  .card:nth-child(4) .card-title h1,
+  .card:nth-child(4) .card-description {
+    align-self: stretch;
+    width: 100%;
+    text-align: left;
+  }
+
+  .char {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .char span {
+    transform: translateX(100%);
+    display: inline-block;
+  }
+
+  /* Mobile: obraz w kartach ma pokazywać centrum i mieć pełną szerokość */
+  @media (max-width: 768px) {
+    .card {
+      height: 450px !important;
+      min-height: 450px !important;
+      padding: 1.25rem;
+    }
+
+    .card-img {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      height: 450px !important;
+      border-radius: 32px;
+    }
+
+    .card-img img {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      position: absolute;
+      inset: 0;
+      padding: 1.5rem 1rem 2rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 900px) {
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 0;
+    }
+
+    .intro h1,
+    .outro h1 {
+      width: 100%;
+    }
+
+    .card-content .card-description {
+      width: 90%;
+
+    }
+  }
+}
+
+/* Google Maps InfoWindow dark mode styling */
+.gm-style .gm-style-iw-c {
+  background-color: #171717 !important;
+  border: 1px solid #404040 !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-tc::after {
+  background: #171717 !important;
+}
+
+.gm-style .gm-style-iw-t::after {
+  background: linear-gradient(45deg, #171717 50%, transparent 50%) !important;
+}
+
+.gm-style button.gm-ui-hover-effect {
+  top: 4px !important;
+  right: 4px !important;
+}
+
+.gm-style button.gm-ui-hover-effect > span {
+  background-color: #fff !important;
+}
