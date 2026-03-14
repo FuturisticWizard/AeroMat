@@ -47,6 +47,14 @@
     isolation: isolate;
     transform: translateZ(0);
   }
+
+  /* GPU acceleration for smooth animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    contain: layout style paint;
+  }
 }
 
 .yesteryear-regular {
@@ -153,14 +161,9 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 150px 150px 0 0;
     overflow: hidden;
   }
 
-/* Panorama has a special top-only radius, match the dim layer to it */
-.panorama-card .card-dim {
-  border-radius: 150px 150px 0 0;
-}
 
 /* Ensure panorama layers stack deterministically */
 .panorama-card .panorama-img-wrapper {
@@ -232,6 +235,7 @@
   }
   .panorama-caption:nth-child(2) {
     right: 10%;
+    left: auto;
     top: 50%;
     transform: translateY(-50%);
     text-align: right;
@@ -245,8 +249,9 @@
   .panorama-caption h2 {
     font-size: clamp(3rem, 8vw, 6rem);
     margin-bottom: 1rem;
-    color: #ff7301;
-    font-family: "Bebas Neue", sans-serif;
+    color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
     letter-spacing: 0.1rem;
     line-height: 1;
     white-space: nowrap;
@@ -262,7 +267,7 @@
 
   .panorama-caption p {
     text-transform: none;
-    font-family: "Poppins", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: clamp(1rem, 1.8vw, 1.4rem);
     letter-spacing: 0.05rem;
     line-height: 1.4;
@@ -273,11 +278,15 @@
 @layer base {
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-poppins-sans);
+    font-family: var(--font-montserrat);
+  }
+
+  h1 {
+    font-weight: 900;
   }
 
   :root {
-    --font-poppins-sans: "Poppins", sans-serif;
+    --font-montserrat: "Montserrat", sans-serif;
     --background: 0 0% 0%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
@@ -469,12 +478,36 @@
 /* Cards base layout (must NOT be desktop-only, otherwise mobile ends up with dark text on dark bg) */
 .intro,
 .outro,
+.text-break,
 .cards,
 .panorama-section {
   position: relative;
   width: 100vw;
   background-color: #000000;
   color: #fff;
+}
+
+.text-break {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.text-break h1 {
+  width: 80%;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.text-break p {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  opacity: 0.7;
 }
 
 .cards {
@@ -487,10 +520,10 @@
   position: relative;
   width: 100vw;
   height: 100svh;
-  --card-radius: 150px;
+  --card-radius: 75px;
   /* Create a stacking context so negative z-index children (like marquee) stay within the card */
   isolation: isolate;
-  padding: 1.5em;
+  /* padding: 1.5em; */
 }
 
 .card-wrapper {
@@ -506,7 +539,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: var(--card-radius);
   z-index: 0;
 }
 
@@ -517,7 +549,7 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0;
-  border-radius: var(--card-radius);
+  /* border-radius: var(--card-radius); */
   /* Slight vignette/gradient for better text readability */
   background: linear-gradient(
     180deg,
@@ -601,9 +633,10 @@
   }
 
   .card-content .card-title h1 {
-    font-size: clamp(1.6rem, 7vw, 2.6rem);
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
+    padding-inline: 1rem;
   }
 
   .card-content .card-description p {
@@ -621,7 +654,6 @@
     height: 100svh;
     min-height: 480px;
     --card-radius: 32px;
-    padding: 1.25rem;
   }
 
   .card-img img {
@@ -631,6 +663,44 @@
 
   .card-content {
     padding: 1.5rem 1rem 2rem;
+  }
+
+  .panorama-caption {
+    width: 90%;
+  }
+
+  .panorama-caption:nth-child(1) {
+    left: 5%;
+    right: auto;
+    text-align: left;
+    transform: none;
+    top: 15%;
+  }
+
+  .panorama-caption:nth-child(2) {
+    right: 5%;
+    left: auto;
+    text-align: right;
+    transform: none;
+    top: 45%;
+  }
+
+  .panorama-caption:nth-child(3) {
+    left: 5%;
+    right: auto;
+    text-align: left;
+    transform: none;
+    bottom: 12%;
+    top: auto;
+  }
+
+  .panorama-caption h2 {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    white-space: normal;
+  }
+
+  .panorama-caption p {
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
   }
 }
 
@@ -780,6 +850,62 @@
       "photo9 photo12 photo12";
   }
 
+  /* Smaller grid mobile - 4 columns, portrait images span 2 rows */
+  .grid-small-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 18vh);
+    gap: 3px;
+    grid-template-areas:
+      "photo1 photo1 photo2 photo2"
+      "photo3 photo3 photo2 photo2"
+      "photo3 photo3 photo4 photo4"
+      "photo5 photo5 photo6 photo6"
+      "photo7 photo7 photo9 photo9"
+      "photo8 photo10 photo9 photo11";
+  }
+
+  .grid-small-container > * {
+    overflow: hidden;
+  }
+
+  /* 7-photo grid mobile - photo3 portrait 2 rows, photo7 square 2 rows */
+  .grid-small-7 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 22vh 18vh 18vh 18vh 18vh;
+    gap: 3px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo7 photo7"
+      "photo3 photo3 photo7 photo7"
+      "photo3 photo3 photo4 photo4"
+      "photo5 photo5 photo6 photo6";
+  }
+
+  .grid-small-7 > * {
+    overflow: hidden;
+  }
+
+  /* 7sq grid mobile - 3 squares + 1 portrait, all 2 rows */
+  .grid-small-7sq {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 18vh);
+    gap: 3px;
+    grid-template-areas:
+      "photo3 photo3 photo6 photo6"
+      "photo3 photo3 photo6 photo6"
+      "photo2 photo2 photo7 photo7"
+      "photo2 photo2 photo7 photo7"
+      "photo1 photo1 photo1 photo1"
+      "photo4 photo4 photo5 photo5";
+  }
+
+  .grid-small-7sq > * {
+    overflow: hidden;
+  }
+
   .image-container {
     height: 40vh; /* Adjust height for smaller screens */
   }
@@ -799,6 +925,60 @@
       "photo11 photo11 photo12 photo12"
       "photo11 photo11 photo12 photo12";
   }
+
+  /* Smaller grid - 6 columns, portrait images span 2 rows */
+  .grid-small-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 20vh);
+    gap: 4px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo2 photo2 photo3"
+      "photo4 photo4 photo5 photo2 photo2 photo3"
+      "photo4 photo4 photo5 photo6 photo6 photo6"
+      "photo7 photo7 photo8 photo8 photo9 photo9"
+      "photo10 photo10 photo10 photo10 photo9 photo9"
+      "photo11 photo11 photo11 photo11 photo9 photo9";
+  }
+
+  .grid-small-container > * {
+    overflow: hidden;
+  }
+
+  /* 7-photo grid desktop - photo3 portrait 2 rows, photo7 square 2 rows */
+  .grid-small-7 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 28vh 24vh 24vh 24vh;
+    gap: 4px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo3 photo3 photo7 photo7"
+      "photo4 photo4 photo3 photo3 photo7 photo7"
+      "photo5 photo5 photo5 photo6 photo6 photo6";
+  }
+
+  .grid-small-7 > * {
+    overflow: hidden;
+  }
+
+  /* 7sq grid desktop - 3 squares + 1 portrait, all 2 rows */
+  .grid-small-7sq {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 25vh);
+    gap: 4px;
+    grid-template-areas:
+      "photo3 photo3 photo6 photo6 photo7 photo7"
+      "photo3 photo3 photo6 photo6 photo7 photo7"
+      "photo2 photo2 photo1 photo1 photo1 photo1"
+      "photo2 photo2 photo4 photo4 photo5 photo5";
+  }
+
+  .grid-small-7sq > * {
+    overflow: hidden;
+  }
+
   .grid-container2 {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto; /* Adjust rows as needed */
@@ -892,7 +1072,6 @@
     position: relative;
     width: 100vw;
     height: 100svh;
-    padding: 1.5em;
   }
   .card-wrapper {
     position: relative;
@@ -905,7 +1084,6 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 150px;
     overflow: hidden;
     z-index: 0;
   }
@@ -1016,7 +1194,6 @@
     .card {
       height: 450px !important;
       min-height: 450px !important;
-      padding: 1.25rem;
     }
 
     .card-img {
@@ -1024,7 +1201,6 @@
       inset: auto;
       width: 100%;
       height: 450px !important;
-      border-radius: 32px;
     }
 
     .card-img img {

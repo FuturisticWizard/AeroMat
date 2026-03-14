@@ -2,12 +2,13 @@
 import React, { useEffect } from "react";
 import VideoHero from "./components/hero/VideoHero";
 import Portfolio from "./components/Portfolio";
+import PortfolioCard from "./components/PortfolioCard";
 import TrustedBy from "./components/TrustedBy";
 import HowItWorks from "./components/HowItWorks";
 import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
-import { portfolioPhotos, PtasieMurale } from "@/app/lib/photos";
+import { portfolioPhotos, komunikacjaWizualnaPhotos, wnetrzaPhotos, projektySpecjalnePhotos } from "@/app/lib/photos";
 import { LazyYouTubeGridWithIntersection } from "./components/LazyComponents";
 import Intro from "./components/Intro";
 import Outro from "./components/Outro";
@@ -32,7 +33,7 @@ export default function Home() {
     gsap.registerPlugin(ScrollTrigger, SplitText);
     console.log("Plugins registered");
     const mm = gsap.matchMedia();
-    const isMobile = window.innerWidth < 900;
+    const isMobile = window.innerWidth < 768;
     console.log("[Viewport] isMobile:", isMobile);
 
     let lenis: Lenis | null = null;
@@ -83,6 +84,18 @@ export default function Home() {
     const introCard = cards[0];
     console.log("[Cards] found:", cards.length);
     console.log("[Cards] isMobile:", isMobile);
+
+    // Set z-index directly on .card elements so it works with position:fixed (GSAP pin).
+    // Wrapper div z-index doesn't apply to pinned children.
+    const cardZIndex: Record<number, number> = { 0: 10, 1: 30, 2: 50, 3: 60 };
+    cards.forEach((card) => {
+      const idx = parseInt(card.dataset.cardIndex || "-1", 10);
+      if (card.classList.contains("panorama-card")) {
+        gsap.set(card, { zIndex: 80 });
+      } else if (cardZIndex[idx] !== undefined) {
+        gsap.set(card, { zIndex: cardZIndex[idx] });
+      }
+    });
     
     const introEndValue = isMobile ? "+=120vh" : "+=300vh";
     if (isMobile) {
@@ -110,7 +123,7 @@ export default function Home() {
     });
     
     // Ukryj wszystkie znaki tytułów i opisy na starcie
-    gsap.set(".card-title .char span", { x: "100%" });
+    gsap.set(".card-title .char span", { x: "110%" });
     gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
     gsap.set(".card-dim", { opacity: 0 });
     
@@ -145,7 +158,7 @@ export default function Home() {
       onUpdate: (self) => {
         const progress = self.progress;
         const imgScale = startWrapperScale + progress * (endWrapperScale - startWrapperScale);
-        const borderRadius = 420 - progress * 370;
+        const borderRadius = 420 - progress * 420;
         const innerImgScale = startInnerScale - progress * (startInnerScale - endInnerScale);
 
         gsap.set(cardImgWrapper, {
@@ -185,21 +198,44 @@ export default function Home() {
 
     mm.add("(min-width: 768px)", () => {
       const pins: ScrollTrigger[] = [];
+
       cards.forEach((card, index) => {
         const cardEl = card as HTMLElement;
+        const cardIndex = parseInt(cardEl.dataset.cardIndex || String(index), 10);
+        const isIntroCard = cardIndex === 0;
         const isLastCard = index === cards.length - 1;
         const isPanorama = cardEl.classList?.contains("panorama-card");
 
+        // Intro card: przypięta do ostatniej karty (jak inne karty)
+        if (isIntroCard) {
+          const st = ScrollTrigger.create({
+            trigger: card,
+            start: "top top",
+            end: "top top",
+            endTrigger: cards[cards.length - 1],
+            pin: true,
+            pinSpacing: false,
+            onToggle: (self) => {
+              if (self.isActive) {
+                console.log("[Card pin][desktop] intro card active");
+              }
+            },
+          });
+          pins.push(st);
+          return;
+        }
+
+        // Remaining cards - normal pinning
         const st = ScrollTrigger.create({
           trigger: card,
           start: "top top",
-          end: isPanorama ? "+=200%" : isLastCard ? "+=100vh" : "top top",
+          end: isPanorama ? "+=300%" : isLastCard ? "+=100vh" : "top top",
           endTrigger: isLastCard || isPanorama ? null : cards[cards.length - 1],
           pin: true,
           pinSpacing: isLastCard || isPanorama,
           onToggle: (self) => {
             if (self.isActive) {
-              console.log("[Card pin][desktop] active index", index);
+              console.log("[Card pin][desktop] active card index", cardIndex);
             }
           },
         });
@@ -211,11 +247,19 @@ export default function Home() {
     mm.add("(max-width: 767px)", () => {
       const pins: ScrollTrigger[] = [];
       const contentRevealStates: boolean[] = new Array(cards.length).fill(false);
-      
+
       cards.forEach((card, index) => {
         const cardEl = card as HTMLElement;
+        const cardIndex = parseInt(cardEl.dataset.cardIndex || String(index), 10);
+        const isIntroCard = cardIndex === 0;
         const isLastCard = index === cards.length - 1;
         const isPanorama = cardEl.classList?.contains("panorama-card");
+
+        // Panorama card handles its own pinning in PanoramaScroll.tsx
+        if (isPanorama) {
+          return;
+        }
+
         const cardDescription = card.querySelector(".card-description");
         const cardTitleChars = card.querySelectorAll(".card-title .char span");
         const dimLayer = card.querySelector(".card-dim");
@@ -231,21 +275,17 @@ export default function Home() {
           if (cardTitleChars?.length) animateContentOut(cardTitleChars, cardDescription, dimLayer);
           else if (dimLayer) gsap.to(dimLayer, { opacity: 0, duration: 0.35, ease: "power2.out", overwrite: true });
         };
-        
-        // Intro card text is handled by the dedicated intro ScrollTrigger above.
-        // Still pin it here like the other cards so it stays fullscreen for the expected duration.
-        if (index === 0) {
+
+        // Intro card: pinned until last card (same as desktop) so portfolio can slide over it
+        if (isIntroCard) {
           const st = ScrollTrigger.create({
             trigger: card,
             start: "top top",
-            // Match desktop behavior: keep the first card pinned until the end trigger (last card)
-            // so it feels like the desktop pinned sequence.
             end: "top top",
-            endTrigger: cards[cards.length - 1] as HTMLElement,
+            endTrigger: cards[cards.length - 1],
             pin: true,
             pinSpacing: false,
             anticipatePin: 0.6,
-            // For the intro card, text reveal is driven by the image scale (see intro onUpdate).
             onLeave: hide,
             onLeaveBack: hide,
           });
@@ -256,23 +296,20 @@ export default function Home() {
         const st = ScrollTrigger.create({
           trigger: card,
           start: "top top",
-          end: isPanorama
-            ? () => "+=" + window.innerHeight * 2.4
-            : isLastCard
+          end: isLastCard
             ? () => "+=" + window.innerHeight * 2.0
             : "bottom top+=80%",
-          endTrigger: isPanorama || isLastCard ? null : (cards[index + 1] as HTMLElement),
+          endTrigger: isLastCard ? null : (cards[index + 1] as HTMLElement),
           pin: true,
           pinSpacing: false,
           anticipatePin: 0.6,
-          // Text should animate in when the card becomes pinned (active) and out when it unpins.
           onEnter: reveal,
           onEnterBack: reveal,
           onLeave: hide,
           onLeaveBack: hide,
           onToggle: (self) => {
             if (self.isActive) {
-              console.log("[Card pin][mobile] active index", index);
+              console.log("[Card pin][mobile] active card index", cardIndex);
             }
           },
         });
@@ -282,24 +319,97 @@ export default function Home() {
       return () => pins.forEach((st) => st.kill());
     });
 
-    // Fade/scale out przypiętej karty podczas wjazdu kolejnej (desktop + mobile, łagodniejsze na mobile)
-    cards.forEach((card, index) => {
-      if (index < cards.length - 1) {
-        const cardWrapper = card.querySelector(".card-wrapper");
-        const endPos = "top top";
-        const scaleFactor = isMobile ? 0.85 : 0.75;
-        const opacityFactor = isMobile ? 0.0 : 0.0;
+    // Card→card fade/scale handled by portfolio prevCard animations (each portfolio
+    // fades its preceding card). Direct card→card fade removed to avoid opacity reset conflicts.
+
+    // Portfolio Cards - dynamic handling for multiple portfolio sections
+    const portfolioCards = gsap.utils.toArray<HTMLElement>(".portfolio-break");
+
+    // Set z-index on portfolio elements (position:fixed from GSAP pin needs explicit z-index)
+    const portfolioZIndex: Record<string, number> = { murale: 20, szyldy: 40, wnetrza: 55, projekty: 70 };
+    portfolioCards.forEach((el) => {
+      const pid = el.dataset.portfolioId || "";
+      if (portfolioZIndex[pid] !== undefined) {
+        gsap.set(el, { zIndex: portfolioZIndex[pid] });
+      }
+    });
+    const scaleFactor = isMobile ? 0.85 : 0.75;
+    const yOffset = isMobile ? -50 : -100;
+
+    // Map portfolio IDs to their previous/next card indices
+    const portfolioMapping: Record<string, { prevCardIndex: number; nextCardIndex: number }> = {
+      "murale": { prevCardIndex: 0, nextCardIndex: 1 },
+      "szyldy": { prevCardIndex: 1, nextCardIndex: 2 },
+      "wnetrza": { prevCardIndex: 2, nextCardIndex: 3 },
+      "projekty": { prevCardIndex: 3, nextCardIndex: -1 }, // No next card, goes to PanoramaScroll
+    };
+
+    portfolioCards.forEach((portfolioEl) => {
+      const portfolioId = portfolioEl.dataset.portfolioId || "";
+      const portfolioWrapper = portfolioEl.querySelector(".portfolio-wrapper");
+      const mapping = portfolioMapping[portfolioId];
+
+      // Find the card BEFORE this portfolio using mapping
+      const prevCard = mapping ? cards.find((c) => {
+        const idx = parseInt((c as HTMLElement).dataset.cardIndex || "-1", 10);
+        return idx === mapping.prevCardIndex;
+      }) : null;
+
+      // Find the card AFTER this portfolio using mapping
+      const nextCard = mapping && mapping.nextCardIndex >= 0 ? cards.find((c) => {
+        const idx = parseInt((c as HTMLElement).dataset.cardIndex || "-1", 10);
+        return idx === mapping.nextCardIndex;
+      }) : null;
+
+      // Previous card fades when portfolio enters
+      if (prevCard) {
+        const prevCardWrapper = prevCard.querySelector(".card-wrapper");
+        if (prevCardWrapper) {
+          ScrollTrigger.create({
+            trigger: portfolioEl,
+            start: "top bottom",
+            end: "top top",
+            onUpdate: (self) => {
+              const progress = self.progress;
+              const scaleVal = 1 - progress * (1 - scaleFactor);
+              const opacityVal = 1 - progress;
+              gsap.set(prevCardWrapper, {
+                scale: scaleVal,
+                opacity: opacityVal,
+              });
+            },
+          });
+        }
+      }
+
+      // Portfolio PIN - pinned until last card
+      // Portfolio PIN - pinned until last card (item reveal handled by IntersectionObserver in Images.tsx)
+      ScrollTrigger.create({
+        trigger: portfolioEl,
+        start: "top top",
+        end: "top top",
+        endTrigger: cards[cards.length - 1],
+        pin: true,
+        pinSpacing: false,
+      });
+
+      // Portfolio fades when next card (or panorama) enters
+      const fadeTarget = nextCard || cards.find((c) => (c as HTMLElement).classList.contains("panorama-card")) as HTMLElement | undefined;
+      if (fadeTarget && portfolioWrapper) {
         ScrollTrigger.create({
-          trigger: cards[index + 1],
+          trigger: fadeTarget,
           start: "top bottom",
-          end: endPos,
+          end: "top top",
           onUpdate: (self) => {
             const progress = self.progress;
             const scaleVal = 1 - progress * (1 - scaleFactor);
-            const opacityVal = 1 - progress * (1 - opacityFactor);
-            gsap.set(cardWrapper, {
+            const opacityVal = 1 - progress;
+            const yVal = progress * yOffset;
+
+            gsap.set(portfolioWrapper, {
               scale: scaleVal,
               opacity: opacityVal,
+              y: yVal,
             });
           },
         });
@@ -329,8 +439,6 @@ export default function Home() {
             const progress = self.progress;
             const scaleVal = startScale - progress * (startScale - endScale);
             if (cardImg) gsap.set(cardImg, { scale: scaleVal });
-            if (imgContainer)
-              gsap.set(imgContainer, { borderRadius: 150 - progress * 125 + "px" });
           },
         });
       }
@@ -419,19 +527,55 @@ export default function Home() {
       <main className="flex-1 items-center sm:items-start min-h-screen overflow-x-hidden">
         <VideoHero />
         <Intro />
-        <Cards />
-        <PanoramaScroll />
+
+        {/* Card 0: Murale Wielkoformatowe */}
+        <div className="relative z-10">
+          <Cards startIndex={0} endIndex={0} />
+        </div>
+
+        {/* Spacer - intro card "hold" period (provides scroll distance for expand animation) */}
+        <div className="intro-hold-spacer h-[80vh]" aria-hidden="true" />
+
+        {/* Portfolio 1: po Murale Wielkoformatowe */}
+        <PortfolioCard data={portfolioPhotos} id="murale" gridVariant="11" className="z-20" />
+
+        {/* Card 1: Szyldy i Logotypy */}
+        <div className="relative z-30">
+          <Cards startIndex={1} endIndex={1} />
+        </div>
+
+        {/* Portfolio 2: po Szyldy i Logotypy */}
+        <PortfolioCard data={komunikacjaWizualnaPhotos} id="szyldy" gridVariant="7" className="z-40" />
+
+        {/* Card 2: Wnętrza i Dekoracje */}
+        <div className="relative z-50">
+          <Cards startIndex={2} endIndex={2} />
+        </div>
+
+        {/* Portfolio 3: po Wnętrza i Dekoracje */}
+        <PortfolioCard data={wnetrzaPhotos} id="wnetrza" gridVariant="11" className="z-[55]" />
+
+        {/* Card 3: Projekty Specjalne */}
+        <div className="relative z-[60]">
+          <Cards startIndex={3} endIndex={3} />
+        </div>
+
+        {/* Portfolio 4: po Projekty Specjalne */}
+        <PortfolioCard data={projektySpecjalnePhotos} id="projekty" gridVariant="7sq" className="z-[70]" />
+
+        <div className="relative z-[80]">
+          <PanoramaScroll />
+        </div>
         <Outro />
 
-        <Portfolio 
-          data={portfolioPhotos} 
-        />
-        
-        {/* <Services /> */}
+        {/* Portfolio  /> 
 
-        <Portfolio 
-          data={PtasieMurale} 
+        <Portfolio
+          data={PtasieMurale}
         />
+
+        */}
+
         <LazyYouTubeGridWithIntersection />
         <TrustedBy />
         {/* <WhoAmI2 />

@@ -1,6 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -12,10 +15,10 @@ import { AudioProvider } from "./context/AudioContext";
 //   subsets: ["latin"],
 // });
 
-const poppins = Poppins({
-  variable: "--font-poppins-sans",
-  weight: ["400", "500", "600", "700"], // Add the weights you need
-  subsets: ["latin"], // Specify the subsets
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
 });
 
 // const interSans = Inter({
@@ -45,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} overflow-y-auto antialiased `}>
+      <body className={`${montserrat.variable} overflow-y-auto antialiased `}>
         <AudioProvider>
           <PerformanceMonitor />
           <Navbar />

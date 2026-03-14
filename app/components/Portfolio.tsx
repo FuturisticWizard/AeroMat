@@ -39,22 +39,26 @@ interface PortfolioProps {
     category: string;
     width: number;
     height: number;
-    smcolspan: number;
-    smrowspan: number;
-    colspan: number;
-    rowspan: number;
     gridArea: string;
   }[];
+  fullWidth?: boolean;
+  waitForTrigger?: boolean;
+  gridVariant?: string;
 }
 
-const Portfolio = ({ data = portfolioPhotos}: PortfolioProps) => {
+const Portfolio = ({ data = portfolioPhotos, fullWidth = false, waitForTrigger = false, gridVariant }: PortfolioProps) => {
   const [index, setIndex] = useState<number>(-1);
-  
+
+  const containerClass = fullWidth ? "w-full" : "xl:mx-auto xl:max-w-7xl";
+
   return (
-    <div className="xl:mx-auto xl:max-w-7xl">
+    <div className={containerClass}>
       <Images
         data={data}
         onClick={(currentIndex) => setIndex(currentIndex)}
+        fullWidth={fullWidth}
+        waitForTrigger={waitForTrigger}
+        gridVariant={gridVariant}
       />
       <Lightbox
         slides={data}
