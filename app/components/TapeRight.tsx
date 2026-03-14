@@ -2,18 +2,18 @@ import Image from "next/image";
 import { Fragment } from "react";
 
 const logos = [
-  "/Collaborations/logo1.png",
-  "/Collaborations/logo2.png",
-  "/Collaborations/logo3.png",
-  "/Collaborations/logo5.jpg",
-  "/Collaborations/logo6.png",
-  "/Collaborations/logo7.png",
-  "/Collaborations/logo8.png",
-  "/Collaborations/logo9.png",
-  "/Collaborations/logo10.png",
-  "/Collaborations/logo11.jpg",
-  "/Collaborations/logo12.png",
-  "/Collaborations/logo13.jpg",
+  "/logo/clients_logos/1P.png",
+  "/logo/clients_logos/2P.png",
+  "/logo/clients_logos/3P.png",
+  "/logo/clients_logos/4P.png",
+  "/logo/clients_logos/5P.png",
+  "/logo/clients_logos/6P.png",
+  "/logo/clients_logos/7P.png",
+  "/logo/clients_logos/8P.png",
+  "/logo/clients_logos/9P.png",
+  "/logo/clients_logos/10P.png",
+  "/logo/clients_logos/11P.png",
+  "/logo/clients_logos/12P.png",
 ];
 
 const TapeRightSection = () => {
