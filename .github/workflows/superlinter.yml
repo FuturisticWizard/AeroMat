@@ -1,32 +1,33 @@
-name: Super-Linter                                                                                                                                     
-  on: push                                                                                                                                            
+name: Super-Linter                                                                                                                                  
   
-  permissions:
-    contents: read
-    statuses: write
+on: push
 
-  jobs:
-    super-lint:
-      name: Lint code base
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-          with:
-            fetch-depth: 0
+permissions:
+  contents: read
+  statuses: write
 
-        - name: Run Super-Linter
-          uses: super-linter/super-linter@v7.3.0
-          env:
-            DEFAULT_BRANCH: main
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VALIDATE_ALL_CODEBASE: false
-            VALIDATE_CSS: true
-            VALIDATE_TYPESCRIPT_ES: true
-            VALIDATE_TSX: true
-            VALIDATE_JSON: true
-            VALIDATE_YAML: true
-            VALIDATE_GITHUB_ACTIONS: true
-            VALIDATE_GITLEAKS: true
-            VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
-            VALIDATE_BASH: true
+jobs:
+  super-lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@v7.3.0
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_CSS: true
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_TSX: true
+          VALIDATE_JSON: true
+          VALIDATE_YAML: true
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_GITLEAKS: true
+          VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
+          VALIDATE_BASH: true
