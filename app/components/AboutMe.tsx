@@ -22,7 +22,7 @@ const AboutMe = () => {
         {/* Text */}
         <div className="flex flex-col gap-4">
           <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
-          Kim jestem?
+          Kim jest AEROMAT?
           </h2>
           <h3 className="text-2xl md:text-3xl font-semibold leading-snug text-white">
             Nazywam się Mateusz, malarstwo to moja pasja{" "}

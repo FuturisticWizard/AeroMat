@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
 import { Menu, X, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { useAudio } from "@/app/context/AudioContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
@@ -37,6 +38,8 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { muted, toggleMute } = useAudio();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +49,39 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // After navigating to /, scroll to the hash if present
+  useEffect(() => {
+    if (pathname === "/" && window.location.hash) {
+      const id = window.location.hash.slice(1);
+      // Small delay to let the page render/hydrate
+      const timer = setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      const hashIndex = href.indexOf("#");
+      if (hashIndex === -1) return; // Regular link, let browser handle
+
+      const path = href.slice(0, hashIndex) || "/";
+      const hash = href.slice(hashIndex + 1);
+
+      if (pathname === path || (path === "/" && pathname === "/")) {
+        // Same page — just scroll
+        e.preventDefault();
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // Different page — navigate, hash will be picked up by the useEffect above
+        e.preventDefault();
+        router.push(href);
+      }
+    },
+    [pathname, router]
+  );
 
   return (
     <motion.nav
@@ -79,6 +115,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className="text-gray-300 hover:text-[#ff7302] transition-colors duration-200"
               >
                 {item.label}
@@ -180,7 +217,10 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               key={item.href}
               href={item.href}
               className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                handleNavClick(e, item.href);
+                setIsMobileMenuOpen(false);
+              }}
             >
               {item.label}
             </a>

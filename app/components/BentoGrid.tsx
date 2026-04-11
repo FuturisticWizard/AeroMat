@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import clsx from "clsx";
 import { portfolioPhotos } from "@/app/lib/photos";
 
@@ -16,10 +17,11 @@ const BentoGrid = () => {
             "relative overflow-hidden rounded-lg",
           )}
         >
-          <img
+          <Image
             src={photo.src}
             alt={photo.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
       ))}

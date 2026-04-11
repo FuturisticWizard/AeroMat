@@ -34,19 +34,9 @@ function getMaxVerticalWidth(): number {
   const vw = window.innerWidth;
   switch (getBreakpoint()) {
     case "desktop": return 9999;
-    case "tablet":  return vw * 0.14;
-    case "mobile":  return vw * 0.10;
-    default:        return vw * 0.08;
-  }
-}
-
-function getMaxAkcjaRowHeight(): number {
-  const vh = window.innerHeight;
-  switch (getBreakpoint()) {
-    case "desktop": return Math.floor((vh - 140) / 3);
-    case "tablet":  return Math.floor((vh - 140) / 4);
-    case "mobile":  return Math.floor((vh * 0.55) / 2.5);
-    default:        return Math.floor((vh * 0.55) / 3);
+    case "tablet":  return vw * 0.18;
+    case "mobile":  return vw * 0.16;
+    default:        return vw * 0.14;
   }
 }
 
@@ -118,28 +108,6 @@ function VerticalWord({
   );
 }
 
-// ---- AKCJA Row component ----
-function AkcjaRow({
-  fontSize, height, refCallback,
-}: {
-  fontSize: number; height: number;
-  refCallback: (el: HTMLDivElement | null) => void;
-}) {
-  const rowRef = useRef<HTMLDivElement>(null);
-  useEffect(() => { refCallback(rowRef.current); }, [refCallback]);
-
-  return (
-    <div ref={rowRef} className={`${styles.akcjaRow} ${styles.waveEl}`}
-      data-glitch="AKCJA" style={{ height: height + "px", flexShrink: 0 }}>
-      {[..."AKCJA"].map((c, i) => (
-        <div key={i} className={styles.clip}>
-          <span className={styles.char} style={{ fontSize: fontSize + "px" }}>{c}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 // ---- Highlight style ----
 type HighlightStyle = "scale" | "dim" | "whiteglow" | "combo" | "full" | "stroke";
 
@@ -149,13 +117,12 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
   const vColRef = useRef<HTMLDivElement>(null);
-  const hColRef = useRef<HTMLDivElement>(null);
   const koRef = useRef<HTMLDivElement>(null);
   const botRef = useRef<HTMLDivElement>(null);
 
   const scianaRef = useRef<HTMLDivElement | null>(null);
   const kameraRef = useRef<HTMLDivElement | null>(null);
-  const akcjaRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const akcjaRef = useRef<HTMLDivElement | null>(null);
   const glitchIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const introTlRef = useRef<gsap.core.Timeline | null>(null);
   const introPlayedRef = useRef(false);
@@ -164,25 +131,16 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
   // All layout state
   const [layout, setLayout] = useState<{
     vFontSize: number;
-    akcjaFontSize: number;
-    akcjaHeight: number;
-    akcjaCount: number;
   } | null>(null);
 
   // Visibility controlled via React state (not classList) to survive re-renders
   const [scianaVisible, setScianaVisible] = useState(false);
   const [kameraVisible, setKameraVisible] = useState(false);
-  const [hColActive, setHColActive] = useState(false);
+  const [akcjaVisible, setAkcjaVisible] = useState(false);
 
   const setScianaRef = useCallback((el: HTMLDivElement | null) => { scianaRef.current = el; }, []);
   const setKameraRef = useCallback((el: HTMLDivElement | null) => { kameraRef.current = el; }, []);
-  const akcjaRefCbs = useRef(new Map<number, (el: HTMLDivElement | null) => void>());
-  const getAkcjaRef = useCallback((idx: number) => {
-    if (!akcjaRefCbs.current.has(idx)) {
-      akcjaRefCbs.current.set(idx, (el: HTMLDivElement | null) => { akcjaRefs.current[idx] = el; });
-    }
-    return akcjaRefCbs.current.get(idx)!;
-  }, []);
+  const setAkcjaRef = useCallback((el: HTMLDivElement | null) => { akcjaRef.current = el; }, []);
 
   // Video muted sync
   useEffect(() => {
@@ -207,9 +165,8 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
   useEffect(() => {
     const calc = () => {
       const vCol = vColRef.current;
-      const hCol = hColRef.current;
       const ko = koRef.current;
-      if (!vCol || !hCol || !ko) return;
+      if (!vCol || !ko) return;
 
       const bp = getBreakpoint();
       const vh = window.innerHeight;
@@ -219,46 +176,15 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
       const vMaxW = getMaxVerticalWidth();
       const vFs = fitFont("śCIANA", vh * vMult, vMaxW, "0em");
 
-      // vCol width from calculated font
+      // vCol width from calculated font (3 vertical words)
       const sW = measureH("śCIANA", vFs, "0em");
       const kW = measureH("KAMERA", vFs, "0em");
-      const vColWidth = Math.ceil(sW) + Math.ceil(kW);
+      const aW = measureH("AKCJA", vFs, "0em");
+      const vColWidth = Math.ceil(sW) + Math.ceil(kW) + Math.ceil(aW);
       vCol.style.width = vColWidth + "px";
 
-      const vColLeft = parseFloat(getComputedStyle(vCol).left) || 0;
-      const koWidth = ko.offsetWidth;
-      const koHeight = ko.offsetHeight;
-
-      // Gap
-      let gap = 0;
-      if (bp === "desktop") gap = Math.max(12, koWidth * 0.015);
-      else if (bp === "tablet") gap = Math.max(12, koWidth * 0.02);
-
-      // AKCJA position
-      const hColLeft = vColWidth + vColLeft + gap;
-      hCol.style.left = hColLeft + "px";
-      hCol.style.right = "0";
-      if (bp === "mobile" || bp === "small") {
-        hCol.style.top = "0";
-        hCol.style.bottom = "auto";
-      } else {
-        hCol.style.top = "auto";
-        hCol.style.bottom = "0";
-      }
-
-      // AKCJA sizing
-      const availW = koWidth - vColWidth - vColLeft - gap;
-      const maxRowH = getMaxAkcjaRowHeight();
-      const aFs = fitFont("AKCJA", availW * 0.96, maxRowH, "-0.04em");
-      const aH = measureH("AKCJA", aFs, "-0.04em");
-      const ctaReserve = (bp === "mobile" || bp === "small") ? 80 : 130;
-      const count = Math.max(3, Math.ceil((koHeight - ctaReserve) / aH));
-
-      // CTA position
-      if (botRef.current) botRef.current.style.left = hColLeft + "px";
-
       layoutReadyRef.current = true;
-      setLayout({ vFontSize: vFs, akcjaFontSize: aFs, akcjaHeight: aH, akcjaCount: count });
+      setLayout({ vFontSize: vFs });
     };
 
     // First calc after CSS layout is done
@@ -294,19 +220,19 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
         y: 0, duration: 0.45, ease: "power4.out", stagger: 0.055,
       }, 1.1);
 
-      tl.call(() => { setHColActive(true); }, [], 2.1);
-      tl.to(`.${styles.akcjaRow} .${styles.char}`, {
-        y: 0, duration: 0.45, ease: "power4.out", stagger: 0.03,
-      }, 2.1);
+      tl.call(() => { setAkcjaVisible(true); }, [], 1.9);
+      tl.to(`.${styles.vWord}:nth-child(3) .${styles.char}`, {
+        y: 0, duration: 0.45, ease: "power4.out", stagger: 0.055,
+      }, 1.9);
 
-      tl.to(botRef.current, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 3.2);
+      tl.to(botRef.current, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 2.8);
 
       // Glitch wave — stored in ref for cleanup
       tl.call(() => {
         const allEls: HTMLElement[] = [];
         if (scianaRef.current) allEls.push(scianaRef.current);
         if (kameraRef.current) allEls.push(kameraRef.current);
-        akcjaRefs.current.forEach((el) => { if (el) allEls.push(el); });
+        if (akcjaRef.current) allEls.push(akcjaRef.current);
         if (!allEls.length) return;
 
         let waveIdx = 0;
@@ -352,14 +278,9 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
             <>
               <VerticalWord text="śCIANA" fontSize={layout.vFontSize} visible={scianaVisible} refCallback={setScianaRef} />
               <VerticalWord text="KAMERA" fontSize={layout.vFontSize} visible={kameraVisible} refCallback={setKameraRef} />
+              <VerticalWord text="AKCJA" fontSize={layout.vFontSize} visible={akcjaVisible} refCallback={setAkcjaRef} />
             </>
           )}
-        </div>
-        <div ref={hColRef} className={`${styles.hCol} ${hColActive ? styles.active : ""}`}>
-          {layout && Array.from({ length: layout.akcjaCount }).map((_, i) => (
-            <AkcjaRow key={i} fontSize={layout.akcjaFontSize} height={layout.akcjaHeight}
-              refCallback={getAkcjaRef(i)} />
-          ))}
         </div>
       </div>
 

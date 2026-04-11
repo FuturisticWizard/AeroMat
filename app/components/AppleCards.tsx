@@ -336,43 +336,25 @@ export const BlurImage = ({
   className,
   alt,
   fill,
-  blurDataURL,
-  priority,
-  quality,
-  placeholder,
   ...rest
 }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
-  
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  
-  // Prevent hydration mismatch by not applying blur until client-side
-  const shouldBlur = isMounted && isLoading;
-  
-  // Filter out Next.js Image-specific props that shouldn't go to HTML img
-  const imgProps = {
-    width: width,
-    height: height,
-    loading: "lazy" as const,
-    decoding: "async" as const,
-    alt: alt ? alt : "Background of a beautiful view",
-    ...rest
-  };
-  
+
   return (
-    <img
+    <Image
       className={cn(
         "h-full w-full transition-all duration-300",
-        fill ? "object-cover" : "",
-        shouldBlur ? "blur-sm" : "blur-0",
+        isLoading ? "blur-sm" : "blur-0",
         className,
       )}
       onLoad={() => setLoading(false)}
-      src={src as string}
-      {...imgProps}
+      src={src}
+      alt={alt || "Background of a beautiful view"}
+      fill={fill}
+      height={fill ? undefined : height}
+      width={fill ? undefined : width}
+      sizes={fill ? "(max-width: 768px) 230px, 384px" : undefined}
+      {...rest}
     />
   );
 };

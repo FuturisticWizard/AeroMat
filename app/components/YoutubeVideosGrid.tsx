@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
 import { Play } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -194,10 +195,12 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
             ></iframe>
           ) : (
             <div className="absolute top-0 left-0 w-full h-full">
-              <img
+              <Image
                 src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                 alt={`${video.title} thumbnail`}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-[#ff7302] flex items-center justify-center shadow-lg shadow-orange-500/30 transform group-hover:scale-110 transition-transform duration-300">

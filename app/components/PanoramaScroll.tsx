@@ -14,19 +14,19 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const CAPTIONS = [
   {
-    title: "TWORZĘ Z PASJĄ",
+    title: "PRECYZJA MATERIAŁÓW",
     description:
-      "Każda ściana to dla mnie płótno. Przemieniam szare przestrzenie w żywe dzieła sztuki.",
+      "Materiały dobieram z najwyższą starannością, uwzględniając otoczenie i jego wpływ na pracę. Farby antysmogowe, UV, spray, aerograf — każda technika dobrana do zlecenia.",
   },
   {
-    title: "OD POMYSŁU DO MURALU",
+    title: "OD SZKICU DO ŚCIANY",
     description:
-      "Współpracuję z klientem od pierwszego szkicu po ostatni pociągnięcie pędzla. Razem tworzymy coś wyjątkowego.",
+      "Pędzel, wałek, spray, aerograf, flamastry — pracuję każdą techniką, a ich dobór zawsze wynika z potrzeb konkretnego projektu.",
   },
   {
     title: "SZTUKA BEZ GRANIC",
     description:
-      "Murale, szyldy, wnętrza, eventy – każdy projekt to nowe wyzwanie i nowa historia do opowiedzenia.",
+      "Ani rozmiar ściany, ani położenie geograficzne mnie nie ograniczają. Działam w całej Polsce — od kameralnych wnętrz po wielkoformatowe fasady.",
   },
 ] as const;
 
@@ -150,11 +150,13 @@ const PanoramaScroll = () => {
       const segmentProgress =
         (clampedProgress - currentIndex * segment) / segment;
 
+      const lastIndex = captionEntries.length - 1;
       captionEntries.forEach((entry, index) => {
-        const shouldBeVisible = 
-          index === currentIndex && 
-          segmentProgress >= 0.15 && 
-          segmentProgress < 0.75;
+        const isLast = index === lastIndex;
+        const shouldBeVisible =
+          index === currentIndex &&
+          segmentProgress >= 0.15 &&
+          (isLast || segmentProgress < 0.75);
 
         if (shouldBeVisible && !entry.visible) {
           // Pokaż tekst

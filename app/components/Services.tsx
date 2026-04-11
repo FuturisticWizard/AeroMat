@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import Flipcard from "./Flipcard";
 import HeadingSection from "./HeadingSection";
@@ -133,24 +134,30 @@ const cards = [
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Tworzymy artystyczne murale, które przyciągają uwagę i ożywiają każdą przestrzeń. Nasze projekty to połączenie kreatywności z profesjonalizmem, które buduje pozytywne emocje i wzmacnia wizerunek marki.
         </p>
-        <img
+        <Image
           src="/images/mural-lpec.webp"
           alt="Mural artystyczny"
-          height="500"
-          width="500"
+          height={500}
+          width={500}
           className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-lg"
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <img
-            src="/images/mural-starowka.webp"
-            alt="Mural stare miasto"
-            className="rounded-lg object-cover h-48 w-full"
-          />
-          <img
-            src="/images/mural-morze.webp"
-            alt="Mural morze"
-            className="rounded-lg object-cover h-48 w-full"
-          />
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/mural-starowka.webp"
+              alt="Mural stare miasto"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/mural-morze.webp"
+              alt="Mural morze"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
         </div>
       </div>
     ),
@@ -164,24 +171,30 @@ const cards = [
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Projektujemy i wykonujemy profesjonalne szyldy reklamowe, które zwiększają widoczność Twojej firmy. Nasze realizacje są estetyczne, trwałe i skutecznie przyciągają klientów.
         </p>
-        <img
+        <Image
           src="/images/szyld3.webp"
           alt="Szyld reklamowy"
-          height="500"
-          width="500"
+          height={500}
+          width={500}
           className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-lg"
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <img
-            src="/images/szyld1.webp"
-            alt="Szyld firmowy"
-            className="rounded-lg object-cover h-48 w-full"
-          />
-          <img
-            src="/images/szyld2.webp"
-            alt="Szyld świetlny"
-            className="rounded-lg object-cover h-48 w-full"
-          />
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/szyld1.webp"
+              alt="Szyld firmowy"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/szyld2.webp"
+              alt="Szyld świetlny"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
         </div>
       </div>
     ),
@@ -195,24 +208,30 @@ const cards = [
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Oferujemy profesjonalne malowanie samochodów, które zamieni Twój pojazd w mobilną reklamę. Zwiększ rozpoznawalność marki w każdym miejscu, gdzie pojawi się Twój samochód.
         </p>
-        <img
+        <Image
           src="/images/camper.webp"
           alt="Malowanie samochodów"
-          height="500"
-          width="500"
+          height={500}
+          width={500}
           className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-lg"
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <img
-            src="/images/camper2.webp"
-            alt="Pojazd reklamowy"
-            className="rounded-lg object-cover h-48 w-full"
-          />
-          <img
-            src="/images/camper3.webp"
-            alt="Oklejanie samochodów"
-            className="rounded-lg object-cover h-48 w-full"
-          />
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/camper2.webp"
+              alt="Pojazd reklamowy"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/camper3.webp"
+              alt="Oklejanie samochodów"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
         </div>
       </div>
     ),
@@ -226,24 +245,30 @@ const cards = [
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Stwarzamy wyjątkowe wnętrza, które zachwycają klientów i pracowników. Nasze dekoracje ścienne i wykończenia dodają charakteru każdej przestrzeni biznesowej.
         </p>
-        <img
+        <Image
           src="/images/mural-lester.webp"
           alt="Dekoracja wnętrz"
-          height="500"
-          width="500"
+          height={500}
+          width={500}
           className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-lg"
         />
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <img
-            src="/images/mural-lester2.webp"
-            alt="Wnętrze restauracji"
-            className="rounded-lg object-cover h-48 w-full"
-          />
-          <img
-            src="/images/basen1.webp"
-            alt="Dekoracja basenu"
-            className="rounded-lg object-cover h-48 w-full"
-          />
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/mural-lester2.webp"
+              alt="Wnętrze restauracji"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="relative h-48 w-full">
+            <Image
+              src="/images/basen1.webp"
+              alt="Dekoracja basenu"
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
         </div>
       </div>
     ),
@@ -257,11 +282,11 @@ const cards = [
         <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
           Projektujemy systemy informacji wizualnej, które ułatwiają orientację i poprawiają komunikację w każdej przestrzeni. Tworzymy czytelne i estetyczne rozwiązania.
         </p>
-        <img
+        <Image
           src="/images/visual-information-system.webp"
           alt="System informacji wizualnej"
-          height="500"
-          width="500"
+          height={500}
+          width={500}
           className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain rounded-lg"
         />
         <div className="mt-4 text-left">

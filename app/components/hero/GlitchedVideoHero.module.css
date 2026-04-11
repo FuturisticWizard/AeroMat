@@ -149,13 +149,8 @@
   opacity: 1;
 }
 
-/* Mobile/small: AKCJA from top, words at bottom */
+/* Mobile/small: words at bottom */
 @media (max-width: 768px) {
-  .hCol {
-    top: 0;
-    bottom: auto;
-    justify-content: flex-start;
-  }
   .vCol {
     top: auto;
     /* Scale bottom offset: 320px=80px, 480px=55px, 768px=45px */
@@ -191,44 +186,6 @@
   text-transform: none;
 }
 
-/* ---- AKCJA column ---- */
-.hCol {
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 3;
-}
-.active {
-  opacity: 1;
-}
-
-.akcjaRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-.akcjaRow .clip {
-  line-height: 0.82;
-  vertical-align: top;
-}
-.akcjaRow .char {
-  letter-spacing: -0.04em;
-  transform: translateY(120%);
-}
 
 /* ================================================================
    GLITCH — edge glow: blue/yellow neon on letter edges
