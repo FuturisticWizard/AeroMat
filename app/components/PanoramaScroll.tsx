@@ -85,7 +85,18 @@ const PanoramaScroll = () => {
       }
     };
 
+    let isVisible = false;
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !animationFrameId) animate();
+      },
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(container);
+
     const animate = () => {
+      if (!isVisible) { animationFrameId = 0; return; }
       renderer.render(scene, camera);
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -100,8 +111,9 @@ const PanoramaScroll = () => {
           const description = caption.querySelector<HTMLElement>("p");
           if (!title) return null;
           const split = new SplitText(title, {
-            type: "chars",
+            type: "words,chars",
             charsClass: "char",
+            wordsClass: "word",
             tag: "div",
           });
           split.chars.forEach((char) => {
@@ -187,22 +199,17 @@ const PanoramaScroll = () => {
         updatePlanePosition(0);
         // Nie wywołujemy updateCaptions(0) - napisy pojawią się dopiero przy scrollowaniu
 
-        // Desktop: pełny scrub + dłuższy zakres
+        // Desktop: listen to progress from page.tsx pin (avoids dual ScrollTrigger conflict)
         mm.add("(min-width: 768px)", () => {
-          scrollTrigger = ScrollTrigger.create({
-            trigger: container,
-            start: "top top",
-            end: "+=300%",
-            scrub: true,
-            onUpdate: (self) => {
-              updatePlanePosition(self.progress);
-              updateCaptions(self.progress);
-            },
-          });
+          const onProgress = (e: Event) => {
+            const progress = (e as CustomEvent).detail as number;
+            updatePlanePosition(progress);
+            updateCaptions(progress);
+          };
+          window.addEventListener("panorama-progress", onProgress);
 
           return () => {
-            scrollTrigger?.kill();
-            scrollTrigger = null;
+            window.removeEventListener("panorama-progress", onProgress);
           };
         });
 
@@ -243,6 +250,7 @@ const PanoramaScroll = () => {
 
     return () => {
       mm.revert();
+      visibilityObserver.disconnect();
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
       scrollTrigger?.kill();

@@ -19,11 +19,11 @@ import Lightbox from "yet-another-react-lightbox";
 import { Compare } from "@/app/components/ui/compare";
 
 export default function PhotoPortfolio() {
-  const categories = ["Wszystkie", "Birds", "Murale", "Samochody"];
+  const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Branding"];
   const [index, setIndex] = useState(-1);
 
   return (
-    <div className="min-h-screen bg-black py-8 mt-12">
+    <div className="min-h-screen bg-black py-8 mt-20">
       <header className="container mx-auto py-12 px-4 md:py-20">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white">

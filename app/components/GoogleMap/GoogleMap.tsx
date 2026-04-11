@@ -6,7 +6,6 @@ import {
   Map,
   useMap,
   MapCameraChangedEvent,
-  InfoWindow,
 } from "@vis.gl/react-google-maps";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
@@ -58,25 +57,69 @@ const locations: Poi[] = [
     name: "Ptasi Mural 1 - Mural artystyczny",
     src: "https://www.youtube.com/embed/u6u1kGA8uGE",
   },
+  {
+    key: "ptasi-mural-2",
+    location: { lat: 51.217645559309446, lng: 22.545560966211973 },
+    name: "Ptasi Mural 2 - Zmiany",
+    src: "https://www.youtube.com/embed/1fEvHbd5tTI",
+  },
+  {
+    key: "copenhagen-strain",
+    location: { lat: 51.23905990960437, lng: 22.508048564012203 },
+    name: "Mural Copenhagen S-Train",
+    src: "https://www.youtube.com/embed/_Ww_hEQBIos",
+  },
+  {
+    key: "przedszkole-junior",
+    location: { lat: 51.241771783177576, lng: 22.53444259892882 },
+    name: "Mural na przedszkolu Junior",
+    src: "https://www.youtube.com/embed/oE7ucKq4of8",
+  },
+  {
+    key: "tifosi",
+    location: { lat: 51.24540935667581, lng: 22.5555330500593 },
+    name: "Mural Tifosi",
+    src: "https://www.youtube.com/embed/ZUph96wwU2g",
+  },
+  {
+    key: "dom-kultury-jastkowice",
+    location: { lat: 50.602685190705124, lng: 22.105993626179597 },
+    name: "Dom Kultury Jastkowice",
+    src: "https://www.youtube.com/embed/8mX0dX03usA",
+  },
+  {
+    key: "opole-lubelskie",
+    location: { lat: 51.146616094983955, lng: 21.974377044347392 },
+    name: "Mural historyczny w Opolu Lubelskim",
+    src: "https://www.youtube.com/embed/nLrFVfav05g",
+  },
+  {
+    key: "akwarium-24",
+    location: { lat: 51.23511014563301, lng: 22.5763315040532 },
+    name: "Mural z Rybą - Akwarium24",
+    src: "https://www.youtube.com/embed/HBrLvcUcGfg",
+  },
+  {
+    key: "apis",
+    location: { lat: 51.214706, lng: 22.548721 },
+    name: "Mural APIS",
+    src: "https://www.youtube.com/embed/IuAl1eqrCCA",
+  },
+  {
+    key: "bieluch",
+    location: { lat: 51.14572, lng: 23.48539 },
+    name: "Mural Bieluch",
+    src: "https://www.youtube.com/embed/5Ba1XizIDnc",
+  },
 ];
-const PoiMarkers = memo((props: { pois: Poi[] }) => {
+const PoiMarkers = memo((props: { pois: Poi[]; onSelectPoi: (poi: Poi) => void }) => {
   const map = useMap();
   const [markers, setMarkers] = useState<{ [key: string]: google.maps.Marker }>({});
-  const [selectedPoi, setSelectedPoi] = useState<Poi | null>(null);
   const clusterer = useRef<MarkerClusterer | null>(null);
-  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInfoWindowClose = useCallback(() => {
-    setInfoWindowOpen(false);
-    setSelectedPoi(null);
-  }, []);
-
-  // Create markers using native Google Maps API
   useEffect(() => {
     if (!map) return;
 
-    // Clear existing markers
     Object.values(markers).forEach(marker => marker.setMap(null));
 
     const newMarkers: { [key: string]: google.maps.Marker } = {};
@@ -94,8 +137,7 @@ const PoiMarkers = memo((props: { pois: Poi[] }) => {
 
       marker.addListener("click", () => {
         map.panTo(poi.location);
-        setSelectedPoi(poi);
-        setInfoWindowOpen(true);
+        props.onSelectPoi(poi);
       });
 
       newMarkers[poi.key] = marker;
@@ -103,9 +145,8 @@ const PoiMarkers = memo((props: { pois: Poi[] }) => {
 
     setMarkers(newMarkers);
 
-    // Initialize clusterer
     if (!clusterer.current) {
-      clusterer.current = new MarkerClusterer({ 
+      clusterer.current = new MarkerClusterer({
         map,
         markers: Object.values(newMarkers)
       });
@@ -119,35 +160,9 @@ const PoiMarkers = memo((props: { pois: Poi[] }) => {
     };
   }, [map, props.pois]);
 
-  return (
-    <>
-      {selectedPoi && infoWindowOpen && (
-        <InfoWindow position={selectedPoi.location} onClose={handleInfoWindowClose}>
-          <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-neutral-900 p-4 rounded-lg">
-            <p className="text-lg font-bold mb-2 text-white">{selectedPoi.name}</p>
-            {isLoading ? (
-              <div className="animate-pulse bg-neutral-800 w-full h-48 rounded">Ładowanie...</div>
-            ) : (
-              <div className="relative w-full h-0 pb-[56.25%] overflow-hidden rounded border border-neutral-700">
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
-                  src={selectedPoi.src}
-                  title={selectedPoi.name}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-            )}
-          </div>
-        </InfoWindow>
-      )}
-    </>
-  );
+  return null;
 });
 
-// Add display name for debugging
 PoiMarkers.displayName = 'PoiMarkers';
 
 // Error boundary component
@@ -221,6 +236,7 @@ const darkModeStyles = [
 const GoogleMapInner = memo(() => {
   const [isClient, setIsClient] = useState(false);
   const [apiLoaded, setApiLoaded] = useState(false);
+  const [selectedPoi, setSelectedPoi] = useState<Poi | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -230,6 +246,10 @@ const GoogleMapInner = memo(() => {
     setApiLoaded(true);
   }, []);
 
+  const handleSelectPoi = useCallback((poi: Poi) => {
+    setSelectedPoi(poi);
+  }, []);
+
   if (!isClient) {
     return <MapLoading />;
   }
@@ -237,19 +257,54 @@ const GoogleMapInner = memo(() => {
   return (
     <MapErrorBoundary>
       <APIProvider
-        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAR7h_0EaMtlx3FtElu7aVAL3z0VX5d1hg"}
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}
         onLoad={handleApiLoad}
       >
-        <div className="w-full h-[400px] sm:h-[500px] lg:h-[800px] rounded overflow-hidden">
+        <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[800px] rounded overflow-hidden">
           <Map
-            defaultZoom={11}
-            defaultCenter={{ lat: 51.2469, lng: 22.5833 }}
+            defaultZoom={9}
+            defaultCenter={{ lat: 51.1, lng: 22.7 }}
             onCameraChanged={(ev: MapCameraChangedEvent) => {}}
             className="w-full h-full"
             styles={darkModeStyles}
           >
-            {apiLoaded && <PoiMarkers pois={locations} />}
+            {apiLoaded && <PoiMarkers pois={locations} onSelectPoi={handleSelectPoi} />}
           </Map>
+
+          {/* Custom overlay — centered on map */}
+          {selectedPoi && (
+            <div
+              className="absolute inset-0 z-10 flex items-center justify-center bg-black/30"
+              onClick={() => setSelectedPoi(null)}
+            >
+              <div
+                className="w-[280px] sm:w-[380px] md:w-[480px] lg:w-[560px] bg-neutral-900 rounded-xl overflow-hidden shadow-2xl shadow-black/60 border border-neutral-700 animate-infowindow-grow"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setSelectedPoi(null)}
+                  className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/75 border border-white/30 flex items-center justify-center hover:bg-[#ff7302] hover:border-[#ff7302] transition-colors"
+                  aria-label="Zamknij"
+                >
+                  <span className="text-white text-sm font-bold">✕</span>
+                </button>
+                <div className="relative w-full pb-[56.25%] overflow-hidden">
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src={selectedPoi.src}
+                    title={selectedPoi.name}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+                <div className="px-3 py-2 sm:px-4 sm:py-3">
+                  <p className="text-sm sm:text-base font-semibold text-white leading-snug">{selectedPoi.name}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </APIProvider>
     </MapErrorBoundary>

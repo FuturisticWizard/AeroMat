@@ -44,7 +44,7 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
     },
     {
       title: "Inne",
-      description: "Eventy, festiwale, akcje artystyczne. Realizuję niestandardowe projekty – live painting, warsztaty graffiti i współpraca z markami.",
+      description: "Realizuję niestandardowe projekty i współpraca z markami.",
       hasMarquee: false,
     },
   ];

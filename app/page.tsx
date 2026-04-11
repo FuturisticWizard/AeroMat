@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import VideoHero from "./components/hero/VideoHero";
+// import VideoHero from "./components/hero/VideoHero";
+import GlitchedVideoHero from "./components/hero/GlitchedVideoHero";
 import Portfolio from "./components/Portfolio";
 import PortfolioCard from "./components/PortfolioCard";
 import TrustedBy from "./components/TrustedBy";
@@ -9,9 +10,10 @@ import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
 import { portfolioPhotos, komunikacjaWizualnaPhotos, wnetrzaPhotos, projektySpecjalnePhotos } from "@/app/lib/photos";
-import { LazyYouTubeGridWithIntersection } from "./components/LazyComponents";
+import { LazyYouTubeGridWithIntersection, LazyPanoramaScrollWithIntersection, LazyTestimonialsWithIntersection } from "./components/LazyComponents";
 import Intro from "./components/Intro";
 import Outro from "./components/Outro";
+import AboutMe from "./components/AboutMe";
 import Cards from "./components/Cards";
 import PanoramaScroll from "./components/PanoramaScroll";
 import setupMarqueeAnimation from "./lib/marquee";
@@ -23,7 +25,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import Lenis from "lenis"; 
-import { Noto_Sans_Multani } from "next/font/google";
 // import Hero from "./components/Hero";
 // <a href="https://www.vecteezy.com/free-png/paint-roller">Paint Roller PNGs by Vecteezy</a>
 
@@ -37,6 +38,7 @@ export default function Home() {
     console.log("[Viewport] isMobile:", isMobile);
 
     let lenis: Lenis | null = null;
+    let lenisRaf: ((time: number) => void) | null = null;
     let currentScroll = 0;
     const scroller = document.documentElement;
 
@@ -72,7 +74,8 @@ export default function Home() {
       ScrollTrigger.refresh();
       console.log("[ScrollTrigger] defaults set + refresh");
       
-      gsap.ticker.add((time) => lenis!.raf(time * 1000));
+      lenisRaf = (time: number) => lenis!.raf(time * 1000);
+      gsap.ticker.add(lenisRaf);
       gsap.ticker.lagSmoothing(0);
     } else {
       ScrollTrigger.defaults({ scroller: window });
@@ -136,11 +139,12 @@ export default function Home() {
     const endWrapperScale = isMobile ? 1.05 : 1.0;
     const startInnerScale = isMobile ? 1.8 : 1.5;
     const endInnerScale = 1.0;
-    gsap.set(cardImgWrapper, { scale: startWrapperScale, borderRadius: "420px" });
+    gsap.set(cardImgWrapper, { scale: startWrapperScale, clipPath: "circle(closest-side at 50% 50%)", borderRadius: "0px" });
     if (introDim) {
       gsap.set(introDim, {
         scale: startWrapperScale,
-        borderRadius: "420px",
+        clipPath: "circle(closest-side at 50% 50%)",
+        borderRadius: "0px",
         transformOrigin: "center",
       });
     }
@@ -158,17 +162,29 @@ export default function Home() {
       onUpdate: (self) => {
         const progress = self.progress;
         const imgScale = startWrapperScale + progress * (endWrapperScale - startWrapperScale);
-        const borderRadius = 420 - progress * 420;
         const innerImgScale = startInnerScale - progress * (startInnerScale - endInnerScale);
+
+        // Stay circular via clip-path until 80% progress, then expand to full rectangle
+        const radiusThreshold = 0.8;
+        let clipPath: string;
+        if (progress < radiusThreshold) {
+          clipPath = "circle(closest-side at 50% 50%)";
+        } else {
+          // Transition from closest-side (~50vh) to farthest-corner (~71% diagonal)
+          const radiusProgress = (progress - radiusThreshold) / (1 - radiusThreshold);
+          // 50% = closest-side equivalent, expand to 75% which covers the full rectangle
+          const radius = 50 + radiusProgress * 25;
+          clipPath = `circle(${radius}% at 50% 50%)`;
+        }
 
         gsap.set(cardImgWrapper, {
           scale: imgScale,
-          borderRadius: borderRadius + "px",
+          clipPath: clipPath,
         });
         if (introDim) {
           gsap.set(introDim, {
             scale: imgScale,
-            borderRadius: borderRadius + "px",
+            clipPath: clipPath,
           });
         }
         gsap.set(cardImg, { scale: innerImgScale });
@@ -184,8 +200,8 @@ export default function Home() {
 
         // Reveal intro text only once the image has (almost) reached fullscreen scale.
         // Use hysteresis to avoid flicker near the threshold when scrolling slowly.
-        const showAt = endWrapperScale - 0.03;
-        const hideAt = endWrapperScale - 0.08;
+        const showAt = endWrapperScale - 0.01;
+        const hideAt = endWrapperScale - 0.05;
         if (!introTextRevealed && imgScale >= showAt) {
           introTextRevealed = true;
           animateContentIn(titleChars, description, introDim);
@@ -225,7 +241,11 @@ export default function Home() {
           return;
         }
 
-        // Remaining cards - normal pinning
+        // Remaining cards - normal pinning + text reveal
+        const cardTitleCharsPin = cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
+        const cardDescPin = cardEl.querySelector<HTMLElement>(".card-description");
+        const cardDimPin = cardEl.querySelector<HTMLElement>(".card-dim");
+
         const st = ScrollTrigger.create({
           trigger: card,
           start: "top top",
@@ -233,9 +253,28 @@ export default function Home() {
           endTrigger: isLastCard || isPanorama ? null : cards[cards.length - 1],
           pin: true,
           pinSpacing: isLastCard || isPanorama,
-          onToggle: (self) => {
-            if (self.isActive) {
-              console.log("[Card pin][desktop] active card index", cardIndex);
+          scrub: isPanorama ? true : undefined,
+          onUpdate: isPanorama ? (self) => {
+            window.dispatchEvent(new CustomEvent("panorama-progress", { detail: self.progress }));
+          } : undefined,
+          onEnter: () => {
+            if (cardTitleCharsPin.length && !isPanorama) {
+              animateContentIn(cardTitleCharsPin, cardDescPin, cardDimPin);
+            }
+          },
+          onEnterBack: () => {
+            if (cardTitleCharsPin.length && !isPanorama) {
+              animateContentIn(cardTitleCharsPin, cardDescPin, cardDimPin);
+            }
+          },
+          onLeave: () => {
+            if (cardTitleCharsPin.length && !isPanorama) {
+              animateContentOut(cardTitleCharsPin, cardDescPin, cardDimPin);
+            }
+          },
+          onLeaveBack: () => {
+            if (cardTitleCharsPin.length && !isPanorama) {
+              animateContentOut(cardTitleCharsPin, cardDescPin, cardDimPin);
             }
           },
         });
@@ -451,26 +490,8 @@ export default function Home() {
       description: HTMLElement | null;
     }[] = [];
 
-    // Remove the desktop text triggers on mobile
-    if (!isMobile) {
-      cards.forEach((card) => {
-        const cardDescription = card.querySelector<HTMLElement>(".card-description");
-        const cardTitleChars = card.querySelectorAll<HTMLElement>(".card-title .char span");
-        const dimLayer = card.querySelector<HTMLElement>(".card-dim");
-        if (!cardTitleChars.length) return;
-
-        const st = ScrollTrigger.create({
-          trigger: card,
-          start: "top top",
-          onEnter: () => animateContentIn(cardTitleChars, cardDescription, dimLayer),
-          onEnterBack: () => animateContentIn(cardTitleChars, cardDescription, dimLayer),
-          onLeave: () => animateContentOut(cardTitleChars, cardDescription, dimLayer),
-          onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription, dimLayer),
-        });
-
-        textTriggers.push({ st, titleChars: cardTitleChars, description: cardDescription });
-      });
-    }
+    // Desktop text triggers are now integrated into the pin triggers above (mm.add desktop block).
+    // No separate text triggers needed.
 
     const revealActiveTexts = () => {
       textTriggers.forEach(({ st, titleChars, description }) => {
@@ -485,7 +506,154 @@ export default function Home() {
     // Krótki timeout na przypadek, gdy layout/refresh zmieni aktywne triggery
     setTimeout(revealActiveTexts, 50);
 
+    // Intro neon reveal animation — realistic neon ignition
+    const introWords = gsap.utils.toArray<HTMLElement>(".intro-word");
+    if (introWords.length) {
+      gsap.set(introWords, { opacity: 0.03 });
+
+      const introTl = gsap.timeline({ paused: true });
+
+      // "Maluję ściany," — new tube, ignites quickly with one small hiccup
+      introTl.to(introWords[0], { opacity: 0.7, duration: 0.05, ease: "none" }, 0)
+        .to(introWords[0], { opacity: 0.1,  duration: 0.04, ease: "none" })
+        .to(introWords[0], { opacity: 1,    duration: 0.12, ease: "power2.out" });
+
+      // "które" — smooth ignition, barely flickers
+      introTl.to(introWords[1], { opacity: 0.5, duration: 0.04, ease: "none" }, "+=0.3")
+        .to(introWords[1], { opacity: 0.15, duration: 0.03, ease: "none" })
+        .to(introWords[1], { opacity: 1,    duration: 0.1,  ease: "power2.out" });
+
+      // "opowiadają" — one clean flash, catches immediately
+      introTl.to(introWords[2], { opacity: 0.4, duration: 0.04, ease: "none" }, "+=0.2")
+        .to(introWords[2], { opacity: 0.08, duration: 0.03, ease: "none" })
+        .to(introWords[2], { opacity: 0.9,  duration: 0.06, ease: "none" })
+        .to(introWords[2], { opacity: 1,    duration: 0.1,  ease: "power2.out" });
+
+      // "historie." — old tube, struggles to ignite, multiple failed attempts
+      introTl.to(introWords[3], { opacity: 0.5,  duration: 0.05, ease: "none" }, "+=0.4")
+        .to(introWords[3], { opacity: 0.04, duration: 0.04, ease: "none" })
+        // pause — gas cools
+        .to(introWords[3], { opacity: 0.04, duration: 0.15, ease: "none" })
+        // second try
+        .to(introWords[3], { opacity: 0.7,  duration: 0.05, ease: "none" })
+        .to(introWords[3], { opacity: 0.1,  duration: 0.05, ease: "none" })
+        .to(introWords[3], { opacity: 0.6,  duration: 0.04, ease: "none" })
+        .to(introWords[3], { opacity: 0.05, duration: 0.06, ease: "none" })
+        // longer pause
+        .to(introWords[3], { opacity: 0.05, duration: 0.2,  ease: "none" })
+        // third try — catches but flutters
+        .to(introWords[3], { opacity: 0.8,  duration: 0.04, ease: "none" })
+        .to(introWords[3], { opacity: 0.3,  duration: 0.03, ease: "none" })
+        .to(introWords[3], { opacity: 0.9,  duration: 0.04, ease: "none" })
+        .to(introWords[3], { opacity: 0.5,  duration: 0.03, ease: "none" })
+        .to(introWords[3], { opacity: 0.85, duration: 0.05, ease: "none" })
+        .to(introWords[3], { opacity: 0.6,  duration: 0.03, ease: "none" })
+        .to(introWords[3], { opacity: 1,    duration: 0.2,  ease: "power2.out" });
+
+      ScrollTrigger.create({
+        trigger: ".intro",
+        start: "center 66%",
+        once: true,
+        onEnter: () => introTl.play(),
+      });
+    }
+
+    // Outro neon ignition animation (same style as intro)
+    const outroWords = gsap.utils.toArray<HTMLElement>(".outro-word");
+    if (outroWords.length) {
+      gsap.set(outroWords, { opacity: 0.03 });
+
+      const outroTl = gsap.timeline({ paused: true });
+
+      // "Masz" — quick ignition
+      outroTl.to(outroWords[0], { opacity: 0.7, duration: 0.05, ease: "none" }, 0)
+        .to(outroWords[0], { opacity: 0.1,  duration: 0.04, ease: "none" })
+        .to(outroWords[0], { opacity: 1,    duration: 0.12, ease: "power2.out" });
+
+      // "ścianę?" — smooth
+      outroTl.to(outroWords[1], { opacity: 0.5, duration: 0.04, ease: "none" }, "+=0.3")
+        .to(outroWords[1], { opacity: 0.15, duration: 0.03, ease: "none" })
+        .to(outroWords[1], { opacity: 1,    duration: 0.1,  ease: "power2.out" });
+
+      // "Mam" — clean flash
+      outroTl.to(outroWords[2], { opacity: 0.4, duration: 0.04, ease: "none" }, "+=0.2")
+        .to(outroWords[2], { opacity: 0.08, duration: 0.03, ease: "none" })
+        .to(outroWords[2], { opacity: 0.9,  duration: 0.06, ease: "none" })
+        .to(outroWords[2], { opacity: 1,    duration: 0.1,  ease: "power2.out" });
+
+      // "pomysł." — slight struggle
+      outroTl.to(outroWords[3], { opacity: 0.6, duration: 0.05, ease: "none" }, "+=0.25")
+        .to(outroWords[3], { opacity: 0.08, duration: 0.04, ease: "none" })
+        .to(outroWords[3], { opacity: 0.04, duration: 0.1,  ease: "none" })
+        .to(outroWords[3], { opacity: 0.8,  duration: 0.05, ease: "none" })
+        .to(outroWords[3], { opacity: 0.4,  duration: 0.03, ease: "none" })
+        .to(outroWords[3], { opacity: 1,    duration: 0.15, ease: "power2.out" });
+
+      // "Porozmawiajmy." — old tube, struggles hard
+      outroTl.to(outroWords[4], { opacity: 0.5,  duration: 0.05, ease: "none" }, "+=0.4")
+        .to(outroWords[4], { opacity: 0.04, duration: 0.04, ease: "none" })
+        .to(outroWords[4], { opacity: 0.04, duration: 0.15, ease: "none" })
+        .to(outroWords[4], { opacity: 0.7,  duration: 0.05, ease: "none" })
+        .to(outroWords[4], { opacity: 0.1,  duration: 0.05, ease: "none" })
+        .to(outroWords[4], { opacity: 0.6,  duration: 0.04, ease: "none" })
+        .to(outroWords[4], { opacity: 0.05, duration: 0.06, ease: "none" })
+        .to(outroWords[4], { opacity: 0.05, duration: 0.2,  ease: "none" })
+        .to(outroWords[4], { opacity: 0.8,  duration: 0.04, ease: "none" })
+        .to(outroWords[4], { opacity: 0.3,  duration: 0.03, ease: "none" })
+        .to(outroWords[4], { opacity: 0.9,  duration: 0.04, ease: "none" })
+        .to(outroWords[4], { opacity: 0.5,  duration: 0.03, ease: "none" })
+        .to(outroWords[4], { opacity: 1,    duration: 0.2,  ease: "power2.out" });
+
+      // Use IntersectionObserver — reliable regardless of pinned sections above
+      const outroSection = document.querySelector(".outro");
+      if (outroSection) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                outroTl.play();
+                observer.disconnect();
+              }
+            });
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(outroSection);
+      }
+    }
+
     setupMarqueeAnimation();
+
+    // Marquee hover — highlight phrase under cursor (throttled with rAF)
+    const marqueeH1s = gsap.utils.toArray<HTMLElement>(".card-marquee .marquee h1");
+    const introCardEl = cards[0] as HTMLElement;
+    let marqueeRafId = 0;
+    let onMouseMove: ((e: MouseEvent) => void) | null = null;
+    let onMouseLeave: (() => void) | null = null;
+    if (introCardEl && marqueeH1s.length) {
+      onMouseMove = (e: MouseEvent) => {
+        if (marqueeRafId) return;
+        marqueeRafId = requestAnimationFrame(() => {
+          marqueeRafId = 0;
+          const mx = e.clientX;
+          const my = e.clientY;
+          marqueeH1s.forEach((h1) => {
+            const rect = h1.getBoundingClientRect();
+            if (mx >= rect.left && mx <= rect.right && my >= rect.top && my <= rect.bottom) {
+              h1.classList.add("marquee-hover");
+            } else {
+              h1.classList.remove("marquee-hover");
+            }
+          });
+        });
+      };
+      onMouseLeave = () => {
+        marqueeH1s.forEach((h1) => h1.classList.remove("marquee-hover"));
+      };
+      introCardEl.addEventListener("mousemove", onMouseMove);
+      introCardEl.addEventListener("mouseleave", onMouseLeave);
+    }
+
     // Refresh after load to recompute pin-spacer heights once images/fonts are ready
     const onLoadRefresh = () => {
       console.log("[ScrollTrigger] window load -> refresh");
@@ -506,26 +674,27 @@ export default function Home() {
         lenis.destroy();
         ScrollTrigger.defaults({ scroller: window });
         ScrollTrigger.scrollerProxy(scroller, {});
-        gsap.ticker.remove((time) => lenis!.raf(time * 1000));
+        if (lenisRaf) gsap.ticker.remove(lenisRaf);
       } else {
         ScrollTrigger.defaults({ scroller: window });
       }
       window.removeEventListener("load", onLoadRefresh);
       ScrollTrigger.removeEventListener("refresh", revealActiveTexts);
-      if (lenis) {
-        gsap.ticker.remove((time) => lenis!.raf(time * 1000));
-      }
+      if (introCardEl && onMouseMove) introCardEl.removeEventListener("mousemove", onMouseMove);
+      if (introCardEl && onMouseLeave) introCardEl.removeEventListener("mouseleave", onMouseLeave);
+      if (marqueeRafId) cancelAnimationFrame(marqueeRafId);
     };
   }, []); // Pusta tablica zależności = wykona się raz po zamontowaniu
 
 
 
   return (
-    <div className="flex flex-col font-[family-name:var(--font-geist-sans)] min-h-screen  mt-20 antialiased">
+    <div className="flex flex-col min-h-screen mt-20 antialiased">
       {/* ScrollTrigger needs actual scrolling. `h-screen overflow-hidden` can prevent scroll on mobile,
           making all scroll-based animations appear "not working". */}
       <main className="flex-1 items-center sm:items-start min-h-screen overflow-x-hidden">
-        <VideoHero />
+        {/* <VideoHero /> */}
+        <GlitchedVideoHero highlightStyle="stroke" />
         <Intro />
 
         {/* Card 0: Murale Wielkoformatowe */}
@@ -563,12 +732,13 @@ export default function Home() {
         {/* Portfolio 4: po Projekty Specjalne */}
         <PortfolioCard data={projektySpecjalnePhotos} id="projekty" gridVariant="7sq" className="z-[70]" />
 
-        <div className="relative z-[80]">
+        <div className="relative z-[90]">
           <PanoramaScroll />
         </div>
         <Outro />
+        <AboutMe />
 
-        {/* Portfolio  /> 
+        {/* Portfolio  />
 
         <Portfolio
           data={PtasieMurale}
@@ -578,17 +748,9 @@ export default function Home() {
 
         <LazyYouTubeGridWithIntersection />
         <TrustedBy />
-        {/* <WhoAmI2 />
-
-        <HowItWorks /> */}
+        <LazyTestimonialsWithIntersection />
 
         <MuralsMap />
-        {/* 
-        <section id="testimonials" className=" max-w-6xl mx-auto items-center justify-center px-8 md:px-0 py-20">
-            <h2 className='xxs:text-2xl px-4 text-center'>Opinie</h2>
-       
-            
-        </section> */}
         {/* <LazyThreeCanvasWithIntersection /> */}
       </main>
     </div>

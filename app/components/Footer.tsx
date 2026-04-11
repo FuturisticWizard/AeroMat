@@ -25,10 +25,10 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-black to-[#2d1a0a] pt-[190px] pb-12 px-4">
+    <footer className="bg-gradient-to-b from-black to-[#2d1a0a] pt-24 md:pt-48 pb-12 px-4">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="flex w-full justify-center items-center pt-[50px]">
+          <div className="flex w-full justify-center items-center pt-12">
             <div className="relative w-64 h-24">
               <Image
                 src="/logo/logo-white.png"
@@ -55,6 +55,7 @@ const Footer = () => {
                   key={index}
                   href={social.link}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white hover:text-white/70 transition-colors"
                 >
                   <FontAwesomeIcon icon={social.icon} className="w-8 h-8" />

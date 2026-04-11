@@ -21,11 +21,25 @@ const ThreeLoadingPlaceholder = () => (
 );
 
 const YouTubeLoadingPlaceholder = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
-    {Array.from({ length: 6 }, (_, i) => (
-      <div key={i} className="bg-gray-200 rounded-lg h-48"></div>
-    ))}
-  </div>
+  <section className="py-16 max-w-7xl mx-auto mb-12">
+    <div className="container px-4 mx-auto">
+      <div className="py-4">
+        <div className="h-16 md:h-20 w-64 bg-neutral-800/50 rounded-lg mb-4 animate-pulse"></div>
+        <div className="h-5 w-96 max-w-full bg-neutral-800/30 rounded animate-pulse"></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        {Array.from({ length: 9 }, (_, i) => (
+          <div key={i} className="rounded-xl overflow-hidden bg-neutral-900/80 border border-neutral-700 animate-pulse">
+            <div className="relative pb-[56.25%] bg-neutral-800/50"></div>
+            <div className="p-4">
+              <div className="h-5 w-3/4 bg-neutral-800/50 rounded mb-2"></div>
+              <div className="h-4 w-full bg-neutral-800/30 rounded"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 );
 
 const VideoPlayerLoadingPlaceholder = () => (
@@ -108,6 +122,26 @@ export const LazyWithIntersection = ({
   );
 };
 
+export const LazyPanoramaScroll = dynamic(
+  () => import("./PanoramaScroll"),
+  {
+    ssr: false,
+    loading: () => <ThreeLoadingPlaceholder />
+  }
+);
+
+export const LazyTestimonials = dynamic(
+  () => import("./Testimonials"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="max-w-7xl mx-auto py-6 h-[400px] bg-neutral-900/30 rounded-xl animate-pulse flex items-center justify-center">
+        <div className="text-gray-600 text-sm">Ładowanie opinii...</div>
+      </div>
+    )
+  }
+);
+
 // Optimized lazy wrappers
 export const LazyMuralsMapWithIntersection = () => (
   <LazyWithIntersection 
@@ -127,6 +161,28 @@ export const LazyThreeCanvasWithIntersection = () => (
   >
     <Suspense fallback={<ThreeLoadingPlaceholder />}>
       <LazyThreeCanvas />
+    </Suspense>
+  </LazyWithIntersection>
+);
+
+export const LazyPanoramaScrollWithIntersection = () => (
+  <LazyWithIntersection
+    fallback={<ThreeLoadingPlaceholder />}
+    rootMargin="300px"
+  >
+    <Suspense fallback={<ThreeLoadingPlaceholder />}>
+      <LazyPanoramaScroll />
+    </Suspense>
+  </LazyWithIntersection>
+);
+
+export const LazyTestimonialsWithIntersection = () => (
+  <LazyWithIntersection
+    fallback={<div className="h-[400px]" />}
+    rootMargin="200px"
+  >
+    <Suspense fallback={<div className="h-[400px]" />}>
+      <LazyTestimonials />
     </Suspense>
   </LazyWithIntersection>
 );

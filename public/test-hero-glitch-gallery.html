@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroMat — 6 Glitch Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--orange:#FE9100;--w:#fff;--w50:rgba(255,255,255,.5);--w30:rgba(255,255,255,.3);--b:#000;--fa:'Anton',sans-serif;--fb:'Bebas Neue',sans-serif;--fi:'Inter',sans-serif;--blue:#0af;--yellow:#ffe600}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--fi);background:#050505;color:var(--w);-webkit-font-smoothing:antialiased}
+
+    .nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;height:44px;padding:0 1rem;overflow-x:auto;scrollbar-width:none}
+    .nav::-webkit-scrollbar{display:none}
+    .nav .t{color:var(--orange);font-family:var(--fb);font-size:.9rem;letter-spacing:.08em;padding-right:.8rem;border-right:1px solid rgba(255,255,255,.08);margin-right:.3rem;white-space:nowrap}
+    .nav a{color:var(--w30);text-decoration:none;font-size:.65rem;font-weight:500;padding:.5rem .5rem;white-space:nowrap;transition:color .2s}
+    .nav a:hover{color:var(--orange)}
+
+    .sep{padding:1.5rem 1.5rem;text-align:center;background:#050505}
+    .sep h3{font-family:var(--fb);font-size:1rem;letter-spacing:.12em;color:var(--orange)}
+    .sep p{color:var(--w30);font-size:.68rem;margin-top:.25rem;max-width:500px;margin-inline:auto;line-height:1.4}
+
+    .btn-o{display:inline-flex;align-items:center;font-family:var(--fi);font-weight:600;font-size:.82rem;padding:.7rem 1.4rem;border-radius:5px;background:var(--orange);color:var(--b);text-decoration:none;border:none;cursor:pointer}
+    .micro{display:flex;gap:1rem;font-size:.66rem;color:var(--w30);flex-wrap:wrap}
+    .micro span{display:flex;align-items:center;gap:.3rem}
+    .micro span::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--orange);opacity:.5}
+
+    /* ---- HERO ---- */
+    .hero{position:relative;width:100vw;height:100vh;overflow:hidden;isolation:isolate}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+    .ko-all{position:absolute;inset:0;z-index:2;background:rgba(5,5,5,.82);mix-blend-mode:multiply}
+    .v-col{position:absolute;top:0;left:0;bottom:0;display:flex;flex-direction:row;gap:0;z-index:1}
+    .v-word{height:100vh;display:flex;align-items:center;justify-content:center;writing-mode:vertical-lr;transform:rotate(180deg);overflow:hidden;will-change:filter;position:relative}
+    .v-word .clip{display:inline-block;overflow:hidden;line-height:.82}
+    .v-word .clip .char{display:inline-block;font-family:var(--fa);text-transform:uppercase;color:var(--w);line-height:.82;letter-spacing:-0.02em}
+    .h-col{position:absolute;top:0;bottom:0;right:0;display:flex;flex-direction:column;gap:0}
+    .akcja-row{display:flex;justify-content:center;align-items:center;overflow:hidden;white-space:nowrap;margin:0;padding:0;will-change:filter;position:relative}
+    .akcja-row .clip{display:inline-block;overflow:hidden;line-height:.82;vertical-align:top}
+    .akcja-row .clip .char{display:inline-block;font-family:var(--fa);text-transform:uppercase;color:var(--w);line-height:.82;letter-spacing:-0.04em}
+
+    /* ---- SHARED GLITCH BASE ----
+       Pseudo-elements: white text (same as main) + colored text-shadow.
+       Inside knockout overlay, white = video visible through text.
+       The colored shadow bleeds around the white creating the color effect.
+    */
+    .wave-el{position:relative}
+    .wave-el::before,.wave-el::after{
+      content:attr(data-glitch);position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--fa);text-transform:uppercase;line-height:.82;
+      color:var(--w);pointer-events:none;opacity:0;
+      will-change:transform,clip-path,opacity;
+    }
+
+    /* ==========================================================
+       G1 — BEBBER CLASSIC (heavy, 20 steps, desync durations)
+       Blue shadow on ::before, yellow on ::after.
+       Large offsets, many clip-path bands, steps(1).
+       ========================================================== */
+    .g1{filter:brightness(1.3);text-shadow:8px 0 4px var(--blue),-8px 0 4px var(--yellow),0 0 60px rgba(0,170,255,.5),0 0 60px rgba(255,230,0,.5)}
+    .g1::before{opacity:1;text-shadow:10px 0 6px var(--blue);animation:g1b .5s steps(1,end) infinite}
+    .g1::after{opacity:1;text-shadow:-10px 0 6px var(--yellow);animation:g1y .4s steps(1,end) infinite}
+    @keyframes g1b{
+      0%{clip-path:inset(40% 0 20% 0);transform:translate(-12px,0) skewX(-2deg)}
+      5%{clip-path:inset(8% 0 75% 0);transform:translate(10px,2px)}
+      10%{clip-path:inset(85% 0 2% 0);transform:translate(-8px,-1px) skewX(1deg)}
+      15%{clip-path:inset(15% 0 50% 0);transform:translate(14px,0) skewX(-3deg)}
+      20%{clip-path:inset(60% 0 5% 0);transform:translate(-6px,3px)}
+      25%{clip-path:inset(2% 0 88% 0);transform:translate(11px,-2px)}
+      30%{clip-path:inset(45% 0 15% 0);transform:translate(-15px,0) skewX(2deg)}
+      35%{clip-path:inset(70% 0 10% 0);transform:translate(8px,1px)}
+      40%{clip-path:inset(5% 0 60% 0);transform:translate(-10px,-3px) skewX(-1deg)}
+      45%{clip-path:inset(30% 0 30% 0);transform:translate(13px,0)}
+      50%{clip-path:inset(92% 0 1% 0);transform:translate(-7px,2px) skewX(3deg)}
+      55%{clip-path:inset(12% 0 70% 0);transform:translate(9px,-1px)}
+      60%{clip-path:inset(55% 0 8% 0);transform:translate(-14px,0) skewX(-2deg)}
+      65%{clip-path:inset(3% 0 82% 0);transform:translate(12px,3px)}
+      70%{clip-path:inset(48% 0 22% 0);transform:translate(-9px,-2px)}
+      75%{clip-path:inset(78% 0 5% 0);transform:translate(15px,0) skewX(1deg)}
+      80%{clip-path:inset(20% 0 45% 0);transform:translate(-11px,1px)}
+      85%{clip-path:inset(65% 0 12% 0);transform:translate(7px,-3px) skewX(-3deg)}
+      90%{clip-path:inset(10% 0 55% 0);transform:translate(-13px,0)}
+      95%{clip-path:inset(38% 0 35% 0);transform:translate(10px,2px) skewX(2deg)}
+      100%{clip-path:inset(50% 0 18% 0);transform:translate(-8px,-1px)}
+    }
+    @keyframes g1y{
+      0%{clip-path:inset(60% 0 5% 0);transform:translate(10px,0)}
+      4%{clip-path:inset(2% 0 80% 0);transform:translate(-14px,-2px) skewX(2deg)}
+      8%{clip-path:inset(35% 0 30% 0);transform:translate(8px,3px)}
+      12%{clip-path:inset(88% 0 1% 0);transform:translate(-11px,0) skewX(-1deg)}
+      16%{clip-path:inset(15% 0 55% 0);transform:translate(15px,-1px)}
+      20%{clip-path:inset(50% 0 12% 0);transform:translate(-7px,2px) skewX(3deg)}
+      24%{clip-path:inset(5% 0 72% 0);transform:translate(12px,0)}
+      28%{clip-path:inset(72% 0 8% 0);transform:translate(-13px,-3px) skewX(-2deg)}
+      32%{clip-path:inset(22% 0 42% 0);transform:translate(9px,1px)}
+      36%{clip-path:inset(80% 0 3% 0);transform:translate(-10px,0)}
+      40%{clip-path:inset(10% 0 65% 0);transform:translate(14px,-2px) skewX(1deg)}
+      44%{clip-path:inset(42% 0 18% 0);transform:translate(-8px,3px)}
+      48%{clip-path:inset(95% 0 0% 0);transform:translate(11px,0) skewX(-3deg)}
+      52%{clip-path:inset(8% 0 78% 0);transform:translate(-15px,-1px)}
+      56%{clip-path:inset(55% 0 10% 0);transform:translate(7px,2px) skewX(2deg)}
+      60%{clip-path:inset(18% 0 48% 0);transform:translate(-12px,0)}
+      64%{clip-path:inset(68% 0 5% 0);transform:translate(13px,-3px)}
+      68%{clip-path:inset(3% 0 85% 0);transform:translate(-9px,1px) skewX(-1deg)}
+      72%{clip-path:inset(45% 0 22% 0);transform:translate(10px,0)}
+      76%{clip-path:inset(75% 0 8% 0);transform:translate(-14px,-2px) skewX(3deg)}
+      80%{clip-path:inset(28% 0 38% 0);transform:translate(8px,3px)}
+      84%{clip-path:inset(90% 0 2% 0);transform:translate(-11px,0)}
+      88%{clip-path:inset(12% 0 60% 0);transform:translate(15px,-1px) skewX(-2deg)}
+      92%{clip-path:inset(52% 0 15% 0);transform:translate(-7px,2px)}
+      96%{clip-path:inset(32% 0 35% 0);transform:translate(12px,0) skewX(1deg)}
+      100%{clip-path:inset(62% 0 8% 0);transform:translate(-10px,-2px)}
+    }
+
+    /* ==========================================================
+       G2 — RAPID NOISE (very fast, Bebber alternate-reverse)
+       Desync: 0.3s vs 0.2s, alternate-reverse for non-repeating feel
+       ========================================================== */
+    .g2{filter:brightness(1.25);text-shadow:5px 0 3px var(--blue),-5px 0 3px var(--yellow),0 0 40px rgba(0,170,255,.4),0 0 40px rgba(255,230,0,.4)}
+    .g2::before{opacity:1;text-shadow:6px 0 var(--blue);animation:g2b .3s infinite linear alternate-reverse}
+    .g2::after{opacity:1;text-shadow:-6px 0 var(--yellow);animation:g2y .2s infinite linear alternate-reverse}
+    @keyframes g2b{
+      0%{clip-path:inset(42% 0 25% 0);transform:translate(-6px,0)}
+      10%{clip-path:inset(80% 0 5% 0);transform:translate(4px,2px)}
+      20%{clip-path:inset(10% 0 70% 0);transform:translate(-8px,-1px)}
+      30%{clip-path:inset(55% 0 15% 0);transform:translate(6px,0)}
+      40%{clip-path:inset(3% 0 88% 0);transform:translate(-5px,3px)}
+      50%{clip-path:inset(65% 0 8% 0);transform:translate(7px,-2px)}
+      60%{clip-path:inset(20% 0 50% 0);transform:translate(-9px,0)}
+      70%{clip-path:inset(90% 0 2% 0);transform:translate(5px,1px)}
+      80%{clip-path:inset(35% 0 40% 0);transform:translate(-7px,-3px)}
+      90%{clip-path:inset(70% 0 12% 0);transform:translate(8px,0)}
+      100%{clip-path:inset(15% 0 60% 0);transform:translate(-6px,2px)}
+    }
+    @keyframes g2y{
+      0%{clip-path:inset(25% 0 50% 0);transform:translate(5px,1px)}
+      10%{clip-path:inset(70% 0 10% 0);transform:translate(-7px,0)}
+      20%{clip-path:inset(5% 0 82% 0);transform:translate(8px,-2px)}
+      30%{clip-path:inset(48% 0 20% 0);transform:translate(-6px,3px)}
+      40%{clip-path:inset(85% 0 3% 0);transform:translate(5px,0)}
+      50%{clip-path:inset(12% 0 65% 0);transform:translate(-9px,-1px)}
+      60%{clip-path:inset(58% 0 8% 0);transform:translate(7px,2px)}
+      70%{clip-path:inset(30% 0 45% 0);transform:translate(-5px,0)}
+      80%{clip-path:inset(75% 0 5% 0);transform:translate(6px,-3px)}
+      90%{clip-path:inset(18% 0 55% 0);transform:translate(-8px,1px)}
+      100%{clip-path:inset(40% 0 30% 0);transform:translate(5px,0)}
+    }
+
+    /* ==========================================================
+       G3 — BURST + SKEW (calm 70%, burst 30%)
+       No pseudo visible when calm. Explosive burst with big skew.
+       ========================================================== */
+    .g3{animation:g3el 1.8s linear infinite}
+    .g3::before{animation:g3b 1.8s linear infinite;text-shadow:8px 0 4px var(--blue)}
+    .g3::after{animation:g3y 1.8s linear infinite;text-shadow:-8px 0 4px var(--yellow)}
+    @keyframes g3el{
+      0%,68%{filter:brightness(1);text-shadow:none}
+      72%{filter:brightness(1.8);text-shadow:8px 0 var(--blue),-8px 0 var(--yellow),0 0 50px rgba(0,170,255,.7),0 0 50px rgba(255,230,0,.7)}
+      82%{filter:brightness(2.2);text-shadow:12px 0 var(--blue),-12px 0 var(--yellow),0 0 80px rgba(0,170,255,.9),0 0 80px rgba(255,230,0,.9)}
+      92%{filter:brightness(1.3);text-shadow:4px 0 var(--blue),-4px 0 var(--yellow)}
+      100%{filter:brightness(1);text-shadow:none}
+    }
+    @keyframes g3b{
+      0%,68%{opacity:0;transform:none;clip-path:inset(0 0 100% 0)}
+      70%{opacity:1;clip-path:inset(10% 0 45% 0);transform:translate(-14px,3px) skewX(-12deg)}
+      75%{clip-path:inset(55% 0 5% 0);transform:translate(10px,-4px) skewX(8deg)}
+      80%{clip-path:inset(3% 0 70% 0);transform:translate(-8px,2px) skewX(-15deg)}
+      85%{clip-path:inset(65% 0 10% 0);transform:translate(15px,0) skewX(10deg)}
+      90%{clip-path:inset(20% 0 40% 0);transform:translate(-12px,-3px) skewX(-6deg)}
+      95%{opacity:1;clip-path:inset(50% 0 20% 0);transform:translate(6px,1px) skewX(4deg)}
+      100%{opacity:0;transform:none;clip-path:inset(0 0 100% 0)}
+    }
+    @keyframes g3y{
+      0%,68%{opacity:0;transform:none;clip-path:inset(100% 0 0 0)}
+      70%{opacity:1;clip-path:inset(45% 0 15% 0);transform:translate(12px,-2px) skewX(10deg)}
+      75%{clip-path:inset(5% 0 60% 0);transform:translate(-15px,4px) skewX(-8deg)}
+      80%{clip-path:inset(70% 0 3% 0);transform:translate(9px,-1px) skewX(14deg)}
+      85%{clip-path:inset(15% 0 55% 0);transform:translate(-13px,3px) skewX(-12deg)}
+      90%{clip-path:inset(40% 0 25% 0);transform:translate(11px,0) skewX(6deg)}
+      95%{opacity:1;clip-path:inset(80% 0 5% 0);transform:translate(-7px,-2px) skewX(-4deg)}
+      100%{opacity:0;transform:none;clip-path:inset(100% 0 0 0)}
+    }
+
+    /* ==========================================================
+       G4 — WIDE BANDS (fewer, wider clip-path slices, slow)
+       Big visible color bars that slide across text
+       ========================================================== */
+    .g4{filter:brightness(1.2);text-shadow:6px 0 3px var(--blue),-6px 0 3px var(--yellow),0 0 30px rgba(0,170,255,.3),0 0 30px rgba(255,230,0,.3)}
+    .g4::before{opacity:1;text-shadow:8px 0 5px var(--blue);animation:g4b .8s steps(1,end) infinite}
+    .g4::after{opacity:1;text-shadow:-8px 0 5px var(--yellow);animation:g4y .7s steps(1,end) infinite}
+    @keyframes g4b{
+      0%{clip-path:inset(0% 0 60% 0);transform:translate(-10px,0)}
+      14%{clip-path:inset(25% 0 35% 0);transform:translate(12px,2px)}
+      28%{clip-path:inset(55% 0 5% 0);transform:translate(-8px,-1px)}
+      42%{clip-path:inset(10% 0 50% 0);transform:translate(14px,0)}
+      57%{clip-path:inset(40% 0 15% 0);transform:translate(-12px,3px)}
+      71%{clip-path:inset(70% 0 0% 0);transform:translate(9px,-2px)}
+      85%{clip-path:inset(5% 0 65% 0);transform:translate(-15px,0)}
+      100%{clip-path:inset(30% 0 30% 0);transform:translate(10px,1px)}
+    }
+    @keyframes g4y{
+      0%{clip-path:inset(50% 0 10% 0);transform:translate(9px,-1px)}
+      14%{clip-path:inset(5% 0 55% 0);transform:translate(-13px,3px)}
+      28%{clip-path:inset(35% 0 25% 0);transform:translate(11px,0)}
+      42%{clip-path:inset(70% 0 0% 0);transform:translate(-10px,-2px)}
+      57%{clip-path:inset(15% 0 45% 0);transform:translate(14px,1px)}
+      71%{clip-path:inset(60% 0 5% 0);transform:translate(-8px,0)}
+      85%{clip-path:inset(0% 0 70% 0);transform:translate(12px,-3px)}
+      100%{clip-path:inset(40% 0 20% 0);transform:translate(-11px,2px)}
+    }
+
+    /* ==========================================================
+       G5 — SMOOTH DRIFT (no steps, ease-in-out, gentle glow)
+       Layers float smoothly, organic chromatic aberration
+       ========================================================== */
+    .g5{filter:brightness(1.15);text-shadow:4px 0 8px rgba(0,170,255,.5),-4px 0 8px rgba(255,230,0,.5),0 0 50px rgba(0,170,255,.3),0 0 50px rgba(255,230,0,.3)}
+    .g5::before{opacity:.8;text-shadow:6px 0 10px var(--blue);animation:g5b 2s ease-in-out infinite alternate}
+    .g5::after{opacity:.8;text-shadow:-6px 0 10px var(--yellow);animation:g5y 2.5s ease-in-out infinite alternate}
+    @keyframes g5b{
+      0%{transform:translate(-6px,0);clip-path:inset(0)}
+      25%{transform:translate(-3px,2px);clip-path:inset(5% 0 5% 0)}
+      50%{transform:translate(6px,0);clip-path:inset(0)}
+      75%{transform:translate(3px,-2px);clip-path:inset(5% 0 5% 0)}
+      100%{transform:translate(-6px,0);clip-path:inset(0)}
+    }
+    @keyframes g5y{
+      0%{transform:translate(5px,0);clip-path:inset(0)}
+      25%{transform:translate(2px,-2px);clip-path:inset(3% 0 3% 0)}
+      50%{transform:translate(-5px,0);clip-path:inset(0)}
+      75%{transform:translate(-2px,2px);clip-path:inset(3% 0 3% 0)}
+      100%{transform:translate(5px,0);clip-path:inset(0)}
+    }
+
+    /* ==========================================================
+       G6 — MAXIMUM CHAOS (everything + hue-rotate + big skew)
+       Multi-spike, varied intensity, longest cycle
+       ========================================================== */
+    .g6{animation:g6el 3s linear infinite}
+    .g6::before{text-shadow:10px 0 6px var(--blue);animation:g6b 3s linear infinite}
+    .g6::after{text-shadow:-10px 0 6px var(--yellow);animation:g6y 3s linear infinite}
+    @keyframes g6el{
+      0%,10%{filter:brightness(1);text-shadow:none}
+      15%{filter:brightness(2) hue-rotate(15deg);text-shadow:10px 0 var(--blue),-10px 0 var(--yellow),0 0 60px rgba(0,170,255,.8),0 0 60px rgba(255,230,0,.8)}
+      20%{filter:brightness(1);text-shadow:none}
+      45%{filter:brightness(1);text-shadow:none}
+      48%{filter:brightness(2.5) hue-rotate(-20deg);text-shadow:15px 0 var(--blue),-15px 0 var(--yellow),0 0 80px rgba(0,170,255,1),0 0 80px rgba(255,230,0,1)}
+      54%{filter:brightness(1);text-shadow:none}
+      75%{filter:brightness(1);text-shadow:none}
+      78%{filter:brightness(1.8) hue-rotate(10deg);text-shadow:8px 0 var(--blue),-8px 0 var(--yellow),0 0 40px rgba(0,170,255,.6),0 0 40px rgba(255,230,0,.6)}
+      82%{filter:brightness(1);text-shadow:none}
+      100%{filter:brightness(1);text-shadow:none}
+    }
+    @keyframes g6b{
+      0%,10%{opacity:.2;transform:none;clip-path:inset(0)}
+      15%{opacity:1;clip-path:inset(5% 0 40% 0);transform:translate(-15px,4px) skewX(-15deg);filter:brightness(2) hue-rotate(20deg)}
+      20%{opacity:.2;transform:none;clip-path:inset(0)}
+      45%{opacity:.2;transform:none;clip-path:inset(0)}
+      48%{opacity:1;clip-path:inset(20% 0 10% 0);transform:translate(14px,-5px) skewX(18deg);filter:brightness(2.5) hue-rotate(-30deg)}
+      50%{clip-path:inset(60% 0 5% 0);transform:translate(-12px,3px) skewX(-12deg)}
+      54%{opacity:.2;transform:none;clip-path:inset(0)}
+      75%{opacity:.2;transform:none;clip-path:inset(0)}
+      78%{opacity:1;clip-path:inset(15% 0 50% 0);transform:translate(10px,-2px) skewX(10deg);filter:brightness(1.8)}
+      82%{opacity:.2;transform:none;clip-path:inset(0);filter:brightness(1)}
+      100%{opacity:.2;transform:none;clip-path:inset(0);filter:brightness(1)}
+    }
+    @keyframes g6y{
+      0%,10%{opacity:.2;transform:none;clip-path:inset(0)}
+      15%{opacity:1;clip-path:inset(40% 0 10% 0);transform:translate(13px,-3px) skewX(12deg);filter:brightness(1.8) hue-rotate(-15deg)}
+      20%{opacity:.2;transform:none;clip-path:inset(0)}
+      45%{opacity:.2;transform:none;clip-path:inset(0)}
+      48%{opacity:1;clip-path:inset(5% 0 35% 0);transform:translate(-14px,6px) skewX(-16deg);filter:brightness(2.2) hue-rotate(25deg)}
+      50%{clip-path:inset(45% 0 15% 0);transform:translate(11px,-4px) skewX(14deg)}
+      54%{opacity:.2;transform:none;clip-path:inset(0)}
+      75%{opacity:.2;transform:none;clip-path:inset(0)}
+      78%{opacity:1;clip-path:inset(50% 0 10% 0);transform:translate(-12px,3px) skewX(-8deg);filter:brightness(1.6)}
+      82%{opacity:.2;transform:none;clip-path:inset(0);filter:brightness(1)}
+      100%{opacity:.2;transform:none;clip-path:inset(0);filter:brightness(1)}
+    }
+
+    /* CTA */
+    .bot{position:absolute;bottom:0;right:0;z-index:20;padding:clamp(.8rem,2vw,1.5rem) clamp(1rem,3vw,2.5rem);background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.4) 55%,transparent 100%)}
+    .bot .copy{color:var(--w50);font-size:clamp(.72rem,.9vw,.8rem);max-width:380px;line-height:1.5}
+    .bot .copy strong{color:var(--w);font-weight:600}
+    .bot .row{display:flex;align-items:center;gap:1rem;margin-top:.5rem;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="t">6 GLITCHY</span>
+  <a href="#s1">G1: Bebber Classic</a>
+  <a href="#s2">G2: Rapid Noise</a>
+  <a href="#s3">G3: Burst+Skew</a>
+  <a href="#s4">G4: Wide Bands</a>
+  <a href="#s5">G5: Smooth Drift</a>
+  <a href="#s6">G6: Max Chaos</a>
+</nav>
+
+<div class="sep" style="padding-top:3.5rem"><h3>G1 — BEBBER CLASSIC</h3><p>20 krokow, steps(1), desync 0.5s/0.4s. Duze offsety 10-15px, skew, mocne text-shadow blue+yellow. Najagressywniejszy.</p></div>
+<section id="s1" class="hero" data-g="g1"></section>
+
+<div class="sep"><h3>G2 — RAPID NOISE</h3><p>Bebber alternate-reverse: 0.3s/0.2s desync, nigdy ten sam pattern. Srednie offsety 5-9px. Szum elektryczny.</p></div>
+<section id="s2" class="hero" data-g="g2"></section>
+
+<div class="sep"><h3>G3 — BURST + SKEW</h3><p>70% cisza, 30% eksplozja: skewX do 15deg, brightness do 2.2x, duze offsety. Nagly szok.</p></div>
+<section id="s3" class="hero" data-g="g3"></section>
+
+<div class="sep"><h3>G4 — WIDE BANDS</h3><p>Mniej krokow, szersze clip-path (30-40% tekstu). Wolniejszy, bardziej "filmowy" glitch. Steps(1).</p></div>
+<section id="s4" class="hero" data-g="g4"></section>
+
+<div class="sep"><h3>G5 — SMOOTH DRIFT</h3><p>Gladki, ease-in-out, alternate. Organiczny chromatic aberration. Delikatny ale stalowo obecny.</p></div>
+<section id="s5" class="hero" data-g="g5"></section>
+
+<div class="sep"><h3>G6 — MAXIMUM CHAOS</h3><p>Wszystko: clip+translate+skewX+brightness+hue-rotate. 3 spike'i w cyklu 3s. Kitchen sink.</p></div>
+<section id="s6" class="hero" data-g="g6"></section>
+
+<div style="height:2rem;background:#050505"></div>
+
+<script>
+(function(){
+  const WAVE_MS=1200;
+
+  function fitFont(t,mW,mH,ls){
+    const m=document.createElement('span');
+    m.style.cssText="font-family:'Anton',sans-serif;text-transform:uppercase;white-space:nowrap;visibility:hidden;position:absolute;top:-9999px;line-height:.82;letter-spacing:"+(ls||'-0.02em')+";";
+    m.textContent=t;document.body.appendChild(m);
+    let lo=10,hi=1500,b=60;
+    for(let i=0;i<30;i++){const mid=(lo+hi)/2;m.style.fontSize=mid+'px';if(m.offsetWidth<=mW&&m.offsetHeight<=mH){b=mid;lo=mid}else hi=mid}
+    document.body.removeChild(m);return b;
+  }
+  function mH(t,fs){
+    const m=document.createElement('span');
+    m.style.cssText="font-family:'Anton',sans-serif;text-transform:uppercase;white-space:nowrap;visibility:hidden;position:absolute;top:-9999px;line-height:.82;letter-spacing:-0.02em;font-size:"+fs+"px;";
+    m.textContent=t;document.body.appendChild(m);const h=m.offsetHeight;document.body.removeChild(m);return h;
+  }
+  function mAH(fs){
+    const m=document.createElement('span');
+    m.style.cssText="font-family:'Anton',sans-serif;text-transform:uppercase;white-space:nowrap;visibility:hidden;position:absolute;top:-9999px;line-height:.82;letter-spacing:-0.04em;font-size:"+fs+"px;";
+    m.textContent='AKCJA';document.body.appendChild(m);const h=m.offsetHeight;document.body.removeChild(m);return h;
+  }
+
+  function buildSection(sec){
+    const gCls=sec.dataset.g;
+    const vh=window.innerHeight,vw=window.innerWidth;
+    sec.innerHTML='';
+
+    const video=document.createElement('video');
+    video.autoplay=video.muted=video.loop=video.playsInline=true;
+    video.innerHTML='<source src="/movies/hero_compressed.mp4" type="video/mp4"/><source src="/movies/hero_compressed.webm" type="video/webm"/>';
+    sec.appendChild(video);
+
+    const ko=document.createElement('div');ko.className='ko-all';
+    const vCol=document.createElement('div');vCol.className='v-col';
+    const vEls=[];
+
+    ['ŚCIANA','KAMERA'].forEach(text=>{
+      const el=document.createElement('div');el.className='v-word wave-el';el.setAttribute('data-glitch','');
+      const fs=fitFont(text,vh*1.33,9999,'-0.02em');
+      el.style.width=Math.ceil(mH(text,fs))+'px';
+      [...text].forEach(c=>{
+        const clip=document.createElement('div');clip.className='clip';
+        const span=document.createElement('span');span.className='char';span.textContent=c;span.style.fontSize=fs+'px';
+        clip.appendChild(span);el.appendChild(clip);
+      });
+      vCol.appendChild(el);vEls.push(el);
+    });
+    ko.appendChild(vCol);
+
+    const totalVW=vEls.reduce((s,el)=>s+parseFloat(el.style.width),0);
+    vCol.style.width=totalVW+'px';
+
+    const hCol=document.createElement('div');hCol.className='h-col';
+    hCol.style.left=totalVW+'px';
+    const availW=vw-totalVW;
+    const aFs=fitFont('AKCJA',availW*1.0,9999,'-0.04em');
+    const oneH=mAH(aFs);
+    const count=Math.max(3,Math.ceil(vh/oneH));
+    const rows=[];
+    for(let i=0;i<count;i++){
+      const row=document.createElement('div');row.className='akcja-row wave-el';
+      row.setAttribute('data-glitch','AKCJA');
+      row.style.fontSize=aFs+'px';row.style.height=oneH+'px';row.style.flexShrink='0';
+      [...'AKCJA'].forEach(c=>{
+        const clip=document.createElement('div');clip.className='clip';
+        const span=document.createElement('span');span.className='char';span.textContent=c;span.style.fontSize=aFs+'px';
+        clip.appendChild(span);row.appendChild(clip);
+      });
+      hCol.appendChild(row);rows.push(row);
+    }
+    ko.appendChild(hCol);sec.appendChild(ko);
+
+    const bot=document.createElement('div');bot.className='bot';bot.style.left=totalVW+'px';
+    bot.innerHTML='<p class="copy">Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z drona</strong>.</p><div class="row"><a href="#" class="btn-o">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film z drona</span></div></div>';
+    sec.appendChild(bot);
+
+    // Sequential wave: ŚCIANA → KAMERA → AKCJA1 → AKCJA2 → ...
+    const all=[...vEls,...rows];
+    let idx=0;
+    setInterval(()=>{
+      all.forEach(el=>el.classList.remove(gCls));
+      all[idx].classList.add(gCls);
+      idx=(idx+1)%all.length;
+    },WAVE_MS);
+  }
+
+  document.querySelectorAll('.hero[data-g]').forEach(buildSection);
+})();
+</script>
+</body>
+</html>

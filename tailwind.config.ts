@@ -222,6 +222,7 @@ export default {
         "loop-scroll": "loop-scroll 30s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        wiggle: "wiggle 0.5s ease-out 1",
       },
       keyframes: {
         "accordion-down": {
@@ -260,6 +261,15 @@ export default {
           "100%": {
             transform: "translateX(0%)",
           },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "15%": { transform: "rotate(-0.3deg)" },
+          "30%": { transform: "rotate(0.3deg)" },
+          "45%": { transform: "rotate(-0.2deg)" },
+          "60%": { transform: "rotate(0.2deg)" },
+          "75%": { transform: "rotate(-0.1deg)" },
+          "90%": { transform: "rotate(0.1deg)" },
         },
         rotateGradient: {
           "0%": {

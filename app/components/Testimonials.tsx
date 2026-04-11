@@ -14,72 +14,46 @@ import {
 import { Badge } from "@/app/components/ui/badge";
 import { Star } from "lucide-react";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
-// Testimonial data with work images
+// Testimonial data — real references from clients
 const testimonials = [
   {
     id: 1,
-    type: "Szyld",
-    name: "Janusz Berbelucha ",
-    role: "Zacierowy",
-    company: "Riders Pub",
-    image: "/Collaborations/logo8.png",
+    type: "Mural",
+    name: "Paweł Suszek",
+    role: "Członek Zarządu",
+    company: "Ekopak Sp. z o.o.",
+    image: "/logo/clients_logos/1P.png",
     content:
-      "Mateusz odjebał kawał dobrej roboty. Szyld przyciaga motocyklistów z całej gminy! I to wszystko za kilka flaszek naszego bimberku!",
+      "Projekt został wykonany kompleksowo — od koncepcji graficznej, przez przygotowanie ściany, aż po finalne wykonanie muralu. Wykonawca wykazał się profesjonalizmem, elastycznością oraz bardzo dobrym zrozumieniem tematyki ekologicznej. Efekt końcowy spełnił nasze oczekiwania zarówno pod względem wizualnym, jak i wizerunkowym.",
     rating: 5,
-    workImage: "/Collaborations/riders_szyld.webp",
-    workTitle: "Szyld dla Riders Pub",
+    workImage: "/Portfolio/murale/7B.webp",
+    workTitle: "Mural ekologiczny dla Ekopak",
   },
   {
     id: 2,
-    type: "Szyld",
-    name: "Michał  Golob",
-    role: "Manager",
-    company: "Tifosi pizza pub",
-    image: "/Collaborations/logo13.webp",
+    type: "Mural",
+    name: "Teresa Stępniak-Romanek",
+    role: "Kierownik Działu Strategii i Komunikacji",
+    company: "LPEC S.A.",
+    image: "/logo/clients_logos/2P.png",
     content:
-      "Mateusz jest bardzo utalentowanym artystą. Troche za dużo pije (do południa pół litra), ale za to później doskonale trafia przetrawioną pizzą do miednicy :D ",
-    rating: 4,
-    workImage: "/images/szyld4.webp",
-    workTitle: "Szyld dla pizzeri Tifosi",
+      "Wszystkie prace zostały wykonane zgodnie z ustaleniami, z należytą starannością, terminowo oraz na wysokim poziomie estetycznym i technicznym. Współpraca przebiegała bez zastrzeżeń. Z pełnym przekonaniem możemy polecić wykonawcę jako solidnego i godnego zaufania partnera.",
+    rating: 5,
+    workImage: "/Portfolio/murale/10.webp",
+    workTitle: "Murale dla LPEC w Lublinie",
   },
   {
     id: 3,
-    type: "Logo",
-    name: "Emily Rodriguez",
-    role: "Product Manager",
-    company: "Schronisko dla zwierząt w Radysach",
-    image: "/Collaborations/logo7.webp",
-    content:
-      "Zależało nam na tanim logo dla naszego schroniska. Mateusz zrobił to za darmo, bo mu się psiak spodobał. Potem mówił że bardzo smaczny. Polecamy!",
-    rating: 5,
-    workImage: "/images/logo1.webp",
-    workTitle: "Logo dla Schroniska dla zwierząt w Radysach",
-  },
-  {
-    id: 4,
     type: "Mural",
-    name: "David Kim",
-    role: "CTO",
-    company: "Premium Auto Partner",
-    image: "/Collaborations/images.webp",
+    name: "Paweł Rysak",
+    role: "Prezes Zarządu",
+    company: "SM Bieluch w Chełmie",
+    image: "/logo/clients_logos/4P.png",
     content:
-      "Mateusz poradził sobie z tym zadaniem doskonale. Zostało nam troche czarnej farby więc postanowiliśmy ją wykorzystac.",
+      "Firma Aeromat zrealizowała usługę w sposób w pełni profesjonalny, rzetelny i kompleksowy. Kolorystyka muralu jest intensywna, wyrazista i zgodna z projektem. Powstały mural stanowi atrakcyjną, a zarazem nienachalną formę promocji — przyciąga uwagę przechodniów, którzy chętnie zatrzymują się, aby go obejrzeć.",
     rating: 5,
-    workImage: "/images/szyld2.webp",
-    workTitle: "Mural dla Premium Auto Partner",
-  },
-  {
-    id: 5,
-    type: "Mural",
-    name: "Lisa Patel",
-    role: "UX Designer",
-    company: "Magiczny Świat",
-    image: "/Collaborations/logo6.webp",
-    content:
-      "Doskonały mural, dzieciaki co chwila wbiegają w ścianę w miejscu gdzie jest wjazd do tunelu ...  ",
-    rating: 4,
-    workImage: "/images/magiczny-swiat.webp",
-    workTitle: "Mural dla Magiczny Świat",
+    workImage: "/Portfolio/murale/13.webp",
+    workTitle: "Mural promocyjny dla SM Bieluch",
   },
 ];
 
@@ -101,16 +75,15 @@ export default function TestimonialsCarousel3() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [api, setApi] = useState<UseEmblaCarouselType[1]>();
   // const [direction, setDirection] = useState(0) // 1 for forward, -1 for backward
-  const buttonHeight = 64; // Height of button (56px) + gap (8px)
+  const buttonHeight = 96; // Height of button (80px) + gap (16px)
   const buttonContainerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const totalTestimonials = testimonials.length;
 
   // Create a circular wheel by adding extra items for seamless looping
   const createCircularWheel = () => {
-    // We need to show at least 6 buttons at a time, so add 6 before and 6 after
-    // This ensures smooth scrolling in either direction
-    const visibleCount = 6;
+    // Show enough items for seamless looping
+    const visibleCount = Math.min(3, totalTestimonials);
 
     const wheel = [];
 
@@ -180,26 +153,26 @@ export default function TestimonialsCarousel3() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-6 bg-background flex items-center overflow-hidden">
+    <div className="max-w-[1600px] mx-auto py-6 bg-background flex items-center overflow-hidden px-4 sm:px-8">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
         className="w-full flex flex-row"
       >
-        <div className="flex flex-col gap-2 items-center md:justify-center">
+        <div className="flex flex-col gap-2 items-center md:justify-center shrink-0">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="static transform-none mx-4"
           >
-            <CarouselPrevious className="static transform-none mx-4" />
+            <CarouselPrevious className="static transform-none mx-4 bg-neutral-800 border-neutral-600 text-white hover:bg-[#ff7302] hover:border-[#ff7302] hover:text-white" />
           </motion.div>
 
           {/* Navigation buttons container - circular wheel style */}
           <div
             ref={containerRef}
-            className="relative h-[336px] w-full overflow-visible px-4 flex  items-center"
+            className="relative h-[336px] w-24 overflow-visible px-4 flex items-center"
           >
             {/* Mask for top fade effect */}
             <div className="absolute top-0 left-0 right-0 h-[80px] bg-gradient-to-b from-background to-transparent z-10 pointer-events-none"></div>
@@ -235,7 +208,7 @@ export default function TestimonialsCarousel3() {
                   return (
                     <motion.button
                       key={item.key}
-                      className={`w-14 h-14 rounded-full transition-all duration-300 relative ${
+                      className={`w-20 h-20 rounded-full transition-all duration-300 relative ${
                         activeIndex === normalizedIndex
                           ? " z-20 scale-105 opacity-100  "
                           : "opacity-75 hover:opacity-100 z-10"
@@ -258,11 +231,11 @@ export default function TestimonialsCarousel3() {
                           alt=""
                           width={380}
                           height={380}
-                          className={`w-full h-full ${
+                          className={`w-full h-full p-2 ${
                             activeIndex === normalizedIndex
                               ? "scale-105"
                               : " opacity-70"
-                          } object-cover`}
+                          } object-contain`}
                         />
                       </div>
                     </motion.button>
@@ -278,13 +251,14 @@ export default function TestimonialsCarousel3() {
             transition={{ duration: 0.5 }}
             className="static transform-none mx-4"
           >
-            <CarouselNext className="static transform-none mx-4" />
+            <CarouselNext className="static transform-none mx-4 bg-neutral-800 border-neutral-600 text-white hover:bg-[#ff7302] hover:border-[#ff7302] hover:text-white" />
           </motion.div>
         </div>
+        <div className="flex-1 min-w-0">
         <CarouselContent className="w-full">
           {testimonials.map((testimonial) => (
             <CarouselItem key={testimonial.id} className="w-full">
-              <div className="relative min-w-[220px] h-full xxs:h-[350px] md:h-[400px] lg:h-[600px] rounded-xl overflow-hidden">
+              <div className="relative min-w-[220px] h-full xxs:h-[350px] md:h-[500px] lg:h-[700px] rounded-xl overflow-hidden">
                 {/* Full-size background image */}
                 <Image
                   src={testimonial.workImage || "/placeholder.svg"}
@@ -292,7 +266,7 @@ export default function TestimonialsCarousel3() {
                   fill
                   className="object-cover"
                   sizes="100vw"
-                  priority
+                  loading="lazy"
                 />
 
                 {/* Gradient overlay for better text visibility */}
@@ -306,7 +280,7 @@ export default function TestimonialsCarousel3() {
                   </h3>
 
                   {/* Testimonial card */}
-                  <Card className="bg-transparent backdrop-blur-sm border-0 shadow-lg w-full md:max-w-[600px]">
+                  <Card className="bg-transparent backdrop-blur-sm border-0 shadow-lg w-full md:max-w-[700px] xl:max-w-[800px]">
                     <CardContent className="p-2 sm:p-6">
                       <div className="flex items-start gap-2 sm:gap-4 mb-2 sm:mb-4">
                         <Avatar className="h-12 w-12 border-2 border-primary/10 text-sm">
@@ -344,6 +318,7 @@ export default function TestimonialsCarousel3() {
             </CarouselItem>
           ))}
         </CarouselContent>
+        </div>
       </Carousel>
     </div>
   );

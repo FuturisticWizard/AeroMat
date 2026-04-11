@@ -5,6 +5,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
 
   // Pusta konfiguracja Turbopack (wymagana w Next.js 16)
   turbopack: {},
@@ -131,7 +132,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://maps.googleapis.com https://*.googleapis.com https://www.youtube.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https: blob:",
+              "img-src 'self' data: blob: https://img.youtube.com https://maps.googleapis.com https://maps.gstatic.com https://*.ggpht.com",
               "media-src 'self' blob:",
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
               "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://*.gstatic.com",
@@ -150,6 +151,14 @@ const nextConfig = {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
           },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
+          },
         ],
       },
       {
@@ -162,7 +171,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/:dir(pngs|icons|Collaborations|Portfolio|movies)/:path*",
+        source: "/:dir(pngs|icons|Collaborations|Portfolio|movies|Animation|logo)/:path*",
         headers: [
           {
             key: "Cache-Control",

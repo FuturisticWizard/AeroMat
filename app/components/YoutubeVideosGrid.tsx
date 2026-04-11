@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Play } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface VideoItem {
   id: string
@@ -9,9 +10,23 @@ interface VideoItem {
   description: string
 }
 
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return isDesktop;
+}
+
 export default function YouTubeGrid() {
-  
-  // Instead of conditionally rendering iframes, we'll use a more direct approach
+  const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
+  const expandedRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useIsDesktop();
+
   const videos: VideoItem[] = [
     {
       id: "FpFBhlD7cOU",
@@ -58,32 +73,87 @@ export default function YouTubeGrid() {
     },
   ]
 
+  // Lock body scroll when video is open
+  useEffect(() => {
+    if (activeVideo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [activeVideo]);
+
   return (
-    <section className="py-16 max-w-7xl mx-auto mb-12">
+    <section id="w-akcji" className="py-16 md:py-24 max-w-7xl mx-auto mb-12">
       <div className="container px-4 mx-auto relative">
-        {/* Mobile/tablet heading (visible on smaller screens) */}
-        <div className="py-4"> 
-          <h2 className="text-7xl md:text-8xl anton-regular text-left font-bold tracking-tight transform origin-right whitespace-nowrap text-[#ff7302] opacity-30">
-          ZA KULISAMI
+        <div className="py-4">
+          <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-[#ff7302]">
+          FILMY
           </h2>
-        
+
           <p className="text-lg text-gray-200">
-            Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.
+          Zobacz jak powstają moje prace.
           </p>
         </div>
 
-        {/* Desktop description (visible only on large screens) */}
-        {/* <div className="hidden lg:block max-w-6xl mx-auto text-left mb-12">
-          <p className="text-lg text-slate-600 dark:text-slate-400">
-          Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.
-          </p>
-        </div> */}
-        
+        <div className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {videos.map((video) => (
+              <VideoCard
+                key={video.id}
+                video={video}
+                isActive={activeVideo?.id === video.id}
+                onPlay={() => isDesktop ? setActiveVideo(video) : undefined}
+                isMobile={!isDesktop}
+              />
+            ))}
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 " >
-          {videos.map((video) => (
-            <VideoCard key={video.id} video={video} />
-          ))}
+          {/* Overlay player — na pierwszym planie, na całą szerokość */}
+          <AnimatePresence>
+            {activeVideo && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70"
+                onClick={() => setActiveVideo(null)}
+              >
+                <motion.div
+                  ref={expandedRef}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-[94%] max-w-5xl rounded-xl overflow-hidden bg-neutral-900 border border-[#ff7302]/40 shadow-2xl shadow-orange-500/30"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="relative pb-[56.25%]">
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube-nocookie.com/embed/${activeVideo.id}?autoplay=1`}
+                      title={activeVideo.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                    <button
+                      onClick={() => setActiveVideo(null)}
+                      className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 hover:bg-[#ff7302] text-white flex items-center justify-center transition-colors duration-200"
+                      aria-label="Zamknij wideo"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg mb-1 text-white">{activeVideo.title}</h3>
+                    <p className="text-gray-300 text-[0.9375rem] leading-relaxed">{activeVideo.description}</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
@@ -91,23 +161,39 @@ export default function YouTubeGrid() {
 }
 
 
-function VideoCard({ video }: { video: VideoItem }) {
-    const [isPlaying, setIsPlaying] = useState(false);
-  
-    const handlePlay = () => {
-      setIsPlaying(true);
+function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; isActive: boolean; onPlay: () => void; isMobile: boolean }) {
+    const [inlinePlay, setInlinePlay] = useState(false);
+
+    const handleClick = () => {
+      if (isMobile) {
+        setInlinePlay(true);
+      } else {
+        onPlay();
+      }
     };
-  
+
     return (
-      <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300 bg-neutral-900/80 border border-neutral-700 hover:border-[#ff7302]/40">
-        {/* Ensure the aspect ratio is maintained */}
+      <div
+        onClick={!inlinePlay ? handleClick : undefined}
+        className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-neutral-900/80 border ${
+          isActive
+            ? "border-[#ff7302] shadow-orange-500/20"
+            : "border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-[#ff7302]/40"
+        } ${!inlinePlay ? "cursor-pointer" : ""}`}
+      >
         <div className="relative pb-[56.25%] overflow-hidden">
-          {!isPlaying ? (
-            // Thumbnail with play button
-            <div
-              className="absolute top-0 left-0 w-full h-full cursor-pointer"
-              onClick={handlePlay}
-            >
+          {inlinePlay ? (
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube-nocookie.com/embed/${video.id}?playsinline=1&rel=0`}
+              title={video.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              allowFullScreen
+              sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
+            ></iframe>
+          ) : (
+            <div className="absolute top-0 left-0 w-full h-full">
               <img
                 src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                 alt={`${video.title} thumbnail`}
@@ -119,21 +205,11 @@ function VideoCard({ video }: { video: VideoItem }) {
                 </div>
               </div>
             </div>
-          ) : (
-            // Direct iframe embed
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
-              title={video.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
           )}
         </div>
         <div className="p-4">
           <h3 className="font-semibold text-lg mb-1 text-white">{video.title}</h3>
-          <p className="text-gray-300 text-sm">{video.description}</p>
+          <p className="text-gray-300 text-[0.9375rem] leading-relaxed">{video.description}</p>
         </div>
       </div>
     );

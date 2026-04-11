@@ -69,7 +69,8 @@ const VideoHero = ({
         autoPlay
         muted={muted}
         loop
-        preload="auto"
+        preload="metadata"
+        poster="/images/hero-poster.webp"
         playsInline
         webkit-playsinline="true"
         className={`w-full h-full object-cover object-center transition-opacity duration-1000 ease-out ${

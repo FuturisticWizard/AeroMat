@@ -14,9 +14,11 @@ export default function setupMarqueeAnimation() {
   console.log("Found marquee items:", marqueeItems.length);
   console.log(marqueeItems);
   if (marqueeItems.length > 0) {
+    const isMobile = window.innerWidth < 768;
     const tl = horizontalLoop(marqueeItems, {
       repeat: -1,
       paddingRight: 30,
+      speed: isMobile ? 0.2 : 0.4,
     });
   }
 }

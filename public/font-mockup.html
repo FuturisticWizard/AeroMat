@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroMat — Light Mode Palette Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; }
+
+    .page-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: #0a0a0a;
+      color: #fff;
+      border-bottom: 2px solid #ff7302;
+    }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: #ff7302; }
+    .page-header p { color: #888; margin-top: 8px; font-size: 0.9rem; max-width: 700px; margin-inline: auto; }
+
+    /* Quick nav */
+    .quick-nav {
+      position: fixed; top: 50%; right: 16px; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 8px; z-index: 100;
+    }
+    .quick-nav a {
+      width: 32px; height: 32px; border-radius: 50%; background: #333; border: 1px solid #555;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; text-decoration: none; font-size: 0.65rem; font-weight: 600; transition: all 0.2s;
+    }
+    .quick-nav a:hover { background: #ff7302; border-color: #ff7302; color: #000; }
+
+    /* Palette section */
+    .palette-section { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
+    .palette-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #ff7302; margin-bottom: 4px; }
+    .palette-name { font-size: 1.4rem; font-weight: 600; margin-bottom: 4px; }
+    .palette-desc { font-size: 0.85rem; margin-bottom: 32px; opacity: 0.6; }
+    .palette-tag {
+      display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 4px;
+      margin-right: 6px; text-transform: uppercase; letter-spacing: 0.08em;
+      background: #ff7302; color: #fff;
+    }
+
+    /* Mock components */
+    .mock-navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px; border-radius: 12px; margin-bottom: 24px;
+      border: 1px solid; backdrop-filter: blur(8px);
+    }
+    .mock-nav-links { display: flex; gap: 24px; font-size: 0.9rem; }
+    .mock-nav-links a { text-decoration: none; transition: color 0.2s; }
+    .mock-nav-right { display: flex; gap: 12px; align-items: center; }
+    .mock-toggle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; border: none; }
+
+    .mock-section { border-radius: 16px; padding: 40px; margin-bottom: 24px; }
+    .mock-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 12px; }
+    .mock-section h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
+    .mock-section p { font-size: 1rem; line-height: 1.7; max-width: 600px; }
+
+    .mock-card { border-radius: 12px; padding: 24px; margin-bottom: 16px; border: 1px solid; }
+    .mock-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 8px; }
+    .mock-card p { font-size: 0.9rem; line-height: 1.6; }
+
+    .mock-footer { border-radius: 12px; padding: 32px; text-align: center; margin-top: 24px; }
+    .mock-footer h5 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .mock-footer p { font-size: 0.8rem; opacity: 0.7; }
+
+    .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .swatch { width: 60px; height: 60px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); display: flex; align-items: flex-end; justify-content: center; padding: 4px; }
+    .swatch span { font-size: 0.5rem; font-family: monospace; opacity: 0.8; }
+
+    /* Dark mode intro (same for all options) */
+    .dark-intro {
+      background: #000; color: #fff; border-radius: 16px; padding: 60px 40px;
+      margin-bottom: 24px; text-align: center;
+    }
+    .dark-intro h2 {
+      font-family: 'Caveat', cursive; font-size: clamp(2rem, 5vw, 3rem);
+      text-shadow: 0 0 7px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.6),
+        0 0 22px rgba(34,141,255,0.7), 0 0 45px rgba(34,141,255,0.5), 0 0 75px rgba(34,141,255,0.3);
+    }
+    .dark-intro p { color: #666; font-size: 0.75rem; margin-top: 12px; }
+
+    /* ====== OPTION A: Clean White ====== */
+    .opt-a { background: #FFFFFF; color: #1A1A1A; }
+    .opt-a .mock-navbar { background: rgba(255,255,255,0.92); border-color: #E5E5E5; }
+    .opt-a .mock-nav-links a { color: #333; }
+    .opt-a .mock-nav-links a:hover { color: #ff7302; }
+    .opt-a .mock-toggle { background: #F5F5F5; color: #333; }
+    .opt-a .mock-section { background: #FAFAFA; }
+    .opt-a .mock-section h2 { color: #ff7302; }
+    .opt-a .mock-section h3 { color: #1A1A1A; }
+    .opt-a .mock-section h3 .accent { color: #ff7302; }
+    .opt-a .mock-section p { color: #6B6B6B; }
+    .opt-a .mock-card { background: #FFFFFF; border-color: #E5E5E5; }
+    .opt-a .mock-card h4 { color: #1A1A1A; }
+    .opt-a .mock-card p { color: #6B6B6B; }
+    .opt-a .mock-footer { background: linear-gradient(to bottom, #1A1A1A, #2D1A0A); color: #fff; }
+    .opt-a .mock-footer p { color: rgba(255,255,255,0.6); }
+
+    /* ====== OPTION B: Warm Cream ====== */
+    .opt-b { background: #FBF8F4; color: #2C2418; }
+    .opt-b .mock-navbar { background: rgba(251,248,244,0.92); border-color: #DDD6CA; }
+    .opt-b .mock-nav-links a { color: #3D3428; }
+    .opt-b .mock-nav-links a:hover { color: #ff7302; }
+    .opt-b .mock-toggle { background: #EDE6DA; color: #3D3428; }
+    .opt-b .mock-section { background: #F5F0E8; }
+    .opt-b .mock-section h2 { color: #ff7302; }
+    .opt-b .mock-section h3 { color: #2C2418; }
+    .opt-b .mock-section h3 .accent { color: #ff7302; }
+    .opt-b .mock-section p { color: #7A6E5E; }
+    .opt-b .mock-card { background: #FFFFFF; border-color: #DDD6CA; }
+    .opt-b .mock-card h4 { color: #2C2418; }
+    .opt-b .mock-card p { color: #7A6E5E; }
+    .opt-b .mock-footer { background: linear-gradient(to bottom, #1A1510, #2D1A0A); color: #fff; }
+    .opt-b .mock-footer p { color: rgba(255,255,255,0.6); }
+
+    /* ====== OPTION C: Cool Gray ====== */
+    .opt-c { background: #F8F9FB; color: #171B22; }
+    .opt-c .mock-navbar { background: rgba(248,249,251,0.92); border-color: #D8DCE2; }
+    .opt-c .mock-nav-links a { color: #2D333B; }
+    .opt-c .mock-nav-links a:hover { color: #ff7302; }
+    .opt-c .mock-toggle { background: #E8ECF0; color: #2D333B; }
+    .opt-c .mock-section { background: #F0F2F5; }
+    .opt-c .mock-section h2 { color: #ff7302; }
+    .opt-c .mock-section h3 { color: #171B22; }
+    .opt-c .mock-section h3 .accent { color: #ff7302; }
+    .opt-c .mock-section p { color: #656D78; }
+    .opt-c .mock-card { background: #FFFFFF; border-color: #D8DCE2; }
+    .opt-c .mock-card h4 { color: #171B22; }
+    .opt-c .mock-card p { color: #656D78; }
+    .opt-c .mock-footer { background: linear-gradient(to bottom, #111318, #2D1A0A); color: #fff; }
+    .opt-c .mock-footer p { color: rgba(255,255,255,0.6); }
+
+    .divider { height: 2px; background: #ff7302; margin: 0; }
+  </style>
+</head>
+<body>
+
+  <nav class="quick-nav">
+    <a href="#opt-a" title="Clean White">A</a>
+    <a href="#opt-b" title="Warm Cream">B</a>
+    <a href="#opt-c" title="Cool Gray">C</a>
+  </nav>
+
+  <header class="page-header">
+    <h1>AeroMat — Light Mode Palety Kolorow</h1>
+    <p>3 opcje light mode. Kazda z akcentem pomaranczowym #ff7302 + bialym. Sekcje kinowe (intro, outro, karty, panorama) zostaja ZAWSZE ciemne.</p>
+  </header>
+
+  <!-- ====== OPTION A ====== -->
+  <div id="opt-a" class="opt-a">
+    <div class="palette-section">
+      <div class="palette-label">Opcja A</div>
+      <div class="palette-name">Clean White <span class="palette-tag">galeria</span></div>
+      <div class="palette-desc">Biale tlo galerii. Maksymalna przestrzen dla sztuki. Ostre, kontrastowe, nowoczesne.</div>
+
+      <div class="color-swatches">
+        <div class="swatch" style="background:#FFFFFF;border:1px solid #ddd"><span style="color:#999">#FFF</span></div>
+        <div class="swatch" style="background:#FAFAFA"><span style="color:#999">#FAFAFA</span></div>
+        <div class="swatch" style="background:#F5F5F5"><span style="color:#999">#F5F5F5</span></div>
+        <div class="swatch" style="background:#1A1A1A"><span style="color:#fff">#1A1A1A</span></div>
+        <div class="swatch" style="background:#333333"><span style="color:#fff">#333</span></div>
+        <div class="swatch" style="background:#6B6B6B"><span style="color:#fff">#6B6B6B</span></div>
+        <div class="swatch" style="background:#ff7302"><span style="color:#fff">#ff7302</span></div>
+        <div class="swatch" style="background:#E5E5E5"><span style="color:#666">#E5E5E5</span></div>
+      </div>
+
+      <div class="mock-navbar">
+        <strong style="font-family:'Bebas Neue';font-size:1.2rem;letter-spacing:0.05em">AEROMAT</strong>
+        <div class="mock-nav-links">
+          <a href="#">Portfolio</a><a href="#">Filmy</a><a href="#">O mnie</a><a href="#">Kontakt</a>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-toggle">&#9790;</div>
+        </div>
+      </div>
+
+      <div class="dark-intro">
+        <h2>Maluję ściany, które opowiadają historie.</h2>
+        <p>&#8593; Sekcje kinowe zostaja ciemne w kazdej opcji</p>
+      </div>
+
+      <div class="mock-section">
+        <h2>Kim jestem?</h2>
+        <h3>Nazywam się Mateusz, malarstwo to moja pasja <span class="accent">i sposób na życie.</span></h3>
+        <p>Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich klientów miałem okazję sprawdzić się w różnych technikach i kombinacjach.</p>
+      </div>
+
+      <div class="mock-card">
+        <h4>W AKCJI</h4>
+        <p>Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.</p>
+      </div>
+      <div class="mock-card">
+        <h4>Zaufaly Mi Silne Marki</h4>
+        <p>Logo klientow na bialym tle — kontrastowe i czytelne.</p>
+      </div>
+
+      <div class="mock-footer">
+        <h5>Sledz Nas!</h5>
+        <p>&copy; 2026 AeroMat. Footer zostaje ciemny.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== OPTION B ====== -->
+  <div id="opt-b" class="opt-b">
+    <div class="palette-section">
+      <div class="palette-label">Opcja B — REKOMENDOWANA</div>
+      <div class="palette-name">Warm Cream <span class="palette-tag">artystyczna</span></div>
+      <div class="palette-desc">Ciepla kremowa baza jak plotno malarskie. Naturalne polaczenie z pomaranczowym akcentem. Przytulna, artystyczna.</div>
+
+      <div class="color-swatches">
+        <div class="swatch" style="background:#FBF8F4;border:1px solid #ddd"><span style="color:#999">#FBF8F4</span></div>
+        <div class="swatch" style="background:#F5F0E8"><span style="color:#999">#F5F0E8</span></div>
+        <div class="swatch" style="background:#EDE6DA"><span style="color:#999">#EDE6DA</span></div>
+        <div class="swatch" style="background:#2C2418"><span style="color:#fff">#2C2418</span></div>
+        <div class="swatch" style="background:#3D3428"><span style="color:#fff">#3D3428</span></div>
+        <div class="swatch" style="background:#7A6E5E"><span style="color:#fff">#7A6E5E</span></div>
+        <div class="swatch" style="background:#ff7302"><span style="color:#fff">#ff7302</span></div>
+        <div class="swatch" style="background:#DDD6CA"><span style="color:#666">#DDD6CA</span></div>
+      </div>
+
+      <div class="mock-navbar">
+        <strong style="font-family:'Bebas Neue';font-size:1.2rem;letter-spacing:0.05em">AEROMAT</strong>
+        <div class="mock-nav-links">
+          <a href="#">Portfolio</a><a href="#">Filmy</a><a href="#">O mnie</a><a href="#">Kontakt</a>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-toggle">&#9790;</div>
+        </div>
+      </div>
+
+      <div class="dark-intro">
+        <h2>Maluję ściany, które opowiadają historie.</h2>
+        <p>&#8593; Sekcje kinowe zostaja ciemne w kazdej opcji</p>
+      </div>
+
+      <div class="mock-section">
+        <h2>Kim jestem?</h2>
+        <h3>Nazywam się Mateusz, malarstwo to moja pasja <span class="accent">i sposób na życie.</span></h3>
+        <p>Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich klientów miałem okazję sprawdzić się w różnych technikach i kombinacjach.</p>
+      </div>
+
+      <div class="mock-card">
+        <h4>W AKCJI</h4>
+        <p>Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.</p>
+      </div>
+      <div class="mock-card">
+        <h4>Zaufaly Mi Silne Marki</h4>
+        <p>Logo klientow na kremowym tle — cieplo, jak w galerii sztuki.</p>
+      </div>
+
+      <div class="mock-footer">
+        <h5>Sledz Nas!</h5>
+        <p>&copy; 2026 AeroMat. Footer zostaje ciemny.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== OPTION C ====== -->
+  <div id="opt-c" class="opt-c">
+    <div class="palette-section">
+      <div class="palette-label">Opcja C</div>
+      <div class="palette-name">Cool Gray <span class="palette-tag">profesjonalna</span></div>
+      <div class="palette-desc">Chlodne szarosci — kontrast z cieplym pomaranczem sprawia ze akcent wyskakuje mocniej. Nowoczesna, techniczna.</div>
+
+      <div class="color-swatches">
+        <div class="swatch" style="background:#F8F9FB;border:1px solid #ddd"><span style="color:#999">#F8F9FB</span></div>
+        <div class="swatch" style="background:#F0F2F5"><span style="color:#999">#F0F2F5</span></div>
+        <div class="swatch" style="background:#E8ECF0"><span style="color:#999">#E8ECF0</span></div>
+        <div class="swatch" style="background:#171B22"><span style="color:#fff">#171B22</span></div>
+        <div class="swatch" style="background:#2D333B"><span style="color:#fff">#2D333B</span></div>
+        <div class="swatch" style="background:#656D78"><span style="color:#fff">#656D78</span></div>
+        <div class="swatch" style="background:#ff7302"><span style="color:#fff">#ff7302</span></div>
+        <div class="swatch" style="background:#D8DCE2"><span style="color:#666">#D8DCE2</span></div>
+      </div>
+
+      <div class="mock-navbar">
+        <strong style="font-family:'Bebas Neue';font-size:1.2rem;letter-spacing:0.05em">AEROMAT</strong>
+        <div class="mock-nav-links">
+          <a href="#">Portfolio</a><a href="#">Filmy</a><a href="#">O mnie</a><a href="#">Kontakt</a>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-toggle">&#9790;</div>
+        </div>
+      </div>
+
+      <div class="dark-intro">
+        <h2>Maluję ściany, które opowiadają historie.</h2>
+        <p>&#8593; Sekcje kinowe zostaja ciemne w kazdej opcji</p>
+      </div>
+
+      <div class="mock-section">
+        <h2>Kim jestem?</h2>
+        <h3>Nazywam się Mateusz, malarstwo to moja pasja <span class="accent">i sposób na życie.</span></h3>
+        <p>Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich klientów miałem okazję sprawdzić się w różnych technikach i kombinacjach.</p>
+      </div>
+
+      <div class="mock-card">
+        <h4>W AKCJI</h4>
+        <p>Podejrzyj zakulisowe nagrania z moich projektów, które pokazują proces twórczy i efekty końcowe.</p>
+      </div>
+      <div class="mock-card">
+        <h4>Zaufaly Mi Silne Marki</h4>
+        <p>Logo klientow na szarym tle — profesjonalne, techniczne.</p>
+      </div>
+
+      <div class="mock-footer">
+        <h5>Sledz Nas!</h5>
+        <p>&copy; 2026 AeroMat. Footer zostaje ciemny.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.quick-nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

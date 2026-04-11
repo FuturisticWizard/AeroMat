@@ -27,7 +27,7 @@ const TapeRightSection = () => {
                 {logos.map((logo, index) => (
                   <div
                     key={index}
-                    className="inline-flex items-center  hover:scale-125"
+                    className="inline-flex items-center hover:scale-[1.2] transition-transform duration-300 ease-out"
                   >
                     <Image
                       src={logo}
