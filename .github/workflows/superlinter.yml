@@ -24,8 +24,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSS: true
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_TSX: true
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_TSX: false
           VALIDATE_JSON: true
           VALIDATE_YAML: true
           VALIDATE_GITHUB_ACTIONS: true

@@ -7,9 +7,11 @@
   .bg-background {
     background-color: hsl(var(--background));
   }
+
   .text-foreground {
     color: hsl(var(--foreground));
   }
+
   .fancy-text {
     -webkit-text-stroke: 1px rgb(255 255 255);
     font-family: var(--font-anton), Anton, sans-serif;
@@ -19,9 +21,11 @@
   .blur-sm {
     filter: blur(4px);
   }
+
   .blur-0 {
     filter: blur(0);
   }
+
   .backdrop-blur-lg {
     backdrop-filter: blur(16px);
   }
@@ -114,7 +118,6 @@
       hsl(0deg 0% 0% / 100%) 10%,
       hsl(0deg 0% 100% / 100%) 100%
     );
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#FFFFFF", GradientType=1 );
   }
 
 @layer components {
@@ -199,18 +202,18 @@
     pointer-events: none;
     background: radial-gradient(
         circle at 30% 20%,
-        rgba(255, 190, 120, 0.2),
+        rgb(255 190 120 / 20%),
         transparent 45%
       ),
       radial-gradient(
         circle at 70% 80%,
-        rgba(80, 180, 255, 0.25),
+        rgb(80 180 255 / 25%),
         transparent 55%
       ),
       linear-gradient(
         180deg,
-        rgba(5, 8, 18, 0.55),
-        rgba(1, 4, 10, 0.85)
+        rgb(5 8 18 / 55%),
+        rgb(1 4 10 / 85%)
       );
     mix-blend-mode: multiply;
   }
@@ -228,11 +231,13 @@
     text-transform: uppercase;
     opacity: 1;
   }
+
   .panorama-caption:nth-child(1) {
     left: 8%;
     top: 20%;
     text-align: left;
   }
+
   .panorama-caption:nth-child(2) {
     right: 10%;
     left: auto;
@@ -240,10 +245,12 @@
     transform: translateY(-50%);
     text-align: right;
   }
+
   .panorama-caption:nth-child(2) p {
     padding-right: 0;
     padding-left: 40%;
   }
+
   .panorama-caption:nth-child(3) {
     left: 6%;
     bottom: 15%;
@@ -253,13 +260,14 @@
   .panorama-caption h2 {
     font-size: clamp(2.5rem, 5vw, 5rem);
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: #fff;
     font-family: var(--font-bebas);
     font-weight: 400;
     letter-spacing: 0.1rem;
     line-height: 1;
     white-space: nowrap;
   }
+
   .panorama-caption .word {
     display: inline-block;
     white-space: nowrap;
@@ -270,6 +278,7 @@
     display: inline-block;
     overflow: hidden;
   }
+
   .panorama-caption .char span {
     display: inline-block;
   }
@@ -280,7 +289,7 @@
     font-size: clamp(1rem, 1.8vw, 1.8rem);
     letter-spacing: 0.05rem;
     line-height: 1.4;
-    color: rgba(238, 244, 255, 0.92);
+    color: rgb(238 244 255 / 92%);
     padding-right: 40%;
   }
 }
@@ -288,6 +297,7 @@
 @layer base {
   body {
     @apply bg-background text-foreground;
+
     font-family: var(--font-inter);
   }
 
@@ -468,6 +478,7 @@
   left: 0;
   transform: translateY(-50%);
   overflow: hidden;
+
   /* Behind the image layer so it doesn't sit on top of the photo while it scales in */
   z-index: -1;
   pointer-events: none;
@@ -481,6 +492,7 @@
 .card-marquee .marquee h1 {
   white-space: nowrap;
   margin-right: 2rem;
+
   /* Reasonable default for mobile + desktop; can be overridden later if needed */
   font-size: clamp(2.25rem, 10vw, 6rem);
   font-weight: 400;
@@ -498,12 +510,12 @@
 .outro-word {
   color: #fff;
   text-shadow:
-    0 0 7px rgba(255, 255, 255, 0.9),
-    0 0 12px rgba(255, 255, 255, 0.6),
-    0 0 22px rgba(34, 141, 255, 0.7),
-    0 0 45px rgba(34, 141, 255, 0.5),
-    0 0 75px rgba(34, 141, 255, 0.3),
-    0 0 110px rgba(34, 141, 255, 0.15);
+    0 0 7px rgb(255 255 255 / 90%),
+    0 0 12px rgb(255 255 255 / 60%),
+    0 0 22px rgb(34 141 255 / 70%),
+    0 0 45px rgb(34 141 255 / 50%),
+    0 0 75px rgb(34 141 255 / 30%),
+    0 0 110px rgb(34 141 255 / 15%);
 }
 
 /* Cards base layout (must NOT be desktop-only, otherwise mobile ends up with dark text on dark bg) */
@@ -514,7 +526,7 @@
 .panorama-section {
   position: relative;
   width: 100vw;
-  background-color: #000000;
+  background-color: #000;
   color: #fff;
 }
 
@@ -551,9 +563,12 @@
   position: relative;
   width: 100vw;
   height: 100svh;
+
   --card-radius: 75px;
+
   /* Create a stacking context so negative z-index children (like marquee) stay within the card */
   isolation: isolate;
+
   /* padding: 1.5em; */
 }
 
@@ -576,17 +591,20 @@
 .card-dim {
   position: absolute;
   inset: -1px;
+
   /* Between image (0) and content (10) */
   z-index: 1;
   pointer-events: none;
   opacity: 0;
+
   /* border-radius: var(--card-radius); */
+
   /* Slight vignette/gradient for better text readability */
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.35) 55%,
-    rgba(0, 0, 0, 0.55) 100%
+    rgb(0 0 0 / 15%) 0%,
+    rgb(0 0 0 / 35%) 55%,
+    rgb(0 0 0 / 55%) 100%
   );
 }
 
@@ -599,12 +617,13 @@
   align-items: center;
   gap: 0.4rem;
   padding: 3rem;
+
   /* Always above dim layer */
   z-index: 10;
 }
 
 .card-content .card-title h1 {
-  color: #ffffff;
+  color: #fff;
   font-family: var(--font-bebas);
 }
 
@@ -623,7 +642,7 @@
 /* IMPORTANT: this needs to be a top-level media query.
    The previous CSS had `@media (max-width: 768px)` nested inside `@media (width >= 769px)`,
    which resolves to an impossible condition and never matches on mobile. */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   /* Intro mobile typography + layout */
   .intro {
     min-height: 100svh;
@@ -702,6 +721,7 @@
   .card {
     height: 100svh;
     min-height: 480px;
+
     --card-radius: 32px;
   }
 
@@ -739,12 +759,9 @@
   }
 
   .panorama-caption:nth-child(3) {
-    left: 5%;
-    right: auto;
+    inset: auto auto 12% 5%;
     text-align: left;
     transform: none;
-    bottom: 12%;
-    top: auto;
   }
 
   .panorama-caption h2 {
@@ -847,6 +864,7 @@
 
 .image-container img {
   object-fit: cover; /* Use contain to maintain aspect ratio */
+
   /* Use cover to fill the container, cropping if necessary */
   width: 100%;
   height: 100%;
@@ -1037,6 +1055,7 @@
       "photo4 photo8 photo8 photo9"
       "photo11 photo11 photo11 photo9";
   }
+
   .image-container {
     height: 40vh; /* Adjust height for smaller screens */
   }
@@ -1048,6 +1067,7 @@
     object-fit: cover;
     will-change: transform;
   }
+
   h1 {
   font-size: clamp(5rem, 4vw, 7rem);
   font-weight: 500;
@@ -1069,7 +1089,7 @@
   .panorama-section {
     position: relative;
     width: 100vw;
-    background-color: #000000;
+    background-color: #000;
     color: #fff;
   }
 
@@ -1101,6 +1121,7 @@
     flex-direction: column;
     gap: 10vh;
   }
+
   .card-marquee {
     width: 100%;
     position: absolute;
@@ -1120,11 +1141,13 @@
     font-weight: 600;
     margin-right: 5rem;
   }
+
   .card {
     position: relative;
     width: 100vw;
     height: 100svh;
   }
+
   .card-wrapper {
     position: relative;
     width: 100%;
@@ -1320,6 +1343,7 @@
     transform: scale(0.3);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
