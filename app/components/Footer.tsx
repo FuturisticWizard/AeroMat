@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { Mail, Phone } from "lucide-react";
 
 const socials = [
   {
@@ -38,15 +39,25 @@ const Footer = () => {
               />
             </div>
           </div>
-          {/* <div>
-          <h3 className="font-bold text-lg mb-4">Dane Kontaktowe</h3>
-          <address className="not-italic text-muted-foreground">
-            <p>123 Photography Lane</p>
-            <p>New York, NY 10001</p>
-            <p className="mt-2">info@companyphotos.com</p>
-            <p>(555) 123-4567</p>
-          </address>
-        </div> */}
+          <div className="flex flex-col w-full justify-center items-center text-center">
+            <h3 className="font-bold text-lg mb-4 text-white">Kontakt</h3>
+            <address className="not-italic text-white/80 space-y-2">
+              <a
+                href="mailto:kontakt@aeromat.pl"
+                className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
+              >
+                <Mail className="w-4 h-4 shrink-0" />
+                <span>kontakt@aeromat.pl</span>
+              </a>
+              <a
+                href="tel:+48500123456"
+                className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
+              >
+                <Phone className="w-4 h-4 shrink-0" />
+                <span>+48 500 123 456</span>
+              </a>
+            </address>
+          </div>
           <div className="flex flex-col w-full justify-center items-center text-center ">
             <h3 className="font-bold text-lg mb-4 text-white">Śledź Nas!</h3>
             <div className="flex space-x-4">
@@ -66,8 +77,8 @@ const Footer = () => {
         </div>
 
         <div className=" mt-8 pt-8 text-center text-white">
-          <p>© {new Date().getFullYear()} Made by . All rights reserved.</p>
-          <p>
+          <p>© {new Date().getFullYear()} AeroMat. All rights reserved.</p>
+          <p className="text-sm">
             Icons by{" "}
             <Link href="https://www.icons8.com" className="underline">
               icons8

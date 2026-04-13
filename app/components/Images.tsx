@@ -12,7 +12,17 @@ interface Slide {
   height: number;
   gridArea: string;
   objectPosition?: string;
+  colspan?: number;
+  smcolspan?: number;
 }
+
+// Compute responsive sizes from colspan (out of 10) per-slide so Next.js
+// picks the right srcset variant and panoramas don't get served undersized.
+const computeSizes = (slide: Slide): string => {
+  const desktopVw = slide.colspan ? Math.min(100, Math.round((slide.colspan / 10) * 100)) : 100;
+  const mobileVw = slide.smcolspan ? Math.min(100, Math.round((slide.smcolspan / 10) * 100)) : 100;
+  return `(max-width: 768px) ${mobileVw}vw, ${desktopVw}vw`;
+};
 
 interface ImageSlideProps {
   data: Slide[];
@@ -24,13 +34,15 @@ interface ImageSlideProps {
   gridVariant?: string;
 }
 
-// Konfiguracja animacji - slide in from sides
+// Konfiguracja animacji — snappy slide + scale-in
 const ANIMATION_CONFIG = {
-  duration: 1.2,        // Dłuższa animacja dla dramatycznego efektu
-  stagger: 0.15,        // Większy odstęp między elementami
-  xOffset: 200,         // Przesunięcie z boku (px) - nie za dużo żeby było płynne
-  yOffset: 120,         // Fallback dla domyślnego trybu
-  ease: "power3.out",   // Naturalny ease - szybki start, łagodne zakończenie
+  duration: 0.8,
+  stagger: 0.06,
+  xOffset: 80,
+  yOffset: 40,
+  startScale: 0.94,
+  // cubic-bezier(0.22, 1, 0.36, 1) — modern snappy ease
+  ease: "expo.out",
 };
 
 const containerVariants = {
@@ -83,13 +95,15 @@ const Images: FC<ImageSlideProps> = (props) => {
     const containerRect = container.getBoundingClientRect();
     const containerCenterX = containerRect.width / 2;
 
-    // Hide items with offset
+    // Hide items with side offset + scale-down (B. scale-in entry)
     items.forEach((item) => {
       const rect = item.getBoundingClientRect();
       const isLeft = rect.left + rect.width / 2 - containerRect.left < containerCenterX;
       gsap.set(item, {
         opacity: 0,
         x: isLeft ? -ANIMATION_CONFIG.xOffset : ANIMATION_CONFIG.xOffset,
+        scale: ANIMATION_CONFIG.startScale,
+        transformOrigin: "center center",
       });
     });
 
@@ -104,9 +118,11 @@ const Images: FC<ImageSlideProps> = (props) => {
             gsap.to(items, {
               opacity: 1,
               x: 0,
-              stagger: 0.20,
-              duration: 1.6,
-              ease: "power2.out",
+              scale: 1,
+              delay: 0.25,
+              stagger: ANIMATION_CONFIG.stagger,
+              duration: ANIMATION_CONFIG.duration,
+              ease: ANIMATION_CONFIG.ease,
               overwrite: true,
             });
             observer.disconnect();
@@ -154,7 +170,7 @@ const Images: FC<ImageSlideProps> = (props) => {
                 style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes={computeSizes(slide)}
                 quality={85}
                 priority={false}
                 loading="lazy"

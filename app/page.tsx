@@ -7,11 +7,11 @@ import WhoAmI2 from "./components/WhoAmI2";
 import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
 import { portfolioPhotos, komunikacjaWizualnaPhotos, wnetrzaPhotos, projektySpecjalnePhotos } from "@/app/lib/photos";
-import { LazyYouTubeGridWithIntersection, LazyPanoramaScrollWithIntersection, LazyTestimonialsWithIntersection } from "./components/LazyComponents";
+import { LazyTestimonialsWithIntersection } from "./components/LazyComponents";
 import Intro from "./components/Intro";
 import Outro from "./components/Outro";
-import AboutMe from "./components/AboutMe";
 import Cards from "./components/Cards";
+import Link from "next/link";
 import PanoramaScroll from "./components/PanoramaScroll";
 import HomeAnimations from "./components/HomeAnimations";
 import WhyChooseMe from "./components/WhyChooseMe";
@@ -19,9 +19,9 @@ import WhyChooseMe from "./components/WhyChooseMe";
 export default function Home() {
   return (
     <HomeAnimations>
-      <div className="flex flex-col min-h-screen mt-20 antialiased">
+      <div className="flex flex-col min-h-screen mt-16 sm:mt-18 md:mt-20 antialiased">
         <main className="flex-1 items-center sm:items-start min-h-screen overflow-x-hidden">
-          <GlitchedVideoHero highlightStyle="stroke" />
+          <GlitchedVideoHero highlightStyle="combined" />
           <Intro />
 
           {/* Card 0: Murale Wielkoformatowe */}
@@ -63,12 +63,29 @@ export default function Home() {
             <PanoramaScroll />
           </div>
           <Outro />
-          <AboutMe />
+
           <WhyChooseMe />
 
-          <LazyYouTubeGridWithIntersection />
+          <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 text-center">
+            <Link
+              href="/o-mnie"
+              className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"
+            >
+              Poznaj mnie bliżej <span aria-hidden="true">→</span>
+            </Link>
+          </section>
+
           <TrustedBy />
           <LazyTestimonialsWithIntersection />
+
+          <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 text-center">
+            <Link
+              href="/filmy"
+              className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"
+            >
+              Zobacz filmy z realizacji <span aria-hidden="true">→</span>
+            </Link>
+          </section>
 
           <MuralsMap />
         </main>

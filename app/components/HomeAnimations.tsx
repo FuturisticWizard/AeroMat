@@ -13,10 +13,8 @@ import {
 export default function HomeAnimations({ children }: { children: ReactNode }) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, SplitText);
-    console.log("Plugins registered");
     const mm = gsap.matchMedia();
     const isMobile = window.innerWidth < 768;
-    console.log("[Viewport] isMobile:", isMobile);
 
     let lenis: Lenis | null = null;
     let lenisRaf: ((time: number) => void) | null = null;
@@ -29,13 +27,11 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         currentScroll = scroll;
         ScrollTrigger.update();
       });
-      console.log("[Lenis] init, start scroll:", currentScroll);
 
       ScrollTrigger.scrollerProxy(scroller, {
         scrollTop(value) {
           if (arguments.length) {
             lenis!.scrollTo(value as number, { immediate: true, duration: 0 });
-            console.log("[scrollerProxy] set scrollTop ->", value);
           }
           return currentScroll;
         },
@@ -49,11 +45,9 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         },
         pinType: scroller.style.transform ? "transform" : "fixed",
       });
-      console.log("[ScrollTrigger] scrollerProxy set on <html>");
 
       ScrollTrigger.defaults({ scroller });
       ScrollTrigger.refresh();
-      console.log("[ScrollTrigger] defaults set + refresh");
 
       lenisRaf = (time: number) => lenis!.raf(time * 1000);
       gsap.ticker.add(lenisRaf);
@@ -61,13 +55,10 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     } else {
       ScrollTrigger.defaults({ scroller: window });
       ScrollTrigger.refresh();
-      console.log("[ScrollTrigger] mobile defaults set (no Lenis) + refresh");
     }
 
     const cards = gsap.utils.toArray<HTMLElement>(".card");
     const introCard = cards[0];
-    console.log("[Cards] found:", cards.length);
-    console.log("[Cards] isMobile:", isMobile);
 
     // Set z-index directly on .card elements so it works with position:fixed (GSAP pin).
     // Wrapper div z-index doesn't apply to pinned children.
@@ -91,16 +82,13 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     }
 
     const titles = gsap.utils.toArray<HTMLElement>(".card-title h1");
-    console.log("[Titles] found:", titles.length);
 
     titles.forEach((title, index) => {
-      console.log(`[Title ${index}] text:`, title.textContent);
       const split = new SplitText(title, {
         type: "chars",
         charsClass: "char",
         tag: "div",
       });
-      console.log(`[Title ${index}] split chars:`, split.chars.length);
       split.chars.forEach((char) => {
         char.innerHTML = `<span>${char.textContent}</span>`;
       });
@@ -212,7 +200,6 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
             pinSpacing: false,
             onToggle: (self) => {
               if (self.isActive) {
-                console.log("[Card pin][desktop] intro card active");
               }
             },
           });
@@ -327,7 +314,6 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
           onLeaveBack: hide,
           onToggle: (self) => {
             if (self.isActive) {
-              console.log("[Card pin][mobile] active card index", cardIndex);
             }
           },
         });
@@ -379,22 +365,19 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         return idx === mapping.nextCardIndex;
       }) : null;
 
-      // Previous card fades when portfolio enters
+      // Previous card fades when portfolio enters — scrub tween (smooth, batched)
       if (prevCard) {
         const prevCardWrapper = prevCard.querySelector(".card-wrapper");
         if (prevCardWrapper) {
-          ScrollTrigger.create({
-            trigger: portfolioEl,
-            start: "top bottom",
-            end: "top top",
-            onUpdate: (self) => {
-              const progress = self.progress;
-              const scaleVal = 1 - progress * (1 - scaleFactor);
-              const opacityVal = 1 - progress;
-              gsap.set(prevCardWrapper, {
-                scale: scaleVal,
-                opacity: opacityVal,
-              });
+          gsap.to(prevCardWrapper, {
+            scale: scaleFactor,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: portfolioEl,
+              start: "top bottom",
+              end: "top top",
+              scrub: 0.5,
             },
           });
         }
@@ -410,24 +393,19 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         pinSpacing: false,
       });
 
-      // Portfolio fades when next card (or panorama) enters
+      // Portfolio fades when next card (or panorama) enters — scrub tween
       const fadeTarget = nextCard || cards.find((c) => (c as HTMLElement).classList.contains("panorama-card")) as HTMLElement | undefined;
       if (fadeTarget && portfolioWrapper) {
-        ScrollTrigger.create({
-          trigger: fadeTarget,
-          start: "top bottom",
-          end: "top top",
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const scaleVal = 1 - progress * (1 - scaleFactor);
-            const opacityVal = 1 - progress;
-            const yVal = progress * yOffset;
-
-            gsap.set(portfolioWrapper, {
-              scale: scaleVal,
-              opacity: opacityVal,
-              y: yVal,
-            });
+        gsap.to(portfolioWrapper, {
+          scale: scaleFactor,
+          opacity: 0,
+          y: yOffset,
+          ease: "none",
+          scrollTrigger: {
+            trigger: fadeTarget,
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.5,
           },
         });
       }
@@ -631,7 +609,6 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
     // Refresh after load to recompute pin-spacer heights once images/fonts are ready
     const onLoadRefresh = () => {
-      console.log("[ScrollTrigger] window load -> refresh");
       ScrollTrigger.refresh();
       revealActiveTexts();
     };

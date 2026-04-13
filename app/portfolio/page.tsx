@@ -60,28 +60,31 @@ export default function PhotoPortfolio() {
             </TabsList>
           </div>
 
-          {categories.map((category) => (
-            <TabsContent key={category} value={category} className="mt-0">
-              <RowsPhotoAlbum
-                photos={allPhotos.filter(
-                  (photo) =>
-                    category === "Wszystkie" || photo.category === category,
-                )}
-                targetRowHeight={250}
-                onClick={({ index }) => setIndex(index)}
-              />
-              <Lightbox
-                slides={allPhotos.filter(
-                  (photo) =>
-                    category === "Wszystkie" || photo.category === category,
-                )}
-                open={index >= 0}
-                index={index}
-                close={() => setIndex(-1)}
-                plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-              />
-            </TabsContent>
-          ))}
+          {categories.map((category) => {
+            const filtered = allPhotos
+              .filter(
+                (photo) =>
+                  category === "Wszystkie" || photo.category === category,
+              )
+              .map(({ title, ...rest }) => rest);
+
+            return (
+              <TabsContent key={category} value={category} className="mt-0">
+                <RowsPhotoAlbum
+                  photos={filtered}
+                  targetRowHeight={250}
+                  onClick={({ index }) => setIndex(index)}
+                />
+                <Lightbox
+                  slides={filtered}
+                  open={index >= 0}
+                  index={index}
+                  close={() => setIndex(-1)}
+                  plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+                />
+              </TabsContent>
+            );
+          })}
         </Tabs>
 
         <section className="bg-neutral-900 border border-neutral-700 rounded-xl p-8 md:p-12 overflow-hidden">

@@ -17,7 +17,6 @@ export const allPhotos = [
   { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
   { index: 16, src: "/Portfolio/murale/2Az.webp", title: "Mural artystyczny 2", category: "Murale", width: 2661, height: 1921 },
   { index: 17, src: "/Portfolio/murale/3cropped.webp", title: "Mural przycięty", category: "Murale", width: 2400, height: 888 },
-  { index: 18, src: "/Portfolio/murale/7C.webp", title: "Mural klasyczny", category: "Murale", width: 4000, height: 2752 },
 
   // === Wnętrza ===
   { index: 19, src: "/Portfolio/wnetrza/w1a.webp", title: "Wnętrze panorama", category: "Wnętrza", width: 4000, height: 1947 },

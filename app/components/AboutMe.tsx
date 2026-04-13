@@ -4,7 +4,7 @@ const AboutMe = () => {
   return (
     <section
       id="o-mnie"
-      className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-44 md:pt-12 md:pb-52 scroll-mt-48"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 md:py-16 scroll-mt-48"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
         {/* Image */}

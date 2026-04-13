@@ -23,8 +23,8 @@ interface NavbarProps {
 
 const defaultItems: NavItem[] = [
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Filmy", href: "/#w-akcji" },
-  { label: "O mnie", href: "/#o-mnie" },
+  { label: "Filmy", href: "/filmy" },
+  { label: "O mnie", href: "/o-mnie" },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
@@ -50,17 +50,26 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Scroll target to top of viewport with navbar offset (so heading isn't hidden)
+  const scrollToId = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const top = window.scrollY + rect.top - 100;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, []);
+
   // After navigating to /, scroll to the hash if present
   useEffect(() => {
     if (pathname === "/" && window.location.hash) {
       const id = window.location.hash.slice(1);
       // Small delay to let the page render/hydrate
       const timer = setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        scrollToId(id);
       }, 300);
       return () => clearTimeout(timer);
     }
-  }, [pathname]);
+  }, [pathname, scrollToId]);
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -73,14 +82,14 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
       if (pathname === path || (path === "/" && pathname === "/")) {
         // Same page — just scroll
         e.preventDefault();
-        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+        scrollToId(hash);
       } else {
         // Different page — navigate, hash will be picked up by the useEffect above
         e.preventDefault();
         router.push(href);
       }
     },
-    [pathname, router]
+    [pathname, router, scrollToId]
   );
 
   return (
@@ -99,9 +108,9 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
           <div className="flex-shrink-0 z-[120]">
             <Link href="/">
               <Image
-                src="/images/logo-horizontal-black2.webp"
+                src="/logo/logo-white.png"
                 width={175}
-                height={0}
+                height={54}
                 style={{ height: "auto" }}
                 alt="Logo"
                 className="w-[130px] sm:w-[150px] md:w-[175px]"

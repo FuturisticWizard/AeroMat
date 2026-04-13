@@ -20,11 +20,11 @@ const nextConfig = {
         : false,
   },
 
-  // Image optimization — sharp on VPS, responsive srcsets, AVIF/WebP
+  // Image optimization disabled — large source images (up to 9151px wide) cause
+  // sharp timeouts in production build. Serving raw .webp files which are already
+  // optimized at source. Re-enable after pre-resizing oversized photos.
   images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "img.youtube.com" },
     ],
@@ -48,7 +48,6 @@ const nextConfig = {
   // Transpile packages dla lepszej kompatybilności
   transpilePackages: [
     "three",
-    "webgi",
     "gsap",
     "@react-three/fiber",
     "@react-three/drei",
@@ -101,7 +100,7 @@ const nextConfig = {
             reuseExistingChunk: true,
           },
           three: {
-            test: /[\\/]node_modules[\\/](three|@react-three[\\/]|webgi)/,
+            test: /[\\/]node_modules[\\/](three|@react-three[\\/])/,
             chunks: "all",
             priority: 10,
             name: "three",

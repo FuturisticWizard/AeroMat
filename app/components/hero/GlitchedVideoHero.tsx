@@ -23,7 +23,7 @@ function getBreakpoint(): "desktop" | "tablet" | "mobile" | "small" {
 // ---- Responsive multipliers ----
 function getVerticalHeightMultiplier(): number {
   switch (getBreakpoint()) {
-    case "desktop": return 0.87;
+    case "desktop": return 0.78;
     case "tablet":  return 0.85;
     case "mobile":  return 0.65;
     default:        return 0.55;
@@ -109,13 +109,24 @@ function VerticalWord({
 }
 
 // ---- Highlight style ----
-type HighlightStyle = "scale" | "dim" | "whiteglow" | "combo" | "full" | "stroke";
+type HighlightStyle = "scale" | "dim" | "whiteglow" | "combo" | "full" | "stroke" | "combined";
 
 // ---- Main Component ----
 const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: HighlightStyle }) => {
   const { muted } = useAudio();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [videoSources, setVideoSources] = useState<{ webm: string; mp4: string } | null>(null);
+
+  // Pick sources based on viewport (runs client-side only, no hydration mismatch)
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+    setVideoSources(
+      isMobile
+        ? { webm: "/movies/hero_mini.webm", mp4: "/movies/hero_mini.mp4" }
+        : { webm: "/movies/hero_medium.webm", mp4: "/movies/hero_compressed.mp4" }
+    );
+  }, []);
   const vColRef = useRef<HTMLDivElement>(null);
   const koRef = useRef<HTMLDivElement>(null);
   const botRef = useRef<HTMLDivElement>(null);
@@ -262,12 +273,33 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
 
   return (
     <div className={styles.hero} data-style={highlightStyle}>
-      <video ref={videoRef} autoPlay muted loop playsInline preload="auto"
-        poster="/images/hero-poster.webp"
-        className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
-        onCanPlay={() => setVideoReady(true)}>
-        <source src="/movies/hero_compressed.mp4" type="video/mp4" />
-      </video>
+      {/* SVG filter for V3 displacement warp — used by combined variant */}
+      <svg width="0" height="0" style={{ position: "absolute", pointerEvents: "none" }} aria-hidden>
+        <defs>
+          <filter id="glitch-warp">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015 0.4" numOctaves="2" seed="5">
+              <animate attributeName="baseFrequency" dur="10s" values="0.015 0.4;0.03 0.7;0.015 0.4" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="5" />
+          </filter>
+        </defs>
+      </svg>
+      {videoSources && (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/images/hero-poster.webp"
+          className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
+          onLoadedData={() => setVideoReady(true)}
+        >
+          <source src={videoSources.webm} type="video/webm" />
+          <source src={videoSources.mp4} type="video/mp4" />
+        </video>
+      )}
 
       <div className={styles.videoGrad} />
       <div className={styles.bottomFade} />

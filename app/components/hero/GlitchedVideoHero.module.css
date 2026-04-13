@@ -95,17 +95,15 @@
   }
 }
 
-/* Tablet: left 50% with soft fade */
+/* Tablet: bottom 80% with very long fade — even higher + much more stretched gradient */
 @media (width <= 1024px) and (width >= 769px) {
   .koHalf {
-    width: 50%;
-    -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
-    mask-image: linear-gradient(to right, black 70%, transparent 100%);
-  }
-
-  .vWord {
-    align-items: flex-start;
-    justify-content: flex-start;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    height: 80%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
   }
 }
 
@@ -115,9 +113,9 @@
     width: 100%;
     top: auto;
     bottom: 0;
-    height: 65%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 10%);
+    height: 48%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
   }
 }
 
@@ -157,9 +155,7 @@
 @media (width <= 768px) {
   .vCol {
     top: auto;
-
-    /* Scale bottom offset: 320px=80px, 480px=55px, 768px=45px */
-    bottom: clamp(70px, calc(125px - (100vw - 320px) * 0.12), 125px);
+    bottom: clamp(50px, 7.5vh, 75px);
     height: auto;
   }
 
@@ -171,6 +167,21 @@
 
   .vWord .char {
     letter-spacing: 0.02em;
+  }
+}
+
+/* ≥769px: anchor vCol from bottom — same "start from bottom edge" behavior as mobile */
+@media (width >= 769px) {
+  .vCol {
+    top: auto;
+    bottom: clamp(90px, 10vh, 160px);
+    height: auto;
+  }
+
+  .vWord {
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }
 
@@ -324,6 +335,87 @@
   filter: brightness(1.4);
   text-shadow: 8px 0 4px #0af, -8px 0 4px #ffe600, 0 0 30px rgb(0 170 255 / 100%), 0 0 30px rgb(255 230 0 / 100%), 0 0 70px rgb(0 170 255 / 70%), 0 0 70px rgb(255 230 0 / 70%);
   animation: glitchEdge 3s linear infinite;
+}
+
+/* H7: Combined — RGB Slice (V2) + SVG Displacement (V3) + Neon Flicker (V4) */
+:global([data-style="combined"]) .waveEl {
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+  filter: url(#glitch-warp);
+}
+
+:global([data-style="combined"]) .waveEl::before {
+  -webkit-text-stroke: 0;
+  color: #0af;
+  -webkit-text-fill-color: #0af;
+  mix-blend-mode: screen;
+}
+
+:global([data-style="combined"]) .waveEl::after {
+  -webkit-text-stroke: 0;
+  color: #f0a;
+  -webkit-text-fill-color: #f0a;
+  mix-blend-mode: screen;
+}
+
+:global([data-style="combined"]) .glitchNow {
+  opacity: 1 !important;
+  animation: neonPulse 4s infinite;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(255, 115, 2, 0.7),
+    0 0 35px rgba(255, 115, 2, 0.45),
+    0 0 60px rgba(255, 115, 2, 0.25);
+}
+
+:global([data-style="combined"]) .glitchNow::before {
+  opacity: 1 !important;
+  animation: rgbSliceCyan 2.4s infinite linear;
+  filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.7));
+}
+
+:global([data-style="combined"]) .glitchNow::after {
+  opacity: 1 !important;
+  animation: rgbSliceMagenta 2.4s infinite linear;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 170, 0.7));
+}
+
+/* V4 Neon flicker — irregular broken-neon pulse */
+@keyframes neonPulse {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.9),
+      0 0 18px rgba(255, 115, 2, 0.7),
+      0 0 35px rgba(255, 115, 2, 0.45),
+      0 0 60px rgba(255, 115, 2, 0.25);
+  }
+  20%, 24%, 55% {
+    opacity: 0.55;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* V2 RGB Slice — cyan layer with clip-path slicing */
+@keyframes rgbSliceCyan {
+  0%, 100% { transform: translate(-3px, 0); clip-path: inset(0 0 0 0); }
+  5% { transform: translate(-10px, 1px); clip-path: inset(20% 0 55% 0); }
+  7% { transform: translate(-3px, 0); clip-path: inset(0 0 0 0); }
+  42% { transform: translate(-8px, -1px); clip-path: inset(60% 0 10% 0); }
+  44% { transform: translate(-3px, 0); clip-path: inset(0 0 0 0); }
+  80% { transform: translate(-6px, 2px); clip-path: inset(40% 0 30% 0); }
+  82% { transform: translate(-3px, 0); clip-path: inset(0 0 0 0); }
+}
+
+/* V2 RGB Slice — magenta layer (opposite direction) */
+@keyframes rgbSliceMagenta {
+  0%, 100% { transform: translate(3px, 0); clip-path: inset(0 0 0 0); }
+  5% { transform: translate(10px, -1px); clip-path: inset(40% 0 35% 0); }
+  7% { transform: translate(3px, 0); clip-path: inset(0 0 0 0); }
+  42% { transform: translate(8px, 1px); clip-path: inset(10% 0 60% 0); }
+  44% { transform: translate(3px, 0); clip-path: inset(0 0 0 0); }
+  80% { transform: translate(6px, -2px); clip-path: inset(20% 0 50% 0); }
+  82% { transform: translate(3px, 0); clip-path: inset(0 0 0 0); }
 }
 
 /* Pulsing text-shadow intensity */
@@ -540,6 +632,72 @@
   opacity: 0.5;
 }
 
+@media (width >= 1025px) {
+  .bot {
+    left: auto;
+    right: 0;
+    max-width: 480px;
+    bottom: clamp(4rem, 10vh, 8rem);
+    text-align: right;
+  }
+
+  .copy {
+    margin-left: auto;
+  }
+
+  .row {
+    justify-content: flex-end;
+  }
+
+  .micro {
+    justify-content: flex-end;
+  }
+}
+
+/* Large desktop / 1440p+ — scale up so content doesn't look tiny on ultrawide */
+@media (width >= 1600px) {
+  .bot {
+    max-width: 580px;
+    bottom: clamp(5rem, 10vh, 9rem);
+  }
+
+  .copy {
+    font-size: clamp(0.9rem, 0.8vw, 1.05rem);
+    max-width: 520px;
+  }
+
+  .btnO {
+    font-size: 0.95rem;
+    padding: 0.9rem 1.9rem;
+  }
+
+  .micro {
+    font-size: 0.8rem;
+  }
+}
+
+/* 4K / 2560px+ — further scale */
+@media (width >= 2400px) {
+  .bot {
+    max-width: 720px;
+    bottom: clamp(6rem, 10vh, 11rem);
+  }
+
+  .copy {
+    font-size: 1.2rem;
+    max-width: 640px;
+  }
+
+  .btnO {
+    font-size: 1.1rem;
+    padding: 1rem 2.2rem;
+  }
+
+  .micro {
+    font-size: 0.9rem;
+  }
+}
+
 @media (width <= 1024px) {
   .bot {
     max-width: 400px;
@@ -552,7 +710,7 @@
     left: auto !important;
     right: 0;
     max-width: 100%;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1.5rem 0.8rem 2.5rem;
     bottom: clamp(4rem, 12vh, 7rem);
     text-align: right;
   }
@@ -570,6 +728,8 @@
 
   .copy {
     font-size: 0.72rem;
+    max-width: 220px;
+    margin-left: auto;
   }
 
   .bottomFade {

@@ -228,8 +228,8 @@
   .panorama-caption {
     position: absolute;
     color: #eaf3ff;
-    text-transform: uppercase;
     opacity: 1;
+    max-width: min(46vw, 640px);
   }
 
   .panorama-caption:nth-child(1) {
@@ -246,11 +246,6 @@
     text-align: right;
   }
 
-  .panorama-caption:nth-child(2) p {
-    padding-right: 0;
-    padding-left: 40%;
-  }
-
   .panorama-caption:nth-child(3) {
     left: 6%;
     bottom: 15%;
@@ -258,14 +253,15 @@
   }
 
   .panorama-caption h2 {
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4.5vw, 4.5rem);
+    margin-bottom: 0.85rem;
     color: #fff;
-    font-family: var(--font-bebas);
-    font-weight: 400;
-    letter-spacing: 0.1rem;
+    font-family: var(--font-syne);
+    font-weight: 800;
+    letter-spacing: -0.02em;
     line-height: 1;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
   .panorama-caption .word {
@@ -277,6 +273,7 @@
     position: relative;
     display: inline-block;
     overflow: hidden;
+    padding-bottom: 0.1em;
   }
 
   .panorama-caption .char span {
@@ -285,12 +282,14 @@
 
   .panorama-caption p {
     text-transform: none;
-    font-family: var(--font-inter);
-    font-size: clamp(1rem, 1.8vw, 1.8rem);
-    letter-spacing: 0.05rem;
-    line-height: 1.4;
-    color: rgb(238 244 255 / 92%);
-    padding-right: 40%;
+    font-family: var(--font-space);
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 88%);
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -774,6 +773,12 @@
 
   .panorama-caption p {
     font-size: clamp(1rem, 3.5vw, 1.2rem);
+    max-width: none;
+    padding-right: 0;
+  }
+
+  .panorama-caption:nth-child(2) p {
+    padding-left: 0;
   }
 }
 

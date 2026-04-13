@@ -85,7 +85,7 @@ export default function YouTubeGrid() {
   }, [activeVideo]);
 
   return (
-    <section id="w-akcji" className="py-16 md:py-24 max-w-7xl mx-auto mb-12">
+    <section id="w-akcji" className="py-16 md:py-24 max-w-7xl mx-auto mb-12 scroll-mt-24">
       <div className="container px-4 mx-auto relative">
         <div className="py-4">
           <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-[#ff7302]">

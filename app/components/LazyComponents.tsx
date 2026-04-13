@@ -85,14 +85,16 @@ export const LazyVideoPlayer = dynamic(
 );
 
 // High-order component for intersection observer lazy loading
-export const LazyWithIntersection = ({ 
-  children, 
-  fallback, 
-  rootMargin = "100px" 
+export const LazyWithIntersection = ({
+  children,
+  fallback,
+  rootMargin = "100px",
+  id,
 }: {
   children: React.ReactNode;
   fallback: React.ReactNode;
   rootMargin?: string;
+  id?: string;
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
@@ -116,7 +118,7 @@ export const LazyWithIntersection = ({
   }, [rootMargin]);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} id={id}>
       {isVisible ? children : fallback}
     </div>
   );
@@ -188,9 +190,10 @@ export const LazyTestimonialsWithIntersection = () => (
 );
 
 export const LazyYouTubeGridWithIntersection = () => (
-  <LazyWithIntersection 
+  <LazyWithIntersection
     fallback={<YouTubeLoadingPlaceholder />}
     rootMargin="200px"
+    id="w-akcji"
   >
     <Suspense fallback={<YouTubeLoadingPlaceholder />}>
       <LazyYouTubeGrid />

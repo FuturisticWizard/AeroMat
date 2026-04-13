@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue, Caveat, Anton } from "next/font/google";
+import { Inter, Bebas_Neue, Caveat, Anton, Syne, Space_Grotesk } from "next/font/google";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
@@ -38,6 +38,18 @@ const caveat = Caveat({
   subsets: ["latin", "latin-ext"],
 });
 
+const syne = Syne({
+  variable: "--font-syne",
+  weight: ["500", "700", "800"],
+  subsets: ["latin", "latin-ext"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space",
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin", "latin-ext"],
+});
+
 // const interSans = Inter({
 //   variable: "--font-inter-sans",
 //   subsets: ["latin"],
@@ -64,8 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} overflow-y-auto antialiased `}>
+    <html lang="pl">
+      <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${syne.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
         <AudioProvider>
           <PerformanceMonitor />
           <Navbar />
