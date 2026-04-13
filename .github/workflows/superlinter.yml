@@ -22,6 +22,7 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSS: true
           VALIDATE_JSON: true
