@@ -341,7 +341,7 @@
 :global([data-style="combined"]) .waveEl {
   opacity: 0.35;
   transition: opacity 0.3s ease;
-  filter: url(#glitch-warp);
+  filter: url("#glitch-warp");
 }
 
 :global([data-style="combined"]) .waveEl::before {
@@ -362,22 +362,22 @@
   opacity: 1 !important;
   animation: neonPulse 4s infinite;
   text-shadow:
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 18px rgba(255, 115, 2, 0.7),
-    0 0 35px rgba(255, 115, 2, 0.45),
-    0 0 60px rgba(255, 115, 2, 0.25);
+    0 0 8px rgb(255 255 255 / 90%),
+    0 0 18px rgb(255 115 2 / 70%),
+    0 0 35px rgb(255 115 2 / 45%),
+    0 0 60px rgb(255 115 2 / 25%);
 }
 
 :global([data-style="combined"]) .glitchNow::before {
   opacity: 1 !important;
   animation: rgbSliceCyan 2.4s infinite linear;
-  filter: drop-shadow(0 0 10px rgba(0, 170, 255, 0.7));
+  filter: drop-shadow(0 0 10px rgb(0 170 255 / 70%));
 }
 
 :global([data-style="combined"]) .glitchNow::after {
   opacity: 1 !important;
   animation: rgbSliceMagenta 2.4s infinite linear;
-  filter: drop-shadow(0 0 10px rgba(255, 0, 170, 0.7));
+  filter: drop-shadow(0 0 10px rgb(255 0 170 / 70%));
 }
 
 /* V4 Neon flicker — irregular broken-neon pulse */
@@ -385,14 +385,15 @@
   0%, 18%, 22%, 25%, 53%, 57%, 100% {
     opacity: 1;
     text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.9),
-      0 0 18px rgba(255, 115, 2, 0.7),
-      0 0 35px rgba(255, 115, 2, 0.45),
-      0 0 60px rgba(255, 115, 2, 0.25);
+      0 0 8px rgb(255 255 255 / 90%),
+      0 0 18px rgb(255 115 2 / 70%),
+      0 0 35px rgb(255 115 2 / 45%),
+      0 0 60px rgb(255 115 2 / 25%);
   }
+
   20%, 24%, 55% {
     opacity: 0.55;
-    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 4px rgb(255 255 255 / 40%);
   }
 }
 

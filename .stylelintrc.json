@@ -63,6 +63,7 @@
       {
         "message": "Expected keyframe name to be kebab-case or camelCase"
       }
-    ]
+    ],
+    "declaration-block-single-line-max-declarations": null
   }
 }
