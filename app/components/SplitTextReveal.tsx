@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -13,6 +13,8 @@ interface Props {
   className?: string;
 }
 
+const useIsoEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 const SplitTextReveal = ({
   children,
   selector = "h1, h2, h3",
@@ -23,7 +25,7 @@ const SplitTextReveal = ({
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
+  useIsoEffect(() => {
     gsap.registerPlugin(ScrollTrigger, SplitText);
     const container = ref.current;
     if (!container) return;
@@ -75,12 +77,10 @@ const SplitTextReveal = ({
     };
   }, [selector, stagger, duration]);
 
+  const combined = ready ? className : `${className} split-pending`.trim();
+
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{ visibility: ready ? "visible" : "hidden" }}
-    >
+    <div ref={ref} className={combined}>
       {children}
     </div>
   );

@@ -640,6 +640,12 @@
   display: inline-block;
 }
 
+/* SplitTextReveal wrapper is invisible until JS has split chars + parked them
+   off-screen. Layout is still reserved so there's no CLS on reveal. */
+.split-pending {
+  visibility: hidden;
+}
+
 /* IMPORTANT: this needs to be a top-level media query.
    The previous CSS had `@media (max-width: 768px)` nested inside `@media (width >= 769px)`,
    which resolves to an impossible condition and never matches on mobile. */
