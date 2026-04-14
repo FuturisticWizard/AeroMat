@@ -78,24 +78,35 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       gsap.set(".card-img", { height: "100vh", minHeight: "480px" });
       gsap.set(".card-img img", { height: "100%", minHeight: "100%", scale: 1 });
       requestAnimationFrame(() => ScrollTrigger.refresh());
-      setTimeout(() => ScrollTrigger.refresh(), 200);
     }
 
-    const titles = gsap.utils.toArray<HTMLElement>(".card-title h1");
-
-    titles.forEach((title, index) => {
+    // Split a card's title into chars on demand. Called eagerly for the intro
+    // (needed by its own ScrollTrigger), lazily per-card for the rest via
+    // onEnter — cuts ~585ms forced reflow from mount-time SplitText batch.
+    const splitCardTitle = (cardEl: HTMLElement) => {
+      if ((cardEl as HTMLElement & { __split?: boolean }).__split) return;
+      const title = cardEl.querySelector<HTMLElement>(".card-title h1");
+      if (!title) return;
       const split = new SplitText(title, {
         type: "chars",
         charsClass: "char",
         tag: "div",
       });
       split.chars.forEach((char) => {
-        char.innerHTML = `<span>${char.textContent}</span>`;
+        const text = char.textContent ?? "";
+        char.textContent = "";
+        const span = document.createElement("span");
+        span.textContent = text;
+        char.appendChild(span);
       });
-    });
+      const chars = cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
+      gsap.set(chars, { x: "110%" });
+      (cardEl as HTMLElement & { __split?: boolean }).__split = true;
+    };
 
-    // Ukryj wszystkie znaki tytułów i opisy na starcie
-    gsap.set(".card-title .char span", { x: "110%" });
+    // Eager split: intro only (its ScrollTrigger needs chars immediately).
+    splitCardTitle(introCard);
+
     gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
     gsap.set(".card-dim", { opacity: 0 });
 
@@ -198,6 +209,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
             endTrigger: cards[cards.length - 1],
             pin: true,
             pinSpacing: false,
+            anticipatePin: 1,
             onToggle: (self) => {
               if (self.isActive) {
               }
@@ -207,10 +219,11 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
           return;
         }
 
-        // Remaining cards - normal pinning + text reveal
-        const cardTitleCharsPin = cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
+        // Remaining cards - normal pinning + text reveal. Lazy SplitText on
+        // first enter to keep mount-time forced reflow off the critical path.
         const cardDescPin = cardEl.querySelector<HTMLElement>(".card-description");
         const cardDimPin = cardEl.querySelector<HTMLElement>(".card-dim");
+        const getCharsPin = () => cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
 
         const st = ScrollTrigger.create({
           trigger: card,
@@ -224,24 +237,26 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
             window.dispatchEvent(new CustomEvent("panorama-progress", { detail: self.progress }));
           } : undefined,
           onEnter: () => {
-            if (cardTitleCharsPin.length && !isPanorama) {
-              animateContentIn(cardTitleCharsPin, cardDescPin, cardDimPin);
-            }
+            if (isPanorama) return;
+            splitCardTitle(cardEl);
+            const chars = getCharsPin();
+            if (chars.length) animateContentIn(chars, cardDescPin, cardDimPin);
           },
           onEnterBack: () => {
-            if (cardTitleCharsPin.length && !isPanorama) {
-              animateContentIn(cardTitleCharsPin, cardDescPin, cardDimPin);
-            }
+            if (isPanorama) return;
+            splitCardTitle(cardEl);
+            const chars = getCharsPin();
+            if (chars.length) animateContentIn(chars, cardDescPin, cardDimPin);
           },
           onLeave: () => {
-            if (cardTitleCharsPin.length && !isPanorama) {
-              animateContentOut(cardTitleCharsPin, cardDescPin, cardDimPin);
-            }
+            if (isPanorama) return;
+            const chars = getCharsPin();
+            if (chars.length) animateContentOut(chars, cardDescPin, cardDimPin);
           },
           onLeaveBack: () => {
-            if (cardTitleCharsPin.length && !isPanorama) {
-              animateContentOut(cardTitleCharsPin, cardDescPin, cardDimPin);
-            }
+            if (isPanorama) return;
+            const chars = getCharsPin();
+            if (chars.length) animateContentOut(chars, cardDescPin, cardDimPin);
           },
         });
         pins.push(st);
@@ -266,18 +281,20 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         }
 
         const cardDescription = card.querySelector(".card-description");
-        const cardTitleChars = card.querySelectorAll(".card-title .char span");
         const dimLayer = card.querySelector(".card-dim");
         const reveal = () => {
           if (contentRevealStates[index]) return;
           contentRevealStates[index] = true;
-          if (cardTitleChars?.length) animateContentIn(cardTitleChars, cardDescription, dimLayer);
+          if (!isIntroCard) splitCardTitle(cardEl);
+          const chars = card.querySelectorAll(".card-title .char span");
+          if (chars.length) animateContentIn(chars, cardDescription, dimLayer);
           else if (dimLayer) gsap.to(dimLayer, { opacity: 1, duration: 0.45, ease: "power2.out", overwrite: true });
         };
         const hide = () => {
           if (!contentRevealStates[index]) return;
           contentRevealStates[index] = false;
-          if (cardTitleChars?.length) animateContentOut(cardTitleChars, cardDescription, dimLayer);
+          const chars = card.querySelectorAll(".card-title .char span");
+          if (chars.length) animateContentOut(chars, cardDescription, dimLayer);
           else if (dimLayer) gsap.to(dimLayer, { opacity: 0, duration: 0.35, ease: "power2.out", overwrite: true });
         };
 
