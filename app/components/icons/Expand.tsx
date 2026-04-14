@@ -8,7 +8,7 @@ const Expand = () => {
         alt="Expand"
         fill
         src="/icons/icons8-expand-100.png"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="40px"
       />
     </div>
   );

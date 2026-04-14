@@ -21,6 +21,8 @@ const BentoGrid = () => {
             src={photo.src}
             alt={photo.title}
             fill
+            sizes={`(max-width: 768px) ${Math.max(photo.smcolspan * 10, 50)}vw, ${Math.max(photo.colspan * 10, 33)}vw`}
+            quality={85}
             className="object-cover"
           />
         </div>

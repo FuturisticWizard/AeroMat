@@ -38,7 +38,7 @@ const Process = () => {
           className="flex flex-col justify-center items-center px-4 py-2 max-w-md  "
         >
           <div className="relative w-16 h-16 ">
-            <Image src={step.icon} alt={step.title} fill object-fit="cover" />
+            <Image src={step.icon} alt={step.title} fill sizes="64px" className="object-cover" />
           </div>
 
           <h3 className="text-base text-center">{step.title}</h3>

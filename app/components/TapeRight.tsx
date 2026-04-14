@@ -32,7 +32,7 @@ const TapeRightSection = () => {
                     <Image
                       src={logo}
                       alt={`Logo ${index + 1}`}
-                      sizes="100vw"
+                      sizes="84px"
                       width="84"
                       height="0"
                       style={{ height: "auto" }}

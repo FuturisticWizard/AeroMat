@@ -20,11 +20,8 @@ const nextConfig = {
         : false,
   },
 
-  // Image optimization disabled — large source images (up to 9151px wide) cause
-  // sharp timeouts in production build. Serving raw .webp files which are already
-  // optimized at source. Re-enable after pre-resizing oversized photos.
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "img.youtube.com" },
     ],

@@ -4,7 +4,6 @@ import PortfolioCard from "./components/PortfolioCard";
 import TrustedBy from "./components/TrustedBy";
 import HowItWorks from "./components/HowItWorks";
 import WhoAmI2 from "./components/WhoAmI2";
-import Services from "./components/Services";
 import MuralsMap from "./components/MuralsMap";
 import { portfolioPhotos, komunikacjaWizualnaPhotos, wnetrzaPhotos, projektySpecjalnePhotos } from "@/app/lib/photos";
 import { LazyTestimonialsWithIntersection } from "./components/LazyComponents";
@@ -66,7 +65,7 @@ export default function Home() {
 
           <WhyChooseMe />
 
-          <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 text-center">
+          <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-0 pb-12 text-center">
             <Link
               href="/o-mnie"
               className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"

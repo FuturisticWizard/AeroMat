@@ -8,7 +8,7 @@ const Designing = () => {
         alt="Projetkowanie"
         fill
         src="/icons/designing.png"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="40px"
       />
     </div>
   );

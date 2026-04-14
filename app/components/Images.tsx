@@ -18,10 +18,14 @@ interface Slide {
 
 // Compute responsive sizes from colspan (out of 10) per-slide so Next.js
 // picks the right srcset variant and panoramas don't get served undersized.
+// Floor at 33vw desktop / 50vw mobile — below that browser picks 384px imageSizes
+// variant which is too soft for detailed photography on retina displays.
 const computeSizes = (slide: Slide): string => {
   const desktopVw = slide.colspan ? Math.min(100, Math.round((slide.colspan / 10) * 100)) : 100;
   const mobileVw = slide.smcolspan ? Math.min(100, Math.round((slide.smcolspan / 10) * 100)) : 100;
-  return `(max-width: 768px) ${mobileVw}vw, ${desktopVw}vw`;
+  const desktopFinal = Math.max(desktopVw, 33);
+  const mobileFinal = Math.max(mobileVw, 50);
+  return `(max-width: 768px) ${mobileFinal}vw, ${desktopFinal}vw`;
 };
 
 interface ImageSlideProps {
