@@ -284,22 +284,24 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
           </filter>
         </defs>
       </svg>
-      {videoSources && (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/hero-poster.webp"
-          className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
-          onLoadedData={() => setVideoReady(true)}
-        >
-          <source src={videoSources.webm} type="video/webm" />
-          <source src={videoSources.mp4} type="video/mp4" />
-        </video>
-      )}
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/hero-poster.webp"
+        className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
+        onLoadedData={() => setVideoReady(true)}
+      >
+        {videoSources && (
+          <>
+            <source src={videoSources.webm} type="video/webm" />
+            <source src={videoSources.mp4} type="video/mp4" />
+          </>
+        )}
+      </video>
 
       <div className={styles.videoGrad} />
       <div className={styles.bottomFade} />

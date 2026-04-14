@@ -77,6 +77,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero-poster.webp"
+          fetchPriority="high"
+          type="image/webp"
+        />
+      </head>
       <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${syne.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
         <AudioProvider>
           <PerformanceMonitor />

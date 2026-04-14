@@ -22,6 +22,8 @@ const nextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
+    deviceSizes: [480, 640, 828, 1080, 1200, 1920, 2560],
+    imageSizes: [64, 128, 256],
     remotePatterns: [
       { protocol: "https", hostname: "img.youtube.com" },
     ],
@@ -35,7 +37,6 @@ const nextConfig = {
       "@radix-ui/react-tabs",
       "@vis.gl/react-google-maps",
       "framer-motion",
-      "gsap",
     ],
     scrollRestoration: true,
     // useLightningcss disabled - causes issues with Vercel Linux builds

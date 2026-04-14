@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SplitTextReveal from "./SplitTextReveal";
 
 const AboutMe = () => {
   return (
@@ -20,7 +21,7 @@ const AboutMe = () => {
         </div>
 
         {/* Text */}
-        <div className="flex flex-col gap-4">
+        <SplitTextReveal className="flex flex-col gap-4" selector="h2, h3">
           <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
           Kim jest AEROMAT?
           </h2>
@@ -39,7 +40,7 @@ const AboutMe = () => {
             Stacjonuję w <span className="text-white font-medium">Lublinie</span>, ale
             działam na terenie <span className="text-[#ff7302] font-medium">całego kraju</span>.
           </p>
-        </div>
+        </SplitTextReveal>
       </div>
     </section>
   );

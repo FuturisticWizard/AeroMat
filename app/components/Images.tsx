@@ -16,16 +16,14 @@ interface Slide {
   smcolspan?: number;
 }
 
-// Compute responsive sizes from colspan (out of 10) per-slide so Next.js
-// picks the right srcset variant and panoramas don't get served undersized.
-// Floor at 33vw desktop / 50vw mobile — below that browser picks 384px imageSizes
-// variant which is too soft for detailed photography on retina displays.
+// Compute responsive sizes from colspan (out of 10) per-slide. No mobile floor —
+// DPR already doubles effective pixels, previous floor caused 2-3x over-fetch.
+// Mild desktop floor (25vw) prevents narrow tiles from serving undersized on retina.
 const computeSizes = (slide: Slide): string => {
   const desktopVw = slide.colspan ? Math.min(100, Math.round((slide.colspan / 10) * 100)) : 100;
   const mobileVw = slide.smcolspan ? Math.min(100, Math.round((slide.smcolspan / 10) * 100)) : 100;
-  const desktopFinal = Math.max(desktopVw, 33);
-  const mobileFinal = Math.max(mobileVw, 50);
-  return `(max-width: 768px) ${mobileFinal}vw, ${desktopFinal}vw`;
+  const desktopFinal = Math.max(desktopVw, 25);
+  return `(max-width: 768px) ${mobileVw}vw, ${desktopFinal}vw`;
 };
 
 interface ImageSlideProps {
@@ -213,7 +211,7 @@ const Images: FC<ImageSlideProps> = (props) => {
               style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes={computeSizes(slide)}
               quality={85}
               priority={false}
               loading="lazy"

@@ -628,13 +628,15 @@
 
 /* SplitText chars for card titles must be clipped on all viewports (mobile included),
    otherwise the translated spans can still be visible and the title looks "always on". */
-.card-title .char {
+.card-title .char,
+.split-char {
   position: relative;
   overflow: hidden;
   display: inline-block;
 }
 
-.card-title .char span {
+.card-title .char span,
+.split-char span {
   display: inline-block;
 }
 
