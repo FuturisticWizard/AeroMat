@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -21,6 +21,7 @@ const SplitTextReveal = ({
   className = "",
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -28,7 +29,10 @@ const SplitTextReveal = ({
     if (!container) return;
 
     const headings = Array.from(container.querySelectorAll<HTMLElement>(selector));
-    if (headings.length === 0) return;
+    if (headings.length === 0) {
+      setReady(true);
+      return;
+    }
 
     const splits: SplitText[] = [];
     headings.forEach((h) => {
@@ -49,6 +53,7 @@ const SplitTextReveal = ({
 
     const allChars = container.querySelectorAll(".split-char span");
     gsap.set(allChars, { x: "110%" });
+    setReady(true);
 
     const trigger = ScrollTrigger.create({
       trigger: container,
@@ -71,7 +76,11 @@ const SplitTextReveal = ({
   }, [selector, stagger, duration]);
 
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={className}
+      style={{ visibility: ready ? "visible" : "hidden" }}
+    >
       {children}
     </div>
   );
