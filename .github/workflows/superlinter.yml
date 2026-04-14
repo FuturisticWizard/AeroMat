@@ -25,7 +25,9 @@ jobs:
           LINTER_RULES_PATH: .
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSS: true
-          VALIDATE_JSON: true
+          # VALIDATE_JSON disabled — super-linter v7 passes --ext to ESLint,
+          # incompatible with our flat eslint.config.mjs. JSON syntax is
+          # validated by tsconfig parser / npm / Next.js build anyway.
           VALIDATE_YAML: true
           VALIDATE_GITHUB_ACTIONS: true
           VALIDATE_GITLEAKS: true
