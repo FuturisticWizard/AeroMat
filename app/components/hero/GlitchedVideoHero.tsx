@@ -115,18 +115,6 @@ type HighlightStyle = "scale" | "dim" | "whiteglow" | "combo" | "full" | "stroke
 const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: HighlightStyle }) => {
   const { muted } = useAudio();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoReady, setVideoReady] = useState(false);
-  const [videoSources, setVideoSources] = useState<{ webm: string; mp4: string } | null>(null);
-
-  // Pick sources based on viewport (runs client-side only, no hydration mismatch)
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    setVideoSources(
-      isMobile
-        ? { webm: "/movies/hero_mini.webm", mp4: "/movies/hero_mini.mp4" }
-        : { webm: "/movies/hero_medium.webm", mp4: "/movies/hero_compressed.mp4" }
-    );
-  }, []);
   const vColRef = useRef<HTMLDivElement>(null);
   const koRef = useRef<HTMLDivElement>(null);
   const botRef = useRef<HTMLDivElement>(null);
@@ -156,11 +144,11 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
   // Video muted sync
   useEffect(() => {
     const v = videoRef.current;
-    if (!v || !videoReady) return;
+    if (!v) return;
     v.muted = muted;
     v.defaultMuted = muted;
     if (!muted) v.volume = 0.1;
-  }, [muted, videoReady]);
+  }, [muted]);
 
   // Video autoplay
   useEffect(() => {
@@ -292,15 +280,12 @@ const GlitchedVideoHero = ({ highlightStyle = "stroke" }: { highlightStyle?: Hig
         playsInline
         preload="metadata"
         poster="/images/hero-poster.webp"
-        className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
-        onLoadedData={() => setVideoReady(true)}
+        className={styles.video}
       >
-        {videoSources && (
-          <>
-            <source src={videoSources.webm} type="video/webm" />
-            <source src={videoSources.mp4} type="video/mp4" />
-          </>
-        )}
+        <source src="/movies/hero_mini.webm" type="video/webm" media="(max-width: 768px)" />
+        <source src="/movies/hero_mini.mp4" type="video/mp4" media="(max-width: 768px)" />
+        <source src="/movies/hero_medium.webm" type="video/webm" media="(min-width: 769px)" />
+        <source src="/movies/hero_compressed.mp4" type="video/mp4" media="(min-width: 769px)" />
       </video>
 
       <div className={styles.videoGrad} />
