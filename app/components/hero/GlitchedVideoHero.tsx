@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useAudio } from "@/app/context/AudioContext";
 import styles from "./GlitchedVideoHero.module.css";
 
@@ -25,6 +26,7 @@ const GlitchedVideoHero = () => {
   const { muted } = useAudio();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoSources, setVideoSources] = useState<{ webm: string; mp4: string } | null>(null);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     // Defer video source assignment until browser is idle.
@@ -66,13 +68,30 @@ const GlitchedVideoHero = () => {
     const v = videoRef.current;
     if (!v) return;
     v.defaultMuted = true;
-    const play = async () => { try { v.muted = true; await v.play(); } catch (_) {} };
-    if (v.readyState >= 3) play();
-    else v.addEventListener("canplay", play, { once: true });
-  }, []);
+    const onReady = () => {
+      setVideoReady(true);
+      v.muted = true;
+      v.play().catch(() => {});
+    };
+    if (v.readyState >= 3) onReady();
+    else v.addEventListener("canplay", onReady, { once: true });
+  }, [videoSources]);
 
   return (
     <div className={styles.hero}>
+      {/* Poster as independent <Image> (not video poster attr) — Chrome scores
+          this as LCP as soon as it paints, regardless of when video sources
+          attach later. */}
+      <Image
+        src="/images/hero-poster.webp"
+        alt=""
+        aria-hidden
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className={styles.poster}
+      />
       <video
         ref={videoRef}
         autoPlay
@@ -80,8 +99,7 @@ const GlitchedVideoHero = () => {
         loop
         playsInline
         preload="none"
-        poster="/images/hero-poster.webp"
-        className={styles.video}
+        className={`${styles.video} ${videoReady ? styles.videoReady : ""}`}
       >
         {videoSources && (
           <>

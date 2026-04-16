@@ -54,7 +54,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       gsap.ticker.lagSmoothing(0);
     } else {
       ScrollTrigger.defaults({ scroller: window });
-      ScrollTrigger.refresh();
+      // Single refresh happens later (rAF-deferred after mobile set + window load)
     }
 
     const cards = gsap.utils.toArray<HTMLElement>(".card");
@@ -595,7 +595,9 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       }
     }
 
-    setupMarqueeAnimation();
+    // Defer marquee init one frame — lets mount-time gsap.set writes flush
+    // in a single layout pass before marquee reads offsetLeft/offsetWidth.
+    requestAnimationFrame(() => setupMarqueeAnimation());
 
     // Marquee hover — highlight phrase under cursor (throttled with rAF)
     const marqueeH1s = gsap.utils.toArray<HTMLElement>(".card-marquee .marquee h1");
@@ -635,10 +637,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     window.addEventListener("load", onLoadRefresh, { once: true });
     ScrollTrigger.addEventListener("refresh", revealActiveTexts);
 
-    if (isMobile) {
-      // Upewnij się, że rozmiary pin-spacer są przeliczone po zmianie pinów
-      ScrollTrigger.refresh();
-    }
+    // (Redundant ScrollTrigger.refresh() removed — rAF-deferred refresh on
+    //  line ~80 + window.load handler above are sufficient.)
     // Cleanup function - wywoła się przy unmount komponentu
     return () => {
       mm.revert();

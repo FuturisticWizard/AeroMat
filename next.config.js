@@ -7,8 +7,16 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // Pusta konfiguracja Turbopack (wymagana w Next.js 16)
-  turbopack: {},
+  // Turbopack config (Next.js 16 default for dev + prod).
+  // Alias the hardcoded Next.js polyfill bundle (Array.at, Object.fromEntries,
+  // String.trimStart etc.) to an empty module — our browserslist already
+  // drops Chrome <105 / Safari <15.4, all targets support these natively.
+  // Saves ~14 KiB of dead polyfill code on every page.
+  turbopack: {
+    resolveAlias: {
+      "next/dist/build/polyfills/polyfill-module": { browser: "./empty-module.js" },
+    },
+  },
 
   // Compiler optimizations
   compiler: {

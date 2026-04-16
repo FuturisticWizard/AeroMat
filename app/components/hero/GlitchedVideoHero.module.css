@@ -25,6 +25,16 @@
   pointer-events: none;
 }
 
+/* Static poster image — paints first, Chrome scores this as LCP */
+.poster {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .video {
   position: absolute;
   inset: 0;
@@ -32,7 +42,13 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  z-index: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+
+.videoReady {
+  opacity: 1;
 }
 
 .videoGrad {
