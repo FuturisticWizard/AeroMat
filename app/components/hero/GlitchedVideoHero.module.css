@@ -3,11 +3,6 @@
    Knockout 55% left, soft fade edge, edge glow glitch blue/yellow
    ================================================================ */
 
-:root {
-  --blue: #0af;
-  --yellow: #ffe600;
-}
-
 .hero {
   position: relative;
   width: 100%;

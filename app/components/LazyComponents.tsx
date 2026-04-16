@@ -11,15 +11,6 @@ const MapLoadingPlaceholder = () => (
   </div>
 );
 
-const ThreeLoadingPlaceholder = () => (
-  <div className="flex items-center justify-center w-full h-96 bg-gray-50 rounded-lg animate-pulse">
-    <div className="text-center">
-      <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-      <div className="text-gray-600 text-sm">Loading 3D scene...</div>
-    </div>
-  </div>
-);
-
 const YouTubeLoadingPlaceholder = () => (
   <section className="py-16 max-w-7xl mx-auto mb-12">
     <div className="container px-4 mx-auto">
@@ -57,14 +48,6 @@ export const LazyGoogleMap = dynamic(
   {
     ssr: false,
     loading: () => <MapLoadingPlaceholder />
-  }
-);
-
-export const LazyThreeCanvas = dynamic(
-  () => import("./ThreeCanvas"),
-  {
-    ssr: false,
-    loading: () => <ThreeLoadingPlaceholder />
   }
 );
 
@@ -144,17 +127,6 @@ export const LazyMuralsMapWithIntersection = () => (
   >
     <Suspense fallback={<MapLoadingPlaceholder />}>
       <LazyGoogleMap />
-    </Suspense>
-  </LazyWithIntersection>
-);
-
-export const LazyThreeCanvasWithIntersection = () => (
-  <LazyWithIntersection 
-    fallback={<ThreeLoadingPlaceholder />}
-    rootMargin="150px"
-  >
-    <Suspense fallback={<ThreeLoadingPlaceholder />}>
-      <LazyThreeCanvas />
     </Suspense>
   </LazyWithIntersection>
 );

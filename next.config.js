@@ -44,12 +44,7 @@ const nextConfig = {
   },
 
   // Transpile packages dla lepszej kompatybilności
-  transpilePackages: [
-    "three",
-    "gsap",
-    "@react-three/fiber",
-    "@react-three/drei",
-  ],
+  transpilePackages: ["three", "gsap"],
 
   // Webpack optimizations (będą używane w production build)
   webpack: (config, { dev, isServer }) => {
@@ -98,7 +93,7 @@ const nextConfig = {
             reuseExistingChunk: true,
           },
           three: {
-            test: /[\\/]node_modules[\\/](three|@react-three[\\/])/,
+            test: /[\\/]node_modules[\\/]three[\\/]/,
             chunks: "all",
             priority: 10,
             name: "three",
