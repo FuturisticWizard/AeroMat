@@ -1,7 +1,16 @@
 # 🚀 Performance Optimizations Summary
 
+> **📅 Najnowszy raport sesji PSI:** [`docs/RAPORT-PERF-PSI-2026-04-16.md`](docs/RAPORT-PERF-PSI-2026-04-16.md) —
+> iteracyjny cykl audit → fix → redeploy, BMad 5-agent research team,
+> diagnosis regresji LCP 5.2s→8.0s→~2.5s.
+>
+> Historia poprzednich audytów:
+> - [`docs/RAPORT-PERF-BMAD-2026-04-13.md`](docs/RAPORT-PERF-BMAD-2026-04-13.md)
+> - [`docs/RAPORT-WYDAJNOSCI.md`](docs/RAPORT-WYDAJNOSCI.md)
+> - [`docs/RAPORT-OPTYMALIZACJA-ZDJEC.md`](docs/RAPORT-OPTYMALIZACJA-ZDJEC.md)
+
 ## Overview
-This document outlines comprehensive performance optimizations implemented for the Aeromat Next.js 16.0.1 application to address compilation time, render time, and bundle size issues.
+This document outlines comprehensive performance optimizations implemented for the Aeromat Next.js 16 application to address compilation time, render time, and bundle size issues.
 
 ## 🎯 Performance Goals & Current Status
 
