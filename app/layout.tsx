@@ -8,6 +8,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PerformanceMonitor from "./components/PerformanceMonitor";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import { AudioProvider } from "./context/AudioContext";
 
 // const geistSans = Geist({
@@ -87,6 +88,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${syne.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
+        <GoogleAnalytics />
         <AudioProvider>
           <PerformanceMonitor />
           <Navbar />
