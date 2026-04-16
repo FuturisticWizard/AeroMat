@@ -129,10 +129,7 @@
 .vCol::before {
   content: "";
   position: absolute;
-  top: -22vh;
-  left: -4vw;
-  right: -4vw;
-  bottom: -6vh;
+  inset: -22vh -4vw -6vh;
   background: linear-gradient(
     to bottom,
     transparent 0%,

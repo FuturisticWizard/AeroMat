@@ -624,6 +624,7 @@
 .card-content .card-title h1 {
   color: #fff;
   font-family: var(--font-bebas);
+
   /* Hidden until SplitText runs + animateContentIn reveals chars.
      Prevents flash of plain title before animation kicks in. */
   opacity: 0;
