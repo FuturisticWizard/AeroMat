@@ -1,9 +1,6 @@
 import GlitchedVideoHero from "./components/hero/GlitchedVideoHero";
-import Portfolio from "./components/Portfolio";
 import PortfolioCard from "./components/PortfolioCard";
 import TrustedBy from "./components/TrustedBy";
-import HowItWorks from "./components/HowItWorks";
-import WhoAmI2 from "./components/WhoAmI2";
 import MuralsMap from "./components/MuralsMap";
 import { portfolioPhotos, komunikacjaWizualnaPhotos, wnetrzaPhotos, projektySpecjalnePhotos } from "@/app/lib/photos";
 import { LazyTestimonialsWithIntersection } from "./components/LazyComponents";

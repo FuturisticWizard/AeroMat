@@ -16,7 +16,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/ta
 import { RowsPhotoAlbum } from "react-photo-album";
 import { allPhotos, portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
-import { Compare } from "@/app/components/ui/compare";
 
 export default function PhotoPortfolio() {
   const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Branding"];
