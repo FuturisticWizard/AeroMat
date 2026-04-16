@@ -1,19 +1,12 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
-import Masonry from "react-masonry-css";
-import Card from "./Card";
-import CardFlip from "./CardFlip";
-import { FC } from "react";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
+import dynamic from "next/dynamic";
 import { portfolioPhotos } from "@/app/lib/photos";
 import Images from "./Images";
+
+const LazyLightbox = dynamic(() => import("./PortfolioLightbox"), {
+  ssr: false,
+});
 
 interface ImagesProps {
   data: {
@@ -60,14 +53,13 @@ const Portfolio = ({ data = portfolioPhotos, fullWidth = false, waitForTrigger =
         waitForTrigger={waitForTrigger}
         gridVariant={gridVariant}
       />
-      <Lightbox
-        slides={data}
-        open={index >= 0}
-        index={index}
-        close={() => setIndex(-1)}
-        // enable optional lightbox plugins
-        plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-      />
+      {index >= 0 && (
+        <LazyLightbox
+          slides={data}
+          index={index}
+          close={() => setIndex(-1)}
+        />
+      )}
     </div>
   );
 };

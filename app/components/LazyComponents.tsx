@@ -124,14 +124,6 @@ export const LazyWithIntersection = ({
   );
 };
 
-export const LazyPanoramaScroll = dynamic(
-  () => import("./PanoramaScroll"),
-  {
-    ssr: false,
-    loading: () => <ThreeLoadingPlaceholder />
-  }
-);
-
 export const LazyTestimonials = dynamic(
   () => import("./Testimonials"),
   {
@@ -163,17 +155,6 @@ export const LazyThreeCanvasWithIntersection = () => (
   >
     <Suspense fallback={<ThreeLoadingPlaceholder />}>
       <LazyThreeCanvas />
-    </Suspense>
-  </LazyWithIntersection>
-);
-
-export const LazyPanoramaScrollWithIntersection = () => (
-  <LazyWithIntersection
-    fallback={<ThreeLoadingPlaceholder />}
-    rootMargin="300px"
-  >
-    <Suspense fallback={<ThreeLoadingPlaceholder />}>
-      <LazyPanoramaScroll />
     </Suspense>
   </LazyWithIntersection>
 );

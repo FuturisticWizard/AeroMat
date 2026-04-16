@@ -17,6 +17,19 @@
   background: #000;
 }
 
+/* Twarda czarna belka 2px na samym dole hero — zabezpieczenie przed subpixel peek video */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #000;
+  z-index: 20;
+  pointer-events: none;
+}
+
 .video {
   position: absolute;
   inset: 0;
@@ -65,6 +78,8 @@
     transparent 0%,
     rgb(0 0 0 / 40%) 40%,
     rgb(0 0 0 / 85%) 75%,
+    /* ostatnie ~5% = pełna czerń bez interpolacji (zabezpieczenie przed subpixel peekiem video) */
+    rgb(0 0 0 / 100%) 95%,
     rgb(0 0 0 / 100%) 100%
   );
 }
@@ -89,27 +104,10 @@
   }
 }
 
-/* Tablet: bottom 80% with very long fade — even higher + much more stretched gradient */
-@media (width <= 1024px) and (width >= 769px) {
+/* Hide left knockout below 1024px — word-local gradient (.vCol::before) handles darkening */
+@media (width <= 1024px) {
   .koHalf {
-    width: 100%;
-    top: auto;
-    bottom: 0;
-    height: 80%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
-  }
-}
-
-/* Mobile + small: bottom 65% with soft fade on top edge */
-@media (width <= 768px) {
-  .koHalf {
-    width: 100%;
-    top: auto;
-    bottom: 0;
-    height: 48%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+    display: none;
   }
 }
 
@@ -124,6 +122,27 @@
   align-items: stretch;
   gap: 0;
   z-index: 3;
+}
+
+/* Word-local darkening backdrop — always covers full word area
+   Extends above and around vCol so top edge stays soft, bottom fades to black */
+.vCol::before {
+  content: "";
+  position: absolute;
+  top: -22vh;
+  left: -4vw;
+  right: -4vw;
+  bottom: -6vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(0 0 0 / 5%) 35%,
+    rgb(0 0 0 / 40%) 70%,
+    rgb(0 0 0 / 85%) 90%,
+    rgb(0 0 0 / 100%) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
 }
 
 .vWord {
@@ -149,7 +168,7 @@
 @media (width <= 768px) {
   .vCol {
     top: auto;
-    bottom: clamp(50px, 7.5vh, 75px);
+    bottom: calc(clamp(140px, 22vh, 220px) - 65px);
     height: auto;
   }
 
@@ -562,6 +581,88 @@
   opacity: 0;
   transform: translateY(12px);
   max-width: 480px;
+  animation: heroCtaFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes heroCtaFadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================================================================
+   FILM STRIPS — vertical strips on left + right edges
+   Black panel with white text. mix-blend-mode: multiply makes
+   black stay black (blocks video) and white letters show the
+   video through (letters = "holes"/perforations in 35mm film).
+   ================================================================ */
+.strip {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: clamp(70px, 10vw, 130px);
+  overflow: hidden;
+  z-index: 3;
+  background: #000;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.stripLeft  { left: 0; }
+.stripRight { right: 0; }
+
+.track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(30px, 4vh, 70px);
+  padding: clamp(30px, 4vh, 70px) 0;
+  will-change: transform;
+  animation: heroStripScroll 60s linear infinite;
+}
+
+.txt {
+  flex: 0 0 auto;
+  color: #fff;
+  font-family: var(--font-anton), Anton, sans-serif;
+  font-size: clamp(44px, 7vw, 90px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  writing-mode: vertical-lr;
+  text-transform: none;
+  user-select: none;
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: clamp(6px, 0.8vw, 12px);
+  height: clamp(6px, 0.8vw, 12px);
+  background: #fff;
+  border-radius: 50%;
+}
+
+@keyframes heroStripScroll {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+/* Tablet / medium — slightly thinner strips, adjust CTA to not overlap right strip */
+@media (width <= 1024px) {
+  .strip { width: clamp(64px, 11vw, 100px); }
+  .txt { font-size: clamp(40px, 8vw, 78px); }
+}
+
+/* Mobile — thinner strips, smaller text */
+@media (width <= 768px) {
+  .strip { width: clamp(50px, 14vw, 72px); }
+  .txt { font-size: clamp(34px, 10vw, 56px); letter-spacing: -0.01em; }
+  .dot { width: 5px; height: 5px; }
+  .track { gap: clamp(20px, 4vh, 40px); padding: clamp(20px, 4vh, 40px) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+  .bot { animation: none; opacity: 1; transform: none; }
 }
 
 .copy {
@@ -630,7 +731,7 @@
 @media (width >= 1025px) {
   .bot {
     left: auto;
-    right: 0;
+    right: clamp(70px, 10vw, 130px); /* clear the right film strip */
     max-width: 480px;
     bottom: clamp(4rem, 10vh, 8rem);
     text-align: right;
@@ -696,17 +797,18 @@
 @media (width <= 1024px) {
   .bot {
     max-width: 400px;
+    right: clamp(64px, 11vw, 100px); /* clear right film strip on tablet */
     bottom: clamp(3rem, 8vh, 5rem);
   }
 }
 
 @media (width <= 768px) {
   .bot {
-    left: auto !important;
-    right: 0;
-    max-width: 100%;
-    padding: 0.8rem 1.5rem 0.8rem 2.5rem;
-    bottom: clamp(4rem, 12vh, 7rem);
+    left: clamp(50px, 14vw, 72px) !important; /* clear left film strip */
+    right: clamp(50px, 14vw, 72px); /* clear right film strip */
+    max-width: none;
+    padding: 0.8rem 1rem;
+    bottom: calc(clamp(7rem, 18vh, 11rem) - 50px);
     text-align: right;
   }
 
@@ -728,6 +830,15 @@
   }
 
   .bottomFade {
-    height: 15%;
+    height: 40%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(0 0 0 / 15%) 35%,
+      rgb(0 0 0 / 50%) 70%,
+      rgb(0 0 0 / 85%) 90%,
+      rgb(0 0 0 / 100%) 97%,
+      rgb(0 0 0 / 100%) 100%
+    );
   }
 }

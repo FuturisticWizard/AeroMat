@@ -101,6 +101,9 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       });
       const chars = cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
       gsap.set(chars, { x: "110%" });
+      // Title was hidden with opacity: 0 in CSS to prevent pre-animation flash;
+      // safe to unhide now — chars are off-screen inside overflow:hidden .char wrappers.
+      gsap.set(title, { opacity: 1 });
       (cardEl as HTMLElement & { __split?: boolean }).__split = true;
     };
 
