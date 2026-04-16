@@ -181,6 +181,9 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Zamknij menu" : "Otwórz menu"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <AnimatePresence mode="wait" initial={false}>
                 {isMobileMenuOpen ? (
@@ -212,6 +215,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
 
       {/* Mobile menu */}
       <motion.div
+        id="mobile-menu"
         initial={false}
         animate={isMobileMenuOpen ? "open" : "closed"}
         variants={{

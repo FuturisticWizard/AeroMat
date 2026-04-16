@@ -27,12 +27,31 @@ const GlitchedVideoHero = () => {
   const [videoSources, setVideoSources] = useState<{ webm: string; mp4: string } | null>(null);
 
   useEffect(() => {
+    // Defer video source assignment until browser is idle.
+    // Poster is LCP, video kicks in after first paint — keeps LCP ~poster-fast.
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    setVideoSources(
-      isMobile
-        ? { webm: "/movies/hero_mini.webm", mp4: "/movies/hero_mini.mp4" }
-        : { webm: "/movies/hero_medium.webm", mp4: "/movies/hero_compressed.mp4" }
-    );
+    const sources = isMobile
+      ? { webm: "/movies/hero_mini.webm", mp4: "/movies/hero_mini.mp4" }
+      : { webm: "/movies/hero_medium.webm", mp4: "/movies/hero_compressed.mp4" };
+
+    type IdleWindow = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    const w = window as IdleWindow;
+    let handle: number;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (typeof w.requestIdleCallback === "function") {
+      handle = w.requestIdleCallback(() => setVideoSources(sources), { timeout: 2000 });
+    } else {
+      timer = setTimeout(() => setVideoSources(sources), 1500);
+    }
+    return () => {
+      if (typeof w.cancelIdleCallback === "function" && handle !== undefined) {
+        w.cancelIdleCallback(handle);
+      }
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -60,7 +79,7 @@ const GlitchedVideoHero = () => {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         poster="/images/hero-poster.webp"
         className={styles.video}
       >

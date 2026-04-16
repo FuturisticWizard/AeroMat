@@ -8,16 +8,19 @@ import { Mail, Phone } from "lucide-react";
 const socials = [
   {
     title: "facebook",
+    label: "AeroMat na Facebooku",
     icon: faFacebookF,
     link: "https://www.facebook.com/aeromat1",
   },
   {
     title: "instagram",
+    label: "AeroMat na Instagramie",
     icon: faInstagram,
     link: "https://www.instagram.com/aeromat1/",
   },
   {
     title: "youtube",
+    label: "Kanał AeroMat na YouTube",
     icon: faYoutube,
     link: "https://www.youtube.com/@AeroMat1/",
   },
@@ -66,6 +69,7 @@ const Footer = () => {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.label}
                   className="text-white hover:text-white/70 transition-colors"
                 >
                   <FontAwesomeIcon icon={social.icon} className="w-8 h-8" />

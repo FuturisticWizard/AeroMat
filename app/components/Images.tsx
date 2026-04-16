@@ -16,14 +16,18 @@ interface Slide {
   smcolspan?: number;
 }
 
-// Compute responsive sizes from colspan (out of 10) per-slide. No mobile floor —
-// DPR already doubles effective pixels, previous floor caused 2-3x over-fetch.
-// Mild desktop floor (25vw) prevents narrow tiles from serving undersized on retina.
+// Compute responsive sizes from colspan (out of 10) per-slide.
+// - Mobile: raw vw (DPR doubles effective pixels)
+// - Desktop: vw with 25% floor for narrow tiles on retina
+// - Ultra-wide cap: on ≥1920px viewports, portfolio tiles practically don't exceed
+//   `colspan * 140px` (grids top out around 1400px total width), so cap srcset pick
+//   to avoid browsers pulling the 2560px variant for a tile that'll never render that wide.
 const computeSizes = (slide: Slide): string => {
   const desktopVw = slide.colspan ? Math.min(100, Math.round((slide.colspan / 10) * 100)) : 100;
   const mobileVw = slide.smcolspan ? Math.min(100, Math.round((slide.smcolspan / 10) * 100)) : 100;
-  const desktopFinal = Math.max(desktopVw, 25);
-  return `(max-width: 768px) ${mobileVw}vw, ${desktopFinal}vw`;
+  const desktopFloor = Math.max(desktopVw, 25);
+  const desktopPxCap = Math.round(desktopVw * 14);
+  return `(max-width: 768px) ${mobileVw}vw, (min-width: 1920px) ${desktopPxCap}px, ${desktopFloor}vw`;
 };
 
 interface ImageSlideProps {
