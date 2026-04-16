@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { useAudio } from "@/app/context/AudioContext";
 import styles from "./GlitchedVideoHero.module.css";
 
@@ -79,17 +78,17 @@ const GlitchedVideoHero = () => {
 
   return (
     <div className={styles.hero}>
-      {/* Poster as independent <Image> (not video poster attr) — Chrome scores
-          this as LCP as soon as it paints, regardless of when video sources
-          attach later. */}
-      <Image
+      {/* Poster as plain <img> (NOT next/image) so the URL matches the
+          <link rel="preload"> in layout.tsx exactly. next/image served via
+          /_next/image?url=... would be a different URL and skip the preload. */}
+      <img
         src="/images/hero-poster.webp"
         alt=""
         aria-hidden
-        fill
-        priority
+        width={1280}
+        height={720}
+        decoding="sync"
         fetchPriority="high"
-        sizes="100vw"
         className={styles.poster}
       />
       <video

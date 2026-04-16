@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { Mail, Phone } from "lucide-react";
+import { FacebookIcon, InstagramIcon, YouTubeIcon } from "../components/SocialIcons";
 
 const socials = [
-  { title: "facebook", icon: faFacebookF, link: "https://www.facebook.com/aeromat1" },
-  { title: "instagram", icon: faInstagram, link: "https://www.instagram.com/aeromat1/" },
-  { title: "youtube", icon: faYoutube, link: "https://www.youtube.com/@AeroMat1/" },
+  { title: "facebook", Icon: FacebookIcon, link: "https://www.facebook.com/aeromat1" },
+  { title: "instagram", Icon: InstagramIcon, link: "https://www.instagram.com/aeromat1/" },
+  { title: "youtube", Icon: YouTubeIcon, link: "https://www.youtube.com/@AeroMat1/" },
 ];
 
 function FooterVariant({
@@ -68,17 +67,20 @@ function FooterVariant({
             <div className="flex flex-col w-full justify-center items-center text-center">
               <h3 className={`font-bold text-lg mb-4 ${textColor}`}>Śledź Nas!</h3>
               <div className="flex space-x-4">
-                {socials.map((social, index) => (
-                  <Link
-                    key={index}
-                    href={social.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${textColor} hover:opacity-70 transition-opacity`}
-                  >
-                    <FontAwesomeIcon icon={social.icon} className="w-8 h-8" />
-                  </Link>
-                ))}
+                {socials.map((social, index) => {
+                  const Icon = social.Icon;
+                  return (
+                    <Link
+                      key={index}
+                      href={social.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${textColor} hover:opacity-70 transition-opacity`}
+                    >
+                      <Icon className="w-8 h-8" />
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

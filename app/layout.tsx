@@ -1,9 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Inter, Bebas_Neue, Caveat, Anton, Syne, Space_Grotesk } from "next/font/google";
-import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-config.autoAddCss = false;
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";

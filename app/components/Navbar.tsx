@@ -9,8 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAudio } from "@/app/context/AudioContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { FacebookIcon, InstagramIcon, YouTubeIcon } from "./SocialIcons";
 
 interface NavItem {
   label: string;
@@ -29,9 +28,9 @@ const defaultItems: NavItem[] = [
 ];
 
 const socials = [
-  { title: "facebook", icon: faFacebookF, link: "https://www.facebook.com/aeromat1" },
-  { title: "instagram", icon: faInstagram, link: "https://www.instagram.com/aeromat1/" },
-  { title: "youtube", icon: faYoutube, link: "https://www.youtube.com/@AeroMat1/" },
+  { title: "facebook", Icon: FacebookIcon, link: "https://www.facebook.com/aeromat1" },
+  { title: "instagram", Icon: InstagramIcon, link: "https://www.instagram.com/aeromat1/" },
+  { title: "youtube", Icon: YouTubeIcon, link: "https://www.youtube.com/@AeroMat1/" },
 ];
 
 const Navbar = ({ items = defaultItems }: NavbarProps) => {
@@ -143,7 +142,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 className="text-white hover:text-[#ff7302] transition-colors duration-200"
                 aria-label={social.title}
               >
-                <FontAwesomeIcon icon={social.icon} className="w-5 h-5" />
+                <social.Icon className="w-5 h-5" />
               </Link>
             ))}
             <Button
@@ -249,7 +248,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 className="text-white hover:text-[#ff7302] transition-colors duration-200"
                 aria-label={social.title}
               >
-                <FontAwesomeIcon icon={social.icon} className="w-5 h-5" />
+                <social.Icon className="w-5 h-5" />
               </Link>
             ))}
           </div>

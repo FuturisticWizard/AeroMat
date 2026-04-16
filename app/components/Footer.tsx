@@ -1,27 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { Mail, Phone } from "lucide-react";
+import { FacebookIcon, InstagramIcon, YouTubeIcon } from "./SocialIcons";
 
 const socials = [
   {
     title: "facebook",
     label: "AeroMat na Facebooku",
-    icon: faFacebookF,
+    Icon: FacebookIcon,
     link: "https://www.facebook.com/aeromat1",
   },
   {
     title: "instagram",
     label: "AeroMat na Instagramie",
-    icon: faInstagram,
+    Icon: InstagramIcon,
     link: "https://www.instagram.com/aeromat1/",
   },
   {
     title: "youtube",
     label: "Kanał AeroMat na YouTube",
-    icon: faYoutube,
+    Icon: YouTubeIcon,
     link: "https://www.youtube.com/@AeroMat1/",
   },
 ];
@@ -63,18 +62,21 @@ const Footer = () => {
           <div className="flex flex-col w-full justify-center items-center text-center ">
             <h3 className="font-bold text-lg mb-4 text-white">Śledź Nas!</h3>
             <div className="flex space-x-4">
-              {socials.map((social, index) => (
-                <Link
-                  key={index}
-                  href={social.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="text-white hover:text-white/70 transition-colors"
-                >
-                  <FontAwesomeIcon icon={social.icon} className="w-8 h-8" />
-                </Link>
-              ))}
+              {socials.map((social, index) => {
+                const Icon = social.Icon;
+                return (
+                  <Link
+                    key={index}
+                    href={social.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="text-white hover:text-white/70 transition-colors"
+                  >
+                    <Icon className="w-8 h-8" />
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
