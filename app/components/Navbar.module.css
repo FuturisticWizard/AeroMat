@@ -1,0 +1,55 @@
+/* Nav entrance — slide from above (replaces motion.nav) */
+.nav {
+  animation: navSlideDown 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes navSlideDown {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+/* Hamburger ↔ X icon swap (replaces AnimatePresence with rotate+fade) */
+.iconSwap {
+  position: relative;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.iconMenu,
+.iconX {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Default: Menu visible, X rotated off */
+.iconMenu { transform: rotate(0);    opacity: 1; }
+.iconX    { transform: rotate(-90deg); opacity: 0; }
+
+/* When open: Menu rotates out, X rotates in */
+.iconSwap[data-open="true"] .iconMenu { transform: rotate(90deg);  opacity: 0; }
+.iconSwap[data-open="true"] .iconX    { transform: rotate(0);      opacity: 1; }
+
+/* Mobile menu collapse — CSS grid 0fr → 1fr trick for height:0 → auto */
+.mobileMenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.25s ease;
+}
+
+.mobileMenu[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.mobileMenuInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav { animation: none; }
+  .iconMenu, .iconX, .mobileMenu { transition: none; }
+}

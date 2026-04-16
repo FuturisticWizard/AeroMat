@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
 import { Menu, X, Volume2, VolumeX } from "lucide-react";
@@ -10,6 +9,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAudio } from "@/app/context/AudioContext";
 import { FacebookIcon, InstagramIcon, YouTubeIcon } from "./SocialIcons";
+import styles from "./Navbar.module.css";
 
 interface NavItem {
   label: string;
@@ -92,13 +92,12 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
   );
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+    <nav
       className={cn(
         "fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-sm transition-all duration-300 border-b border-neutral-800",
         isScrolled ? "shadow-lg shadow-black/50" : "",
         "z-[100]",
+        styles.nav,
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 z-[110]">
@@ -184,77 +183,55 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {isMobileMenuOpen ? (
-                  <motion.span
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="h-6 w-6" />
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="h-6 w-6" />
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              <span className={styles.iconSwap} data-open={isMobileMenuOpen}>
+                <Menu className={`h-6 w-6 ${styles.iconMenu}`} />
+                <X className={`h-6 w-6 ${styles.iconX}`} />
+              </span>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <motion.div
+      {/* Mobile menu — CSS grid-template-rows trick animates height:0 → auto */}
+      <div
         id="mobile-menu"
-        initial={false}
-        animate={isMobileMenuOpen ? "open" : "closed"}
-        variants={{
-          open: { height: "auto", opacity: 1 },
-          closed: { height: 0, opacity: 0 },
-        }}
-        className="md:hidden overflow-hidden z-[120]"
+        className={`md:hidden z-[120] ${styles.mobileMenu}`}
+        data-open={isMobileMenuOpen}
       >
-        <div className="px-4 pt-3 pb-4 space-y-1">
-          {items.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
-              onClick={(e) => {
-                handleNavClick(e, item.href);
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-          {/* Social media icons in mobile menu */}
-          <div className="flex items-center space-x-4 px-3 pt-3 border-t border-neutral-700 mt-2">
-            {socials.map((social) => (
-              <Link
-                key={social.title}
-                href={social.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-[#ff7302] transition-colors duration-200"
-                aria-label={social.title}
+        <div className={styles.mobileMenuInner}>
+          <div className="px-4 pt-3 pb-4 space-y-1">
+            {items.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
+                onClick={(e) => {
+                  handleNavClick(e, item.href);
+                  setIsMobileMenuOpen(false);
+                }}
               >
-                <social.Icon className="w-5 h-5" />
-              </Link>
+                {item.label}
+              </a>
             ))}
+            {/* Social media icons in mobile menu */}
+            <div className="flex items-center space-x-4 px-3 pt-3 border-t border-neutral-700 mt-2">
+              {socials.map((social) => (
+                <Link
+                  key={social.title}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[#ff7302] transition-colors duration-200"
+                  aria-label={social.title}
+                >
+                  <social.Icon className="w-5 h-5" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </motion.div>
-    </motion.nav>
+      </div>
+    </nav>
   );
 };
 
