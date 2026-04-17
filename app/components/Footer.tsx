@@ -27,7 +27,7 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-black to-[#2d1a0a] pt-24 md:pt-48 pb-12 px-4">
+    <footer className="bg-gradient-to-b from-white to-[#fff3e8] dark:from-black dark:to-[#2d1a0a] pt-24 md:pt-48 pb-12 px-4">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex w-full justify-center items-center pt-12">
@@ -36,13 +36,19 @@ const Footer = () => {
                 src="/logo/logo-white.png"
                 alt="logo-aeromat"
                 fill
-                className="object-contain"
+                className="object-contain hidden dark:block"
+              />
+              <Image
+                src="/logo/logo-black.jpg"
+                alt="logo-aeromat"
+                fill
+                className="object-contain block dark:hidden"
               />
             </div>
           </div>
           <div className="flex flex-col w-full justify-center items-center text-center">
-            <h3 className="font-bold text-lg mb-4 text-white">Kontakt</h3>
-            <address className="not-italic text-white/80 space-y-2">
+            <h3 className="font-bold text-lg mb-4 text-foreground">Kontakt</h3>
+            <address className="not-italic text-foreground/80 space-y-2">
               <a
                 href="mailto:kontakt@aeromat.pl"
                 className="flex items-center justify-center gap-2 hover:text-accent transition-colors"
@@ -60,7 +66,7 @@ const Footer = () => {
             </address>
           </div>
           <div className="flex flex-col w-full justify-center items-center text-center ">
-            <h3 className="font-bold text-lg mb-4 text-white">Śledź Nas!</h3>
+            <h3 className="font-bold text-lg mb-4 text-foreground">Śledź Nas!</h3>
             <div className="flex space-x-4">
               {socials.map((social, index) => {
                 const Icon = social.Icon;
@@ -71,7 +77,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="text-white hover:text-white/70 transition-colors"
+                    className="text-foreground hover:text-foreground/70 transition-colors"
                   >
                     <Icon className="w-8 h-8" />
                   </Link>
@@ -81,7 +87,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className=" mt-8 pt-8 text-center text-white">
+        <div className=" mt-8 pt-8 text-center text-foreground">
           <p>© {new Date().getFullYear()} AeroMat. All rights reserved.</p>
           <p className="text-sm">
             Icons by{" "}

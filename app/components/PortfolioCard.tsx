@@ -27,7 +27,7 @@ interface PortfolioCardProps {
 const PortfolioCard: React.FC<PortfolioCardProps> = ({ data, id, gridVariant = "11", className = "" }) => {
   return (
     <section
-      className={`portfolio-break portfolio-card-${id} relative bg-[#050505] overflow-hidden ${className}`}
+      className={`portfolio-break portfolio-card-${id} relative bg-background dark:bg-[#050505] overflow-hidden ${className}`}
       data-portfolio-id={id}
     >
       <div className="portfolio-wrapper">

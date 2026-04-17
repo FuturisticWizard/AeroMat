@@ -80,6 +80,48 @@
   }
 }
 
+/* Theme toggle — sun <-> moon morph (inspired by codepen.io/wgao19/pen/vMzOgQ)
+   Default SVG renders a full sun with rays. In dark mode a mask circle slides
+   over the disc's upper-right, carving a crescent; rays simultaneously collapse. */
+.theme-toggle-icon {
+  overflow: visible;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-icon[data-mode="dark"] {
+  transform: rotate(40deg);
+}
+
+.theme-toggle-disc {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.theme-toggle-icon[data-mode="dark"] .theme-toggle-disc {
+  transform: scale(1.6);
+}
+
+.theme-toggle-cutout {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode: mask circle parked off-disc (no bite). Dark: slides into bite position. */
+.theme-toggle-icon[data-mode="dark"] .theme-toggle-cutout {
+  transform: translate(-7px, 7px);
+}
+
+.theme-toggle-rays {
+  transform-origin: center;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-out;
+}
+
+.theme-toggle-icon[data-mode="dark"] .theme-toggle-rays {
+  transform: scale(0) rotate(-45deg);
+  opacity: 0;
+}
+
 .yesteryear-regular {
     font-family: Yesteryear, serif;
     font-weight: 400;
@@ -539,17 +581,39 @@
   font-size: clamp(2.25rem, 10vw, 6rem);
   font-weight: 400;
   font-family: var(--font-bebas);
-  color: #333;
+  color: #c9c9c9; /* subtle on white (light mode) */
   transition: color 0.3s ease;
 }
 
+.dark .card-marquee .marquee h1 {
+  color: #333; /* subtle on black (dark mode) */
+}
+
 .card-marquee .marquee h1.marquee-hover {
+  color: #1a1a1a;
+}
+
+.dark .card-marquee .marquee h1.marquee-hover {
   color: #fff;
 }
 
-/* Neon glow for intro/outro words — white core + blue outer glow */
+/* Neon glow for intro/outro words
+   Light mode default: orange core + amber outer glow (matches accent)
+   Dark mode: white core + blue outer glow (cinematic) */
 .intro-word,
 .outro-word {
+  color: #ff7302;
+  text-shadow:
+    0 0 7px rgb(255 115 2 / 90%),
+    0 0 12px rgb(255 115 2 / 60%),
+    0 0 22px rgb(255 180 50 / 70%),
+    0 0 45px rgb(255 180 50 / 50%),
+    0 0 75px rgb(255 200 50 / 30%),
+    0 0 110px rgb(255 200 50 / 15%);
+}
+
+.dark .intro-word,
+.dark .outro-word {
   color: #fff;
   text-shadow:
     0 0 7px rgb(255 255 255 / 90%),
@@ -560,11 +624,18 @@
     0 0 110px rgb(34 141 255 / 15%);
 }
 
-/* Cards base layout (must NOT be desktop-only, otherwise mobile ends up with dark text on dark bg) */
+/* Themed sections — follow light/dark mode */
 .intro,
 .outro,
+.cards {
+  position: relative;
+  width: 100vw;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Always-dark sections (cinematic, panorama pins) */
 .text-break,
-.cards,
 .panorama-section {
   position: relative;
   width: 100vw;
@@ -662,6 +733,9 @@
 
   /* Always above dim layer */
   z-index: 10;
+
+  /* Card text sits over a dimmed image — always white for legibility regardless of theme */
+  color: #fff;
 }
 
 .card-content .card-title h1 {
@@ -1143,9 +1217,15 @@
   }
 
 
+  /* Themed desktop sections — bg/color inherited from base rule (hsl vars) */
   .intro,
   .outro,
-  .cards,
+  .cards {
+    position: relative;
+    width: 100vw;
+  }
+
+  /* Panorama stays always-dark (cinematic pin) */
   .panorama-section {
     position: relative;
     width: 100vw;

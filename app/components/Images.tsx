@@ -164,7 +164,7 @@ const Images: FC<ImageSlideProps> = (props) => {
             <div
               key={index}
               onClick={() => handleClickImage(index)}
-              className="relative gpu-accelerated portfolio-item"
+              className="relative gpu-accelerated portfolio-item bg-neutral-200 dark:bg-neutral-900"
               style={{ gridArea: slide.gridArea }}
             >
               <Image
@@ -202,7 +202,7 @@ const Images: FC<ImageSlideProps> = (props) => {
           <motion.div
             key={index}
             onClick={() => handleClickImage(index)}
-            className="relative gpu-accelerated"
+            className="relative gpu-accelerated bg-neutral-200 dark:bg-neutral-900"
             style={{ gridArea: slide.gridArea }}
             variants={itemVariants}
           >

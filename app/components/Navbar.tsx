@@ -96,7 +96,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-sm transition-all duration-300 border-b border-border",
-        isScrolled ? "shadow-lg shadow-black/50 dark:shadow-black/50" : "",
+        isScrolled ? "shadow-md shadow-black/10 dark:shadow-lg dark:shadow-black/50" : "",
         "z-[100]",
         styles.nav,
       )}

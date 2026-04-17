@@ -12,7 +12,8 @@
   background: #000;
 }
 
-/* Twarda czarna belka 2px na samym dole hero — zabezpieczenie przed subpixel peek video */
+/* Twarda belka 2px na samym dole hero — zabezpieczenie przed subpixel peek video.
+   Biała w light mode (pasuje do Intro), czarna w dark mode. */
 .hero::after {
   content: "";
   position: absolute;
@@ -20,9 +21,13 @@
   right: 0;
   bottom: 0;
   height: 2px;
-  background: #000;
+  background: #fff;
   z-index: 20;
   pointer-events: none;
+}
+
+:global(.dark) .hero::after {
+  background: #000;
 }
 
 /* Static poster image — paints first, Chrome scores this as LCP */
@@ -58,6 +63,16 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  /* Light mode default — white wash */
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 10%) 0%,
+    rgb(255 255 255 / 3%) 50%,
+    rgb(255 255 255 / 50%) 100%
+  );
+}
+
+:global(.dark) .videoGrad {
   background: linear-gradient(
     to bottom,
     rgb(0 0 0 / 10%) 0%,
@@ -70,6 +85,15 @@
   .videoGrad {
     background: linear-gradient(
       to bottom,
+      rgb(255 255 255 / 5%) 0%,
+      rgb(255 255 255 / 2%) 40%,
+      rgb(255 255 255 / 30%) 100%
+    );
+  }
+
+  :global(.dark) .videoGrad {
+    background: linear-gradient(
+      to bottom,
       rgb(0 0 0 / 5%) 0%,
       rgb(0 0 0 / 2%) 40%,
       rgb(0 0 0 / 30%) 100%
@@ -77,7 +101,7 @@
   }
 }
 
-/* Bottom fade — smooth transition to black/Intro section */
+/* Bottom fade — smooth transition to Intro section (white in light, black in dark) */
 .bottomFade {
   position: absolute;
   bottom: 0;
@@ -86,6 +110,17 @@
   height: 25%;
   z-index: 15;
   pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(255 255 255 / 40%) 40%,
+    rgb(255 255 255 / 85%) 75%,
+    rgb(255 255 255 / 100%) 95%,
+    rgb(255 255 255 / 100%) 100%
+  );
+}
+
+:global(.dark) .bottomFade {
   background: linear-gradient(
     to bottom,
     transparent 0%,
