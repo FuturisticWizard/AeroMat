@@ -70,7 +70,7 @@ export default function WhyChooseMe() {
       >
         Co mnie wyróżnia?
       </h2>
-      <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mb-12">
+      <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mb-12">
         Ponad 25 lat doświadczenia przekutych w podejście, któremu zaufały
         dziesiątki firm w całej Polsce.
       </p>
@@ -85,7 +85,7 @@ export default function WhyChooseMe() {
             <div
               key={feature.number}
               data-reveal
-              className="relative bg-white/5 border border-white/10 rounded-2xl p-6 transition-colors duration-300 hover:border-accent/30 hover:bg-white/[0.07]"
+              className="relative bg-foreground/5 border border-foreground/10 rounded-2xl p-6 transition-colors duration-300 hover:border-accent/30 hover:bg-foreground/[0.07]"
               style={{
                 opacity: 0,
                 transform: "translateY(24px)",
@@ -103,11 +103,11 @@ export default function WhyChooseMe() {
                 aria-hidden="true"
               />
 
-              <h3 className="text-lg font-semibold text-white mb-2">
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 {feature.title}
               </h3>
 
-              <p className="text-sm text-gray-400 leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>
