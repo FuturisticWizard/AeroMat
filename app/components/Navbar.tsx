@@ -95,8 +95,8 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 bg-black/90 backdrop-blur-sm transition-all duration-300 border-b border-neutral-800",
-        isScrolled ? "shadow-lg shadow-black/50" : "",
+        "fixed top-0 left-0 right-0 bg-background/90 backdrop-blur-sm transition-all duration-300 border-b border-border",
+        isScrolled ? "shadow-lg shadow-black/50 dark:shadow-black/50" : "",
         "z-[100]",
         styles.nav,
       )}
@@ -112,7 +112,15 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 height={54}
                 style={{ height: "auto" }}
                 alt="Logo"
-                className="w-[130px] sm:w-[150px] md:w-[175px]"
+                className="w-[130px] sm:w-[150px] md:w-[175px] hidden dark:block"
+              />
+              <Image
+                src="/logo/logo-black.jpg"
+                width={175}
+                height={54}
+                style={{ height: "auto" }}
+                alt="Logo"
+                className="w-[130px] sm:w-[150px] md:w-[175px] block dark:hidden"
               />
             </Link>
           </div>
@@ -124,7 +132,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-gray-300 hover:text-accent transition-colors duration-200"
+                className="text-foreground/80 hover:text-accent transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -139,7 +147,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-accent transition-colors duration-200"
+                className="text-foreground hover:text-accent transition-colors duration-200"
                 aria-label={social.title}
               >
                 <social.Icon className="w-5 h-5" />
@@ -148,7 +156,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-accent text-white hover:text-white transition-colors"
+              className="rounded-full h-10 w-10 bg-secondary hover:bg-accent text-foreground hover:text-white transition-colors"
               onClick={toggleMute}
               aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
             >
@@ -166,7 +174,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-accent text-white hover:text-white transition-colors"
+              className="rounded-full h-10 w-10 bg-secondary hover:bg-accent text-foreground hover:text-white transition-colors"
               onClick={toggleMute}
               aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
             >
@@ -178,7 +186,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             </Button>
             <ThemeToggle />
             <Button
-              className="text-white hover:text-accent hover:bg-transparent focus-visible:ring-0 z-[130] relative"
+              className="text-foreground hover:text-accent hover:bg-transparent focus-visible:ring-0 z-[130] relative"
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -207,7 +215,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               <a
                 key={item.href}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium text-white hover:text-accent hover:bg-neutral-800/80 rounded-md transition-colors"
+                className="block px-3 py-2 text-base font-medium text-foreground hover:text-accent hover:bg-secondary/80 rounded-md transition-colors"
                 onClick={(e) => {
                   handleNavClick(e, item.href);
                   setIsMobileMenuOpen(false);
@@ -217,14 +225,14 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               </a>
             ))}
             {/* Social media icons in mobile menu */}
-            <div className="flex items-center space-x-4 px-3 pt-3 border-t border-neutral-700 mt-2">
+            <div className="flex items-center space-x-4 px-3 pt-3 border-t border-border mt-2">
               {socials.map((social) => (
                 <Link
                   key={social.title}
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-accent transition-colors duration-200"
+                  className="text-foreground hover:text-accent transition-colors duration-200"
                   aria-label={social.title}
                 >
                   <social.Icon className="w-5 h-5" />

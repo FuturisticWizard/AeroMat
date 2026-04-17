@@ -5,9 +5,9 @@ const TrustedBy = () => {
   return (
     <section className="py-12 md:py-16 px-4 sm:px-8">
       <div className="flex flex-row justify-center items-center pb-6">
-        <span className="border-b border-solid border-white/20 w-8 h-1" />
-        <h3 className="text-center px-4 text-white">Zaufały Mi Silne Marki:</h3>
-        <span className="border-b border-solid border-white/20 w-8 h-1" />
+        <span className="border-b border-solid border-foreground/20 w-8 h-1" />
+        <h3 className="text-center px-4 text-foreground">Zaufały Mi Silne Marki:</h3>
+        <span className="border-b border-solid border-foreground/20 w-8 h-1" />
       </div>
       <div className="relative">
         {/* Aurora wash behind logos — variant 34b (magenta / orange / amber) */}
