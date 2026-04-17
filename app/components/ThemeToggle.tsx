@@ -33,7 +33,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-[#ff7302] text-white hover:text-white transition-colors"
+      className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-accent text-white hover:text-white transition-colors"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Włącz tryb jasny" : "Włącz tryb ciemny"}
     >

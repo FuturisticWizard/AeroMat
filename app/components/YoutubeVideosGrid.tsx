@@ -88,7 +88,7 @@ export default function YouTubeGrid() {
     <section id="w-akcji" className="py-16 md:py-24 max-w-7xl mx-auto mb-12 scroll-mt-24">
       <div className="container px-4 mx-auto relative">
         <div className="py-4">
-          <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-[#ff7302]">
+          <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-accent">
           FILMY
           </h2>
 
@@ -127,7 +127,7 @@ export default function YouTubeGrid() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.6 }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-[94%] max-w-5xl rounded-xl overflow-hidden bg-neutral-900 border border-[#ff7302]/40 shadow-2xl shadow-orange-500/30"
+                  className="w-[94%] max-w-5xl rounded-xl overflow-hidden bg-neutral-900 border border-accent/40 shadow-2xl shadow-orange-500/30"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="relative pb-[56.25%]">
@@ -141,7 +141,7 @@ export default function YouTubeGrid() {
                     ></iframe>
                     <button
                       onClick={() => setActiveVideo(null)}
-                      className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 hover:bg-[#ff7302] text-white flex items-center justify-center transition-colors duration-200"
+                      className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 hover:bg-accent text-white flex items-center justify-center transition-colors duration-200"
                       aria-label="Zamknij wideo"
                     >
                       ✕
@@ -178,8 +178,8 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
         onClick={!inlinePlay ? handleClick : undefined}
         className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-neutral-900/80 border ${
           isActive
-            ? "border-[#ff7302] shadow-orange-500/20"
-            : "border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-[#ff7302]/40"
+            ? "border-accent shadow-orange-500/20"
+            : "border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-accent/40"
         } ${!inlinePlay ? "cursor-pointer" : ""}`}
       >
         <div className="relative pb-[56.25%] overflow-hidden">
@@ -203,7 +203,7 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-[#ff7302] flex items-center justify-center shadow-lg shadow-orange-500/30 transform group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center shadow-lg shadow-orange-500/30 transform group-hover:scale-110 transition-transform duration-300">
                   <Play className="w-8 h-8 text-white fill-current ml-1" />
                 </div>
               </div>

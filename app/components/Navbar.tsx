@@ -124,7 +124,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-gray-300 hover:text-[#ff7302] transition-colors duration-200"
+                className="text-gray-300 hover:text-accent transition-colors duration-200"
               >
                 {item.label}
               </a>
@@ -139,7 +139,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#ff7302] transition-colors duration-200"
+                className="text-white hover:text-accent transition-colors duration-200"
                 aria-label={social.title}
               >
                 <social.Icon className="w-5 h-5" />
@@ -148,7 +148,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-[#ff7302] text-white hover:text-white transition-colors"
+              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-accent text-white hover:text-white transition-colors"
               onClick={toggleMute}
               aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
             >
@@ -166,7 +166,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-[#ff7302] text-white hover:text-white transition-colors"
+              className="rounded-full h-10 w-10 bg-neutral-800 hover:bg-accent text-white hover:text-white transition-colors"
               onClick={toggleMute}
               aria-label={muted ? "Włącz dźwięk" : "Wycisz"}
             >
@@ -178,7 +178,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             </Button>
             <ThemeToggle />
             <Button
-              className="text-white hover:text-[#ff7302] hover:bg-transparent focus-visible:ring-0 z-[130] relative"
+              className="text-white hover:text-accent hover:bg-transparent focus-visible:ring-0 z-[130] relative"
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -207,7 +207,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               <a
                 key={item.href}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
+                className="block px-3 py-2 text-base font-medium text-white hover:text-accent hover:bg-neutral-800/80 rounded-md transition-colors"
                 onClick={(e) => {
                   handleNavClick(e, item.href);
                   setIsMobileMenuOpen(false);
@@ -224,7 +224,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-[#ff7302] transition-colors duration-200"
+                  className="text-white hover:text-accent transition-colors duration-200"
                   aria-label={social.title}
                 >
                   <social.Icon className="w-5 h-5" />

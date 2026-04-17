@@ -204,7 +204,7 @@ export default function ContactPage() {
           >
             <div
               style={inter}
-              className="mb-4 text-center text-xs uppercase tracking-[0.3em] text-[#ff7302]"
+              className="mb-4 text-center text-xs uppercase tracking-[0.3em] text-accent"
             >
               {String(step + 1).padStart(2, "0")} / {String(totalSteps).padStart(2, "0")} &middot; {current.eyebrow}
             </div>
@@ -224,7 +224,7 @@ export default function ContactPage() {
                   placeholder={current.placeholder}
                   autoFocus
                   {...form.register(current.key)}
-                  className="w-full resize-none border-0 border-b-2 border-white/20 bg-transparent py-4 text-center text-lg text-white placeholder:text-white/25 focus:border-[#ff7302] focus:outline-none md:text-xl"
+                  className="w-full resize-none border-0 border-b-2 border-white/20 bg-transparent py-4 text-center text-lg text-white placeholder:text-white/25 focus:border-accent focus:outline-none md:text-xl"
                   style={{ ...inter, cursor: "text" }}
                 />
               ) : (
@@ -235,7 +235,7 @@ export default function ContactPage() {
                   autoFocus
                   autoComplete={current.key === "email" ? "email" : "off"}
                   {...form.register(current.key)}
-                  className="w-full border-0 border-b-2 border-white/20 bg-transparent py-4 text-center text-2xl text-white placeholder:text-white/25 focus:border-[#ff7302] focus:outline-none md:text-3xl"
+                  className="w-full border-0 border-b-2 border-white/20 bg-transparent py-4 text-center text-2xl text-white placeholder:text-white/25 focus:border-accent focus:outline-none md:text-3xl"
                   style={{ ...syne, cursor: "text" }}
                 />
               )}
@@ -278,7 +278,7 @@ export default function ContactPage() {
                 type="button"
                 onClick={goNext}
                 disabled={status === "sending"}
-                className="group flex items-center gap-3 rounded-full bg-[#ff7302] px-8 py-3 text-white transition hover:bg-white hover:text-[#ff7302] disabled:opacity-60"
+                className="group flex items-center gap-3 rounded-full bg-accent px-8 py-3 text-white transition hover:bg-white hover:text-accent disabled:opacity-60"
                 style={{ ...syne, fontWeight: 700, cursor: "pointer" }}
               >
                 {status === "sending" ? "Wysyłam…" : isLast ? "Wyślij" : "Dalej"}
@@ -305,7 +305,7 @@ export default function ContactPage() {
           </form>
         ) : (
           <div className="w-full max-w-xl text-center">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#ff7302] text-[#ff7302]">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-accent text-accent">
               <Check size={28} />
             </div>
             <h1
@@ -322,14 +322,14 @@ export default function ContactPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/"
-                className="rounded-full border border-white/20 bg-white/5 px-6 py-3 text-white/80 transition hover:border-[#ff7302] hover:text-white"
+                className="rounded-full border border-white/20 bg-white/5 px-6 py-3 text-white/80 transition hover:border-accent hover:text-white"
                 style={{ ...space, cursor: "pointer" }}
               >
                 Strona główna
               </a>
               <a
                 href="/portfolio"
-                className="rounded-full bg-[#ff7302] px-6 py-3 text-white transition hover:bg-white hover:text-black"
+                className="rounded-full bg-accent px-6 py-3 text-white transition hover:bg-white hover:text-black"
                 style={{ ...syne, fontWeight: 700, cursor: "pointer" }}
               >
                 Portfolio →

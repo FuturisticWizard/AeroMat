@@ -45,14 +45,14 @@ const Footer = () => {
             <address className="not-italic text-white/80 space-y-2">
               <a
                 href="mailto:kontakt@aeromat.pl"
-                className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
+                className="flex items-center justify-center gap-2 hover:text-accent transition-colors"
               >
                 <Mail className="w-4 h-4 shrink-0" />
                 <span>kontakt@aeromat.pl</span>
               </a>
               <a
                 href="tel:+48500123456"
-                className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
+                className="flex items-center justify-center gap-2 hover:text-accent transition-colors"
               >
                 <Phone className="w-4 h-4 shrink-0" />
                 <span>+48 500 123 456</span>

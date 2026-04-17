@@ -23,7 +23,7 @@ const HeadingSection = ({
 
       {/* Content */}
       <div className="relative  z-[1]">
-        <h2 id="subheading" className="text-[#ff7302] text-lg font-bold uppercase tracking-wider">
+        <h2 id="subheading" className="text-accent text-lg font-bold uppercase tracking-wider">
           {subheading}
         </h2>
         <div className="flex flex flex-col sm:flex-row order-2 sm:order-1 pb-4 lsm:pb-8 gap-4">

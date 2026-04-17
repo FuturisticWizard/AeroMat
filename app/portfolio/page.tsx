@@ -51,7 +51,7 @@ export default function PhotoPortfolio() {
                 <TabsTrigger 
                   key={category} 
                   value={category}
-                  className="text-gray-300 data-[state=active]:bg-[#ff7302] data-[state=active]:text-white"
+                  className="text-gray-300 data-[state=active]:bg-accent data-[state=active]:text-white"
                 >
                   {category}
                 </TabsTrigger>
@@ -97,7 +97,7 @@ export default function PhotoPortfolio() {
                 profesjonalnego malowania fasady czy unikalnej dekoracji wnętrz,
                 jesteśmy tutaj, aby ożywić Twoją przestrzeń.
               </p>
-              <Button className="inline-block bg-[#ff7302] hover:bg-[#e56502] text-white w-fit">
+              <Button className="inline-block bg-accent hover:bg-accent/90 text-white w-fit">
                 <Link href="/kontakt">Kontakt</Link>
               </Button>
             </div>

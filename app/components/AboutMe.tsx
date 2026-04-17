@@ -22,12 +22,12 @@ const AboutMe = () => {
 
         {/* Text */}
         <SplitTextReveal className="flex flex-col gap-4" selector="h2, h3">
-          <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
+          <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-accent">
           Kim jest AEROMAT?
           </h2>
           <h3 className="text-2xl md:text-3xl font-semibold leading-snug text-white">
             Nazywam się Mateusz, malarstwo to  moja pasja{" "}
-            <span className="text-[#ff7302]">i sposób na życie.</span>
+            <span className="text-accent">i sposób na życie.</span>
           </h3>
           <p className="text-base md:text-lg text-gray-300 leading-relaxed">
             Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich
@@ -38,7 +38,7 @@ const AboutMe = () => {
           </p>
           <p className="text-base md:text-lg text-gray-400 leading-relaxed">
             Stacjonuję w <span className="text-white font-medium">Lublinie</span>, ale
-            działam na terenie <span className="text-[#ff7302] font-medium">całego kraju</span>.
+            działam na terenie <span className="text-accent font-medium">całego kraju</span>.
           </p>
         </SplitTextReveal>
       </div>

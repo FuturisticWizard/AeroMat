@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Top 10 billboard effects — AeroMat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  @property --angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  @property --wght  { syntax: '<number>'; inherits: false; initial-value: 200; }
+  @property --extr  { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: center; align-items: center;
+    background: rgba(0,0,0,.85); backdrop-filter: blur(10px);
+    padding: 8px; border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 4px; opacity: .6;
+    transition: all .2s;
+  }
+  .nav a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden; isolation: isolate; background: #000;
+  }
+  .hero > video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .fade-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 15;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 20%) 40%, rgb(0 0 0 / 70%) 80%, #000 100%);
+  }
+  .cta {
+    position: absolute; bottom: clamp(2rem, 8vh, 5rem); right: clamp(1rem, 3vw, 3rem);
+    z-index: 20; max-width: 480px; text-align: right;
+  }
+  .cta p { font-size: clamp(.78rem, 1vw, .88rem); color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: .8rem; }
+  .cta p strong { color: #fff; }
+  .cta .row { display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .cta a.btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #fe9100; color: #000; font-weight: 600; font-size: .85rem;
+    padding: .75rem 1.6rem; border-radius: 5px; text-decoration: none;
+  }
+  .cta .micro { display: flex; gap: 1.2rem; font-size: .72rem; color: rgba(255,255,255,.4); }
+
+  .label {
+    position: absolute; top: 60px; left: 20px; z-index: 30;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 600;
+    background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 2px;
+    max-width: calc(100vw - 40px);
+  }
+  .label strong { color: #fe9100; }
+
+  /* ============ SHARED STAGE ============ */
+  .stage {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: clamp(140px, 22vw, 340px);
+    overflow: hidden;
+    z-index: 3;
+    mix-blend-mode: difference;
+  }
+  .stage .word {
+    position: absolute;
+    right: 0;
+    top: calc(50% + 22px);
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(85px, 16vw, 220px);
+    writing-mode: vertical-lr;
+    line-height: .82;
+    letter-spacing: -.03em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(-50%);
+    animation: slideBill 15s cubic-bezier(.7, 0, .25, 1) infinite;
+  }
+  .stage .word:nth-child(1) { animation-delay: 0s; }
+  .stage .word:nth-child(2) { animation-delay: 5s; }
+  .stage .word:nth-child(3) { animation-delay: 10s; }
+
+  @keyframes slideBill {
+    0%  { transform: translateY(calc(-50% + 70vh)); opacity: 0; }
+    5%  { transform: translateY(-50%);              opacity: 1; }
+    27% { transform: translateY(-50%);              opacity: 1; }
+    33% { transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+    100%{ transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+  }
+
+  /* ============ H1 — Variable Font axis tween (weight breath) ============ */
+  .h1 .word {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 200;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               h1Weight 15s ease-in-out infinite;
+  }
+  .h1 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .h1 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .h1 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes h1Weight {
+    0%, 5%   { font-weight: 200; }
+    12%      { font-weight: 700; }
+    20%      { font-weight: 400; }
+    27%, 33% { font-weight: 600; }
+  }
+
+  /* ============ H2 — SVG Goo Metaball (paint drip) ============ */
+  .h2 .stage { filter: url(#goo); }
+  .h2 .word {
+    animation: slideBill 15s cubic-bezier(.3, 1.3, .3, 1) infinite;
+  }
+
+  /* ============ H3 — feTurbulence heat shimmer ============ */
+  .h3 .word {
+    filter: url(#turbulence);
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               h3Turb 15s ease-in-out infinite;
+  }
+  .h3 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .h3 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .h3 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes h3Turb {
+    0%, 6%, 27%, 100% { filter: url(#turbulence) blur(0); }
+    12%               { filter: url(#turbulenceBig) blur(0); }
+    18%               { filter: url(#turbulence) blur(0); }
+    22%               { filter: url(#turbulenceBig) blur(0); }
+  }
+
+  /* ============ H4 — @property gradient sweep ============ */
+  .h4 .word {
+    background: linear-gradient(var(--angle), #fff 0%, #fff 40%, #fe9100 50%, #fff 60%, #fff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               h4Sweep 15s linear infinite;
+  }
+  .h4 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .h4 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .h4 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes h4Sweep {
+    0%, 5%    { --angle: 180deg; }
+    12%       { --angle: 90deg; }
+    20%       { --angle: 0deg; }
+    27%       { --angle: -90deg; }
+    33%, 100% { --angle: 180deg; }
+  }
+
+  /* ============ H5 — Venetian slats reveal ============ */
+  .h5 .word { position: relative; }
+  .h5 .word .slat {
+    position: absolute; inset: 0;
+    writing-mode: vertical-lr;
+    font-family: inherit; font-size: inherit; line-height: inherit; letter-spacing: inherit;
+    color: inherit;
+    animation: 15s cubic-bezier(.5, 0, .5, 1) infinite;
+  }
+  .h5 .word .slat-1 { clip-path: inset(0 0 83% 0); animation-name: slatIn1; }
+  .h5 .word .slat-2 { clip-path: inset(17% 0 66% 0); animation-name: slatIn2; }
+  .h5 .word .slat-3 { clip-path: inset(34% 0 50% 0); animation-name: slatIn3; }
+  .h5 .word .slat-4 { clip-path: inset(50% 0 33% 0); animation-name: slatIn4; }
+  .h5 .word .slat-5 { clip-path: inset(67% 0 17% 0); animation-name: slatIn5; }
+  .h5 .word .slat-6 { clip-path: inset(83% 0 0 0); animation-name: slatIn6; }
+  .h5 .word:nth-child(1) .slat { animation-delay: 0s; }
+  .h5 .word:nth-child(2) .slat { animation-delay: 5s; }
+  .h5 .word:nth-child(3) .slat { animation-delay: 10s; }
+  .h5 .word > span.hide { visibility: hidden; }
+  /* Each slat rotates on X axis (closed horizontal → open flat) during entry */
+  @keyframes slatIn1 { 0%{transform:rotateX(90deg);opacity:0} 5%{transform:rotateX(90deg);opacity:0} 8%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  @keyframes slatIn2 { 0%{transform:rotateX(90deg);opacity:0} 6%{transform:rotateX(90deg);opacity:0} 10%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  @keyframes slatIn3 { 0%{transform:rotateX(90deg);opacity:0} 7%{transform:rotateX(90deg);opacity:0} 11%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  @keyframes slatIn4 { 0%{transform:rotateX(90deg);opacity:0} 8%{transform:rotateX(90deg);opacity:0} 12%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  @keyframes slatIn5 { 0%{transform:rotateX(90deg);opacity:0} 9%{transform:rotateX(90deg);opacity:0} 13%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  @keyframes slatIn6 { 0%{transform:rotateX(90deg);opacity:0} 10%{transform:rotateX(90deg);opacity:0} 14%{transform:rotateX(0);opacity:1} 27%{transform:rotateX(0);opacity:1} 30%{transform:rotateX(-90deg);opacity:0} 100%{opacity:0} }
+  /* Disable shared slideBill for h5 since slats handle reveal */
+  .h5 .word { animation: none; opacity: 1; transform: translateY(-50%); }
+
+  /* ============ H6 — Outline stroke → fill (simulated path draw) ============ */
+  .h6 .word {
+    -webkit-text-stroke: 2px #fff;
+    color: transparent;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               h6Fill 15s ease-in-out infinite;
+  }
+  .h6 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .h6 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .h6 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes h6Fill {
+    0%, 5%   { color: transparent; -webkit-text-stroke: 2px #fff; }
+    10%      { color: transparent; -webkit-text-stroke: 2px #fff; }
+    18%      { color: #fff; -webkit-text-stroke: 0px #fff; }
+    27%      { color: #fff; -webkit-text-stroke: 0px #fff; }
+    33%, 100%{ color: transparent; -webkit-text-stroke: 2px #fff; }
+  }
+
+  /* ============ H7 — 3D letter unfold (clapboard snap) ============ */
+  .h7 .stage { perspective: 1200px; }
+  .h7 .word {
+    display: flex; flex-direction: column;
+    transform-style: preserve-3d;
+  }
+  .h7 .word .char {
+    display: block;
+    transform-origin: center top;
+    animation: 15s cubic-bezier(.3, 1.5, .5, 1) infinite;
+    opacity: 0;
+  }
+  .h7 .word:nth-child(1) .char:nth-child(1) { animation-name: unfold; animation-delay: 0.0s; }
+  .h7 .word:nth-child(1) .char:nth-child(2) { animation-name: unfold; animation-delay: 0.1s; }
+  .h7 .word:nth-child(1) .char:nth-child(3) { animation-name: unfold; animation-delay: 0.2s; }
+  .h7 .word:nth-child(1) .char:nth-child(4) { animation-name: unfold; animation-delay: 0.3s; }
+  .h7 .word:nth-child(1) .char:nth-child(5) { animation-name: unfold; animation-delay: 0.4s; }
+  .h7 .word:nth-child(1) .char:nth-child(6) { animation-name: unfold; animation-delay: 0.5s; }
+  .h7 .word:nth-child(2) .char:nth-child(1) { animation-name: unfold; animation-delay: 5.0s; }
+  .h7 .word:nth-child(2) .char:nth-child(2) { animation-name: unfold; animation-delay: 5.1s; }
+  .h7 .word:nth-child(2) .char:nth-child(3) { animation-name: unfold; animation-delay: 5.2s; }
+  .h7 .word:nth-child(2) .char:nth-child(4) { animation-name: unfold; animation-delay: 5.3s; }
+  .h7 .word:nth-child(2) .char:nth-child(5) { animation-name: unfold; animation-delay: 5.4s; }
+  .h7 .word:nth-child(2) .char:nth-child(6) { animation-name: unfold; animation-delay: 5.5s; }
+  .h7 .word:nth-child(3) .char:nth-child(1) { animation-name: unfold; animation-delay: 10.0s; }
+  .h7 .word:nth-child(3) .char:nth-child(2) { animation-name: unfold; animation-delay: 10.1s; }
+  .h7 .word:nth-child(3) .char:nth-child(3) { animation-name: unfold; animation-delay: 10.2s; }
+  .h7 .word:nth-child(3) .char:nth-child(4) { animation-name: unfold; animation-delay: 10.3s; }
+  .h7 .word:nth-child(3) .char:nth-child(5) { animation-name: unfold; animation-delay: 10.4s; }
+  @keyframes unfold {
+    0%   { transform: rotateX(-90deg); opacity: 0; }
+    5%   { transform: rotateX(0); opacity: 1; }
+    33%  { transform: rotateX(0); opacity: 1; }
+    36%  { transform: rotateX(90deg); opacity: 0; }
+    100% { transform: rotateX(90deg); opacity: 0; }
+  }
+  .h7 .word { animation: none; opacity: 1; transform: translateY(-50%); }
+
+  /* ============ H8 — Text-shadow extrusion (3D depth) ============ */
+  .h8 .word {
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               h8Extrude 15s ease-in-out infinite;
+  }
+  .h8 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .h8 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .h8 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes h8Extrude {
+    0%, 5%   { text-shadow: 0 0 0 #666; }
+    12%      { text-shadow:
+                1px 1px 0 #888, 2px 2px 0 #777, 3px 3px 0 #666,
+                4px 4px 0 #555, 5px 5px 0 #444, 6px 6px 0 #333,
+                7px 7px 0 #222, 8px 8px 0 #111; }
+    22%      { text-shadow:
+                2px 2px 0 #888, 4px 4px 0 #777, 6px 6px 0 #666,
+                8px 8px 0 #555, 10px 10px 0 #444, 12px 12px 0 #333,
+                14px 14px 0 #222, 16px 16px 0 #111; }
+    27%, 33% { text-shadow: 0 0 0 #666; }
+  }
+
+  /* ============ H9 — Film reel marquee mask ============ */
+  .h9 .stage {
+    --mask-height: 30vh;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(50% - var(--mask-height)/2 + 22px),
+      #000 calc(50% - var(--mask-height)/2 + 22px),
+      #000 calc(50% + var(--mask-height)/2 + 22px),
+      transparent calc(50% + var(--mask-height)/2 + 22px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(50% - var(--mask-height)/2 + 22px),
+      #000 calc(50% - var(--mask-height)/2 + 22px),
+      #000 calc(50% + var(--mask-height)/2 + 22px),
+      transparent calc(50% + var(--mask-height)/2 + 22px),
+      transparent 100%
+    );
+  }
+  /* Add sprocket holes to the side simulating film reel */
+  .h9 .stage::before {
+    content: "";
+    position: absolute; top: 0; left: 0; bottom: 0; width: 18px;
+    z-index: 5;
+    background:
+      repeating-linear-gradient(to bottom,
+        transparent 0 20px,
+        #fff 20px 32px,
+        transparent 32px 48px);
+    opacity: .25;
+    pointer-events: none;
+    animation: sprocket 1s linear infinite;
+  }
+  @keyframes sprocket {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-48px); }
+  }
+
+  /* ============ H10 — Random stagger per-letter (multi-axis jitter) ============ */
+  .h10 .word {
+    display: flex; flex-direction: column;
+  }
+  .h10 .word .char {
+    display: block;
+    opacity: 0;
+    animation: 15s cubic-bezier(.2, .8, .2, 1) infinite;
+  }
+  /* Different transform + timing per letter for "hand painted" feel */
+  .h10 .word:nth-child(1) .char:nth-child(1) { animation-name: j1; animation-delay: 0.22s; }
+  .h10 .word:nth-child(1) .char:nth-child(2) { animation-name: j2; animation-delay: 0.05s; }
+  .h10 .word:nth-child(1) .char:nth-child(3) { animation-name: j3; animation-delay: 0.38s; }
+  .h10 .word:nth-child(1) .char:nth-child(4) { animation-name: j4; animation-delay: 0.17s; }
+  .h10 .word:nth-child(1) .char:nth-child(5) { animation-name: j5; animation-delay: 0.55s; }
+  .h10 .word:nth-child(1) .char:nth-child(6) { animation-name: j6; animation-delay: 0.31s; }
+  .h10 .word:nth-child(2) .char:nth-child(1) { animation-name: j3; animation-delay: 5.28s; }
+  .h10 .word:nth-child(2) .char:nth-child(2) { animation-name: j5; animation-delay: 5.04s; }
+  .h10 .word:nth-child(2) .char:nth-child(3) { animation-name: j1; animation-delay: 5.45s; }
+  .h10 .word:nth-child(2) .char:nth-child(4) { animation-name: j2; animation-delay: 5.18s; }
+  .h10 .word:nth-child(2) .char:nth-child(5) { animation-name: j6; animation-delay: 5.36s; }
+  .h10 .word:nth-child(2) .char:nth-child(6) { animation-name: j4; animation-delay: 5.09s; }
+  .h10 .word:nth-child(3) .char:nth-child(1) { animation-name: j2; animation-delay: 10.34s; }
+  .h10 .word:nth-child(3) .char:nth-child(2) { animation-name: j6; animation-delay: 10.11s; }
+  .h10 .word:nth-child(3) .char:nth-child(3) { animation-name: j4; animation-delay: 10.42s; }
+  .h10 .word:nth-child(3) .char:nth-child(4) { animation-name: j1; animation-delay: 10.06s; }
+  .h10 .word:nth-child(3) .char:nth-child(5) { animation-name: j5; animation-delay: 10.27s; }
+  @keyframes j1 { 0%{transform:translate(40px,-30px) rotate(-8deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(-30px,20px) rotate(6deg);opacity:0} 100%{opacity:0} }
+  @keyframes j2 { 0%{transform:translate(-50px,20px) rotate(10deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(40px,-25px) rotate(-12deg);opacity:0} 100%{opacity:0} }
+  @keyframes j3 { 0%{transform:translate(30px,40px) rotate(5deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(-40px,-30px) rotate(-7deg);opacity:0} 100%{opacity:0} }
+  @keyframes j4 { 0%{transform:translate(-40px,-20px) rotate(-6deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(30px,35px) rotate(9deg);opacity:0} 100%{opacity:0} }
+  @keyframes j5 { 0%{transform:translate(50px,15px) rotate(12deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(-45px,-15px) rotate(-10deg);opacity:0} 100%{opacity:0} }
+  @keyframes j6 { 0%{transform:translate(-35px,30px) rotate(-10deg);opacity:0} 5%{transform:none;opacity:1} 33%{transform:none;opacity:1} 36%{transform:translate(25px,-30px) rotate(8deg);opacity:0} 100%{opacity:0} }
+  .h10 .word { animation: none; opacity: 1; transform: translateY(-50%); }
+
+  .divider {
+    padding: 24px 0; text-align: center; background: #0a0a0a;
+    font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .cta { bottom: 5rem; right: 1rem; max-width: 70%; }
+    .cta p { font-size: .72rem; max-width: 220px; margin-left: auto; }
+    .cta .row { flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .stage { width: clamp(110px, 32vw, 200px); }
+    .stage .word { font-size: clamp(70px, 22vw, 170px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .word, .char, .slat { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG filters for H2 (goo) & H3 (turbulence) -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo"/>
+    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+  </filter>
+  <filter id="turbulence">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.04" numOctaves="2" seed="5">
+      <animate attributeName="baseFrequency" dur="8s" values="0.02 0.04;0.04 0.06;0.02 0.04" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="6"/>
+  </filter>
+  <filter id="turbulenceBig">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03 0.08" numOctaves="3" seed="3"/>
+    <feDisplacementMap in="SourceGraphic" scale="14"/>
+  </filter>
+</svg>
+
+<nav class="nav">
+  <a href="#h1">H1 Variable axis</a>
+  <a href="#h2">H2 Goo metaball</a>
+  <a href="#h3">H3 Heat shimmer</a>
+  <a href="#h4">H4 Gradient sweep</a>
+  <a href="#h5">H5 Venetian slats</a>
+  <a href="#h6">H6 Stroke→fill</a>
+  <a href="#h7">H7 3D unfold</a>
+  <a href="#h8">H8 Extrusion</a>
+  <a href="#h9">H9 Film reel</a>
+  <a href="#h10">H10 Random jitter</a>
+</nav>
+
+<!-- H1 -->
+<section id="h1" class="hero h1">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H1 — <strong>Variable Font</strong> · Oswald 200→700→400→600, "oddychanie" literami (spray pressure)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H2 -->
+<section id="h2" class="hero h2">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H2 — <strong>SVG Goo</strong> · litery formują się z kropel farby (mural paint drip)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H3 -->
+<section id="h3" class="hero h3">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H3 — <strong>Heat shimmer</strong> · feTurbulence + feDisplacementMap (air turbulence from drone)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H4 -->
+<section id="h4" class="hero h4">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H4 — <strong>Gradient sweep</strong> · pomarańczowa fala koloru przebiega przez tekst (@property angle)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H5 -->
+<section id="h5" class="hero h5">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word"><span class="hide">śCIANA</span><span class="slat slat-1">śCIANA</span><span class="slat slat-2">śCIANA</span><span class="slat slat-3">śCIANA</span><span class="slat slat-4">śCIANA</span><span class="slat slat-5">śCIANA</span><span class="slat slat-6">śCIANA</span></span>
+    <span class="word"><span class="hide">KAMERA</span><span class="slat slat-1">KAMERA</span><span class="slat slat-2">KAMERA</span><span class="slat slat-3">KAMERA</span><span class="slat slat-4">KAMERA</span><span class="slat slat-5">KAMERA</span><span class="slat slat-6">KAMERA</span></span>
+    <span class="word"><span class="hide">AKCJA</span><span class="slat slat-1">AKCJA</span><span class="slat slat-2">AKCJA</span><span class="slat slat-3">AKCJA</span><span class="slat slat-4">AKCJA</span><span class="slat slat-5">AKCJA</span><span class="slat slat-6">AKCJA</span></span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H5 — <strong>Venetian slats</strong> · 6 pasków otwiera się sekwencyjnie jak klapek projektora</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H6 -->
+<section id="h6" class="hero h6">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H6 — <strong>Stroke→Fill</strong> · wjeżdża jako kontur, wypełnia się w pauzie, znika jako kontur (storyboard)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H7 -->
+<section id="h7" class="hero h7">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">
+      <span class="char">ś</span><span class="char">C</span><span class="char">I</span><span class="char">A</span><span class="char">N</span><span class="char">A</span>
+    </span>
+    <span class="word">
+      <span class="char">K</span><span class="char">A</span><span class="char">M</span><span class="char">E</span><span class="char">R</span><span class="char">A</span>
+    </span>
+    <span class="word">
+      <span class="char">A</span><span class="char">K</span><span class="char">C</span><span class="char">J</span><span class="char">A</span>
+    </span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H7 — <strong>3D unfold</strong> · litery "klapkują" jak klapka filmowa (AKCJA!)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H8 -->
+<section id="h8" class="hero h8">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H8 — <strong>Text-shadow extrusion</strong> · rosnący cień głęboki 3D (billboard relief)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H9 -->
+<section id="h9" class="hero h9">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H9 — <strong>Film reel mask</strong> · tekst widać tylko przez środkowy pasek + animowane perforacje 35mm</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- H10 -->
+<section id="h10" class="hero h10">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">
+      <span class="char">ś</span><span class="char">C</span><span class="char">I</span><span class="char">A</span><span class="char">N</span><span class="char">A</span>
+    </span>
+    <span class="word">
+      <span class="char">K</span><span class="char">A</span><span class="char">M</span><span class="char">E</span><span class="char">R</span><span class="char">A</span>
+    </span>
+    <span class="word">
+      <span class="char">A</span><span class="char">K</span><span class="char">C</span><span class="char">J</span><span class="char">A</span>
+    </span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">H10 — <strong>Random jitter</strong> · litery wjeżdżają z losowych kierunków + obrót, odlatują losowo (hand painted)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+
+</body>
+</html>

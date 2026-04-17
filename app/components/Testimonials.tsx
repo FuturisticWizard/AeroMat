@@ -104,7 +104,7 @@ const MobileTestimonials = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
         <div className="absolute inset-0 flex flex-col justify-end p-5">
-          <span className="inline-block bg-[#ff7302] text-white text-xs font-semibold px-2 py-0.5 rounded mb-2 self-start">
+          <span className="inline-block bg-accent text-white text-xs font-semibold px-2 py-0.5 rounded mb-2 self-start">
             {t.type}
           </span>
           <h3 className="text-white font-bold text-lg mb-4 leading-tight">
@@ -142,7 +142,7 @@ const MobileTestimonials = () => {
             key={tt.id}
             onClick={() => goTo(idx)}
             className={`h-2 rounded-full transition-all ${
-              idx === i ? "w-8 bg-[#ff7302]" : "w-2 bg-neutral-600"
+              idx === i ? "w-8 bg-accent" : "w-2 bg-neutral-600"
             }`}
             aria-label={`Referencja ${idx + 1}`}
           />
@@ -244,7 +244,7 @@ function DesktopInfiniteWheel({
           onClick={() => setVirtual(slot.virtualIdx)}
           className={`w-20 h-20 my-2 rounded-full overflow-hidden bg-white p-2 transition-[transform,opacity,box-shadow] duration-300 ${
             slot.realIdx === activeRealIdx
-              ? "scale-110 ring-2 ring-[#ff7302] opacity-100 shadow-lg shadow-[#ff7302]/30"
+              ? "scale-110 ring-2 ring-accent opacity-100 shadow-lg shadow-accent/30"
               : "opacity-55 hover:opacity-90"
           }`}
           aria-label={`Opinia ${slot.realIdx + 1}`}
@@ -290,7 +290,7 @@ export default function TestimonialsCarousel3() {
             transition={{ duration: 0.5 }}
             onClick={prev}
             aria-label="Poprzednia opinia"
-            className="mx-4 w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 text-white flex items-center justify-center hover:bg-[#ff7302] hover:border-[#ff7302] transition-colors"
+            className="mx-4 w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 text-white flex items-center justify-center hover:bg-accent hover:border-accent transition-colors"
           >
             <ChevronUp className="w-5 h-5" />
           </motion.button>
@@ -307,7 +307,7 @@ export default function TestimonialsCarousel3() {
             transition={{ duration: 0.5 }}
             onClick={next}
             aria-label="Następna opinia"
-            className="mx-4 w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 text-white flex items-center justify-center hover:bg-[#ff7302] hover:border-[#ff7302] transition-colors"
+            className="mx-4 w-10 h-10 rounded-full bg-neutral-800 border border-neutral-600 text-white flex items-center justify-center hover:bg-accent hover:border-accent transition-colors"
           >
             <ChevronDown className="w-5 h-5" />
           </motion.button>

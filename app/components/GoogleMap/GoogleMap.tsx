@@ -283,7 +283,7 @@ const GoogleMapInner = memo(() => {
               >
                 <button
                   onClick={() => setSelectedPoi(null)}
-                  className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/75 border border-white/30 flex items-center justify-center hover:bg-[#ff7302] hover:border-[#ff7302] transition-colors"
+                  className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/75 border border-white/30 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors"
                   aria-label="Zamknij"
                 >
                   <span className="text-white text-sm font-bold">✕</span>

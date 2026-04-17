@@ -18,7 +18,7 @@ const WhoAmI2 = () => {
         <h2 className="text-red-800 text-lg font-bold">Kim jestem?</h2>
         <h3 className="text-2xl sm:text-2xl lsm:text-3xl  font-semibold leading-snug py-1 z-30">
           Nazywam się Mateusz, malarstwo to moja pasja<br />{" "}
-          <span className="text-[#FF6800]">
+          <span className="text-accent">
             i sposób na życie.
           </span>
         </h3>

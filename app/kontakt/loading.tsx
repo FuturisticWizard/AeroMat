@@ -14,7 +14,7 @@ export default function Loading() {
                 <div key={i} className="h-1 w-6 rounded-full bg-neutral-800" />
               ))}
             </div>
-            <div className="h-10 w-32 rounded-full bg-[#ff7302]/40" />
+            <div className="h-10 w-32 rounded-full bg-accent/40" />
           </div>
         </div>
       </section>

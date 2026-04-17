@@ -10,7 +10,7 @@ export default function Loading() {
             <div className="h-4 w-11/12 rounded bg-neutral-900" />
             <div className="h-4 w-10/12 rounded bg-neutral-900" />
             <div className="h-4 w-9/12 rounded bg-neutral-900" />
-            <div className="mt-8 h-12 w-40 rounded-full bg-[#ff7302]/40" />
+            <div className="mt-8 h-12 w-40 rounded-full bg-accent/40" />
           </div>
         </div>
       </div>

@@ -65,7 +65,7 @@ export default function Home() {
           <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-0 pb-12 text-center">
             <Link
               href="/o-mnie"
-              className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"
+              className="inline-flex items-center gap-2 text-lg font-semibold text-accent hover:text-accent/70 transition-colors"
             >
               Poznaj mnie bliżej <span aria-hidden="true">→</span>
             </Link>
@@ -77,7 +77,7 @@ export default function Home() {
           <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 text-center">
             <Link
               href="/filmy"
-              className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"
+              className="inline-flex items-center gap-2 text-lg font-semibold text-accent hover:text-accent/70 transition-colors"
             >
               Zobacz filmy z realizacji <span aria-hidden="true">→</span>
             </Link>

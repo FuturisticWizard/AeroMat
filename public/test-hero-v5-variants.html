@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V5 Blend Difference — Variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; gap: 0; justify-content: center; align-items: center;
+    background: rgba(0,0,0,.85); backdrop-filter: blur(10px);
+    padding: 8px; border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 4px; opacity: .6;
+    transition: all .2s;
+  }
+  .nav a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden; isolation: isolate; background: #000;
+  }
+  .hero video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .hero .fade-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 15;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 20%) 40%, rgb(0 0 0 / 70%) 80%, #000 100%);
+  }
+
+  .cta {
+    position: absolute; bottom: clamp(2rem, 8vh, 5rem); right: clamp(1rem, 3vw, 3rem);
+    z-index: 20; max-width: 480px; text-align: right;
+  }
+  .cta p { font-size: clamp(.78rem, 1vw, .88rem); color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: .8rem; }
+  .cta p strong { color: #fff; font-weight: 600; }
+  .cta .row { display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .cta a.btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #fe9100; color: #000; font-weight: 600; font-size: .85rem;
+    padding: .75rem 1.6rem; border-radius: 5px; text-decoration: none;
+    transition: background .2s;
+  }
+  .cta a.btn:hover { background: #e87f00; }
+  .cta .micro { display: flex; gap: 1.2rem; font-size: .72rem; color: rgba(255,255,255,.4); }
+
+  .label {
+    position: absolute; top: 60px; left: 20px; z-index: 30;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 600;
+    background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 2px;
+  }
+  .label strong { color: #fe9100; }
+
+  /* Base blend title style */
+  .blend {
+    position: absolute; z-index: 3; pointer-events: none;
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    line-height: .82; letter-spacing: -.02em;
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+  .blend div:not(:first-child) { margin-top: -.05em; }
+
+  /* ========== A1 — XL centered stacked ========== */
+  .a1 .blend {
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: clamp(90px, 18vw, 300px);
+  }
+
+  /* ========== A2 — XXL full-bleed stacked left ========== */
+  .a2 .blend {
+    left: clamp(.5rem, 2vw, 2rem);
+    top: 50%; transform: translateY(-50%);
+    text-align: left;
+    font-size: clamp(100px, 22vw, 380px);
+  }
+
+  /* ========== A3 — GIGANTIC overflow ========== */
+  .a3 .blend {
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: clamp(120px, 26vw, 460px);
+    white-space: nowrap;
+    letter-spacing: -.04em;
+  }
+
+  /* ========== A4 — Bottom anchored, huge ========== */
+  .a4 .blend {
+    left: clamp(.5rem, 2vw, 2rem);
+    bottom: clamp(6rem, 14vh, 10rem);
+    text-align: left;
+    font-size: clamp(90px, 19vw, 340px);
+  }
+
+  /* ========== A5 — Staggered indent (rhythmic) ========== */
+  .a5 .blend {
+    left: clamp(.5rem, 3vw, 3rem); right: clamp(.5rem, 3vw, 3rem);
+    top: 50%; transform: translateY(-50%);
+    font-size: clamp(90px, 20vw, 360px);
+  }
+  .a5 .blend div:nth-child(1) { text-align: left; }
+  .a5 .blend div:nth-child(2) { text-align: center; margin-left: 2em; }
+  .a5 .blend div:nth-child(3) { text-align: right; }
+
+  /* ========== A6 — Single huge line horizontal ========== */
+  .a6 .blend {
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-size: clamp(70px, 14vw, 220px);
+    white-space: nowrap;
+    letter-spacing: -.02em;
+  }
+  .a6 .blend span { display: inline-block; margin: 0 .4em; }
+
+  /* ========== A7 — Vertical stacked giant (3 pionowe kolumny) ========== */
+  .a7 .blend {
+    left: 0; right: 0;
+    top: 50%; transform: translateY(-50%);
+    display: flex; justify-content: space-around; align-items: center;
+    font-size: clamp(90px, 18vh, 240px);
+  }
+  .a7 .blend div {
+    writing-mode: vertical-lr; transform: rotate(180deg);
+    margin: 0 !important;
+  }
+
+  /* ========== A8 — Double layer (outline + fill, both blending) ========== */
+  .a8 .blend {
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: clamp(100px, 20vw, 360px);
+  }
+  .a8 .blend div {
+    position: relative;
+  }
+  .a8 .blend div::after {
+    content: attr(data-txt);
+    position: absolute; inset: 0;
+    color: transparent;
+    -webkit-text-stroke: 2px #fe9100;
+    transform: translate(6px, 4px);
+    mix-blend-mode: normal;
+  }
+
+  .divider {
+    padding: 24px 0; text-align: center; background: #0a0a0a;
+    font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .cta { bottom: 5rem; right: 1rem; max-width: 70%; }
+    .cta p { font-size: .72rem; max-width: 220px; margin-left: auto; }
+    .cta .row { flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .a1 .blend, .a3 .blend, .a6 .blend, .a8 .blend { font-size: clamp(55px, 18vw, 130px); }
+    .a2 .blend, .a4 .blend, .a5 .blend { font-size: clamp(60px, 22vw, 150px); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#a1">A1 XL centered</a>
+  <a href="#a2">A2 XXL left</a>
+  <a href="#a3">A3 Gigantic</a>
+  <a href="#a4">A4 Bottom huge</a>
+  <a href="#a5">A5 Staggered</a>
+  <a href="#a6">A6 Single line</a>
+  <a href="#a7">A7 Vertical trio</a>
+  <a href="#a8">A8 Double layer</a>
+</nav>
+
+<!-- A1 -->
+<section id="a1" class="hero a1">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A1 — <strong>XL centered stacked</strong> · 18vw · wyśrodkowane</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A2 -->
+<section id="a2" class="hero a2">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A2 — <strong>XXL left anchored</strong> · 22vw · przylega do lewej</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A3 -->
+<section id="a3" class="hero a3">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A3 — <strong>Gigantic overflow</strong> · 26vw · litery wychodzą poza ekran</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A4 -->
+<section id="a4" class="hero a4">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A4 — <strong>Bottom anchored huge</strong> · 19vw · zakotwiczone u dołu</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A5 -->
+<section id="a5" class="hero a5">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A5 — <strong>Staggered indent</strong> · rytm left-center-right · rozbija monotonie</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A6 -->
+<section id="a6" class="hero a6">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A6 — <strong>Single horizontal line</strong> · 14vw · jedna linia, słowa obok siebie</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A7 -->
+<section id="a7" class="hero a7">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend"><div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div></div>
+  <div class="fade-bottom"></div>
+  <div class="label">A7 — <strong>Vertical trio</strong> · 3 pionowe kolumny rozłożone na szerokość</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- A8 -->
+<section id="a8" class="hero a8">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend">
+    <div data-txt="ŚCIANA">ŚCIANA</div>
+    <div data-txt="KAMERA">KAMERA</div>
+    <div data-txt="AKCJA">AKCJA</div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">A8 — <strong>Double layer</strong> · blend fill + pomarańczowy stroke offset</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+
+</body>
+</html>

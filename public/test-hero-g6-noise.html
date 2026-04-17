@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G6 noise / grain variants — AeroMat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: center; align-items: center;
+    background: rgba(0,0,0,.85); backdrop-filter: blur(10px);
+    padding: 8px; border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 4px; opacity: .6;
+    transition: all .2s;
+  }
+  .nav a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden; isolation: isolate; background: #000;
+  }
+  .hero > video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .fade-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 15;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 20%) 40%, rgb(0 0 0 / 70%) 80%, #000 100%);
+  }
+  .cta {
+    position: absolute; bottom: clamp(2rem, 8vh, 5rem); right: clamp(1rem, 3vw, 3rem);
+    z-index: 20; max-width: 480px; text-align: right;
+  }
+  .cta p { font-size: clamp(.78rem, 1vw, .88rem); color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: .8rem; }
+  .cta p strong { color: #fff; }
+  .cta .row { display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .cta a.btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #fe9100; color: #000; font-weight: 600; font-size: .85rem;
+    padding: .75rem 1.6rem; border-radius: 5px; text-decoration: none;
+  }
+  .cta .micro { display: flex; gap: 1.2rem; font-size: .72rem; color: rgba(255,255,255,.4); }
+
+  .label {
+    position: absolute; top: 60px; left: 20px; z-index: 30;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 600;
+    background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 2px;
+    max-width: calc(100vw - 40px);
+  }
+  .label strong { color: #fe9100; }
+
+  /* ============ SHARED STAGE ============ */
+  .stage {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: clamp(140px, 22vw, 340px);
+    overflow: hidden;
+    z-index: 3;
+    mix-blend-mode: difference;
+  }
+  .stage .word {
+    position: absolute;
+    right: 0;
+    top: calc(50% + 22px);
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(85px, 16vw, 220px);
+    writing-mode: vertical-lr;
+    line-height: .82;
+    letter-spacing: -.03em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(-50%);
+    animation: slideBill 15s cubic-bezier(.7, 0, .25, 1) infinite;
+  }
+  .stage .word:nth-child(1) { animation-delay: 0s; }
+  .stage .word:nth-child(2) { animation-delay: 5s; }
+  .stage .word:nth-child(3) { animation-delay: 10s; }
+
+  @keyframes slideBill {
+    0%  { transform: translateY(calc(-50% + 70vh)); opacity: 0; }
+    5%  { transform: translateY(-50%);              opacity: 1; }
+    27% { transform: translateY(-50%);              opacity: 1; }
+    33% { transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+    100%{ transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+  }
+
+  /* ============ N1 — SVG feTurbulence grain overlay on word ============ */
+  .n1 .word {
+    filter: url(#grainN1);
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n1Pulse 15s ease-in-out infinite;
+  }
+  .n1 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n1 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n1 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n1Pulse {
+    0%, 6%, 27%, 100% { filter: url(#grainN1); }
+    14%, 20%          { filter: url(#grainN1Strong); }
+  }
+
+  /* ============ N2 — Halftone dots (Lichtenstein) ============ */
+  .n2 .word {
+    -webkit-mask-image:
+      radial-gradient(circle, #000 32%, transparent 33%),
+      linear-gradient(#000, #000);
+    -webkit-mask-size: 6px 6px, 100% 100%;
+    mask-image:
+      radial-gradient(circle, #000 32%, transparent 33%),
+      linear-gradient(#000, #000);
+    mask-size: 6px 6px, 100% 100%;
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n2Halftone 15s steps(1) infinite;
+  }
+  .n2 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n2 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n2 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n2Halftone {
+    0%, 5%   { -webkit-mask-size: 24px 24px, 100% 100%; mask-size: 24px 24px, 100% 100%; }
+    12%      { -webkit-mask-size: 16px 16px, 100% 100%; mask-size: 16px 16px, 100% 100%; }
+    18%      { -webkit-mask-size: 10px 10px, 100% 100%; mask-size: 10px 10px, 100% 100%; }
+    24%, 27% { -webkit-mask-size: 6px 6px, 100% 100%; mask-size: 6px 6px, 100% 100%; }
+    33%, 100%{ -webkit-mask-size: 24px 24px, 100% 100%; mask-size: 24px 24px, 100% 100%; }
+  }
+
+  /* ============ N3 — Film grain (animated noise overlay) ============ */
+  .n3 .stage::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 20%, #fff 0.5px, transparent 1px),
+      radial-gradient(circle at 80% 30%, #fff 0.5px, transparent 1px),
+      radial-gradient(circle at 30% 70%, #fff 0.5px, transparent 1px),
+      radial-gradient(circle at 70% 80%, #fff 0.5px, transparent 1px),
+      radial-gradient(circle at 50% 50%, #fff 0.5px, transparent 1px);
+    background-size: 3px 3px, 4px 4px, 5px 5px, 3px 3px, 2px 2px;
+    pointer-events: none;
+    opacity: .35;
+    mix-blend-mode: overlay;
+    animation: n3Grain .12s steps(1) infinite;
+    z-index: 5;
+  }
+  @keyframes n3Grain {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-1px, 2px); }
+    50%  { transform: translate(2px, -1px); }
+    75%  { transform: translate(-2px, -2px); }
+    100% { transform: translate(1px, 1px); }
+  }
+
+  /* ============ N4 — Sand dispersal (letters dissolve to particles) ============ */
+  .n4 .word {
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -1.5 1.5'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"), linear-gradient(#000, #000);
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -1.5 1.5'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"), linear-gradient(#000, #000);
+    -webkit-mask-composite: source-over;
+    mask-composite: add;
+    -webkit-mask-size: 200% 200%, 100% 100%;
+    mask-size: 200% 200%, 100% 100%;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n4Sand 15s ease-in-out infinite;
+  }
+  .n4 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n4 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n4 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n4Sand {
+    0%, 5%   { -webkit-mask-position: 0 0, 0 0; mask-position: 0 0, 0 0; }
+    27%      { -webkit-mask-position: 0 0, 0 0; mask-position: 0 0, 0 0; }
+    29%      { -webkit-mask-position: 0 -30%, 0 0; mask-position: 0 -30%, 0 0; }
+    31%      { -webkit-mask-position: 0 -70%, 0 0; mask-position: 0 -70%, 0 0; }
+    33%, 100%{ -webkit-mask-position: 0 -100%, 0 0; mask-position: 0 -100%, 0 0; }
+  }
+
+  /* ============ N5 — Ink bleed (letters spread through wet paper) ============ */
+  .n5 .word {
+    filter: url(#inkBleed);
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n5Ink 15s ease-in-out infinite;
+  }
+  .n5 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n5 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n5 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n5Ink {
+    0%   { filter: url(#inkBleedHeavy); }
+    5%   { filter: url(#inkBleed); }
+    27%  { filter: url(#inkBleed); }
+    33%, 100% { filter: url(#inkBleedHeavy); }
+  }
+
+  /* ============ N6 — Static / TV noise glitch ============ */
+  .n6 .stage {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,.04) 0 1px,
+        transparent 1px 2px
+      );
+  }
+  .n6 .word {
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n6Static 15s steps(1) infinite;
+  }
+  .n6 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n6 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n6 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n6Static {
+    0%, 9%, 25%, 100% { filter: none; }
+    10%, 11%          { filter: url(#tvStatic); }
+    12%               { filter: none; }
+    18%, 19%          { filter: url(#tvStaticHeavy); }
+    20%               { filter: none; }
+    22%, 23%          { filter: url(#tvStatic); }
+  }
+  /* Subtle horizontal noise line scroll */
+  .n6 .stage::after {
+    content: "";
+    position: absolute; left: 0; right: 0; height: 2px;
+    background: rgba(255,255,255,.4);
+    z-index: 5;
+    pointer-events: none;
+    animation: n6Line 3s linear infinite;
+  }
+  @keyframes n6Line {
+    from { top: -10px; }
+    to   { top: 110%; }
+  }
+
+  /* ============ N7 — ASCII → text (chars materialize from random glyphs) ============ */
+  .n7 .word {
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+    font-size: clamp(70px, 14vw, 190px);
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite;
+  }
+  .n7 .word .real { opacity: 0; animation: n7Real 15s steps(1) infinite; }
+  .n7 .word .noise {
+    position: absolute; inset: 0;
+    writing-mode: vertical-lr;
+    color: #00ff88; opacity: .4;
+    mix-blend-mode: screen;
+    animation: n7Noise 15s steps(8) infinite;
+  }
+  .n7 .word:nth-child(1) .real, .n7 .word:nth-child(1) .noise { animation-delay: 0s; }
+  .n7 .word:nth-child(2) .real, .n7 .word:nth-child(2) .noise { animation-delay: 5s; }
+  .n7 .word:nth-child(3) .real, .n7 .word:nth-child(3) .noise { animation-delay: 10s; }
+  @keyframes n7Real {
+    0%, 12%   { opacity: 0; }
+    13%, 27%  { opacity: 1; }
+    28%, 100% { opacity: 0; }
+  }
+  @keyframes n7Noise {
+    0%, 5%   { opacity: 0; transform: translateX(0); }
+    6%, 12%  { opacity: .5; transform: translateX(-3px); }
+    13%, 27% { opacity: 0; }
+    28%, 32% { opacity: .5; transform: translateX(3px); }
+    33%, 100%{ opacity: 0; }
+  }
+
+  /* ============ N8 — Stippling / dot engraving build up ============ */
+  .n8 .word {
+    background:
+      radial-gradient(circle at center, #fff 25%, transparent 26%) 0 0/4px 4px,
+      radial-gradient(circle at center, #fff 25%, transparent 26%) 2px 2px/4px 4px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: slideBill 15s cubic-bezier(.7,0,.25,1) infinite,
+               n8Stipple 15s steps(8) infinite;
+  }
+  .n8 .word:nth-child(1) { animation-delay: 0s, 0s; }
+  .n8 .word:nth-child(2) { animation-delay: 5s, 5s; }
+  .n8 .word:nth-child(3) { animation-delay: 10s, 10s; }
+  @keyframes n8Stipple {
+    0%, 5%   { background-size: 20px 20px, 20px 20px; }
+    12%      { background-size: 12px 12px, 12px 12px; }
+    18%      { background-size: 6px 6px, 6px 6px; }
+    24%, 27% { background-size: 3px 3px, 3px 3px; }
+    33%, 100%{ background-size: 20px 20px, 20px 20px; }
+  }
+
+  .divider {
+    padding: 24px 0; text-align: center; background: #0a0a0a;
+    font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .cta { bottom: 5rem; right: 1rem; max-width: 70%; }
+    .cta p { font-size: .72rem; max-width: 220px; margin-left: auto; }
+    .cta .row { flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .stage { width: clamp(110px, 32vw, 200px); }
+    .stage .word { font-size: clamp(70px, 22vw, 170px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .word, .stage::after, .stage::before { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG filters -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="grainN1" x="0" y="0">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .35 0"/>
+    <feComposite in="SourceGraphic" in2="SourceGraphic" operator="over"/>
+    <feBlend in="SourceGraphic" mode="multiply"/>
+  </filter>
+  <filter id="grainN1Strong" x="0" y="0">
+    <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" seed="5"/>
+    <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .6 0"/>
+    <feComposite in="SourceGraphic" in2="SourceGraphic" operator="over"/>
+    <feBlend in="SourceGraphic" mode="multiply"/>
+  </filter>
+  <filter id="inkBleed">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="1.5"/>
+    <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"/>
+    <feComposite in="SourceGraphic" in2="SourceGraphic" operator="atop"/>
+  </filter>
+  <filter id="inkBleedHeavy">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="8"/>
+    <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -4"/>
+  </filter>
+  <filter id="tvStatic">
+    <feTurbulence baseFrequency="0.8 0.2" numOctaves="2" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="12"/>
+  </filter>
+  <filter id="tvStaticHeavy">
+    <feTurbulence baseFrequency="1.5 0.3" numOctaves="3" seed="9"/>
+    <feDisplacementMap in="SourceGraphic" scale="28"/>
+  </filter>
+</svg>
+
+<nav class="nav">
+  <a href="#n1">N1 Grain pulse</a>
+  <a href="#n2">N2 Halftone dots</a>
+  <a href="#n3">N3 Film grain</a>
+  <a href="#n4">N4 Sand dispersal</a>
+  <a href="#n5">N5 Ink bleed</a>
+  <a href="#n6">N6 TV static</a>
+  <a href="#n7">N7 ASCII glitch</a>
+  <a href="#n8">N8 Stipple engraving</a>
+</nav>
+
+<!-- N1 -->
+<section id="n1" class="hero n1">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N1 — <strong>Grain pulse</strong> · feTurbulence naniesiony bezpośrednio na tekst, pulsuje od subtelnego do mocnego</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N2 -->
+<section id="n2" class="hero n2">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N2 — <strong>Halftone dots</strong> · tekst widoczny tylko przez siatkę kropek, siatka zagęszcza się od 24px do 3px (Lichtenstein pop art)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N3 -->
+<section id="n3" class="hero n3">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N3 — <strong>Film grain</strong> · analogowa kropka filmowa 35mm animowana ciągle (tekst nietknięty, nad tekstem zawsze ziarno)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N4 -->
+<section id="n4" class="hero n4">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N4 — <strong>Sand dispersal</strong> · przy wyjściu tekst rozpada się na ziarnistą maskę, rozprasza się w piasek</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N5 -->
+<section id="n5" class="hero n5">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N5 — <strong>Ink bleed</strong> · wjeżdża rozmyte i nasączone, koncentruje się w czysty tekst, rozpryskuje przy wyjściu (wet paper)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N6 -->
+<section id="n6" class="hero n6">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N6 — <strong>TV static</strong> · scanlines + losowe glitche + ruchoma linia biała (uszkodzony telewizor)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N7 -->
+<section id="n7" class="hero n7">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word"><span class="noise">#@!%^&</span><span class="real">śCIANA</span></span>
+    <span class="word"><span class="noise">X?@&!%</span><span class="real">KAMERA</span></span>
+    <span class="word"><span class="noise">?@X%&</span><span class="real">AKCJA</span></span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N7 — <strong>ASCII glitch</strong> · w wejściu pojawia się zielony ciąg znaków, potem rzeczywisty tekst (dekodowanie)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+<div class="divider">—</div>
+
+<!-- N8 -->
+<section id="n8" class="hero n8">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">N8 — <strong>Stipple engraving</strong> · tekst z rozproszonych kropek zagęszcza się aż do pełnej czytelności (grawerunek)</div>
+  <aside class="cta"><p>Dostajesz <strong>mural</strong> — i <strong>film z drona</strong>.</p><div class="row"><a class="btn" href="#">Wycena →</a><div class="micro"><span>25+ lat</span></div></div></aside>
+</section>
+
+</body>
+</html>

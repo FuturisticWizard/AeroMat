@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero Variants — AeroMat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  /* Variant nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; gap: 0; justify-content: center; align-items: center;
+    background: rgba(0,0,0,.85); backdrop-filter: blur(10px);
+    padding: 8px; border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 4px; opacity: .6;
+    transition: all .2s;
+  }
+  .nav a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+
+  /* Hero shell — shared */
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden; isolation: isolate; background: #000;
+  }
+  .hero video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .hero .fade-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 15;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 20%) 40%, rgb(0 0 0 / 70%) 80%, #000 100%);
+  }
+
+  /* Shared: CTA block */
+  .cta {
+    position: absolute; bottom: clamp(2rem, 8vh, 5rem); right: clamp(1rem, 3vw, 3rem);
+    z-index: 20; max-width: 480px; text-align: right;
+  }
+  .cta p { font-size: clamp(.78rem, 1vw, .88rem); color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: .8rem; }
+  .cta p strong { color: #fff; font-weight: 600; }
+  .cta .row { display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .cta a.btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #fe9100; color: #000; font-weight: 600; font-size: .85rem;
+    padding: .75rem 1.6rem; border-radius: 5px; text-decoration: none;
+    transition: background .2s;
+  }
+  .cta a.btn:hover { background: #e87f00; }
+  .cta .micro { display: flex; gap: 1.2rem; font-size: .72rem; color: rgba(255,255,255,.4); }
+
+  /* Variant label */
+  .label {
+    position: absolute; top: 60px; left: 20px; z-index: 30;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 600;
+    background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 2px;
+  }
+  .label strong { color: #fe9100; }
+
+  /* ==================== V1 — Vertical stack (current refined) ==================== */
+  .v1 .words {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: clamp(0.5rem, 2vw, 2rem);
+    bottom: clamp(2rem, 10vh, 4rem);
+    display: flex; gap: clamp(6px, 1.2vw, 14px);
+  }
+  .v1 .words span {
+    writing-mode: vertical-lr; transform: rotate(180deg);
+    font-family: 'Anton', sans-serif; font-size: clamp(80px, 22vh, 240px);
+    line-height: .82; letter-spacing: -.02em;
+    color: rgba(255,255,255,.3);
+    -webkit-text-stroke: 1.5px rgba(255,255,255,.7);
+  }
+  .v1 .words span:nth-child(2) { color: rgba(255,255,255,.3); }
+  .v1 .backdrop {
+    position: absolute; z-index: 2; pointer-events: none;
+    left: 0; right: 45%;
+    top: 0; bottom: 0;
+    background: linear-gradient(135deg, rgb(0 0 0 / 60%) 0%, rgb(0 0 0 / 30%) 40%, transparent 75%);
+  }
+
+  /* ==================== V2 — Outline only, huge horizontal ==================== */
+  .v2 .title {
+    position: absolute; z-index: 3; pointer-events: none;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    text-align: center; line-height: .82;
+    font-size: clamp(60px, 12vw, 180px);
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,.85);
+    letter-spacing: -.02em;
+    white-space: nowrap;
+  }
+  .v2 .title div:nth-child(2) { margin-top: -.05em; }
+  .v2 .title div:nth-child(3) { margin-top: -.05em; }
+
+  /* ==================== V3 — Knockout (text as window to video) ==================== */
+  .v3 .mask-overlay {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: rgb(0 0 0 / 55%);
+    -webkit-mask-image:
+      linear-gradient(#000,#000),
+      linear-gradient(#000,#000);
+    mask-image:
+      linear-gradient(#000,#000),
+      linear-gradient(#000,#000);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .v3 .knockout {
+    position: absolute; z-index: 4; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .v3 .knockout .stack {
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    line-height: .82; text-align: center;
+    font-size: clamp(60px, 13vw, 200px);
+    letter-spacing: -.02em;
+    background: #000; color: #000;
+    mix-blend-mode: multiply;
+  }
+  .v3 .knockout .stack div { padding: 0 .5em; }
+  .v3 .dim {
+    position: absolute; inset: 0; z-index: 2; background: rgb(0 0 0 / 30%); pointer-events: none;
+  }
+
+  /* ==================== V4 — Edge ribbon (minimal — tiny vertical on side) ==================== */
+  .v4 .ribbon {
+    position: absolute; left: 2vw; top: 50%; transform: translateY(-50%);
+    z-index: 3; pointer-events: none;
+    display: flex; flex-direction: column; gap: 1.8rem;
+  }
+  .v4 .ribbon span {
+    writing-mode: vertical-lr; transform: rotate(180deg);
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    font-size: clamp(20px, 2.5vw, 32px); color: #fff;
+    letter-spacing: .12em;
+    border-left: 2px solid #fe9100; padding-left: .7em;
+  }
+  .v4 .ribbon span:nth-child(2) { color: rgba(255,255,255,.5); }
+  .v4 .ribbon span:nth-child(3) { color: rgba(255,255,255,.3); }
+
+  /* ==================== V5 — Blend mode difference ==================== */
+  .v5 .blend-title {
+    position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%);
+    z-index: 3; pointer-events: none;
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    line-height: .82; text-align: center; letter-spacing: -.02em;
+    font-size: clamp(70px, 14vw, 220px); color: #fff;
+    mix-blend-mode: difference;
+  }
+  .v5 .blend-title div:not(:first-child) { margin-top: -.05em; }
+
+  /* ==================== V6 — Split layers (stroke + fill ghost) ==================== */
+  .v6 .split {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    display: flex; align-items: flex-end; padding-bottom: 12vh;
+  }
+  .v6 .split .stack {
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    line-height: .82; letter-spacing: -.02em;
+    font-size: clamp(80px, 16vw, 280px);
+    padding-left: clamp(1rem, 3vw, 3rem);
+  }
+  .v6 .split .stack > div {
+    position: relative;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,.95);
+  }
+  .v6 .split .stack > div::after {
+    content: attr(data-txt);
+    position: absolute; inset: 0;
+    color: rgb(254 145 0 / 14%);
+    -webkit-text-stroke: 0;
+  }
+  .v6 .split .stack > div:nth-child(2) { margin-top: -.05em; text-indent: .3em; }
+  .v6 .split .stack > div:nth-child(3) { margin-top: -.05em; text-indent: .6em; }
+  .v6 .backdrop-soft {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to top, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 20%) 40%, transparent 75%);
+  }
+
+  /* Divider */
+  .divider {
+    padding: 24px 0; text-align: center; background: #0a0a0a;
+    font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .cta { bottom: 5rem; right: 1rem; max-width: 70%; }
+    .cta p { font-size: .72rem; max-width: 220px; margin-left: auto; }
+    .cta .row { flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .v2 .title { font-size: clamp(52px, 18vw, 110px); }
+    .v1 .words span { font-size: clamp(60px, 28vh, 220px); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#v1">V1 Current refined</a>
+  <a href="#v2">V2 Outline huge</a>
+  <a href="#v3">V3 Knockout</a>
+  <a href="#v4">V4 Edge ribbon</a>
+  <a href="#v5">V5 Blend diff</a>
+  <a href="#v6">V6 Stroke + ghost</a>
+</nav>
+
+<!-- V1 -->
+<section id="v1" class="hero v1">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="backdrop"></div>
+  <div class="words">
+    <span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V1 — <strong>Current refined</strong> · vertical stroke · left backdrop</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="divider">— scroll dla kolejnego wariantu —</div>
+
+<!-- V2 -->
+<section id="v2" class="hero v2">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="title">
+    <div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V2 — <strong>Outline huge</strong> · transparent fill · minimal coverage</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="divider">—</div>
+
+<!-- V3 -->
+<section id="v3" class="hero v3">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="dim"></div>
+  <div class="knockout">
+    <div class="stack">
+      <div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div>
+    </div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V3 — <strong>Knockout</strong> · tekst jako okno do video · reszta przyciemniona</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="divider">—</div>
+
+<!-- V4 -->
+<section id="v4" class="hero v4">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="ribbon">
+    <span>Ściana</span><span>Kamera</span><span>Akcja</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V4 — <strong>Edge ribbon</strong> · minimalna ingerencja · video dominuje</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="divider">—</div>
+
+<!-- V5 -->
+<section id="v5" class="hero v5">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="blend-title">
+    <div>ŚCIANA</div><div>KAMERA</div><div>AKCJA</div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V5 — <strong>Blend mode difference</strong> · kolor inwertuje wideo · zero przyciemnienia</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+<div class="divider">—</div>
+
+<!-- V6 -->
+<section id="v6" class="hero v6">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="backdrop-soft"></div>
+  <div class="split">
+    <div class="stack">
+      <div data-txt="ŚCIANA">ŚCIANA</div>
+      <div data-txt="KAMERA">KAMERA</div>
+      <div data-txt="AKCJA">AKCJA</div>
+    </div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">V6 — <strong>Stroke + pomarańczowy ghost</strong> · kontur biały + półprzezroczysty fill w kolorze brandu</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.</p>
+    <div class="row">
+      <a class="btn" href="#">Bezpłatna wycena →</a>
+      <div class="micro"><span>25+ lat doświadczenia</span><span>Film gratis</span></div>
+    </div>
+  </aside>
+</section>
+
+</body>
+</html>

@@ -66,7 +66,7 @@ export default function WhyChooseMe() {
     >
       <h2
         id="why-choose-heading"
-        className="text-5xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302] mb-2"
+        className="text-5xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-accent mb-2"
       >
         Co mnie wyróżnia?
       </h2>
@@ -85,19 +85,19 @@ export default function WhyChooseMe() {
             <div
               key={feature.number}
               data-reveal
-              className="relative bg-white/5 border border-white/10 rounded-2xl p-6 transition-colors duration-300 hover:border-[#ff7302]/30 hover:bg-white/[0.07]"
+              className="relative bg-white/5 border border-white/10 rounded-2xl p-6 transition-colors duration-300 hover:border-accent/30 hover:bg-white/[0.07]"
               style={{
                 opacity: 0,
                 transform: "translateY(24px)",
                 transition: `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s, background-color 0.3s, border-color 0.3s`,
               }}
             >
-              <span className="absolute top-4 right-5 text-5xl font-[family-name:var(--font-bebas)] text-[#ff7302]/15 select-none leading-none">
+              <span className="absolute top-4 right-5 text-5xl font-[family-name:var(--font-bebas)] text-accent/15 select-none leading-none">
                 {feature.number}
               </span>
 
               <Icon
-                className="text-[#ff7302] mb-4"
+                className="text-accent mb-4"
                 size={32}
                 strokeWidth={1.5}
                 aria-hidden="true"

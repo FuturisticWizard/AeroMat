@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V5 Blend — Marquee loop variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; gap: 0; justify-content: center; align-items: center;
+    background: rgba(0,0,0,.85); backdrop-filter: blur(10px);
+    padding: 8px; border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 4px; opacity: .6;
+    transition: all .2s;
+  }
+  .nav a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+
+  .hero {
+    position: relative; width: 100%; height: 100vh;
+    overflow: hidden; isolation: isolate; background: #000;
+  }
+  .hero > video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+  }
+  .hero .fade-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%; z-index: 15;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 20%) 40%, rgb(0 0 0 / 70%) 80%, #000 100%);
+  }
+
+  .cta {
+    position: absolute; bottom: clamp(2rem, 8vh, 5rem); right: clamp(1rem, 3vw, 3rem);
+    z-index: 20; max-width: 480px; text-align: right;
+  }
+  .cta p { font-size: clamp(.78rem, 1vw, .88rem); color: rgba(255,255,255,.7); line-height: 1.6; margin-bottom: .8rem; }
+  .cta p strong { color: #fff; font-weight: 600; }
+  .cta .row { display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .cta a.btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: #fe9100; color: #000; font-weight: 600; font-size: .85rem;
+    padding: .75rem 1.6rem; border-radius: 5px; text-decoration: none;
+    transition: background .2s;
+  }
+  .cta a.btn:hover { background: #e87f00; }
+  .cta .micro { display: flex; gap: 1.2rem; font-size: .72rem; color: rgba(255,255,255,.4); }
+
+  .label {
+    position: absolute; top: 60px; left: 20px; z-index: 30;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 600;
+    background: rgba(0,0,0,.5); padding: 4px 10px; border-radius: 2px;
+  }
+  .label strong { color: #fe9100; }
+
+  /* ======================= BASE MARQUEE COLUMNS ======================= */
+  .columns {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    display: flex; justify-content: space-between; align-items: stretch;
+    mix-blend-mode: difference;
+  }
+  .col {
+    position: relative;
+    flex: 1 1 0; height: 100%; overflow: hidden;
+    display: flex; justify-content: center;
+  }
+  .track {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center;
+    will-change: transform;
+  }
+  .track span {
+    display: block;
+    font-family: 'Anton', sans-serif; text-transform: uppercase;
+    color: #fff; line-height: .82; letter-spacing: -.02em;
+    writing-mode: vertical-lr; transform: rotate(180deg);
+    padding: .15em 0;
+  }
+
+  @keyframes loopDown {
+    from { transform: translateY(-50%); }
+    to   { transform: translateY(0); }
+  }
+  @keyframes loopUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+
+
+  /* ============ B1 — 3 columns, all down, same speed ============ */
+  .b1 .track { animation: loopDown 28s linear infinite; }
+  .b1 .track span { font-size: clamp(90px, 18vw, 280px); }
+
+  /* ============ B2 — 3 columns alternating direction ============ */
+  .b2 .col:nth-child(odd) .track  { animation: loopDown 24s linear infinite; }
+  .b2 .col:nth-child(even) .track { animation: loopUp   24s linear infinite; }
+  .b2 .track span { font-size: clamp(90px, 18vw, 280px); }
+
+  /* ============ B3 — 4 columns, varied speeds, alternating ============ */
+  .b3 .col:nth-child(1) .track { animation: loopDown 22s linear infinite; }
+  .b3 .col:nth-child(2) .track { animation: loopUp   32s linear infinite; }
+  .b3 .col:nth-child(3) .track { animation: loopDown 18s linear infinite; }
+  .b3 .col:nth-child(4) .track { animation: loopUp   26s linear infinite; }
+  .b3 .track span { font-size: clamp(70px, 14vw, 220px); }
+
+  /* ============ B4 — 5 dense cols, fast, chaotic ============ */
+  .b4 .col:nth-child(1) .track { animation: loopDown 20s linear infinite; }
+  .b4 .col:nth-child(2) .track { animation: loopUp   28s linear infinite; }
+  .b4 .col:nth-child(3) .track { animation: loopDown 16s linear infinite; }
+  .b4 .col:nth-child(4) .track { animation: loopUp   24s linear infinite; }
+  .b4 .col:nth-child(5) .track { animation: loopDown 18s linear infinite; }
+  .b4 .track span { font-size: clamp(60px, 11vw, 180px); }
+
+  /* ============ B5 — Horizontal rows (text flows horizontally) ============ */
+  .b5 .columns { flex-direction: column; }
+  .b5 .col {
+    flex: 1 1 0; width: 100%; height: auto;
+    justify-content: flex-start; align-items: center;
+  }
+  .b5 .track {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    flex-direction: row; width: auto;
+    align-items: center;
+    will-change: transform;
+  }
+  .b5 .track span {
+    writing-mode: horizontal-tb; transform: none;
+    padding: 0 .15em;
+    font-size: clamp(60px, 11vh, 130px);
+    white-space: nowrap;
+  }
+  @keyframes loopLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes loopRight {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+  .b5 .col:nth-child(odd) .track  { animation: loopLeft  30s linear infinite; }
+  .b5 .col:nth-child(even) .track { animation: loopRight 35s linear infinite; }
+
+  /* ============ B6 — Huge dense 2 columns opposite ============ */
+  .b6 .col:nth-child(1) .track { animation: loopDown 35s linear infinite; }
+  .b6 .col:nth-child(2) .track { animation: loopUp   35s linear infinite; }
+  .b6 .track span { font-size: clamp(160px, 32vw, 440px); letter-spacing: -.04em; }
+
+  /* ============ B7 — DENSE horizontal rows, screen-filling ============ */
+  .b7 .columns {
+    flex-direction: column;
+    mix-blend-mode: normal; /* no inversion — just semi-transparency */
+  }
+  .b7 .col {
+    flex: 1 1 0; width: 100%; height: auto;
+    justify-content: flex-start; align-items: center;
+    overflow: hidden;
+  }
+  .b7 .track {
+    position: absolute; top: 0; left: 0; bottom: 0;
+    flex-direction: row; width: auto;
+    align-items: center;
+    will-change: transform;
+  }
+  .b7 .track span {
+    writing-mode: horizontal-tb; transform: none;
+    padding: 0;
+    font-size: clamp(120px, 24vh, 300px);
+    line-height: .82;
+    letter-spacing: -.03em;
+    word-spacing: -.05em;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.35); /* semi-transparent white */
+  }
+  .b7 .col:nth-child(odd) .track  { animation: loopLeft  34s linear infinite; }
+  .b7 .col:nth-child(even) .track { animation: loopRight 40s linear infinite; }
+
+  /* ============ B9 — Billboard: each word slides in, pauses at center, slides out ============ */
+  .b9 .stage {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: clamp(120px, 20vw, 300px);
+    overflow: hidden;
+    z-index: 3;
+    mix-blend-mode: difference;
+  }
+  .b9 .word {
+    position: absolute;
+    right: 0;
+    top: calc(50% + 22px); /* center of visible area (navbar ~44px) */
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(85px, 16vw, 220px);
+    writing-mode: vertical-lr;
+    line-height: .82;
+    letter-spacing: -.03em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(-50%);
+    animation: billboard 15s cubic-bezier(.7, 0, .25, 1) infinite;
+  }
+  .b9 .word:nth-child(1) { animation-delay: 0s; }
+  .b9 .word:nth-child(2) { animation-delay: 5s; }
+  .b9 .word:nth-child(3) { animation-delay: 10s; }
+
+  @keyframes billboard {
+    /* Each word: 5s of 15s cycle (33.33%) — slide in, hold, slide out */
+    0%  { transform: translateY(calc(-50% + 70vh)); opacity: 0; }
+    5%  { transform: translateY(-50%);              opacity: 1; }
+    27% { transform: translateY(-50%);              opacity: 1; }
+    33% { transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+    100%{ transform: translateY(calc(-50% - 70vh)); opacity: 0; }
+  }
+
+  /* ============ B8 — DENSE huge vertical columns (letters touch) ============ */
+  .b8 .col:nth-child(odd) .track  { animation: loopDown 40s linear infinite; }
+  .b8 .col:nth-child(even) .track { animation: loopUp   40s linear infinite; }
+  .b8 .track span {
+    font-size: clamp(150px, 32vw, 460px);
+    padding: 0;
+    line-height: .82;
+    letter-spacing: -.04em;
+  }
+
+  .divider {
+    padding: 24px 0; text-align: center; background: #0a0a0a;
+    font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .cta { bottom: 5rem; right: 1rem; max-width: 70%; }
+    .cta p { font-size: .72rem; max-width: 220px; margin-left: auto; }
+    .cta .row { flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .b1 .track span, .b2 .track span { font-size: clamp(60px, 22vw, 150px); }
+    .b3 .track span { font-size: clamp(45px, 16vw, 110px); }
+    .b4 .track span { font-size: clamp(35px, 13vw, 90px); }
+    .b5 .track span { font-size: clamp(40px, 10vh, 90px); }
+    .b6 .track span { font-size: clamp(90px, 40vw, 280px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#b1">B1 3 cols down</a>
+  <a href="#b2">B2 3 cols alt</a>
+  <a href="#b3">B3 4 cols varied</a>
+  <a href="#b4">B4 5 cols chaos</a>
+  <a href="#b5">B5 Horizontal rows</a>
+  <a href="#b6">B6 2 cols XXL</a>
+  <a href="#b7">B7 Dense horizontal</a>
+  <a href="#b8">B8 Dense vertical XXL</a>
+  <a href="#b9">B9 Right edge single</a>
+</nav>
+
+<!-- Template helper: each track contains the words twice for seamless loop -->
+
+<!-- B1 -->
+<section id="b1" class="hero b1">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B1 — <strong>3 kolumny, wszystkie w dół</strong> · jednolity rytm</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B2 -->
+<section id="b2" class="hero b2">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B2 — <strong>3 kolumny naprzemiennie</strong> · 1 w dół, 2 w górę, 3 w dół</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B3 -->
+<section id="b3" class="hero b3">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B3 — <strong>4 kolumny varied speeds</strong> · różne prędkości i kierunki</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B4 -->
+<section id="b4" class="hero b4">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B4 — <strong>5 kolumn chaos</strong> · gęsto, szybciej, efekt macierzy</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B5 -->
+<section id="b5" class="hero b5">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span><span>ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · ŚCIANA · KAMERA · AKCJA · </span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B5 — <strong>Poziome rzędy</strong> · lewy/prawy naprzemiennie</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B6 -->
+<section id="b6" class="hero b6">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B6 — <strong>2 kolumny XXL przeciwnie</strong> · litery gigant, powoli, hipnotyczne</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B7 — Dense horizontal, 10 rows filling whole screen -->
+<section id="b7" class="hero b7">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span><span>ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA ŚCIANA KAMERA AKCJA </span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B7 — <strong>Dense horizontal</strong> · 5 rzędów · gigant litery</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B8 — Dense huge vertical columns -->
+<section id="b8" class="hero b8">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="columns">
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+    <div class="col"><div class="track"><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span><span>ŚCIANA</span><span>KAMERA</span><span>AKCJA</span></div></div>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B8 — <strong>Dense vertical XXL</strong> · 3 kolumny gigant, litery sklejone, bez padding</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+<div class="divider">—</div>
+
+<!-- B9 — Billboard: slide in, pause at center, slide out -->
+<section id="b9" class="hero b9">
+  <video autoplay muted loop playsinline poster="/images/hero-poster.webp">
+    <source src="/movies/hero_mini.webm" type="video/webm">
+    <source src="/movies/hero_mini.mp4" type="video/mp4">
+  </video>
+  <div class="stage">
+    <span class="word">śCIANA</span>
+    <span class="word">KAMERA</span>
+    <span class="word">AKCJA</span>
+  </div>
+  <div class="fade-bottom"></div>
+  <div class="label">B9 — <strong>Billboard center</strong> · każde słowo wjeżdża, pauza 3s, wyjeżdża</div>
+  <aside class="cta">
+    <p>Dostajesz <strong>mural, który przyciąga wzrok</strong> — i <strong>profesjonalny film z ujęciami z drona</strong>.</p>
+    <div class="row"><a class="btn" href="#">Bezpłatna wycena →</a><div class="micro"><span>25+ lat</span><span>Film gratis</span></div></div>
+  </aside>
+</section>
+
+</body>
+</html>
