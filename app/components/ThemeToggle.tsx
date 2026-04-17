@@ -77,13 +77,54 @@ export function ThemeToggle() {
   }
 
   const isDark = resolvedTheme === "dark";
+  const next = isDark ? "light" : "dark";
+
+  /**
+   * View-Transition circular reveal (inspired by rudrodip/theme-toggle-effect).
+   * Animates the new theme into view via an expanding clip-path circle
+   * originating at the click coordinates. Graceful fallback when the API
+   * is unavailable (Firefox, Safari <18).
+   */
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+    };
+    if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTheme(next);
+      return;
+    }
+
+    const { clientX: x, clientY: y } = e;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    const transition = doc.startViewTransition(() => setTheme(next));
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 500,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+  };
 
   return (
     <Button
       variant="ghost"
       size="icon"
       className="rounded-full h-10 w-10 bg-secondary hover:bg-accent text-foreground hover:text-white transition-colors"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleClick}
       aria-label={isDark ? "Włącz tryb jasny" : "Włącz tryb ciemny"}
     >
       <SunMoonIcon isDark={!isDark} />

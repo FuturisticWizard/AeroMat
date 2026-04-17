@@ -80,6 +80,23 @@
   }
 }
 
+/* View Transitions — circular reveal on theme toggle (rudrodip/theme-toggle-effect).
+   Disable default cross-fade; the toggle handler animates a clip-path circle
+   on ::view-transition-new(root) originating at the click point. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+}
+
 /* Theme toggle — sun <-> moon morph (inspired by codepen.io/wgao19/pen/vMzOgQ)
    Default SVG renders a full sun with rays. In dark mode a mask circle slides
    over the disc's upper-right, carving a crescent; rays simultaneously collapse. */
