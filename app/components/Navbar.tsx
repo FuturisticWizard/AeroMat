@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useAudio } from "@/app/context/AudioContext";
 import { FacebookIcon, InstagramIcon, YouTubeIcon } from "./SocialIcons";
+import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Navbar.module.css";
 
 interface NavItem {
@@ -157,9 +158,10 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 <Volume2 className="h-5 w-5" />
               )}
             </Button>
+            <ThemeToggle />
           </div>
 
-          {/* Mobile — Sound + Hamburger */}
+          {/* Mobile — Sound + Theme + Hamburger */}
           <div className="md:hidden flex items-center gap-2">
             <Button
               variant="ghost"
@@ -174,6 +176,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 <Volume2 className="h-5 w-5" />
               )}
             </Button>
+            <ThemeToggle />
             <Button
               className="text-white hover:text-[#ff7302] hover:bg-transparent focus-visible:ring-0 z-[130] relative"
               variant="ghost"
