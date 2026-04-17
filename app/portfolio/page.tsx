@@ -29,10 +29,10 @@ export default function PhotoPortfolio() {
             AeroMat - Kreatywność Bez Granic
           </h1>
           <p className="text-xl text-gray-300 mb-8">
-            W AeroMat nie ma granic dla Twojej wyobraźni. Tworzymy unikalne
+            Dla AeroMat nie ma granic wyobraźni. Tworzę unikalne
             murale, wykorzystując różnorodne techniki malarskie, aby ożywić
             przestrzeń i wyróżnić Twoją markę. Od tradycyjnych pędzli po
-            nowoczesne techniki sprayu i aerografu, nasze dzieła sztuki są
+            nowoczesne techniki sprayu i aerografu, moje prace są
             wyrazem nieograniczonej kreatywności.
           </p>
           {/* <Button size="lg" className="group">
