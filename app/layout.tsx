@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import PerformanceMonitor from "./components/PerformanceMonitor";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { AudioProvider } from "./context/AudioContext";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -74,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="pl" suppressHydrationWarning>
       <head>
         <link
           rel="preload"
@@ -86,12 +87,19 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${syne.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
         <GoogleAnalytics />
-        <AudioProvider>
-          <PerformanceMonitor />
-          <Navbar />
-          {children}
-          <Footer />
-        </AudioProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AudioProvider>
+            <PerformanceMonitor />
+            <Navbar />
+            {children}
+            <Footer />
+          </AudioProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
