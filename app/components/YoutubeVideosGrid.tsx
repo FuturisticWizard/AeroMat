@@ -92,7 +92,7 @@ export default function YouTubeGrid() {
           FILMY
           </h2>
 
-          <p className="text-lg text-gray-200">
+          <p className="text-lg text-foreground/70">
           Zobacz jak powstają moje prace.
           </p>
         </div>
@@ -176,10 +176,10 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
     return (
       <div
         onClick={!inlinePlay ? handleClick : undefined}
-        className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-neutral-900/80 border ${
+        className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-card dark:bg-neutral-900/80 border ${
           isActive
             ? "border-accent shadow-orange-500/20"
-            : "border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-accent/40"
+            : "border-border dark:border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-accent/40"
         } ${!inlinePlay ? "cursor-pointer" : ""}`}
       >
         <div className="relative pb-[56.25%] overflow-hidden">
@@ -211,8 +211,8 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
           )}
         </div>
         <div className="p-4">
-          <h3 className="font-semibold text-lg mb-1 text-white">{video.title}</h3>
-          <p className="text-gray-300 text-[0.9375rem] leading-relaxed">{video.description}</p>
+          <h3 className="font-semibold text-lg mb-1 text-foreground">{video.title}</h3>
+          <p className="text-foreground/70 text-[0.9375rem] leading-relaxed">{video.description}</p>
         </div>
       </div>
     );

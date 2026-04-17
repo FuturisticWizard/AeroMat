@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function FilmyPage() {
   return (
-    <main className="min-h-screen bg-black pt-16 sm:pt-18 md:pt-20">
+    <main className="min-h-screen bg-background dark:bg-black pt-16 sm:pt-18 md:pt-20">
       <YoutubeVideosGrid />
     </main>
   );
