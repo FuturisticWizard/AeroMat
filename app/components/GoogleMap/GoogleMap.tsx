@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef, useCallback, Suspense, memo } from "react";
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import {
   APIProvider,
   Map,
@@ -237,6 +238,7 @@ const GoogleMapInner = memo(() => {
   const [isClient, setIsClient] = useState(false);
   const [apiLoaded, setApiLoaded] = useState(false);
   const [selectedPoi, setSelectedPoi] = useState<Poi | null>(null);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setIsClient(true);
@@ -266,7 +268,7 @@ const GoogleMapInner = memo(() => {
             defaultCenter={{ lat: 51.1, lng: 22.7 }}
             onCameraChanged={(ev: MapCameraChangedEvent) => {}}
             className="w-full h-full"
-            styles={darkModeStyles}
+            styles={resolvedTheme === "light" ? undefined : darkModeStyles}
           >
             {apiLoaded && <PoiMarkers pois={locations} onSelectPoi={handleSelectPoi} />}
           </Map>

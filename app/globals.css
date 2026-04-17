@@ -3,6 +3,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Print mode — always force light for legibility on paper */
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  html.dark {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .bg-background,
+  .bg-secondary,
+  .bg-card {
+    background: #fff !important;
+  }
+  .text-foreground,
+  .text-muted-foreground {
+    color: #000 !important;
+  }
+}
+
 @layer utilities {
   .bg-background {
     background-color: hsl(var(--background));
