@@ -467,6 +467,37 @@
   animation: scroll 20s linear infinite; /* Adjust duration for speed */
 }
 
+/* TrustedByGrid — logo lewituje nad "podłożem", cień pod spodem pulsuje synchronicznie.
+   Stagger per-logo realizowany przez ujemne `animation-delay` ustawiane inline per komórkę. */
+@keyframes aeromat-logo-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -4px, 0); }
+}
+
+@keyframes aeromat-logo-shadow {
+  0%, 100% { transform: translateX(-50%) scale(1, 1); }
+  50%      { transform: translateX(-50%) scale(1.14, 0.88); }
+}
+
+.aeromat-logo-float {
+  animation: aeromat-logo-float 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.aeromat-logo-shadow {
+  animation: aeromat-logo-shadow 4.2s ease-in-out infinite;
+  transform: translateX(-50%);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aeromat-logo-float,
+  .aeromat-logo-shadow {
+    animation: none;
+  }
+}
+
 /* Cards marquee: make sure it's positioned and stacked correctly on BOTH desktop and mobile.
    Without these base styles, `.card-marquee` ends up in normal flow on mobile and is often
    covered by `.card-img`, so the text appears "missing". */
