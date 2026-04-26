@@ -583,103 +583,33 @@
 /* ---- CTA ---- */
 .bot {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: clamp(2rem, 6vh, 5rem);
+  left: 50%;
   z-index: 20;
   padding: clamp(1rem, 2.5vw, 2rem) clamp(1rem, 3vw, 3rem);
   background: none;
   opacity: 0;
-  transform: translateY(12px);
-  max-width: 480px;
+  transform: translate(-50%, 12px);
+  width: min(92vw, 640px);
+  text-align: center;
   animation: heroCtaFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
 }
 
 @keyframes heroCtaFadeIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ================================================================
-   FILM STRIPS — vertical strips on left + right edges
-   Black panel with white text. mix-blend-mode: multiply makes
-   black stay black (blocks video) and white letters show the
-   video through (letters = "holes"/perforations in 35mm film).
-   ================================================================ */
-.strip {
-  position: absolute;
-  top: 0; bottom: 0;
-  width: clamp(70px, 10vw, 130px);
-  overflow: hidden;
-  z-index: 3;
-  background: #000;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-.stripLeft  { left: 0; }
-.stripRight { right: 0; }
-
-.track {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(30px, 4vh, 70px);
-  padding: clamp(30px, 4vh, 70px) 0;
-  will-change: transform;
-  animation: heroStripScroll 60s linear infinite;
-}
-
-.txt {
-  flex: 0 0 auto;
-  color: #fff;
-  font-family: var(--font-anton), Anton, sans-serif;
-  font-size: clamp(44px, 7vw, 90px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  writing-mode: vertical-lr;
-  text-transform: none;
-  user-select: none;
-}
-
-.dot {
-  flex: 0 0 auto;
-  width: clamp(6px, 0.8vw, 12px);
-  height: clamp(6px, 0.8vw, 12px);
-  background: #fff;
-  border-radius: 50%;
-}
-
-@keyframes heroStripScroll {
-  from { transform: translateY(-50%); }
-  to   { transform: translateY(0); }
-}
-
-/* Tablet / medium — slightly thinner strips, adjust CTA to not overlap right strip */
-@media (width <= 1024px) {
-  .strip { width: clamp(64px, 11vw, 100px); }
-  .txt { font-size: clamp(40px, 8vw, 78px); }
-}
-
-/* Mobile — thinner strips, smaller text */
-@media (width <= 768px) {
-  .strip { width: clamp(50px, 14vw, 72px); }
-  .txt { font-size: clamp(34px, 10vw, 56px); letter-spacing: -0.01em; }
-  .dot { width: 5px; height: 5px; }
-  .track { gap: clamp(20px, 4vh, 40px); padding: clamp(20px, 4vh, 40px) 0; }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .track { animation: none; }
-  .bot { animation: none; opacity: 1; transform: none; }
+  .bot { animation: none; opacity: 1; transform: translate(-50%, 0); }
 }
 
 .copy {
-  color: rgb(255 255 255 / 50%);
-  font-size: clamp(0.78rem, 1vw, 0.88rem);
-  max-width: 420px;
-  line-height: 1.6;
+  color: rgb(255 255 255 / 65%);
+  font-size: clamp(0.95rem, 1.35vw, 1.15rem);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.55;
+  text-align: center;
 }
 
 .copy strong {
@@ -690,8 +620,9 @@
 .row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.2rem;
-  margin-top: 0.7rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
@@ -700,8 +631,8 @@
   align-items: center;
   gap: 0.4rem;
   font-weight: 600;
-  font-size: 0.85rem;
-  padding: 0.75rem 1.6rem;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.8rem;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s;
@@ -717,9 +648,10 @@
 
 .micro {
   display: flex;
+  justify-content: center;
   gap: 1.5rem;
-  font-size: 0.72rem;
-  color: rgb(255 255 255 / 30%);
+  font-size: 0.8rem;
+  color: rgb(255 255 255 / 45%);
   flex-wrap: wrap;
 }
 
@@ -735,108 +667,81 @@
   height: 5px;
   border-radius: 50%;
   background: #fe9100;
-  opacity: 0.5;
-}
-
-@media (width >= 1025px) {
-  .bot {
-    left: auto;
-    right: clamp(70px, 10vw, 130px); /* clear the right film strip */
-    max-width: 480px;
-    bottom: clamp(4rem, 10vh, 8rem);
-    text-align: right;
-  }
-
-  .copy {
-    margin-left: auto;
-  }
-
-  .row {
-    justify-content: flex-end;
-  }
-
-  .micro {
-    justify-content: flex-end;
-  }
+  opacity: 0.6;
 }
 
 /* Large desktop / 1440p+ — scale up so content doesn't look tiny on ultrawide */
 @media (width >= 1600px) {
   .bot {
-    max-width: 580px;
+    width: min(88vw, 760px);
     bottom: clamp(5rem, 10vh, 9rem);
   }
 
   .copy {
-    font-size: clamp(0.9rem, 0.8vw, 1.05rem);
-    max-width: 520px;
+    font-size: clamp(1.1rem, 1.1vw, 1.3rem);
+    max-width: 720px;
   }
 
   .btnO {
-    font-size: 0.95rem;
-    padding: 0.9rem 1.9rem;
+    font-size: 1.05rem;
+    padding: 0.95rem 2rem;
   }
 
   .micro {
-    font-size: 0.8rem;
+    font-size: 0.88rem;
   }
 }
 
 /* 4K / 2560px+ — further scale */
 @media (width >= 2400px) {
   .bot {
-    max-width: 720px;
+    width: min(80vw, 920px);
     bottom: clamp(6rem, 10vh, 11rem);
   }
 
   .copy {
-    font-size: 1.2rem;
-    max-width: 640px;
+    font-size: 1.45rem;
+    max-width: 860px;
   }
 
   .btnO {
-    font-size: 1.1rem;
-    padding: 1rem 2.2rem;
+    font-size: 1.2rem;
+    padding: 1.05rem 2.3rem;
   }
 
   .micro {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 }
 
 @media (width <= 1024px) {
   .bot {
-    max-width: 400px;
-    right: clamp(64px, 11vw, 100px); /* clear right film strip on tablet */
+    width: min(90vw, 540px);
     bottom: clamp(3rem, 8vh, 5rem);
+  }
+
+  .copy {
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
   }
 }
 
 @media (width <= 768px) {
   .bot {
-    left: clamp(50px, 14vw, 72px) !important; /* clear left film strip */
-    right: clamp(50px, 14vw, 72px); /* clear right film strip */
-    max-width: none;
+    width: min(92vw, 440px);
     padding: 0.8rem 1rem;
-    bottom: calc(clamp(7rem, 18vh, 11rem) - 50px);
-    text-align: right;
+    bottom: clamp(2.5rem, 8vh, 4rem);
   }
 
   .row {
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    gap: 0.5rem;
-  }
-
-  .micro {
-    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
   }
 
   .copy {
-    font-size: 0.72rem;
-    max-width: 220px;
-    margin-left: auto;
+    font-size: 0.92rem;
+    max-width: 340px;
+    line-height: 1.5;
   }
 
   .bottomFade {

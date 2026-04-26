@@ -1,25 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAudio } from "@/app/context/AudioContext";
 import styles from "./GlitchedVideoHero.module.css";
-
-// Word sequence (always ściana → kamera → akcja, duplicated for seamless loop)
-const WORDS = ["śCIANA", "KAMERA", "AKCJA", "śCIANA", "KAMERA", "AKCJA"];
-
-const FilmStrip = ({ side, words }: { side: "left" | "right"; words: string[] }) => (
-  <div className={`${styles.strip} ${side === "left" ? styles.stripLeft : styles.stripRight}`}>
-    <div className={styles.track}>
-      {/* content + duplicate for seamless marquee */}
-      {[...words, ...words].map((w, i) => (
-        <React.Fragment key={i}>
-          <span className={styles.txt}>{w}</span>
-          <span className={styles.dot} />
-        </React.Fragment>
-      ))}
-    </div>
-  </div>
-);
 
 const GlitchedVideoHero = () => {
   const { muted } = useAudio();
@@ -111,9 +94,6 @@ const GlitchedVideoHero = () => {
       <div className={styles.videoGrad} />
       <div className={styles.bottomFade} />
 
-      <FilmStrip side="left"  words={WORDS} />
-      <FilmStrip side="right" words={WORDS} />
-
       <div className={styles.bot}>
         <p className={styles.copy}>
           Dostajesz <strong>mural, który przyciąga wzrok</strong> — i{" "}
@@ -123,7 +103,6 @@ const GlitchedVideoHero = () => {
           <a href="/kontakt" className={styles.btnO}>Bezpłatna wycena &rarr;</a>
           <div className={styles.micro}>
             <span>25+ lat doświadczenia</span>
-            <span>Film gratis</span>
           </div>
         </div>
       </div>
