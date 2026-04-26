@@ -31,6 +31,22 @@ const mockups: Mockup[] = [
     description:
       "Warianty gradientu na dole hero (mask fade vs solid overlay). Kontrola jak video przechodzi w sekcję Intro.",
   },
+  {
+    path: "/hero-copy-mockup",
+    label: "Hero Paragraph — copy",
+    tag: "hero",
+    description:
+      "10 propozycji paragrafu pod CTA w hero. Punkt wyjścia: „Murale, które przyciągają wzrok” + język korzyści (konkretny zysk, liczby, porównanie do kampanii, perspektywa klienta).",
+    count: "10 wariantów",
+  },
+  {
+    path: "/hero-copy-v3-mockup",
+    label: "Hero Copy #3 — 12 stylizacji (video)",
+    tag: "hero",
+    description:
+      "13 pełnoekranowych sekcji hero (z video) z tą samą kopią (wariant #3: „szara ściana = stracona szansa…”). Trzy zestawy typograficzne: Bebas Neue + Space Grotesk (6 + wariacja V4 bottom-center = 7), Archivo Black + Space 300 (3), Anton + Space (3). Różne layouty: center, left rail, orange accent, outlined, stacked diagonal, frosted card, mega impact, editorial left, paint stroke.",
+    count: "13 wariantów",
+  },
 
   {
     path: "/trusted-mockup",
@@ -47,6 +63,30 @@ const mockups: Mockup[] = [
     description:
       "Pogłębienie 3 najciekawszych kierunków: inverted vignette (8×), neon line + bloom (8×), aurora wash (8×). Od subtelnych do mocnych.",
     count: "24 warianty",
+  },
+  {
+    path: "/logos-grid-mockup",
+    label: "Logos — Grid Wall (bez kart, bez marquee)",
+    tag: "section",
+    description:
+      "8 wariantów gridowych sekcji „zaufali mi”: even 4×3, hover-to-color, bento uneven, line-separated rows, dense 6×2, asymmetric featured, duotone orange (dark), white silhouettes (black). Wszystkie grayscale/monotone zrobione w CSS (filter + mask) — zero duplikatów PNG.",
+    count: "8 wariantów",
+  },
+  {
+    path: "/logos-grid-black-mockup",
+    label: "Logos — Grayscale na Czarnym",
+    tag: "section",
+    description:
+      "9 wariantów sekcji „zaufali mi” na czarnym tle. Trzy strategie konwersji ciemnych logosów: A · invert+grayscale (dark-mode klasyka), B · brightness-lift (bez invertu, zachowuje polaryzację), C · halo (mleczny spot pod logosem). Layouty: even, bento, rows, featured, dense, ABC-compare. Wszystko CSS filter — jedno źródło PNG.",
+    count: "9 wariantów",
+  },
+  {
+    path: "/logos-grid-v10-mockup",
+    label: "Logos — V10 (V4.1) · 11 wariantów kontekstu i layoutu",
+    tag: "section",
+    description:
+      "Pogłębienie V10: W01 baseline, W02 warm cream (jasne), W03 dense 6-kol, W04 marquee infinite loop, W05 staggered brick, W06 pyramid 5/4/3, W07 asymmetric columns, W08–W11 „less dark” (neutral gray #1a1a1a, warm charcoal #1d1915, vertical gradient, radial spotlight) — ciemne tła pośrednie między pure black a jasnym. Wspólny V10LogoCell dla wszystkich.",
+    count: "11 wariantów",
   },
   {
     path: "/panorama-typography-mockup",
@@ -72,6 +112,39 @@ const mockups: Mockup[] = [
     label: "Kontakt — formularz",
     tag: "layout",
     description: "Warianty strony kontaktowej: layouty, typografie, hero treatment.",
+  },
+  {
+    path: "/kontakt-form-mockup",
+    label: "Kontakt — 25 wariantów sekcji (jednostronne)",
+    tag: "layout",
+    description:
+      "25 pełnych sekcji kontakt (heading + formularz + QuickCTAs + ContactInfo + Hours / Social / Stats / Map / FAQ w różnych kombinacjach) w 3 parach typograficznych: #2 Bebas + Space (9), #4 Anton + Space 300 (8), #5 Bebas + Inter (8). Warianty: centered, split, brutalist, newspaper 3-col, floating labels + social, neon border + stats, minimal mono, orange info/form duo, orange band, industrial + stats, vertical heading, airy editorial + map, orange border + quickCTAs, stacked rows, modal + mini-info, banner + map, sidebar + FAQ + quote, billboard + quickCTAs + hours, vintage postcard + address, glass + quickCTAs, magazine + stats, spotlight + social, horizontal + map, split image + stats, retro stamp + address + map.",
+    count: "25 wariantów",
+  },
+
+  {
+    path: "/portfolio-home-mockup",
+    label: "Portfolio — home section (masonry 4-kol)",
+    tag: "section",
+    description:
+      "Replika layoutu sekcji #home-portfolio z cam-l.pl: 4-kolumnowy elastic masonry (12 kafelków w mieszanych rozmiarach 25%/50%, gutter 2px), hover overlay w kolorze projektu (fade ~1s cubic-bezier(0,1,.5,1)), scale na tytule, CTA see-through (#3d929e → #008f9d). Zero kadrowania: aspect-ratio każdego kafelka = aspect-ratio zdjęcia AeroMat. Content z /public/Portfolio.",
+    count: "12 kafelków",
+  },
+  {
+    path: "/portfolio-card-variants-mockup",
+    label: "Portfolio Card — 4 warianty karty",
+    tag: "section",
+    description:
+      "Ta sama siatka 4-kol / 12 kafelków co w /portfolio-home-mockup, ale obraz mniejszy — karta ma obszar na metadane. Warianty: V1 Classic (białe tło, ramka, tytuł + kategoria + opis), V2 Dark (czarne tło, akcent #ff7302 z home), V3 Label inline (obraz wypełnia, pasek z gradientem na dole), V4 Polaroid (ramka wokół obrazu, kremowe tło, serif).",
+    count: "4 warianty",
+  },
+  {
+    path: "/portfolio-animation-variants-mockup",
+    label: "Portfolio Animation — 16 wariantów anti-crop (4×4)",
+    tag: "section",
+    description:
+      "Replika animacji home (Card intro „Murale Wielkoformatowe” + Portfolio) z przełącznikiem 16 wariantów siatki portfolio bez kadrowania. Cztery strategie po cztery sub-warianty: V1 Justified Rows (rzędy o równej wysokości, zmienne szerokości), V2 Aspect Bento (CSS Grid, aspect-ratio komórki = aspect-ratio zdjęcia), V3 Masonry Columns (CSS columns, kaskada), V4 Row-span Masonry (CSS Grid + grid-row span policzony z aspect-ratio). Dane: portfolioPhotos (Murale, 11 zdjęć).",
+    count: "16 wariantów",
   },
 
   {
