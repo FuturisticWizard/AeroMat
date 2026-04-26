@@ -73,10 +73,15 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
             {card.hasMarquee && (
               <div className="card-marquee">
                 <div className="marquee">
-                  <h1>Sztuka na Murach</h1>
-                  <h1>Kolor Zmienia Przestrzeń</h1>
-                  <h1>Tworzę z Pasją</h1>
-                  <h1>Graffiti z Duszą</h1>
+                  {/* Duplicated 2× so totalWidth > viewport even on 4K/ultrawide —
+                      prevents the GSAP horizontalLoop from leaving a gap that
+                      makes a phrase pop into view statically after some cycles. */}
+                  {[0, 1].flatMap((rep) => [
+                    <h1 key={`${rep}-0`}>Sztuka na Murach</h1>,
+                    <h1 key={`${rep}-1`}>Kolor Zmienia Przestrzeń</h1>,
+                    <h1 key={`${rep}-2`}>Tworzę z Pasją</h1>,
+                    <h1 key={`${rep}-3`}>Graffiti z Duszą</h1>,
+                  ])}
                 </div>
               </div>
             )}

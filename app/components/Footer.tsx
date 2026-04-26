@@ -60,7 +60,7 @@ const Footer = () => {
             </address>
           </div>
           <div className="flex flex-col w-full justify-center items-center text-center ">
-            <h3 className="font-bold text-lg mb-4 text-white">Śledź Nas!</h3>
+            <h3 className="font-bold text-lg mb-4 text-white">Obserwuj mnie!</h3>
             <div className="flex space-x-4">
               {socials.map((social, index) => {
                 const Icon = social.Icon;
@@ -82,12 +82,9 @@ const Footer = () => {
         </div>
 
         <div className=" mt-8 pt-8 text-center text-white">
-          <p>© {new Date().getFullYear()} AeroMat. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} AeroMat</p>
           <p className="text-sm">
-            Icons by{" "}
-            <Link href="https://www.icons8.com" className="underline">
-              icons8
-            </Link>
+            Stworzone przez <Link href="https://www.linkedin.com/in/automate/" className="underline hover:text-white/70 transition-colors">AutoMate</Link>
           </p>
         </div>
       </div>

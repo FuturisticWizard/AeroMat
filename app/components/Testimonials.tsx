@@ -18,7 +18,7 @@ const testimonials = [
     content:
       "Projekt został wykonany kompleksowo — od koncepcji graficznej, przez przygotowanie ściany, aż po finalne wykonanie muralu. Wykonawca wykazał się profesjonalizmem, elastycznością oraz bardzo dobrym zrozumieniem tematyki ekologicznej. Efekt końcowy spełnił nasze oczekiwania zarówno pod względem wizualnym, jak i wizerunkowym.",
     rating: 5,
-    workImage: "/Portfolio/murale/7B.webp",
+    workImage: "/Portfolio/murale/7c.webp",
     workTitle: "Mural ekologiczny dla Ekopak",
   },
   {
