@@ -123,7 +123,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="text-gray-300 hover:text-[#ff7302] transition-colors duration-200"
+                className="text-gray-300 hover:text-[#ff7302] transition-colors duration-200 font-bold uppercase"
               >
                 {item.label}
               </a>
@@ -220,7 +220,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               <a
                 key={item.href}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
+                className="block px-3 py-2 text-base font-bold uppercase text-white hover:text-[#ff7302] hover:bg-neutral-800/80 rounded-md transition-colors"
                 onClick={(e) => {
                   handleNavClick(e, item.href);
                   setIsMobileMenuOpen(false);
