@@ -528,11 +528,30 @@
   font-weight: 400;
   font-family: var(--font-bebas);
   color: #333;
-  transition: color 0.3s ease;
+  text-shadow: none;
+  /* base transition = fade-OUT when hover ends (shorter niż fade-in, ale nadal czytelny) */
+  transition:
+    color 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    text-shadow 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Per-phrase hover — tylko konkretny h1 pod kursorem się zapala
+   (klasa `.marquee-hover` dodawana przez JS w HomeAnimations.tsx mousemove).
+   Nie do pełnej bieli — ciepły szary + subtelny glow. */
 .card-marquee .marquee h1.marquee-hover {
-  color: #fff;
+  color: #8a8a8a;
+  text-shadow:
+    0 0 14px rgb(255 255 255 / 22%),
+    0 0 32px rgb(255 255 255 / 14%),
+    0 0 60px rgb(255 115 2 / 14%);
+  /* fade-IN (slower — "powolne zapalanie") */
+  transition:
+    color 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+    text-shadow 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-marquee .marquee h1 { transition: none; }
 }
 
 /* Neon glow for intro/outro words — white core + blue outer glow */
@@ -977,6 +996,27 @@
       "photo11 photo11 photo11";
   }
 
+  /* Murale-specific override (no photo3 — bird photo expanded) */
+  .grid-small-container-murale {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 10vh repeat(5, 18vh) 10vh 10vh;
+    gap: 3px;
+    grid-template-areas:
+      "photo1 photo1 photo1"
+      "photo2 photo2 photo2"
+      "photo4 photo4 photo4"
+      "photo5 photo6 photo6"
+      "photo5 photo8 photo8"
+      "photo9 photo10 photo10"
+      "photo7 photo7 photo7"
+      "photo11 photo11 photo11";
+  }
+
+  .grid-small-container-murale > * {
+    overflow: hidden;
+  }
+
   .grid-small-container > * {
     overflow: hidden;
   }
@@ -1057,6 +1097,25 @@
     overflow: hidden;
   }
 
+  /* Murale-specific override (no photo3 — bird photo expanded, taller row 4 for photo8) */
+  .grid-small-container-murale {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 20vh 20vh 25vh 35vh 25vh 25vh;
+    gap: 4px;
+    grid-template-areas:
+      "photo1 photo1 photo1 photo2 photo2 photo2"
+      "photo4 photo4 photo5 photo2 photo2 photo2"
+      "photo4 photo4 photo5 photo6 photo6 photo6"
+      "photo7 photo7 photo7 photo7 photo8 photo8"
+      "photo10 photo10 photo10 photo10 photo9 photo9"
+      "photo11 photo11 photo11 photo11 photo9 photo9";
+  }
+
+  .grid-small-container-murale > * {
+    overflow: hidden;
+  }
+
   /* 7-photo grid desktop - photo3 portrait 2 rows, photo7 square 2 rows */
   .grid-small-7 {
     display: grid;
@@ -1064,10 +1123,10 @@
     grid-template-rows: 28vh 24vh 24vh 24vh;
     gap: 4px;
     grid-template-areas:
-      "photo1 photo1 photo1 photo1 photo1 photo1"
+      "photo1 photo1 photo3 photo3 photo7 photo7"
       "photo2 photo2 photo3 photo3 photo7 photo7"
-      "photo4 photo4 photo3 photo3 photo7 photo7"
-      "photo5 photo5 photo5 photo6 photo6 photo6";
+      "photo2 photo2 photo3 photo3 photo4 photo4"
+      "photo5 photo5 photo6 photo6 photo4 photo4";
   }
 
   .grid-small-7 > * {

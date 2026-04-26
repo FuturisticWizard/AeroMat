@@ -29,7 +29,7 @@ export default function Home() {
           <div className="intro-hold-spacer h-[80vh]" aria-hidden="true" />
 
           {/* Portfolio 1: po Murale Wielkoformatowe */}
-          <PortfolioCard data={portfolioPhotos} id="murale" gridVariant="11" className="z-20" />
+          <PortfolioCard data={portfolioPhotos} id="murale" gridVariant="11m" className="z-20" />
 
           {/* Card 1: Szyldy i Logotypy */}
           <div className="relative z-30">
@@ -58,7 +58,6 @@ export default function Home() {
           <div className="relative z-[90]">
             <PanoramaScroll />
           </div>
-          <Outro />
 
           <WhyChooseMe />
 
@@ -84,6 +83,8 @@ export default function Home() {
           </section>
 
           <MuralsMap />
+
+          <Outro />
         </main>
       </div>
     </HomeAnimations>

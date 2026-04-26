@@ -12,6 +12,7 @@ interface Slide {
   height: number;
   gridArea: string;
   objectPosition?: string;
+  objectFit?: "cover" | "contain";
   colspan?: number;
   smcolspan?: number;
 }
@@ -19,14 +20,14 @@ interface Slide {
 // Compute responsive sizes from colspan (out of 10) per-slide.
 // - Mobile: raw vw (DPR doubles effective pixels)
 // - Desktop: vw with 25% floor for narrow tiles on retina
-// - Ultra-wide cap: on ≥1920px viewports, portfolio tiles practically don't exceed
-//   `colspan * 140px` (grids top out around 1400px total width), so cap srcset pick
-//   to avoid browsers pulling the 2560px variant for a tile that'll never render that wide.
+// - Ultra-wide cap: PortfolioCard uses fullWidth (100vw), so on ≥1920px viewports
+//   tiles can reach `colspan * 192px` (1920/10). Multiplier 19.2 keeps cap aligned
+//   with actual rendered width so srcset picks the sharpest variant.
 const computeSizes = (slide: Slide): string => {
   const desktopVw = slide.colspan ? Math.min(100, Math.round((slide.colspan / 10) * 100)) : 100;
   const mobileVw = slide.smcolspan ? Math.min(100, Math.round((slide.smcolspan / 10) * 100)) : 100;
   const desktopFloor = Math.max(desktopVw, 25);
-  const desktopPxCap = Math.round(desktopVw * 14);
+  const desktopPxCap = Math.round(desktopVw * 19.2);
   return `(max-width: 768px) ${mobileVw}vw, (min-width: 1920px) ${desktopPxCap}px, ${desktopFloor}vw`;
 };
 
@@ -150,6 +151,7 @@ const Images: FC<ImageSlideProps> = (props) => {
 
   const gridClassMap: Record<string, string> = {
     "11": "grid grid-small-container",
+    "11m": "grid grid-small-container-murale",
     "7": "grid grid-small-7",
     "7sq": "grid grid-small-7sq",
   };
@@ -172,7 +174,7 @@ const Images: FC<ImageSlideProps> = (props) => {
                 alt={slide.title}
                 width={slide.width}
                 height={slide.height}
-                className="w-full h-full object-cover cursor-pointer hover:animate-wiggle transition-transform"
+                className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
                 style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -211,7 +213,7 @@ const Images: FC<ImageSlideProps> = (props) => {
               alt={slide.title}
               width={slide.width}
               height={slide.height}
-              className="w-full h-full object-cover cursor-pointer hover:animate-wiggle transition-transform"
+              className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
               style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
