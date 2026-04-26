@@ -1,0 +1,8 @@
+# Design exploration mockups — experimental UI variants, intentionally
+# loose CSS. Do not lint.
+app/*-mockup/**
+
+# Build output
+.next/
+out/
+node_modules/
