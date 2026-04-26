@@ -159,8 +159,24 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
             </Button>
           </div>
 
-          {/* Mobile — Sound + Hamburger */}
+          {/* Mobile/Tablet — Social (tablet only) + Sound + Hamburger */}
           <div className="md:hidden flex items-center gap-2">
+            {/* Social icons — widoczne na tabletach (sm do md), ukryte na mobile (tam są w hamburger menu) */}
+            <div className="hidden sm:flex items-center gap-4 mr-2">
+              {socials.map((social) => (
+                <Link
+                  key={social.title}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[#ff7302] transition-colors duration-200"
+                  aria-label={social.title}
+                >
+                  <social.Icon className="w-5 h-5" />
+                </Link>
+              ))}
+            </div>
+
             <Button
               variant="ghost"
               size="icon"
@@ -213,8 +229,8 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
                 {item.label}
               </a>
             ))}
-            {/* Social media icons in mobile menu */}
-            <div className="flex items-center space-x-4 px-3 pt-3 border-t border-neutral-700 mt-2">
+            {/* Social media icons — tylko na pure mobile (<sm). Na tabletach są już w navbarze. */}
+            <div className="sm:hidden flex items-center space-x-4 px-3 pt-3 border-t border-neutral-700 mt-2">
               {socials.map((social) => (
                 <Link
                   key={social.title}

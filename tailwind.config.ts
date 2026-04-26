@@ -2,6 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
+  future: {
+    // hover:* działa tylko na urządzeniach z @media (hover: hover).
+    // Na touch-devices (tablet/mobile) hover nie włącza się w ogóle,
+    // więc po tapnięciu stan hover się nie „zacina".
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
