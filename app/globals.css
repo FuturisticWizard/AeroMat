@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Navbar height — matches Navbar.tsx h-16/sm:h-18/md:h-20.
+   Used by .card height + GSAP pin offsets so cards don't overlap navbar. */
+:root {
+  --nav-h: 64px;
+}
+@media (min-width: 640px) {
+  :root { --nav-h: 72px; }
+}
+@media (min-width: 768px) {
+  :root { --nav-h: 80px; }
+}
+
 @layer utilities {
   .bg-background {
     background-color: hsl(var(--background));
@@ -14,7 +26,8 @@
 
   .fancy-text {
     -webkit-text-stroke: 1px rgb(255 255 255);
-    font-family: var(--font-anton), Anton, sans-serif;
+    font-family: var(--font-bebas), "Bebas Neue", sans-serif;
+    letter-spacing: 0.02em;
   }
   
   /* Blur effects for AppleCards - Production fix */
@@ -73,23 +86,26 @@
   }
 
   .anton-regular {
-    font-family: var(--font-anton), Anton, serif;
+    font-family: var(--font-bebas), "Bebas Neue", serif;
     font-weight: 400;
     font-style: normal;
+    letter-spacing: 0.02em;
   }
 
   .anton-regular-strokeW {
     -webkit-text-stroke: 4px rgb(158 146 146);
-    font-family: var(--font-anton), Anton, serif;
+    font-family: var(--font-bebas), "Bebas Neue", serif;
     font-weight: 400;
     font-style: normal;
+    letter-spacing: 0.02em;
   }
 
   .anton-regular-strokeB {
     -webkit-text-stroke: 2px rgb(0 0 0 / 87.9%);
-    font-family: var(--font-anton), Anton, serif;
+    font-family: var(--font-bebas), "Bebas Neue", serif;
     font-weight: 400;
     font-style: normal;
+    letter-spacing: 0.02em;
   }
 
   .custom-shape-divider-top-1740008698 {
@@ -256,9 +272,9 @@
     font-size: clamp(2rem, 4.5vw, 4.5rem);
     margin-bottom: 0.85rem;
     color: #fff;
-    font-family: var(--font-syne);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-family: var(--font-bebas);
+    font-weight: 400;
+    letter-spacing: 0.02em;
     line-height: 1;
     white-space: normal;
     overflow-wrap: break-word;
@@ -297,7 +313,7 @@
   body {
     @apply bg-background text-foreground;
 
-    font-family: var(--font-inter);
+    font-family: var(--font-space);
   }
 
   h1 {
@@ -611,7 +627,7 @@
 .card {
   position: relative;
   width: 100vw;
-  height: 100svh;
+  height: calc(100svh - var(--nav-h));
 
   --card-radius: 75px;
 
@@ -1039,19 +1055,19 @@
     overflow: hidden;
   }
 
-  /* 7sq grid mobile - 3 squares + 1 portrait, all 2 rows */
+  /* 7sq grid mobile — 6 photos in 100vh, photo2 cropped top/bottom so photo5 fits */
   .grid-small-7sq {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(6, 18vh);
+    grid-template-rows: repeat(6, 16.66vh);
     gap: 3px;
     grid-template-areas:
-      "photo3 photo3 photo6 photo6"
-      "photo3 photo3 photo6 photo6"
-      "photo2 photo2 photo7 photo7"
-      "photo2 photo2 photo7 photo7"
-      "photo1 photo1 photo1 photo1"
-      "photo4 photo4 photo5 photo5";
+      "photo2 photo2 photo2 photo2"
+      "photo2 photo2 photo2 photo2"
+      "photo3 photo3 photo7 photo7"
+      "photo1 photo1 photo4 photo4"
+      "photo5 photo5 photo5 photo5"
+      "photo5 photo5 photo5 photo5";
   }
 
   .grid-small-7sq > * {
@@ -1133,17 +1149,19 @@
     overflow: hidden;
   }
 
-  /* 7sq grid desktop - 3 squares + 1 portrait, all 2 rows */
+  /* 7sq grid desktop — 6 photos in 100vh, photo5 cell sized to its 1.87 aspect, slot at right reserved for new photo */
   .grid-small-7sq {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 25vh);
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 15.5vh 15.5vh 15.5vh 15.5vh 19vh 19vh;
     gap: 4px;
     grid-template-areas:
-      "photo3 photo3 photo6 photo6 photo7 photo7"
-      "photo3 photo3 photo6 photo6 photo7 photo7"
-      "photo2 photo2 photo1 photo1 photo1 photo1"
-      "photo2 photo2 photo4 photo4 photo5 photo5";
+      "photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo7 photo7 photo7"
+      "photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo7 photo7 photo7"
+      "photo2 photo2 photo2 photo2 photo1 photo1 photo1 photo4 photo4 photo4"
+      "photo2 photo2 photo2 photo2 photo1 photo1 photo1 photo4 photo4 photo4"
+      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 .      .     "
+      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 .      .     ";
   }
 
   .grid-small-7sq > * {

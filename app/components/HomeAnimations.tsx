@@ -60,6 +60,16 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     const cards = gsap.utils.toArray<HTMLElement>(".card");
     const introCard = cards[0];
 
+    // Read navbar height from --nav-h (set in globals.css responsive to breakpoint).
+    // Used to offset card heights + pin start so cards don't overlap navbar.
+    const navH = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue("--nav-h") || "80",
+      10
+    ) || 80;
+    // Pin offset = navH so cards (title + portfolio) stop just below the navbar.
+    const pinOffset = navH;
+    const cardH = window.innerHeight - navH;
+
     // Set z-index directly on .card elements so it works with position:fixed (GSAP pin).
     // Wrapper div z-index doesn't apply to pinned children.
     const cardZIndex: Record<number, number> = { 0: 10, 1: 30, 2: 50, 3: 60 };
@@ -74,8 +84,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
     const introEndValue = isMobile ? "+=120vh" : "+=300vh";
     if (isMobile) {
-      gsap.set(".card", { height: "100vh", minHeight: "480px" });
-      gsap.set(".card-img", { height: "100vh", minHeight: "480px" });
+      gsap.set(".card", { height: cardH, minHeight: "480px" });
+      gsap.set(".card-img", { height: cardH, minHeight: "480px" });
       gsap.set(".card-img img", { height: "100%", minHeight: "100%", scale: 1 });
       requestAnimationFrame(() => ScrollTrigger.refresh());
     }
@@ -138,7 +148,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
     ScrollTrigger.create({
       trigger: introCard,
-      start: "top top",
+      start: `top top+=${pinOffset}`,
       end: introEndValue,
       onUpdate: (self) => {
         const progress = self.progress;
@@ -207,8 +217,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         if (isIntroCard) {
           const st = ScrollTrigger.create({
             trigger: card,
-            start: "top top",
-            end: "top top",
+            start: `top top+=${pinOffset}`,
+            end: `top top+=${pinOffset}`,
             endTrigger: cards[cards.length - 1],
             pin: true,
             pinSpacing: false,
@@ -230,8 +240,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
         const st = ScrollTrigger.create({
           trigger: card,
-          start: "top top",
-          end: isPanorama ? "+=300%" : isLastCard ? "+=100vh" : "top top",
+          start: `top top+=${pinOffset}`,
+          end: isPanorama ? "+=300%" : isLastCard ? "+=100vh" : `top top+=${pinOffset}`,
           endTrigger: isLastCard || isPanorama ? null : cards[cards.length - 1],
           pin: true,
           pinSpacing: isLastCard || isPanorama,
@@ -305,8 +315,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         if (isIntroCard) {
           const st = ScrollTrigger.create({
             trigger: card,
-            start: "top top",
-            end: "top top",
+            start: `top top+=${pinOffset}`,
+            end: `top top+=${pinOffset}`,
             endTrigger: cards[cards.length - 1],
             pin: true,
             pinSpacing: false,
@@ -320,7 +330,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
         const st = ScrollTrigger.create({
           trigger: card,
-          start: "top top",
+          start: `top top+=${pinOffset}`,
           end: isLastCard
             ? () => "+=" + window.innerHeight * 2.0
             : "bottom top+=80%",
@@ -350,7 +360,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     const portfolioCards = gsap.utils.toArray<HTMLElement>(".portfolio-break");
 
     // Set z-index on portfolio elements (position:fixed from GSAP pin needs explicit z-index)
-    const portfolioZIndex: Record<string, number> = { murale: 20, szyldy: 40, wnetrza: 55, projekty: 70 };
+    const portfolioZIndex: Record<string, number> = { murale: 20, wnetrza: 40, szyldy: 55, projekty: 70 };
     portfolioCards.forEach((el) => {
       const pid = el.dataset.portfolioId || "";
       if (portfolioZIndex[pid] !== undefined) {
@@ -363,8 +373,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     // Map portfolio IDs to their previous/next card indices
     const portfolioMapping: Record<string, { prevCardIndex: number; nextCardIndex: number }> = {
       "murale": { prevCardIndex: 0, nextCardIndex: 1 },
-      "szyldy": { prevCardIndex: 1, nextCardIndex: 2 },
-      "wnetrza": { prevCardIndex: 2, nextCardIndex: 3 },
+      "wnetrza": { prevCardIndex: 1, nextCardIndex: 2 },
+      "szyldy": { prevCardIndex: 2, nextCardIndex: 3 },
       "projekty": { prevCardIndex: 3, nextCardIndex: -1 }, // No next card, goes to PanoramaScroll
     };
 
@@ -406,8 +416,8 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       // Portfolio PIN - pinned until last card (item reveal handled by IntersectionObserver in Images.tsx)
       ScrollTrigger.create({
         trigger: portfolioEl,
-        start: "top top",
-        end: "top top",
+        start: `top top+=${pinOffset}`,
+        end: `top top+=${pinOffset}`,
         endTrigger: cards[cards.length - 1],
         pin: true,
         pinSpacing: false,

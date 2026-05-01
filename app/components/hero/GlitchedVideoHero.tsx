@@ -95,10 +95,11 @@ const GlitchedVideoHero = () => {
       <div className={styles.bottomFade} />
 
       <div className={styles.bot}>
-        <p className={styles.copy}>
+        <h1 className={styles.headline}>Murale które przyciągają wzrok</h1>
+        {/* <p className={styles.copy}>
           Dostajesz <strong>mural, który przyciąga wzrok</strong> — i{" "}
           <strong>profesjonalny film z ujęciami z drona</strong>, który przyciąga obserwujących.
-        </p>
+        </p> */}
         <div className={styles.row}>
           <a href="/kontakt" className={styles.btnO}>Bezpłatna wycena &rarr;</a>
           <div className={styles.micro}>

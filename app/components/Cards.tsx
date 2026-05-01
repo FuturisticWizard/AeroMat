@@ -14,16 +14,16 @@ interface CardsProps {
 const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
   const desktopImages = [
     "/Animation/Murale_Wielkoformatowe/TitleCard/desktop.webp",
-    "/Animation/Komunikacja_Wizualna/TitleCard/desktop.webp",
     "/Animation/Wnetrza_i_Dekoracje/TitleCard/desktop.webp",
-    "/Animation/Projekty_Specjalne/TitleCard/desktop.webp",
+    "/Animation/Komunikacja_Wizualna/TitleCard/desktop.webp",
+    "/images/camper.webp",
   ];
 
   const mobileImages = [
     "/Animation/Murale_Wielkoformatowe/TitleCard/mobile.webp",
-    "/Animation/Komunikacja_Wizualna/TitleCard/mobile.webp",
     "/Animation/Wnetrza_i_Dekoracje/TitleCard/mobile.webp",
-    "/Animation/Projekty_Specjalne/TitleCard/mobile.webp",
+    "/Animation/Komunikacja_Wizualna/TitleCard/mobile.webp",
+    "/images/camper.webp",
   ];
 
   const cardsData = [
@@ -33,13 +33,13 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
       hasMarquee: true,
     },
     {
-      title: "Komunikacja Wizualna",
-      description: "Ręcznie malowane szyldy i logotypy, które wyróżnią Twój biznes. Unikalne projekty łączące tradycyjne rzemiosło z nowoczesnym designem.",
+      title: "Wnętrza i Dekoracje",
+      description: "Artystyczne malunki ścienne do domu, biura czy lokalu. Tworzę niepowtarzalne klimaty – od subtelnych wzorów po odważne kompozycje.",
       hasMarquee: false,
     },
     {
-      title: "Wnętrza i Dekoracje",
-      description: "Artystyczne malunki ścienne do domu, biura czy lokalu. Tworzę niepowtarzalne klimaty – od subtelnych wzorów po odważne kompozycje.",
+      title: "Identyfikacja Wizualna",
+      description: "Ręcznie malowane szyldy i logotypy, które wyróżnią Twój biznes. Unikalne projekty łączące tradycyjne rzemiosło z nowoczesnym designem.",
       hasMarquee: false,
     },
     {

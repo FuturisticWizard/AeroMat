@@ -125,16 +125,31 @@ export const portfolioPhotos = [
   },
   {
     index: 6,
-    src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/13.webp",
+    src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/8.webp",
     title: "Mural krajobrazowy",
     category: "Murale",
     width: 2400,
-    height: 949,
+    height: 1157,
     smcolspan: 7,
     smrowspan: 2,
     colspan: 5,
     rowspan: 2,
     gridArea: "photo6",
+    compound: [
+      {
+        src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/8.webp",
+        title: "Mural krajobrazowy",
+        width: 2400,
+        height: 1157,
+      },
+      {
+        src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/10.webp",
+        title: "Mural detaliczny",
+        width: 3293,
+        height: 2500,
+      },
+    ],
+    compoundRatio: "2fr 1fr",
   },
   {
     index: 7,
@@ -235,7 +250,6 @@ export const projektySpecjalnePhotos = [
   { index: 2, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-7a.webp", title: "Samochodzik portret", category: "Projekty Specjalne", width: 1916, height: 2400, gridArea: "photo2" },
   { index: 3, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-10.webp", title: "Malowanie samochodu", category: "Projekty Specjalne", width: 2400, height: 1565, gridArea: "photo3" },
   { index: 4, src: "/Animation/Projekty_Specjalne/PortfolioCard/dscf4057a.webp", title: "Event artystyczny", category: "Projekty Specjalne", width: 2400, height: 1611, gridArea: "photo4" },
-  { index: 5, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Projekty Specjalne", width: 2400, height: 1286, gridArea: "photo5" },
-  { index: 6, src: "/Animation/Projekty_Specjalne/PortfolioCard/motyl-1a.webp", title: "Motyl mural", category: "Projekty Specjalne", width: 2400, height: 1539, gridArea: "photo6" },
+  { index: 5, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Projekty Specjalne", width: 2400, height: 1286, gridArea: "photo5", objectFit: "contain" },
   { index: 7, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochodzik finalny", category: "Projekty Specjalne", width: 2400, height: 1529, gridArea: "photo7" },
 ];

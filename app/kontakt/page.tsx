@@ -50,9 +50,9 @@ const steps: Step[] = [
   },
 ];
 
-const syne = { fontFamily: "var(--font-syne)" } as const;
+const syne = { fontFamily: "var(--font-bebas)", letterSpacing: "0.02em" } as const;
 const space = { fontFamily: "var(--font-space)" } as const;
-const inter = { fontFamily: "var(--font-inter)" } as const;
+const inter = { fontFamily: "var(--font-space)" } as const;
 
 export default function ContactPage() {
   const rootRef = useRef<HTMLDivElement>(null);

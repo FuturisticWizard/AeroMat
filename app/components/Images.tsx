@@ -5,6 +5,16 @@ import { FC } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 
+interface CompoundItem {
+  src: string;
+  title: string;
+  width: number;
+  height: number;
+  objectPosition?: string;
+  objectFit?: "cover" | "contain";
+  scale?: number;
+}
+
 interface Slide {
   src: string;
   title: string;
@@ -15,6 +25,8 @@ interface Slide {
   objectFit?: "cover" | "contain";
   colspan?: number;
   smcolspan?: number;
+  compound?: CompoundItem[];
+  compoundRatio?: string;
 }
 
 // Compute responsive sizes from colspan (out of 10) per-slide.
@@ -169,20 +181,52 @@ const Images: FC<ImageSlideProps> = (props) => {
               className="relative gpu-accelerated portfolio-item"
               style={{ gridArea: slide.gridArea }}
             >
-              <Image
-                src={slide.src}
-                alt={slide.title}
-                width={slide.width}
-                height={slide.height}
-                className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
-                style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                sizes={computeSizes(slide)}
-                quality={85}
-                priority={false}
-                loading="lazy"
-              />
+              {slide.compound && slide.compound.length === 2 ? (
+                <div
+                  className="grid w-full h-full gap-1"
+                  style={{ gridTemplateColumns: slide.compoundRatio || "1fr 2fr" }}
+                >
+                  {slide.compound.map((c, i) => {
+                    const imgStyle: React.CSSProperties = {
+                      ...(c.objectPosition ? { objectPosition: c.objectPosition } : {}),
+                      ...(c.scale ? { transform: `scale(${c.scale})`, transformOrigin: "center center" } : {}),
+                    };
+                    return (
+                      <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                        <Image
+                          src={c.src}
+                          alt={c.title}
+                          width={c.width}
+                          height={c.height}
+                          className={`w-full h-full ${c.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                          style={imgStyle}
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                          sizes={computeSizes(slide)}
+                          quality={85}
+                          priority={false}
+                          loading="lazy"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Image
+                  src={slide.src}
+                  alt={slide.title}
+                  width={slide.width}
+                  height={slide.height}
+                  className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                  style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                  sizes={computeSizes(slide)}
+                  quality={85}
+                  priority={false}
+                  loading="lazy"
+                />
+              )}
             </div>
           ))}
         </div>
@@ -208,20 +252,52 @@ const Images: FC<ImageSlideProps> = (props) => {
             style={{ gridArea: slide.gridArea }}
             variants={itemVariants}
           >
-            <Image
-              src={slide.src}
-              alt={slide.title}
-              width={slide.width}
-              height={slide.height}
-              className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
-              style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-              sizes={computeSizes(slide)}
-              quality={85}
-              priority={false}
-              loading="lazy"
-            />
+            {slide.compound && slide.compound.length === 2 ? (
+              <div
+                className="grid w-full h-full gap-1"
+                style={{ gridTemplateColumns: slide.compoundRatio || "1fr 2fr" }}
+              >
+                {slide.compound.map((c, i) => {
+                  const imgStyle: React.CSSProperties = {
+                    ...(c.objectPosition ? { objectPosition: c.objectPosition } : {}),
+                    ...(c.scale ? { transform: `scale(${c.scale})`, transformOrigin: "center center" } : {}),
+                  };
+                  return (
+                    <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                      <Image
+                        src={c.src}
+                        alt={c.title}
+                        width={c.width}
+                        height={c.height}
+                        className={`w-full h-full ${c.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                        style={imgStyle}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                        sizes={computeSizes(slide)}
+                        quality={85}
+                        priority={false}
+                        loading="lazy"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <Image
+                src={slide.src}
+                alt={slide.title}
+                width={slide.width}
+                height={slide.height}
+                className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                sizes={computeSizes(slide)}
+                quality={85}
+                priority={false}
+                loading="lazy"
+              />
+            )}
           </motion.div>
         ))}
       </motion.div>

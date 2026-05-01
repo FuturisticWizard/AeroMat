@@ -47,6 +47,45 @@ const testimonials = [
     workImage: "/Portfolio/murale/13.webp",
     workTitle: "Mural promocyjny dla SM Bieluch",
   },
+  {
+    id: 4,
+    type: "Mural",
+    name: "Radosław Janik",
+    role: "Prezes Zarządu",
+    company: "Spółdzielnia Pszczelarska APIS",
+    image: "/logo/clients_logos/3P.png",
+    content:
+      "Wykonawca wykazał się wysokim poziomem profesjonalizmu, starannością oraz bardzo dobrą organizacją pracy. Podkreślenia wymaga terminowość realizacji, sprawna komunikacja oraz elastyczność w uwzględnianiu zgłaszanych uwag. Ostateczny efekt spełnił w pełni nasze oczekiwania pod względem estetycznym i jakościowym.",
+    rating: 5,
+    workImage: "/Portfolio/murale/2.webp",
+    workTitle: "Mural na elewacji APIS w Lublinie",
+  },
+  {
+    id: 5,
+    type: "Mural",
+    name: "Magdalena Dobrowolska",
+    role: "V-ce Prezes Zarządu",
+    company: "UKS Dubler — Opole Lubelskie",
+    image: "/logo/clients_logos/5P.png",
+    content:
+      "Powierzony projekt został zrealizowany na najwyższym poziomie — zarówno pod względem artystycznym, jak i merytorycznym. Mural cechuje się dbałością o detale, zgodnością z realiami historycznymi oraz wysokimi walorami estetycznymi. Pan Mateusz wykazał się kreatywnością, rzetelnością oraz wysoką kulturą pracy.",
+    rating: 5,
+    workImage: "/Portfolio/murale/8.webp",
+    workTitle: "Mural historyczny — 16 Pułk Piechoty Liniowej",
+  },
+  {
+    id: 6,
+    type: "Mural",
+    name: "Agnieszka Butryn",
+    role: "Prezes Zarządu",
+    company: "LaserCity Sp. z o.o.",
+    image: "/logo/clients_logos/8P.png",
+    content:
+      "Współpracę z Panem Mateuszem oceniamy bardzo wysoko. To rzetelny i godny zaufania partner biznesowy. Istotnym atutem jest elastyczność w zakresie godzin pracy — realizacja zleceń w godzinach nocnych pozwala nam utrzymać ciągłość funkcjonowania lokalu w ciągu dnia. Prace malarskie prowadzone są sprawnie i z zachowaniem wysokich standardów jakości.",
+    rating: 5,
+    workImage: "/Portfolio/wnetrza/w13.webp",
+    workTitle: "Murale we wnętrzu LaserCity",
+  },
 ];
 
 // Star Rating component
@@ -281,7 +320,7 @@ export default function TestimonialsCarousel3() {
   return (
     <>
       <MobileTestimonials />
-      <div className="hidden md:flex max-w-[1600px] mx-auto py-6 bg-background items-center overflow-hidden px-4 sm:px-8">
+      <div className="hidden md:flex max-w-[1600px] mx-auto py-6 bg-background items-center overflow-hidden px-0 lg:px-8">
         {/* Wheel + prev/next buttons */}
         <div className="flex flex-col gap-2 items-center justify-center shrink-0">
           <motion.button

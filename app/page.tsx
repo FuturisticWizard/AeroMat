@@ -31,21 +31,21 @@ export default function Home() {
           {/* Portfolio 1: po Murale Wielkoformatowe */}
           <PortfolioCard data={portfolioPhotos} id="murale" gridVariant="11m" className="z-20" />
 
-          {/* Card 1: Szyldy i Logotypy */}
+          {/* Card 1: Wnętrza i Dekoracje */}
           <div className="relative z-30">
             <Cards startIndex={1} endIndex={1} />
           </div>
 
-          {/* Portfolio 2: po Szyldy i Logotypy */}
-          <PortfolioCard data={komunikacjaWizualnaPhotos} id="szyldy" gridVariant="7" className="z-40" />
+          {/* Portfolio 2: po Wnętrza i Dekoracje */}
+          <PortfolioCard data={wnetrzaPhotos} id="wnetrza" gridVariant="11" className="z-40" />
 
-          {/* Card 2: Wnętrza i Dekoracje */}
+          {/* Card 2: Identyfikacja Wizualna */}
           <div className="relative z-50">
             <Cards startIndex={2} endIndex={2} />
           </div>
 
-          {/* Portfolio 3: po Wnętrza i Dekoracje */}
-          <PortfolioCard data={wnetrzaPhotos} id="wnetrza" gridVariant="11" className="z-[55]" />
+          {/* Portfolio 3: po Identyfikacja Wizualna */}
+          <PortfolioCard data={komunikacjaWizualnaPhotos} id="szyldy" gridVariant="7" className="z-[55]" />
 
           {/* Card 3: Projekty Specjalne */}
           <div className="relative z-[60]">
