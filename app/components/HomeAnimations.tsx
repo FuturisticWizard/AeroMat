@@ -84,9 +84,11 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
     const introEndValue = isMobile ? "+=120vh" : "+=300vh";
     if (isMobile) {
-      gsap.set(".card", { height: cardH, minHeight: "480px" });
-      gsap.set(".card-img", { height: cardH, minHeight: "480px" });
-      gsap.set(".card-img img", { height: "100%", minHeight: "100%", scale: 1 });
+      // Card heights come from CSS (.card { height: 100svh } in globals.css mobile
+      // block). Don't override with `window.innerHeight - navH` pixels — mobile
+      // browser chrome (URL bar) makes that value smaller than the actual visible
+      // viewport at load, leaving the title card looking short of full-screen.
+      gsap.set(".card-img img", { scale: 1 });
       requestAnimationFrame(() => ScrollTrigger.refresh());
     }
 
