@@ -163,7 +163,8 @@ export const portfolioPhotos = [
     colspan: 7,
     rowspan: 2,
     gridArea: "photo7",
-    objectPosition: "75% center",
+    objectFit: "contain",
+    objectPosition: "center top",
   },
   {
     index: 8,
@@ -222,13 +223,12 @@ export const portfolioPhotos = [
 ];
 
 export const komunikacjaWizualnaPhotos = [
-  { index: 1, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/przedszkole-1v.webp", title: "Przedszkole", category: "Komunikacja Wizualna", width: 2400, height: 1126, smcolspan: 10, smrowspan: 1, colspan: 3, rowspan: 1, gridArea: "photo1" },
+  { index: 1, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/przedszkole-1v.webp", title: "Przedszkole", category: "Komunikacja Wizualna", width: 2400, height: 1126, smcolspan: 10, smrowspan: 1, colspan: 5, rowspan: 1, gridArea: "photo1" },
   { index: 2, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/w2.webp", title: "Grafika naścienna", category: "Komunikacja Wizualna", width: 2400, height: 2062, smcolspan: 4, smrowspan: 1, colspan: 3, rowspan: 2, gridArea: "photo2" },
-  { index: 3, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-4.webp", title: "Szyld pionowy", category: "Komunikacja Wizualna", width: 1569, height: 2400, smcolspan: 6, smrowspan: 1, colspan: 3, rowspan: 3, gridArea: "photo3" },
+  { index: 3, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-4.webp", title: "Szyld pionowy", category: "Komunikacja Wizualna", width: 1569, height: 2400, smcolspan: 6, smrowspan: 1, colspan: 2, rowspan: 3, gridArea: "photo3" },
   { index: 4, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-7.webp", title: "Branding", category: "Komunikacja Wizualna", width: 2400, height: 1577, smcolspan: 4, smrowspan: 3, colspan: 3, rowspan: 2, gridArea: "photo4" },
   { index: 5, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-6a.webp", title: "Grafika wielkoformatowa", category: "Komunikacja Wizualna", width: 2400, height: 1388, smcolspan: 4, smrowspan: 1, colspan: 3, rowspan: 1, gridArea: "photo5" },
   { index: 6, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/tif-2d.webp", title: "Projekt 2D", category: "Komunikacja Wizualna", width: 2400, height: 1533, smcolspan: 3, smrowspan: 2, colspan: 3, rowspan: 1, gridArea: "photo6" },
-  { index: 7, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-8.webp", title: "Logo", category: "Komunikacja Wizualna", width: 1080, height: 898, smcolspan: 7, smrowspan: 2, colspan: 3, rowspan: 2, gridArea: "photo7" },
 ];
 
 export const wnetrzaPhotos = [
@@ -236,7 +236,6 @@ export const wnetrzaPhotos = [
   { index: 2, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/p1371980.webp", title: "Dekoracja kwadrat", category: "Wnętrza", width: 2400, height: 2400, smcolspan: 4, smrowspan: 1, colspan: 5, rowspan: 1, gridArea: "photo2" },
   { index: 3, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/p1371888.webp", title: "Malowidło ścienne", category: "Wnętrza", width: 1839, height: 2400, smcolspan: 6, smrowspan: 1, colspan: 5, rowspan: 1, gridArea: "photo3" },
   { index: 4, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/w1c.webp", title: "Dekoracja wnętrza", category: "Wnętrza", width: 2400, height: 2312, smcolspan: 4, smrowspan: 3, colspan: 5, rowspan: 2, gridArea: "photo4" },
-  { index: 5, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/p1371966.webp", title: "Pokój dziecięcy", category: "Wnętrza", width: 1920, height: 2400, smcolspan: 4, smrowspan: 1, colspan: 5, rowspan: 2, gridArea: "photo5" },
   { index: 6, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/w3.webp", title: "Mural wewnętrzny", category: "Wnętrza", width: 2400, height: 1474, smcolspan: 7, smrowspan: 2, colspan: 5, rowspan: 1, gridArea: "photo6" },
   { index: 7, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/w8.webp", title: "Artystyczne wnętrze", category: "Wnętrza", width: 2400, height: 1713, smcolspan: 7, smrowspan: 2, colspan: 5, rowspan: 2, gridArea: "photo7" },
   { index: 8, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/w11.webp", title: "Dekoracja", category: "Wnętrza", width: 2400, height: 1621, smcolspan: 10, smrowspan: 1, colspan: 5, rowspan: 2, gridArea: "photo8" },
@@ -246,10 +245,11 @@ export const wnetrzaPhotos = [
 ];
 
 export const projektySpecjalnePhotos = [
-  { index: 1, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-11.webp", title: "Samochodzik", category: "Projekty Specjalne", width: 2400, height: 1592, gridArea: "photo1", objectPosition: "center 35%" },
-  { index: 2, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-7a.webp", title: "Samochodzik portret", category: "Projekty Specjalne", width: 1916, height: 2400, gridArea: "photo2" },
+  { index: 1, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-7a.webp", title: "Samochodzik portret", category: "Projekty Specjalne", width: 1916, height: 2400, gridArea: "photo1" },
+  { index: 2, src: "/Animation/Projekty_Specjalne/PortfolioCard/dscf4057a.webp", title: "Event artystyczny", category: "Projekty Specjalne", width: 2400, height: 1611, gridArea: "photo2" },
   { index: 3, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-10.webp", title: "Malowanie samochodu", category: "Projekty Specjalne", width: 2400, height: 1565, gridArea: "photo3" },
-  { index: 4, src: "/Animation/Projekty_Specjalne/PortfolioCard/dscf4057a.webp", title: "Event artystyczny", category: "Projekty Specjalne", width: 2400, height: 1611, gridArea: "photo4" },
-  { index: 5, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Projekty Specjalne", width: 2400, height: 1286, gridArea: "photo5", objectFit: "contain" },
+  { index: 4, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-11.webp", title: "Samochodzik", category: "Projekty Specjalne", width: 2400, height: 1592, gridArea: "photo4", objectPosition: "center 35%" },
+  { index: 5, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Projekty Specjalne", width: 2400, height: 1286, gridArea: "photo5" },
+  { index: 6, src: "/Animation/Projekty_Specjalne/PortfolioCard/motyl-1a.webp", title: "Motyl", category: "Projekty Specjalne", width: 2400, height: 1539, gridArea: "photo6" },
   { index: 7, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochodzik finalny", category: "Projekty Specjalne", width: 2400, height: 1529, gridArea: "photo7" },
 ];

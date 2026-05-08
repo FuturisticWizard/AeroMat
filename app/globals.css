@@ -995,20 +995,20 @@
       "photo9 photo12 photo12";
   }
 
-  /* Smaller grid mobile - 4 columns, portrait images span 2 rows */
+  /* Smaller grid mobile — 10 photos (no photo5), portrait+landscape mix */
   .grid-small-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 10vh repeat(5, 18vh) 10vh 10vh;
+    grid-template-rows: repeat(8, 18vh);
     gap: 3px;
     grid-template-areas:
       "photo1 photo1 photo1"
       "photo2 photo2 photo3"
       "photo4 photo4 photo3"
-      "photo5 photo6 photo6"
-      "photo5 photo8 photo8"
-      "photo9 photo10 photo10"
-      "photo7 photo7 photo7"
+      "photo6 photo6 photo6"
+      "photo7 photo7 photo9"
+      "photo8 photo8 photo9"
+      "photo10 photo10 photo10"
       "photo11 photo11 photo11";
   }
 
@@ -1037,7 +1037,7 @@
     overflow: hidden;
   }
 
-  /* 7-photo grid mobile - photo3 portrait 2 rows, photo7 square 2 rows */
+  /* 6-photo grid mobile (no photo7 Logo) */
   .grid-small-7 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1045,9 +1045,9 @@
     gap: 3px;
     grid-template-areas:
       "photo1 photo1 photo1 photo1"
-      "photo2 photo2 photo7 photo7"
-      "photo3 photo3 photo7 photo7"
-      "photo3 photo3 photo4 photo4"
+      "photo2 photo2 photo3 photo3"
+      "photo4 photo4 photo3 photo3"
+      "photo5 photo5 photo6 photo6"
       "photo5 photo5 photo6 photo6";
   }
 
@@ -1055,7 +1055,7 @@
     overflow: hidden;
   }
 
-  /* 7sq grid mobile — 6 photos in 100vh, photo2 cropped top/bottom so photo5 fits */
+  /* 7sq grid mobile — 7 photos in 100vh; photo6 added next to photo5 in the bottom band */
   .grid-small-7sq {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1066,8 +1066,8 @@
       "photo2 photo2 photo2 photo2"
       "photo3 photo3 photo7 photo7"
       "photo1 photo1 photo4 photo4"
-      "photo5 photo5 photo5 photo5"
-      "photo5 photo5 photo5 photo5";
+      "photo5 photo5 photo6 photo6"
+      "photo5 photo5 photo6 photo6";
   }
 
   .grid-small-7sq > * {
@@ -1094,19 +1094,19 @@
       "photo11 photo11 photo12 photo12";
   }
 
-  /* Smaller grid - 6 columns, portrait images span 2 rows */
+  /* Smaller grid — 10 photos fit in 100vh, all rows visible while section is pinned */
   .grid-small-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 25vh);
+    grid-template-rows: repeat(6, 16.66vh);
     gap: 4px;
     grid-template-areas:
-      "photo1 photo1 photo1 photo2 photo2 photo3"
-      "photo4 photo4 photo5 photo2 photo2 photo3"
-      "photo4 photo4 photo5 photo6 photo6 photo6"
-      "photo7 photo7 photo8 photo8 photo8 photo8"
-      "photo10 photo10 photo10 photo10 photo9 photo9"
-      "photo11 photo11 photo11 photo11 photo9 photo9";
+      "photo1 photo1 photo1 photo2 photo4 photo4"
+      "photo1 photo1 photo1 photo2 photo4 photo4"
+      "photo3 photo6 photo6 photo7 photo7 photo9"
+      "photo3 photo6 photo6 photo7 photo7 photo9"
+      "photo8 photo8 photo10 photo10 photo11 photo11"
+      "photo8 photo8 photo10 photo10 photo11 photo11";
   }
 
   .grid-small-container > * {
@@ -1132,36 +1132,57 @@
     overflow: hidden;
   }
 
-  /* 7-photo grid desktop - photo3 portrait 2 rows, photo7 square 2 rows */
+  /* Original 6-photo layout (3 cols × 6 rows × 6 cols-per-row), with top rows raised so
+     photo1 (przedszkole) and photo3 (grafika-4 portrait) get more vertical room. Bottom rows
+     shrink correspondingly so the section still fills 100vh. */
   .grid-small-7 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 28vh 24vh 24vh 24vh;
+    grid-template-rows: repeat(3, 18vh) repeat(3, 15.33vh);
     gap: 4px;
     grid-template-areas:
-      "photo1 photo1 photo3 photo3 photo7 photo7"
-      "photo2 photo2 photo3 photo3 photo7 photo7"
-      "photo2 photo2 photo3 photo3 photo4 photo4"
-      "photo5 photo5 photo6 photo6 photo4 photo4";
+      "photo1 photo1 photo1 photo3 photo2 photo2"
+      "photo1 photo1 photo1 photo3 photo2 photo2"
+      "photo1 photo1 photo1 photo3 photo2 photo2"
+      "photo4 photo4 photo5 photo5 photo6 photo6"
+      "photo4 photo4 photo5 photo5 photo6 photo6"
+      "photo4 photo4 photo5 photo5 photo6 photo6";
   }
 
   .grid-small-7 > * {
     overflow: hidden;
   }
 
-  /* 7sq grid desktop — 6 photos in 100vh, photo5 cell sized to its 1.87 aspect, slot at right reserved for new photo */
+  /* photo6 source is now a padded square canvas — keep the slight tilt but drop the scale/anchor hacks. */
+  .grid-small-7 > [style*="grid-area: photo6"] img {
+    transform: rotate(-3deg) !important;
+  }
+
+  /* Anchor photo5 (grafika-6a) to the left edge so the left side of the image stays visible. */
+  .grid-small-7 > [style*="grid-area: photo5"] img {
+    object-position: left center !important;
+  }
+
+  /* On largest screens keep the same template; section stays at 100vh. */
+  @media (min-width: 1920px) {
+    .grid-small-7 {
+      grid-template-rows: repeat(3, 18vh) repeat(3, 15.33vh);
+    }
+  }
+
+  /* 7sq grid desktop — 7 photos in 100vh, photo6 fills the previously-reserved bottom-right slot */
   .grid-small-7sq {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: 15.5vh 15.5vh 15.5vh 15.5vh 19vh 19vh;
+    grid-template-rows: repeat(6, 16.66vh);
     gap: 4px;
     grid-template-areas:
       "photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo7 photo7 photo7"
       "photo2 photo2 photo2 photo2 photo3 photo3 photo3 photo7 photo7 photo7"
       "photo2 photo2 photo2 photo2 photo1 photo1 photo1 photo4 photo4 photo4"
       "photo2 photo2 photo2 photo2 photo1 photo1 photo1 photo4 photo4 photo4"
-      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 .      .     "
-      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 .      .     ";
+      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 photo6 photo6"
+      "photo2 photo2 photo2 photo2 photo5 photo5 photo5 photo5 photo6 photo6";
   }
 
   .grid-small-7sq > * {
