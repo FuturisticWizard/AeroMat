@@ -16,7 +16,8 @@ export const allPhotos = [
   { index: 14, src: "/Portfolio/murale/13.webp", title: "Mural szeroki 2", category: "Murale", width: 2400, height: 949 },
   { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
   { index: 16, src: "/Portfolio/murale/2Az.webp", title: "Mural artystyczny 2", category: "Murale", width: 2661, height: 1921 },
-  { index: 17, src: "/Portfolio/murale/3cropped.webp", title: "Mural przycięty", category: "Murale", width: 2400, height: 888 },
+  { index: 64, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/apis_mural.webp", title: "Mural pszczoła", category: "Murale", width: 2400, height: 1733 },
+  { index: 65, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/komeko_mural.webp", title: "Mural Komeko", category: "Murale", width: 2400, height: 1344 },
 
   // === Wnętrza ===
   { index: 19, src: "/Portfolio/wnetrza/w1a.webp", title: "Wnętrze panorama", category: "Wnętrza", width: 4000, height: 1947 },
@@ -39,6 +40,8 @@ export const allPhotos = [
   { index: 36, src: "/Portfolio/wnetrza/P1371890.webp", title: "Malowidło P2", category: "Wnętrza", width: 2400, height: 1751 },
   { index: 37, src: "/Portfolio/wnetrza/P1371966.webp", title: "Malowidło P3", category: "Wnętrza", width: 4057, height: 5071 },
   { index: 38, src: "/Portfolio/wnetrza/P1371980.webp", title: "Malowidło P4", category: "Wnętrza", width: 4098, height: 4098 },
+  { index: 66, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/audi.webp", title: "Mural Audi", category: "Wnętrza", width: 2000, height: 2000 },
+  { index: 67, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/monstertruck.webp", title: "Monster truck", category: "Wnętrza", width: 2400, height: 2164 },
 
   // === Ptasia galeria ===
   { index: 39, src: "/Portfolio/ptasie/1.webp", title: "Ptak panorama", category: "Ptasia galeria", width: 2400, height: 1168 },
@@ -54,8 +57,8 @@ export const allPhotos = [
   { index: 49, src: "/Portfolio/ptasie/7b.webp", title: "Ptak szeroki 2", category: "Ptasia galeria", width: 2400, height: 1648 },
   { index: 50, src: "/Portfolio/ptasie/8.webp", title: "Ptak wysoki", category: "Ptasia galeria", width: 1920, height: 2400 },
   { index: 51, src: "/Portfolio/ptasie/8bs.webp", title: "Ptak wysoki 2", category: "Ptasia galeria", width: 1920, height: 2400 },
-  { index: 52, src: "/Portfolio/ptasie/9.webp", title: "Ptak portret 2", category: "Ptasia galeria", width: 1766, height: 2400 },
   { index: 53, src: "/Portfolio/ptasie/10.webp", title: "Ptak krajobraz 2", category: "Ptasia galeria", width: 2400, height: 1636 },
+  { index: 68, src: "/Portfolio/ptasie/ptasia_galeria_1.webp", title: "Ptasia galeria", category: "Ptasia galeria", width: 2400, height: 1314 },
   { index: 54, src: "/Portfolio/ptasie/10a.webp", title: "Ptak pionowy 2", category: "Ptasia galeria", width: 1995, height: 2131 },
   { index: 55, src: "/Portfolio/ptasie/11s.webp", title: "Ptak finałowy", category: "Ptasia galeria", width: 2400, height: 1870 },
   { index: 56, src: "/Portfolio/ptasie/finish-1a.webp", title: "Ptak finish", category: "Ptasia galeria", width: 2400, height: 1436 },
@@ -68,6 +71,10 @@ export const allPhotos = [
   { index: 61, src: "/Portfolio/Brending/grafika 8.webp", title: "Logo", category: "Inne", width: 1080, height: 898 },
   { index: 62, src: "/Portfolio/Brending/tif 2d.webp", title: "Projekt 2D", category: "Inne", width: 2400, height: 1533 },
   { index: 63, src: "/Portfolio/Brending/w2.webp", title: "Grafika naścienna", category: "Inne", width: 2400, height: 2062 },
+  { index: 69, src: "/Portfolio/Inne/kamper_1.webp", title: "Kamper — strona", category: "Inne", width: 2400, height: 1565 },
+  { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
+  { index: 71, src: "/Portfolio/Inne/kamper_3.webp", title: "Kamper — przód", category: "Inne", width: 2400, height: 1529 },
+  { index: 72, src: "/Portfolio/Inne/kamper_4.webp", title: "Kamper — detal", category: "Inne", width: 2400, height: 1286 },
 ];
 
 export const portfolioPhotos = [
