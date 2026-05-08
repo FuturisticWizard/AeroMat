@@ -125,3 +125,76 @@ npx update-browserslist-db@latest
 4. **Production Deployment**: Ready for deployment
 
 Aplikacja jest teraz w pełni funkcjonalna bez critical errors! 🎉
+
+---
+
+## 📝 Sesja 2026-05-08 — UX poprawki (home + kontakt + portfolio + o-mnie)
+
+Realizacja punktów 7, 9, 11/12 z `docs/todos.txt`.
+
+### 1. Przeniesienie neonu intro (todos #9)
+
+**Problem**: Napis neonowy "Maluję ściany, które opowiadają historie..." był pod hero. Klient chciał, żeby pojawiał się dopiero po wszystkich PortfolioCard, tuż przed sekcją PanoramaScroll (z animacją "PRECYZJA MATERIAŁÓW" / KOM-EKO).
+
+**Rozwiązanie**: `app/page.tsx`
+- Usunięto `<Intro />` zaraz po `<GlitchedVideoHero />`.
+- Wstawiono `<Intro />` pomiędzy ostatnim `<PortfolioCard data={projektySpecjalnePhotos} … />` (z-[70]) a wrapperem `<PanoramaScroll />` (z-[90]), opakowany w `<div className="relative z-[80]">` żeby czysto wpasować się w stacking context.
+- Animacja świecenia neonu jest podpięta przez selektor `.intro` w `HomeAnimations.tsx`, więc działa niezależnie od pozycji w drzewie.
+
+### 2. Reorder zakładki "Inne" w `/portfolio` (todos #7)
+
+**Problem**: Klient prosił aby w `/portfolio` w zakładce "Inne" wyświetlały się najpierw samochody, potem kampery, na końcu te malowane na garażach.
+
+**Rozwiązanie**: `app/lib/photos.tsx` — kategoria `Inne` w `allPhotos` ma teraz porządek:
+1. **Samochody** (5 wpisów) — `samochodzik-7a/-10/-11/-3/-12.webp` z `/Animation/Projekty_Specjalne/PortfolioCard/`, indeksy 73-77 (dodane do `allPhotos`, wcześniej tylko w `projektySpecjalnePhotos`).
+2. **Kampery** (4 wpisy) — `kamper_1-4.webp`.
+3. **Garaże / Brending** (7 wpisów) — `przedszkole 1v`, `grafika 4/6a/7/8`, `tif 2d`, `w2`.
+
+### 3. Nowa strona `/kontakt` — V6 Floating Panel (todos #11)
+
+**Problem**: Stary formularz krok-po-kroku (4 ekrany) był nadmiarowy. Klient chciał uproszczonego formularza + bezpośredni kontakt (telefon, email).
+
+**Rozwiązanie**: `app/kontakt/page.tsx` — pełen rewrite (461 → 220 linii) wzorowany na wariancie V6 z `app/kontakt-mockup/page.tsx`.
+- **Layout**: pełnoekranowe portretowe tło (`/images/portret.webp`) + gradient `bg-gradient-to-br from-black/85 via-black/40 to-black/75`.
+- **Headline** w lewym górnym rogu: "Zacznijmy od krótkiej **wiadomości.**" (Bebas, akcent #ff7302).
+- **Lewy dolny róg**: kontakt info z ikonami z `lucide-react` (Mail, Phone, MapPin), klikalne `mailto:` / `tel:`.
+- **Prawy dolny róg**: szklisty floating panel formularza (`backdrop-blur-md`, border `white/15`, bg `white/[0.06]`, eyebrow "Napisz do mnie!").
+- **Backend**: zachowano `react-hook-form` + zod (`formSchema`: `firstName/email/title/message`) + `send()` z `lib/email.tsx`. Dodano 4. pole "Temat" do formularza V6 (mockup miał 3) żeby zgadzało się ze schematem.
+- **Stany**: `idle | sending | sent | error`. Po wysyłce panel zostaje, ale zawartość zmienia się na success state z CTA do home/portfolio.
+- **Pozycja**: dolny rząd (kontakt info + form) podniesiony o `md:-translate-y-[14vh] lg:-translate-y-[20vh] xl:-translate-y-[24vh]` żeby siedział mniej-więcej na środku strony na desktop bez rozciągania sekcji (ważne — `padding-bottom` powiększał `min-height` co skalowało background image).
+- Mockup `/kontakt-mockup` zostawiony nietknięty jako podgląd wszystkich wariantów V1-V6.
+
+### 4. Sekcja "O mnie" — nowe zdjęcie (todos #12)
+
+`app/components/AboutMe.tsx`: portret zmieniony z `/images/portret.webp` na `/images/oMnie.webp`.
+
+`docs/oMnie.jpg` (3169×1842, GH5) → `public/images/oMnie.webp` (q=85, method=6, EXIF orientation applied) — konwersja przez Pillow (`ImageOps.exif_transpose`).
+
+### 5. Czytelność tekstu w formularzu kontaktowym
+
+**Problem**: Tekst wpisywany w pola formularza był mało czytelny / niewidoczny (autofill Chrome dawał ciemny tekst na żółtym tle, placeholder za blady).
+
+**Rozwiązanie**: `app/globals.css` — nowy blok `.kontakt-form input/textarea`:
+- Wymusza `color: #fff` i `caret-color: #ff7302`.
+- Placeholder: `rgba(255,255,255,0.55)`.
+- Override autofill Chrome/Edge: `-webkit-text-fill-color: #fff` + `-webkit-box-shadow: 0 0 0 1000px rgba(20,20,20,0.95) inset` + `transition: background-color 9999s ease-in-out 0s` (klasyczny trick żeby autofill nie zalewał pola żółtym tłem).
+
+`app/kontakt/page.tsx` — formularz dostał klasę `kontakt-form`, usunięto zdublowane `placeholder:opacity-40 / focus:placeholder:opacity-60` z input className.
+
+### 6. Commits
+
+| SHA | Opis |
+|-----|------|
+| `946bd1e` | feat(home/kontakt): move neon intro between portfolios + V6 contact, reorder Inne |
+| `8581409` | fix(kontakt): readable form text + autofill override; rename brief headline |
+| `70ff49f` | fix(kontakt): lift form/contact row toward middle on desktop without scaling bg |
+
+### 7. Pozostałe punkty z `docs/todos.txt` (do zrobienia)
+
+- **#1** — przycisk "ZOBACZ PORTFOLIO" / "REALIZACJE" na hero z linkiem do `/portfolio`; przycisk "Bezpłatna wycena" przesunąć/usunąć.
+- **#3** — błąd lokalizacji muralu "60-lecie LPEC" na mapie (powinien być na ul. Orkana, nie Puławskiej; współrzędne ~51.231451, 22.511928). Mural nie istnieje obecnie w `GoogleMap.tsx` jako osobny POI — wymaga dodania.
+- **#4** — usunąć mural motyla z całej strony.
+- **#5** — aktualizacja sekcji FILMY (kolejność/lista) — czeka na maila.
+- **#8** — rozsynchronizowane zachowanie powiększania zdjęć w galerii (lightbox) — do zdiagnozowania.
+- **#10** — poprawka pierwszej galerii na home (animacja portfolio jak w cam-l.pl).
+- **#11** — kwadratowe zdjęcie na "O mnie" z plecakiem-ptakiem (zostawione obecne `oMnie.webp` 3169×1842).
