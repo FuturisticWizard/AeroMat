@@ -83,7 +83,7 @@ export default function ContactPage() {
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-2 md:-translate-y-[14vh] lg:-translate-y-[20vh] xl:-translate-y-[24vh]">
             {/* bottom-left — kontakt info */}
             <ul className="space-y-3 text-white/85 md:mb-24" style={space}>
               <li className="flex items-center gap-3 text-sm">
