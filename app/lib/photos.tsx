@@ -228,7 +228,7 @@ export const komunikacjaWizualnaPhotos = [
   { index: 3, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-4.webp", title: "Szyld pionowy", category: "Komunikacja Wizualna", width: 1569, height: 2400, smcolspan: 6, smrowspan: 1, colspan: 2, rowspan: 3, gridArea: "photo3" },
   { index: 4, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-7.webp", title: "Branding", category: "Komunikacja Wizualna", width: 2400, height: 1577, smcolspan: 4, smrowspan: 3, colspan: 3, rowspan: 2, gridArea: "photo4" },
   { index: 5, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-6a.webp", title: "Grafika wielkoformatowa", category: "Komunikacja Wizualna", width: 2400, height: 1388, smcolspan: 4, smrowspan: 1, colspan: 3, rowspan: 1, gridArea: "photo5", objectPosition: "left center", tabletObjectPosition: "center", mobileObjectPosition: "center" },
-  { index: 6, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/tif-2d.webp", title: "Projekt 2D", category: "Komunikacja Wizualna", width: 2400, height: 1533, smcolspan: 3, smrowspan: 2, colspan: 3, rowspan: 1, gridArea: "photo6", tabletObjectPosition: "30% center" },
+  { index: 6, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/tif-2d.webp", title: "Projekt 2D", category: "Komunikacja Wizualna", width: 2400, height: 1533, smcolspan: 5, smrowspan: 2, colspan: 3, rowspan: 1, gridArea: "photo6", tabletObjectPosition: "30% center", mobileObjectPosition: "right center" },
 ];
 
 export const wnetrzaPhotos = [
