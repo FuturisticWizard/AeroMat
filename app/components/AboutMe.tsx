@@ -11,7 +11,7 @@ const AboutMe = () => {
         {/* Image */}
         <div className="relative aspect-[16/9] w-full mx-auto md:mx-0 overflow-hidden">
           <Image
-            src="/images/portret.webp"
+            src="/images/oMnie.webp"
             alt="Mateusz - artysta AeroMat"
             fill
             className="object-cover"

@@ -18,7 +18,6 @@ export default function Home() {
       <div className="flex flex-col min-h-screen mt-16 sm:mt-18 md:mt-20 antialiased">
         <main className="flex-1 items-center sm:items-start min-h-screen overflow-x-hidden">
           <GlitchedVideoHero />
-          <Intro />
 
           {/* Card 0: Murale Wielkoformatowe */}
           <div className="relative z-10">
@@ -54,6 +53,11 @@ export default function Home() {
 
           {/* Portfolio 4: po Projekty Specjalne */}
           <PortfolioCard data={projektySpecjalnePhotos} id="projekty" gridVariant="7sq" className="z-[70]" />
+
+          {/* Neon intro — between portfolios and PanoramaScroll */}
+          <div className="relative z-[80]">
+            <Intro />
+          </div>
 
           <div className="relative z-[90]">
             <PanoramaScroll />

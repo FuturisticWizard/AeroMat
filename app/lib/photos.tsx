@@ -64,6 +64,18 @@ export const allPhotos = [
   { index: 56, src: "/Portfolio/ptasie/finish-1a.webp", title: "Ptak finish", category: "Ptasia galeria", width: 2400, height: 1436 },
 
   // === Inne ===
+  // Samochody
+  { index: 73, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-7a.webp", title: "Samochód — portret", category: "Inne", width: 1916, height: 2400 },
+  { index: 74, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-10.webp", title: "Malowanie samochodu", category: "Inne", width: 2400, height: 1565 },
+  { index: 75, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-11.webp", title: "Samochód", category: "Inne", width: 2400, height: 1592 },
+  { index: 76, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Inne", width: 2400, height: 1286 },
+  { index: 77, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochód — finalny", category: "Inne", width: 2400, height: 1529 },
+  // Kampery
+  { index: 69, src: "/Portfolio/Inne/kamper_1.webp", title: "Kamper — strona", category: "Inne", width: 2400, height: 1565 },
+  { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
+  { index: 71, src: "/Portfolio/Inne/kamper_3.webp", title: "Kamper — przód", category: "Inne", width: 2400, height: 1529 },
+  { index: 72, src: "/Portfolio/Inne/kamper_4.webp", title: "Kamper — detal", category: "Inne", width: 2400, height: 1286 },
+  // Garaże / branding
   { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },
   { index: 58, src: "/Portfolio/Brending/grafika 4.webp", title: "Grafika pionowa", category: "Inne", width: 1961, height: 3000 },
   { index: 59, src: "/Portfolio/Brending/grafika 6a.webp", title: "Grafika wielkoformatowa", category: "Inne", width: 2400, height: 1388 },
@@ -71,10 +83,6 @@ export const allPhotos = [
   { index: 61, src: "/Portfolio/Brending/grafika 8.webp", title: "Logo", category: "Inne", width: 1080, height: 898 },
   { index: 62, src: "/Portfolio/Brending/tif 2d.webp", title: "Projekt 2D", category: "Inne", width: 2400, height: 1533 },
   { index: 63, src: "/Portfolio/Brending/w2.webp", title: "Grafika naścienna", category: "Inne", width: 2400, height: 2062 },
-  { index: 69, src: "/Portfolio/Inne/kamper_1.webp", title: "Kamper — strona", category: "Inne", width: 2400, height: 1565 },
-  { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
-  { index: 71, src: "/Portfolio/Inne/kamper_3.webp", title: "Kamper — przód", category: "Inne", width: 2400, height: 1529 },
-  { index: 72, src: "/Portfolio/Inne/kamper_4.webp", title: "Kamper — detal", category: "Inne", width: 2400, height: 1286 },
 ];
 
 export const portfolioPhotos = [
