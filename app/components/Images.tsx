@@ -11,7 +11,11 @@ interface CompoundItem {
   width: number;
   height: number;
   objectPosition?: string;
+  tabletObjectPosition?: string;
+  mobileObjectPosition?: string;
   objectFit?: "cover" | "contain";
+  tabletObjectFit?: "cover" | "contain";
+  mobileObjectFit?: "cover" | "contain";
   scale?: number;
 }
 
@@ -22,12 +26,38 @@ interface Slide {
   height: number;
   gridArea: string;
   objectPosition?: string;
+  tabletObjectPosition?: string;
+  mobileObjectPosition?: string;
   objectFit?: "cover" | "contain";
+  tabletObjectFit?: "cover" | "contain";
+  mobileObjectFit?: "cover" | "contain";
   colspan?: number;
   smcolspan?: number;
   compound?: CompoundItem[];
   compoundRatio?: string;
 }
+
+// CSS variables → object-position / object-fit cascade per breakpoint.
+// Desktop reads --obj-pos-d / --obj-fit-d, tablet falls back to desktop,
+// mobile falls back to tablet → desktop. Defined in globals.css under .portfolio-img-pos.
+type ResponsiveImg = {
+  objectPosition?: string;
+  tabletObjectPosition?: string;
+  mobileObjectPosition?: string;
+  objectFit?: "cover" | "contain";
+  tabletObjectFit?: "cover" | "contain";
+  mobileObjectFit?: "cover" | "contain";
+};
+const posVars = (p: ResponsiveImg): React.CSSProperties => {
+  const out: Record<string, string> = {};
+  if (p.objectPosition)       out["--obj-pos-d"] = p.objectPosition;
+  if (p.tabletObjectPosition) out["--obj-pos-t"] = p.tabletObjectPosition;
+  if (p.mobileObjectPosition) out["--obj-pos-m"] = p.mobileObjectPosition;
+  if (p.objectFit)            out["--obj-fit-d"] = p.objectFit;
+  if (p.tabletObjectFit)      out["--obj-fit-t"] = p.tabletObjectFit;
+  if (p.mobileObjectFit)      out["--obj-fit-m"] = p.mobileObjectFit;
+  return out as React.CSSProperties;
+};
 
 // Compute responsive sizes from colspan (out of 10) per-slide.
 // - Mobile: raw vw (DPR doubles effective pixels)
@@ -179,7 +209,7 @@ const Images: FC<ImageSlideProps> = (props) => {
               key={index}
               onClick={() => handleClickImage(index)}
               className="relative gpu-accelerated portfolio-item"
-              style={{ gridArea: slide.gridArea }}
+              style={{ gridArea: slide.gridArea, ...posVars(slide) }}
             >
               {slide.compound && slide.compound.length === 2 ? (
                 <div
@@ -187,18 +217,17 @@ const Images: FC<ImageSlideProps> = (props) => {
                   style={{ gridTemplateColumns: slide.compoundRatio || "1fr 2fr" }}
                 >
                   {slide.compound.map((c, i) => {
-                    const imgStyle: React.CSSProperties = {
-                      ...(c.objectPosition ? { objectPosition: c.objectPosition } : {}),
-                      ...(c.scale ? { transform: `scale(${c.scale})`, transformOrigin: "center center" } : {}),
-                    };
+                    const imgStyle: React.CSSProperties = c.scale
+                      ? { transform: `scale(${c.scale})`, transformOrigin: "center center" }
+                      : {};
                     return (
-                      <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                      <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center" style={posVars(c)}>
                         <Image
                           src={c.src}
                           alt={c.title}
                           width={c.width}
                           height={c.height}
-                          className={`w-full h-full ${c.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                          className="portfolio-img-pos w-full h-full cursor-pointer hover:animate-wiggle transition-transform"
                           style={imgStyle}
                           placeholder="blur"
                           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -217,8 +246,7 @@ const Images: FC<ImageSlideProps> = (props) => {
                   alt={slide.title}
                   width={slide.width}
                   height={slide.height}
-                  className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
-                  style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
+                  className="portfolio-img-pos w-full h-full cursor-pointer hover:animate-wiggle transition-transform"
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   sizes={computeSizes(slide)}
@@ -249,7 +277,7 @@ const Images: FC<ImageSlideProps> = (props) => {
             key={index}
             onClick={() => handleClickImage(index)}
             className="relative gpu-accelerated"
-            style={{ gridArea: slide.gridArea }}
+            style={{ gridArea: slide.gridArea, ...posVars(slide) }}
             variants={itemVariants}
           >
             {slide.compound && slide.compound.length === 2 ? (
@@ -258,18 +286,17 @@ const Images: FC<ImageSlideProps> = (props) => {
                 style={{ gridTemplateColumns: slide.compoundRatio || "1fr 2fr" }}
               >
                 {slide.compound.map((c, i) => {
-                  const imgStyle: React.CSSProperties = {
-                    ...(c.objectPosition ? { objectPosition: c.objectPosition } : {}),
-                    ...(c.scale ? { transform: `scale(${c.scale})`, transformOrigin: "center center" } : {}),
-                  };
+                  const imgStyle: React.CSSProperties = c.scale
+                    ? { transform: `scale(${c.scale})`, transformOrigin: "center center" }
+                    : {};
                   return (
-                    <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center">
+                    <div key={i} className="relative w-full h-full overflow-hidden flex items-center justify-center" style={posVars(c)}>
                       <Image
                         src={c.src}
                         alt={c.title}
                         width={c.width}
                         height={c.height}
-                        className={`w-full h-full ${c.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
+                        className="portfolio-img-pos w-full h-full cursor-pointer hover:animate-wiggle transition-transform"
                         style={imgStyle}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -288,8 +315,7 @@ const Images: FC<ImageSlideProps> = (props) => {
                 alt={slide.title}
                 width={slide.width}
                 height={slide.height}
-                className={`w-full h-full ${slide.objectFit === "contain" ? "object-contain" : "object-cover"} cursor-pointer hover:animate-wiggle transition-transform`}
-                style={slide.objectPosition ? { objectPosition: slide.objectPosition } : undefined}
+                className="portfolio-img-pos w-full h-full cursor-pointer hover:animate-wiggle transition-transform"
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 sizes={computeSizes(slide)}

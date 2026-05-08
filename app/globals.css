@@ -1162,10 +1162,8 @@
     transform: rotate(-3deg) !important;
   }
 
-  /* Anchor photo5 (grafika-6a) to the left edge so the left side of the image stays visible. */
-  .grid-small-7 > [style*="grid-area: photo5"] img {
-    object-position: left center !important;
-  }
+  /* photo5 (grafika-6a) anchor moved into photos.tsx data (objectPosition) so tablet/mobile
+     can override via responsive CSS variables on .portfolio-img-pos. */
 
   /* On largest screens keep the same template; section stays at 100vh. */
   @media (width >= 1920px) {
@@ -1502,4 +1500,26 @@
 
 .animate-infowindow-grow {
   animation: infowindow-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Portfolio image responsive object-position / object-fit.
+   Per-slide CSS variables (set on the cell wrapper from photos.tsx) cascade
+   through breakpoints — mobile falls back to tablet → desktop → defaults. */
+.portfolio-img-pos {
+  object-position: var(--obj-pos-d, center);
+  object-fit: var(--obj-fit-d, cover);
+}
+
+@media (width <= 1024px) {
+  .portfolio-img-pos {
+    object-position: var(--obj-pos-t, var(--obj-pos-d, center));
+    object-fit: var(--obj-fit-t, var(--obj-fit-d, cover));
+  }
+}
+
+@media (width <= 768px) {
+  .portfolio-img-pos {
+    object-position: var(--obj-pos-m, var(--obj-pos-t, var(--obj-pos-d, center)));
+    object-fit: var(--obj-fit-m, var(--obj-fit-t, var(--obj-fit-d, cover)));
+  }
 }
