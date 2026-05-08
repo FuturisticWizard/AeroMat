@@ -109,17 +109,11 @@ const mockups: Mockup[] = [
   },
   {
     path: "/kontakt-mockup",
-    label: "Kontakt — formularz",
-    tag: "layout",
-    description: "Warianty strony kontaktowej: layouty, typografie, hero treatment.",
-  },
-  {
-    path: "/kontakt-form-mockup",
-    label: "Kontakt — 25 wariantów sekcji (jednostronne)",
+    label: "Kontakt — krótki formularz + zdjęcie",
     tag: "layout",
     description:
-      "25 pełnych sekcji kontakt (heading + formularz + QuickCTAs + ContactInfo + Hours / Social / Stats / Map / FAQ w różnych kombinacjach) w 3 parach typograficznych: #2 Bebas + Space (9), #4 Anton + Space 300 (8), #5 Bebas + Inter (8). Warianty: centered, split, brutalist, newspaper 3-col, floating labels + social, neon border + stats, minimal mono, orange info/form duo, orange band, industrial + stats, vertical heading, airy editorial + map, orange border + quickCTAs, stacked rows, modal + mini-info, banner + map, sidebar + FAQ + quote, billboard + quickCTAs + hours, vintage postcard + address, glass + quickCTAs, magazine + stats, spotlight + social, horizontal + map, split image + stats, retro stamp + address + map.",
-    count: "25 wariantów",
+      "6 wariantów sekcji kontakt zbudowanych wokół zasady „3 pola + portret Mateusza”. Spójne z resztą strony (czarne tło, akcent #ff7302, Bebas + Space Grotesk + Syne). V1 Editorial Split (50/50 magazynowy), V2 Postcard on Photo (frosted card na pełnoekranowym portrecie), V3 Horizontal Banner (wąski pasek portretu + 3 pola w wierszu), V4 Diagonal Paint Stroke (clip-path + pomarańczowa smuga), V5 Cream Card (jasny wariant editorial), V6 Floating Panel (szklisty panel formularza w rogu hero portretu).",
+    count: "6 wariantów",
   },
 
   {

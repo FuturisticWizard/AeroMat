@@ -8,10 +8,12 @@
 :root {
   --nav-h: 64px;
 }
-@media (min-width: 640px) {
+
+@media (width >= 640px) {
   :root { --nav-h: 72px; }
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   :root { --nav-h: 80px; }
 }
 
@@ -545,6 +547,7 @@
   font-family: var(--font-bebas);
   color: #333;
   text-shadow: none;
+
   /* base transition = fade-OUT when hover ends (shorter niż fade-in, ale nadal czytelny) */
   transition:
     color 0.9s cubic-bezier(0.4, 0, 0.2, 1),
@@ -560,6 +563,7 @@
     0 0 14px rgb(255 255 255 / 22%),
     0 0 32px rgb(255 255 255 / 14%),
     0 0 60px rgb(255 115 2 / 14%);
+
   /* fade-IN (slower — "powolne zapalanie") */
   transition:
     color 1.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1164,7 +1168,7 @@
   }
 
   /* On largest screens keep the same template; section stays at 100vh. */
-  @media (min-width: 1920px) {
+  @media (width >= 1920px) {
     .grid-small-7 {
       grid-template-rows: repeat(3, 18vh) repeat(3, 15.33vh);
     }
