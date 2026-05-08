@@ -108,17 +108,17 @@ export default function ContactPage() {
               <form
                 onSubmit={onSubmit}
                 noValidate
-                className="ml-auto w-full max-w-md border border-white/15 bg-white/[0.06] p-7 backdrop-blur-md"
+                className="kontakt-form ml-auto w-full max-w-md border border-white/15 bg-white/[0.06] p-7 backdrop-blur-md"
                 style={{ boxShadow: "0 30px 60px -10px rgba(0,0,0,0.6)" }}
               >
                 <p className="mb-5 text-xs uppercase tracking-[0.32em] text-white/55" style={space}>
-                  Krótki brief
+                  Napisz do mnie!
                 </p>
                 <div className="flex flex-col gap-5">
                   {fields.map((f) => {
                     const err = form.formState.errors[f.name]?.message as string | undefined;
                     const inputCls =
-                      "w-full rounded-md border border-white/15 bg-white/[0.03] px-4 py-3 text-white outline-none transition placeholder:opacity-40 focus:border-[#ff7302] focus:placeholder:opacity-60";
+                      "w-full rounded-md border border-white/15 bg-white/[0.03] px-4 py-3 text-white outline-none transition focus:border-[#ff7302]";
                     return (
                       <div key={f.name} className="flex flex-col gap-2">
                         <label

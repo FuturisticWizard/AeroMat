@@ -1529,3 +1529,32 @@
     object-fit: var(--obj-fit-m, var(--obj-fit-t, var(--obj-fit-d, cover)));
   }
 }
+
+/* ==========================================================================
+   Kontakt form — ensure typed text + autofilled values stay readable on
+   the dark glass panel. Without these, Chrome autofill shows dark text
+   on a yellow background, and the default caret/placeholder are too dim.
+   ========================================================================== */
+.kontakt-form input,
+.kontakt-form textarea {
+  color: #fff;
+  caret-color: #ff7302;
+}
+
+.kontakt-form input::placeholder,
+.kontakt-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.kontakt-form input:-webkit-autofill,
+.kontakt-form input:-webkit-autofill:hover,
+.kontakt-form input:-webkit-autofill:focus,
+.kontakt-form textarea:-webkit-autofill,
+.kontakt-form textarea:-webkit-autofill:hover,
+.kontakt-form textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  caret-color: #ff7302;
+  -webkit-box-shadow: 0 0 0 1000px rgba(20, 20, 20, 0.95) inset;
+  box-shadow: 0 0 0 1000px rgba(20, 20, 20, 0.95) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
