@@ -815,10 +815,10 @@
     object-position: 28% center;
   }
 
-  /* "Inne" title card (camper.webp) — anchor crop at 85% so the toucan's
+  /* "Inne" title card (camper.webp) — anchor crop at 88% so the toucan's
      beak stays fully in frame on mobile portrait. */
   .card[data-card-index="3"] .card-img img {
-    object-position: 85% center;
+    object-position: 88% center;
   }
 
   .card-content {
