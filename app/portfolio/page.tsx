@@ -18,7 +18,7 @@ import { allPhotos, portfolioPhotos } from "@/app/lib/photos";
 import Lightbox from "yet-another-react-lightbox";
 
 export default function PhotoPortfolio() {
-  const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Branding"];
+  const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Inne"];
   const [index, setIndex] = useState(-1);
 
   return (

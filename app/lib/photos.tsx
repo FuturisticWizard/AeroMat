@@ -60,14 +60,14 @@ export const allPhotos = [
   { index: 55, src: "/Portfolio/ptasie/11s.webp", title: "Ptak finałowy", category: "Ptasia galeria", width: 2400, height: 1870 },
   { index: 56, src: "/Portfolio/ptasie/finish-1a.webp", title: "Ptak finish", category: "Ptasia galeria", width: 2400, height: 1436 },
 
-  // === Branding ===
-  { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Branding", width: 4000, height: 1876 },
-  { index: 58, src: "/Portfolio/Brending/grafika 4.webp", title: "Grafika pionowa", category: "Branding", width: 1961, height: 3000 },
-  { index: 59, src: "/Portfolio/Brending/grafika 6a.webp", title: "Grafika wielkoformatowa", category: "Branding", width: 2400, height: 1388 },
-  { index: 60, src: "/Portfolio/Brending/grafika 7.webp", title: "Branding projekt", category: "Branding", width: 2400, height: 1577 },
-  { index: 61, src: "/Portfolio/Brending/grafika 8.webp", title: "Logo", category: "Branding", width: 1080, height: 898 },
-  { index: 62, src: "/Portfolio/Brending/tif 2d.webp", title: "Projekt 2D", category: "Branding", width: 2400, height: 1533 },
-  { index: 63, src: "/Portfolio/Brending/w2.webp", title: "Grafika naścienna", category: "Branding", width: 2400, height: 2062 },
+  // === Inne ===
+  { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },
+  { index: 58, src: "/Portfolio/Brending/grafika 4.webp", title: "Grafika pionowa", category: "Inne", width: 1961, height: 3000 },
+  { index: 59, src: "/Portfolio/Brending/grafika 6a.webp", title: "Grafika wielkoformatowa", category: "Inne", width: 2400, height: 1388 },
+  { index: 60, src: "/Portfolio/Brending/grafika 7.webp", title: "Branding projekt", category: "Inne", width: 2400, height: 1577 },
+  { index: 61, src: "/Portfolio/Brending/grafika 8.webp", title: "Logo", category: "Inne", width: 1080, height: 898 },
+  { index: 62, src: "/Portfolio/Brending/tif 2d.webp", title: "Projekt 2D", category: "Inne", width: 2400, height: 1533 },
+  { index: 63, src: "/Portfolio/Brending/w2.webp", title: "Grafika naścienna", category: "Inne", width: 2400, height: 2062 },
 ];
 
 export const portfolioPhotos = [
