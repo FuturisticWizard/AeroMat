@@ -815,6 +815,11 @@
     object-position: 28% center;
   }
 
+  /* "Inne" title card (camper.webp) — anchor crop right-of-center on mobile. */
+  .card[data-card-index="3"] .card-img img {
+    object-position: 75% center;
+  }
+
   .card-content {
     padding: 1.5rem 1rem 2rem;
   }
