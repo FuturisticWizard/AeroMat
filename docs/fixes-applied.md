@@ -5,7 +5,7 @@
 ### 1. MapTiler API Error (RESOLVED)
 **Problem**: 
 ```
-AJAXError: Failed to fetch (0): https://api.maptiler.com/maps/streets/style.json?key=9S9fXnl3QBvnUZXAddkV
+AJAXError: Failed to fetch (0): https://api.maptiler.com/maps/streets/style.json?key=<redacted>
 ```
 
 **Rozwiązanie**:
