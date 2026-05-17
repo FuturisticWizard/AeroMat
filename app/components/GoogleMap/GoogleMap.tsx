@@ -29,7 +29,7 @@ const locations: Poi[] = [
   },
   {
     key: "lpec-kostka",
-    location: { lat: 51.256905603294754, lng: 22.532630754596873 },
+    location: { lat: 51.231451617321376, lng: 22.51192850341709 },
     name: "Mural dla LPEC \"kostka\" - Mural przy ul.Puławskiej 34",
     src: "https://www.youtube.com/embed/hNWmk-VJZ6c",
   },
