@@ -8,7 +8,8 @@
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "stylelint \"**/*.{css,scss}\"",
+    "lint:fix": "stylelint \"**/*.{css,scss}\" --fix"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.5.3",
