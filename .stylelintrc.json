@@ -33,7 +33,8 @@
           "text-fill-color",
           "mask-image",
           "user-select",
-          "appearance"
+          "appearance",
+          "box-shadow"
         ]
       }
     ],
