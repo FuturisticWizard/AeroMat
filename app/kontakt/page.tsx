@@ -89,13 +89,13 @@ export default function ContactPage() {
               <li className="flex items-center gap-3 text-sm">
                 <Mail size={16} className="text-[#ff7302]" />
                 <a href="mailto:kontakt@aeromat.pl" className="hover:text-[#ff7302] transition">
-                  kontakt@aeromat.pl
+                  aeromat88@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Phone size={16} className="text-[#ff7302]" />
-                <a href="tel:+48600000000" className="hover:text-[#ff7302] transition">
-                  +48 600 000 000
+                <a href="tel:+48500044156" className="hover:text-[#ff7302] transition">
+                  +48 500 044 156
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm">
