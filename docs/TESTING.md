@@ -30,20 +30,22 @@ coverage percentage would be noise. Pure data/animation modules
   case-insensitivity), the no-open-relay invariant (owner-only `to`,
   sender as `replyTo`), missing-config and Resend-failure branches.
 - **`app/lib/schemas.ts`** — `formSchema` field boundaries and rejections.
+- **`app/lib/utils.ts`** — `cn` joins, drops falsy values, and resolves
+  conflicting Tailwind classes (later wins).
+- **`app/hooks/useMemoryOptimization.ts`** — `useDebounce` collapse + unmount
+  cleanup, `useThrottle` interval gating, `useMemoryCleanup` /
+  `useResourceCleanup` running (and error-swallowing) on unmount,
+  `useNetworkStatus` reacting to `online`/`offline`.
+- **`app/hooks/use-outside-click.ts`** — fires on outside mousedown/touchstart
+  only, ignores clicks inside, detaches listeners on unmount.
+- **`app/kontakt/page.tsx`** — the contact-form state machine: valid submit →
+  success panel with personalised name, `send` rejection → error alert,
+  invalid input blocks submission.
 
 ## Roadmap (next priorities)
 
-1. **`app/hooks/useMemoryOptimization.ts`** — `useDebounce` / `useThrottle`
-   timing, cleanup hooks swallowing errors on unmount, `useNetworkStatus`
-   reacting to `online`/`offline`. Use `@testing-library/react` +
-   `vi.useFakeTimers()`.
-2. **`app/kontakt/page.tsx`** — the contact-form state machine
-   (`idle → sending → sent`, error rendering via `role="alert"`, submit
-   disabled while sending) with `send` mocked.
-3. **`app/lib/utils.ts`** (`cn` precedence) and
-   **`app/hooks/use-outside-click.ts`** (fires on outside click only, cleans
-   up listeners).
-4. A single Playwright happy-path E2E for the contact journey.
+1. A single Playwright happy-path E2E for the contact journey (browser-level,
+   complementing the mocked component test above).
 
 ## Known follow-ups surfaced by these tests
 
