@@ -127,7 +127,7 @@ export default function YouTubeGrid({
             <div className="mt-10 flex justify-center">
               <Link
                 href={cta.href}
-                className="group inline-flex items-center gap-3 rounded-full bg-[#ff7302] px-8 py-4 text-lg font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-[#ff7302]"
+                className="group inline-flex items-center gap-3 rounded-full bg-[#ff7302] px-8 py-4 text-lg font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-[#bf4d00]"
               >
                 {cta.label}
                 <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />

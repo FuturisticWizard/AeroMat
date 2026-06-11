@@ -173,7 +173,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="group inline-flex w-full items-center justify-center gap-3 bg-[#ff7302] px-7 py-4 font-semibold uppercase text-white transition hover:bg-white hover:text-[#ff7302] disabled:opacity-60"
+                    className="group inline-flex w-full items-center justify-center gap-3 bg-[#ff7302] px-7 py-4 font-semibold uppercase text-white transition hover:bg-white hover:text-[#bf4d00] disabled:opacity-60"
                     style={{ ...bebas, fontSize: "1.2rem", letterSpacing: "0.25em" }}
                   >
                     {status === "sending" ? "Wysyłam…" : "Wyślij"}
