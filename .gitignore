@@ -43,3 +43,14 @@ next-env.d.ts
 
 # local backups (do not commit)
 backups/
+
+# BMAD web bundles (tooling, not app code)
+web-bundles/
+
+# Playwright MCP test artifacts (screenshots, console logs)
+.playwright-mcp/
+
+# Working images / AI mockups in docs (not part of the app)
+docs/*.jpg
+docs/*.png
+docs/opinie/

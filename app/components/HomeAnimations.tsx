@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import Lenis from "lenis";
-import setupMarqueeAnimation from "@/app/lib/marquee";
+import setupMarqueeAnimation from "@/app/lib/marquee"; // marquee.ts
 import {
   animateContentIn,
   animateContentOut,

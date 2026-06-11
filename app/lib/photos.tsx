@@ -2,6 +2,7 @@ export const allPhotos = [
   // === Murale ===
   { index: 1, src: "/Portfolio/murale/1.webp", title: "Mural artystyczny", category: "Murale", width: 2400, height: 1920 },
   { index: 2, src: "/Portfolio/murale/2.webp", title: "Mural dekoracyjny", category: "Murale", width: 3382, height: 2000 },
+  { index: 64, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/apis_mural.webp", title: "Mural pszczoła", category: "Murale", width: 2400, height: 1733 },
   { index: 3, src: "/Portfolio/murale/3.webp", title: "Mural panoramiczny", category: "Murale", width: 2400, height: 1201 },
   { index: 4, src: "/Portfolio/murale/4.webp", title: "Mural panorama", category: "Murale", width: 2400, height: 500 },
   { index: 5, src: "/Portfolio/murale/5a.webp", title: "Mural wielkoformatowy", category: "Murale", width: 2400, height: 937 },
@@ -15,8 +16,6 @@ export const allPhotos = [
   { index: 13, src: "/Portfolio/murale/12.webp", title: "Mural fasadowy", category: "Murale", width: 2400, height: 1314 },
   { index: 14, src: "/Portfolio/murale/13.webp", title: "Mural szeroki 2", category: "Murale", width: 2400, height: 949 },
   { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
-  { index: 16, src: "/Portfolio/murale/2Az.webp", title: "Mural artystyczny 2", category: "Murale", width: 2661, height: 1921 },
-  { index: 64, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/apis_mural.webp", title: "Mural pszczoła", category: "Murale", width: 2400, height: 1733 },
   { index: 65, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/komeko_mural.webp", title: "Mural Komeko", category: "Murale", width: 2400, height: 1344 },
 
   // === Wnętrza ===
@@ -71,9 +70,7 @@ export const allPhotos = [
   { index: 76, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Inne", width: 2400, height: 1286 },
   { index: 77, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochód — finalny", category: "Inne", width: 2400, height: 1529 },
   // Kampery
-  { index: 69, src: "/Portfolio/Inne/kamper_1.webp", title: "Kamper — strona", category: "Inne", width: 2400, height: 1565 },
   { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
-  { index: 71, src: "/Portfolio/Inne/kamper_3.webp", title: "Kamper — przód", category: "Inne", width: 2400, height: 1529 },
   { index: 72, src: "/Portfolio/Inne/kamper_4.webp", title: "Kamper — detal", category: "Inne", width: 2400, height: 1286 },
   // Garaże / branding
   { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },

@@ -75,19 +75,7 @@
   }
 }
 
-.yesteryear-regular {
-    font-family: Yesteryear, serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .allura {
-    font-family: Allura, serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  .anton-regular {
+.anton-regular {
     font-family: var(--font-bebas), "Bebas Neue", serif;
     font-weight: 400;
     font-style: normal;
@@ -818,7 +806,7 @@
   /* "Inne" title card (camper.webp) — anchor crop at 88% so the toucan's
      beak stays fully in frame on mobile portrait. */
   .card[data-card-index="3"] .card-img img {
-    object-position: 88% center;
+    object-position: 89% center;
   }
 
   .card-content {
