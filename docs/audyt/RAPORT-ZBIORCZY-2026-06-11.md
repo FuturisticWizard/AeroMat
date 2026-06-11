@@ -19,15 +19,26 @@ Data: 2026-06-11
 > - **A11Y-03** — kontrast tekstu hover na białym (`#ff7302` → `#bf4d00`, ~4.9:1)
 > - **SEO-08** — metadane na `/kontakt` i `/portfolio` (rozdział serwer/klient)
 > - **SEC-01 (częściowo)** — usunięty `'unsafe-eval'` z CSP na produkcji + `object-src 'none'`, `base-uri 'self'`. Pełny nonce odrzucony: zweryfikowano buildem produkcyjnym, że Next 16 (Turbopack) nie dokleja nonce do skryptów → blokuje cały JS. `'unsafe-inline'` pozostaje.
+> - **SEC-03** — usuwanie znaków nowej linii z tematu e-maila (ochrona przed wstrzyknięciem nagłówków)
+> - **A11Y-07** — pierścień fokusu w polach formularza
+> - **A11Y-09** — przywrócony widoczny fokus na przycisku hamburgera
+> - **PERF-03** — leniwy lightbox na `/portfolio` (~140 KB ładowane po kliknięciu)
+> - **PERF-05** — `PerformanceMonitor` rejestruje obserwatorów tylko w dev
+> - **PERF-07** — usunięty zdublowany gradient `.gradient-new`
+> - **SEO-09** — `alt` na wszystkich zdjęciach galerii `/portfolio` (title→alt)
+> - **SEO-12** — `app/manifest.ts` (PWA)
+> - **QC-02** — usunięty martwy kod (FooterLight, pixelBackground, 2 nieużywane hooki)
 >
 > **↩️ Wycofane:**
 > - **PERF-01** (leniwe ładowanie PanoramaScroll) — niezgodne z animacją przyklejania (pin) ScrollTrigger; komponent musi istnieć przy inicjalizacji. Odzyskanie ~600 KB three.js wymaga innego podejścia (dynamiczny import samego three.js wewnątrz komponentu) — osobny task.
 >
-> **⏳ Odłożone (do osobnej, ostrożnej decyzji):**
-> - **SEC-01 (pełny nonce)** — pełne usunięcie `'unsafe-inline'` przez nonce wymaga obejścia ograniczenia Next 16/Turbopack (nie dokleja nonce); osobny task gdy/jeśli Next to naprawi lub przy migracji na `proxy.ts`
-> - **SEO-06 / A11Y-05** (jeden H1) — `.marquee h1` sprzężone z `marquee.ts` i GSAP; ryzyko jak przy panoramie
-> - **PERF-03** (leniwy lightbox na `/portfolio`)
-> - **QC-02/03/04, PERF-05/06/07/08, SEC-03, A11Y-07/08/09, SEO-09/12** — Faza 3 (dług techniczny)
+> **⏳ Odłożone (ryzykowne lub duże — wymagają dedykowanej sesji):**
+> - **SEO-06 / A11Y-05** (jeden H1) — 15 znaczników H1 na stronie głównej; 8 w animowanym marquee + tytuły kart + Intro/Outro. Zmiana `h1`→`h2` wymaga skoordynowanej edycji JSX + `globals.css` + `marquee.ts` + `HomeAnimations.tsx` + SplitText. Powierzchnia regresji (kilka systemów animacji) jak przy panoramie — osobne zadanie z pełną weryfikacją każdej animacji.
+> - **SEC-01 (pełny nonce)** — blokowane przez Next 16/Turbopack (nie dokleja nonce); wróci przy migracji na `proxy.ts` lub naprawie w Next
+> - **PERF-06** (statyczne `will-change`) — przy elementach animowanych; niska wartość, ryzyko niewidocznego „szarpnięcia" — pominięte świadomie
+> - **PERF-08** (usunięcie `transpilePackages`) — wymaga weryfikacji buildem produkcyjnym
+> - **A11Y-08** (dostępność klawiaturowa miniatur w `react-photo-album` na `/portfolio`)
+> - **QC-03** (`any` w hookach/komponentach), **QC-04** (tsconfig, `@layer`, unifikacja importów, **testy** jednostkowe/E2E) — dług techniczny Fazy 3
 
 ## Podsumowanie wykonawcze
 
