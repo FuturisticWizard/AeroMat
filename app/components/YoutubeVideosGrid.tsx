@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, type KeyboardEvent } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Play, ArrowRight } from "lucide-react"
@@ -198,10 +198,27 @@ function VideoCard({ video, isActive, onPlay, isMobile }: { video: VideoItem; is
       }
     };
 
+    // Gdy kafelek nie odtwarza jeszcze filmu, działa jak przycisk — dostępny
+    // z klawiatury (Tab + Enter/Spacja) i opisany dla czytników ekranu.
+    const interactiveProps = !inlinePlay
+      ? {
+          role: "button" as const,
+          tabIndex: 0,
+          "aria-label": `Odtwórz film: ${video.title}`,
+          onClick: handleClick,
+          onKeyDown: (e: KeyboardEvent) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleClick();
+            }
+          },
+        }
+      : {};
+
     return (
       <div
-        onClick={!inlinePlay ? handleClick : undefined}
-        className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-neutral-900/80 border ${
+        {...interactiveProps}
+        className={`group relative overflow-hidden rounded-xl shadow-md transition-all duration-300 bg-neutral-900/80 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff7302] focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
           isActive
             ? "border-[#ff7302] shadow-orange-500/20"
             : "border-neutral-700 hover:shadow-xl hover:shadow-orange-500/10 hover:border-[#ff7302]/40"

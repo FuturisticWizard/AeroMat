@@ -207,8 +207,17 @@ const Images: FC<ImageSlideProps> = (props) => {
           {data.map((slide, index) => (
             <div
               key={index}
+              role="button"
+              tabIndex={0}
+              aria-label={`Powiększ zdjęcie: ${slide.title}`}
               onClick={() => handleClickImage(index)}
-              className="relative gpu-accelerated portfolio-item"
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleClickImage(index);
+                }
+              }}
+              className="relative gpu-accelerated portfolio-item focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff7302] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               style={{ gridArea: slide.gridArea, ...posVars(slide) }}
             >
               {slide.compound && slide.compound.length === 2 ? (
@@ -275,8 +284,17 @@ const Images: FC<ImageSlideProps> = (props) => {
         {data.map((slide, index) => (
           <motion.div
             key={index}
+            role="button"
+            tabIndex={0}
+            aria-label={`Powiększ zdjęcie: ${slide.title}`}
             onClick={() => handleClickImage(index)}
-            className="relative gpu-accelerated"
+            onKeyDown={(e: React.KeyboardEvent) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleClickImage(index);
+              }
+            }}
+            className="relative gpu-accelerated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff7302] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             style={{ gridArea: slide.gridArea, ...posVars(slide) }}
             variants={itemVariants}
           >
