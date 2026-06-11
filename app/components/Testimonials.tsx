@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion"
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/app/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
 import { Badge } from "@/app/components/ui/badge";
 import { Star, ChevronUp, ChevronDown } from "lucide-react";
 // Testimonial data — real references from clients
@@ -150,15 +149,6 @@ const MobileTestimonials = () => {
             {t.workTitle}
           </h3>
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-11 h-11 rounded-full bg-white p-1.5 shrink-0">
-              <Image
-                src={t.image}
-                alt=""
-                width={44}
-                height={44}
-                className="w-full h-full object-contain"
-              />
-            </div>
             <div className="min-w-0 flex-1">
               <p className="text-white font-semibold text-sm truncate">
                 {t.name}
@@ -380,10 +370,6 @@ export default function TestimonialsCarousel3() {
                 <Card className="bg-transparent backdrop-blur-sm border-0 shadow-lg w-full md:max-w-[700px] xl:max-w-[800px]">
                   <CardContent className="p-2 sm:p-6">
                     <div className="flex items-start gap-4 mb-4">
-                      <Avatar className="h-12 w-12 border-2 border-primary/10 text-sm">
-                        <AvatarImage src={t.image} alt={t.name} />
-                        <AvatarFallback>{t.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
                       <div>
                         <h4 className="text-gray-200 font-semibold text-lg">
                           {t.name}
