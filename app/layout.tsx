@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue, Caveat, Anton, Syne, Space_Grotesk } from "next/font/google";
+import { Inter, Bebas_Neue, Caveat, Anton, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -38,12 +38,6 @@ const anton = Anton({
 const caveat = Caveat({
   variable: "--font-caveat",
   weight: ["400", "700"],
-  subsets: ["latin", "latin-ext"],
-});
-
-const syne = Syne({
-  variable: "--font-syne",
-  weight: ["500", "700", "800"],
   subsets: ["latin", "latin-ext"],
 });
 
@@ -141,7 +135,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
       </head>
-      <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${syne.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
+      <body className={`${inter.variable} ${bebasNeue.variable} ${caveat.variable} ${anton.variable} ${spaceGrotesk.variable} overflow-y-auto antialiased `}>
         <GoogleAnalytics />
         <AudioProvider>
           <PerformanceMonitor />

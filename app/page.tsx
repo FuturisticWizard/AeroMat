@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import GlitchedVideoHero from "./components/hero/GlitchedVideoHero";
 import PortfolioCard from "./components/PortfolioCard";
 import TrustedBy from "./components/TrustedBy";
@@ -11,6 +12,13 @@ import Link from "next/link";
 import PanoramaScroll from "./components/PanoramaScroll";
 import HomeAnimations from "./components/HomeAnimations";
 import WhyChooseMe from "./components/WhyChooseMe";
+
+export const metadata: Metadata = {
+  title: "AeroMat — Murale wielkoformatowe, szyldy i dekoracje | Lublin",
+  description:
+    "Murale wielkoformatowe, malowidła ścienne, szyldy i dekoracje. Ponad 25 lat doświadczenia. Lublin i cała Polska. Zobacz portfolio i realizacje.",
+  alternates: { canonical: "/" },
+};
 import YouTubeGrid from "./components/YoutubeVideosGrid";
 
 const homeVideos = [
