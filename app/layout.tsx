@@ -64,6 +64,7 @@ const spaceGrotesk = Space_Grotesk({
 // });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://muralelublin.pl"),
   title: "AeroMat — Murale, Szyldy, Dekoracje | Mateusz",
   description: "Portfolio artysty muralisty. Murale wielkoformatowe, komunikacja wizualna, wnętrza i dekoracje. Ponad 25 lat doświadczenia.",
 };
