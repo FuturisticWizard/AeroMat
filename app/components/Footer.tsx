@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { Mail, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon, YouTubeIcon } from "./SocialIcons";
+import { CONTACT } from "../lib/contact";
 
 const socials = [
   {
@@ -44,18 +45,18 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-4 text-white">Kontakt</h3>
             <address className="not-italic text-white/80 space-y-2">
               <a
-                href="mailto:kontakt@aeromat.pl"
+                href={`mailto:${CONTACT.email}`}
                 className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
               >
                 <Mail className="w-4 h-4 shrink-0" />
-                <span>kontakt@aeromat.pl</span>
+                <span>{CONTACT.email}</span>
               </a>
               <a
-                href="tel:+48500123456"
+                href={`tel:${CONTACT.phoneTel}`}
                 className="flex items-center justify-center gap-2 hover:text-[#ff7302] transition-colors"
               >
                 <Phone className="w-4 h-4 shrink-0" />
-                <span>+48 500 123 456</span>
+                <span>{CONTACT.phoneDisplay}</span>
               </a>
             </address>
           </div>

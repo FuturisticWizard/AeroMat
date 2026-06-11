@@ -9,6 +9,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "lucide-react";
 
 import { formSchema } from "../lib/schemas";
 import { send } from "../lib/email";
+import { CONTACT } from "../lib/contact";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -41,7 +42,7 @@ export default function ContactPage() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: { firstName: "", email: "", title: "", message: "" },
+    defaultValues: { firstName: "", email: "", title: "", message: "", company: "" },
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
@@ -88,18 +89,18 @@ export default function ContactPage() {
             <ul className="space-y-3 text-white/85 md:mb-24" style={space}>
               <li className="flex items-center gap-3 text-lg">
                 <Mail size={20} className="text-[#ff7302]" />
-                <a href="mailto:kontakt@aeromat.pl" className="hover:text-[#ff7302] transition">
-                  aeromat88@gmail.com
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-[#ff7302] transition">
+                  {CONTACT.email}
                 </a>
               </li>
               <li className="flex items-center gap-3 text-lg">
                 <Phone size={20} className="text-[#ff7302]" />
-                <a href="tel:+48500044156" className="hover:text-[#ff7302] transition">
-                  +48 500 044 156
+                <a href={`tel:${CONTACT.phoneTel}`} className="hover:text-[#ff7302] transition">
+                  {CONTACT.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-center gap-3 text-lg">
-                <MapPin size={20} className="text-[#ff7302]" /> Lublin · cała Polska
+                <MapPin size={20} className="text-[#ff7302]" /> {CONTACT.location}
               </li>
             </ul>
 
@@ -114,6 +115,18 @@ export default function ContactPage() {
                 <p className="mb-5 text-xs uppercase tracking-[0.32em] text-white/55" style={space}>
                   Napisz do mnie!
                 </p>
+                {/* Honeypot — ukryte pole-pułapka na boty. Niewidoczne dla ludzi
+                    i pomijane przez czytniki ekranu; boty zwykle je wypełniają. */}
+                <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+                  <label htmlFor="company">Nie wypełniaj tego pola</label>
+                  <input
+                    id="company"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    {...form.register("company")}
+                  />
+                </div>
                 <div className="flex flex-col gap-5">
                   {fields.map((f) => {
                     const err = form.formState.errors[f.name]?.message as string | undefined;
