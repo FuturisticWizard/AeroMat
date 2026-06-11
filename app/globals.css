@@ -1328,6 +1328,7 @@
   .card-content .card-title h2 {
     width: 100%;
     color: #fff;
+
     /* Rozmiar dawniej dziedziczony z bazowego h1 (zmiana h1->h2 dla SEO: jeden H1). */
     font-size: clamp(5rem, 4vw, 7rem);
     font-weight: 500;
