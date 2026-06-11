@@ -17,6 +17,8 @@ export const allPhotos = [
   { index: 14, src: "/Portfolio/murale/13.webp", title: "Mural szeroki 2", category: "Murale", width: 2400, height: 949 },
   { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
   { index: 65, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/komeko_mural.webp", title: "Mural Komeko", category: "Murale", width: 2400, height: 1344 },
+  { index: 78, src: "/Portfolio/murale/chelm1.webp", title: "Mural w Chełmie", category: "Murale", width: 2400, height: 1644 },
+  { index: 79, src: "/Portfolio/murale/chelm2.webp", title: "Mural w Chełmie 2", category: "Murale", width: 2400, height: 1771 },
 
   // === Wnętrza ===
   { index: 19, src: "/Portfolio/wnetrza/w1a.webp", title: "Wnętrze panorama", category: "Wnętrza", width: 4000, height: 1947 },
@@ -71,7 +73,7 @@ export const allPhotos = [
   { index: 77, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochód — finalny", category: "Inne", width: 2400, height: 1529 },
   // Kampery
   { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
-  { index: 72, src: "/Portfolio/Inne/kamper_4.webp", title: "Kamper — detal", category: "Inne", width: 2400, height: 1286 },
+  { index: 72, src: "/Portfolio/Inne/garaz.webp", title: "Mural na bramie garażowej", category: "Inne", width: 2400, height: 1050 },
   // Garaże / branding
   { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },
   { index: 58, src: "/Portfolio/Brending/grafika 4.webp", title: "Grafika pionowa", category: "Inne", width: 1961, height: 3000 },
