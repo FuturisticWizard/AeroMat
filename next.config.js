@@ -3,6 +3,15 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
+// script-src: na produkcji BEZ 'unsafe-eval' (blokuje ataki przez eval/new Function).
+// W trybie deweloperskim webpack/HMR potrzebuje 'unsafe-eval', więc tam zostaje.
+// 'unsafe-inline' zostaje w obu — Next.js wstrzykuje inline'owe skrypty bootstrap,
+// a nonce nie działa poprawnie w tej wersji Next (zweryfikowane: blokuje cały JS).
+const isProduction = process.env.NODE_ENV === "production";
+const scriptSrc = isProduction
+  ? "script-src 'self' 'unsafe-inline' blob: https://maps.googleapis.com https://*.googleapis.com https://www.youtube.com https://www.googletagmanager.com"
+  : "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://maps.googleapis.com https://*.googleapis.com https://www.youtube.com https://www.googletagmanager.com";
+
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -134,7 +143,7 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://maps.googleapis.com https://*.googleapis.com https://www.youtube.com https://www.googletagmanager.com",
+              scriptSrc,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://img.youtube.com https://maps.googleapis.com https://maps.gstatic.com https://*.ggpht.com https://www.google-analytics.com https://*.g.doubleclick.net",
@@ -142,6 +151,8 @@ const nextConfig = {
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
               "connect-src 'self' https://maps.googleapis.com https://*.googleapis.com https://*.gstatic.com https://www.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net",
               "worker-src 'self' blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
             ].join("; "),
           },
           {
