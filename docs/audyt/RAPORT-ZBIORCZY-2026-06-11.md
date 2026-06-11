@@ -1,6 +1,33 @@
 # Raport zbiorczy z audytu — AeroMat
 Data: 2026-06-11
 
+> ## Status wdrożenia (aktualizacja 2026-06-11, po sesji naprawczej)
+>
+> **✅ Wdrożone (Faza 1 + Faza 2):**
+> - **QC-01 / SEC-04 / SEO-11** — dane kontaktowe ujednolicone (jedno źródło `app/lib/contact.ts`; linki tel/mailto zgodne z tekstem)
+> - **SEC-02** — formularz: honeypot + limit po IP
+> - **SEO-01/02/03** — `app/sitemap.ts`, `app/robots.ts`, `metadataBase` (domena: muralelublin.pl)
+> - **SEO-04/05** — Open Graph + Twitter Card + JSON-LD `ProfessionalService`
+> - **SEO-07** — metadane strony głównej + canonical
+> - **SEO-10** — `noindex` na `/blog`, `/firma`, `/process`
+> - **PERF-02** — usunięty nieużywany font Syne (Anton ZOSTAJE — jest używany, wbrew pierwotnemu znalezisku)
+> - **PERF-04** — `/filmy` na leniwym `LazyYouTubeGridWithIntersection`
+> - **A11Y-01** — globalny `prefers-reduced-motion` (animacje CSS; GSAP nadal do zrobienia osobno)
+> - **A11Y-02** — kafelki filmów i galerii dostępne z klawiatury
+> - **A11Y-04** — przycisk pauzy wideo w hero
+> - **A11Y-06** — komunikat formularza w `role=status`/`aria-live`
+>
+> **↩️ Wycofane:**
+> - **PERF-01** (leniwe ładowanie PanoramaScroll) — niezgodne z animacją przyklejania (pin) ScrollTrigger; komponent musi istnieć przy inicjalizacji. Odzyskanie ~600 KB three.js wymaga innego podejścia (dynamiczny import samego three.js wewnątrz komponentu) — osobny task.
+>
+> **⏳ Odłożone (do osobnej, ostrożnej decyzji):**
+> - **SEC-01** (CSP na nonce) — najwyższe ryzyko; dedykowany task z pełnym testem regresji
+> - **SEO-06 / A11Y-05** (jeden H1) — `.marquee h1` sprzężone z `marquee.ts` i GSAP; ryzyko jak przy panoramie
+> - **SEO-08** (rozdział `/kontakt` i `/portfolio` na serwer+klient dla metadanych) — refaktor
+> - **PERF-03** (leniwy lightbox na `/portfolio`)
+> - **A11Y-03** (kontrast hover `#ff7302` na białym) — wymaga decyzji o odcieniu (zmiana barwy marki)
+> - **QC-02/03/04, PERF-05/06/07/08, SEC-03, A11Y-07/08/09, SEO-09/12** — Faza 3 (dług techniczny)
+
 ## Podsumowanie wykonawcze
 
 Strona AeroMat ma bardzo dobry fundament techniczny w trzech obszarach: wydajność (szybkość ładowania), jakość kodu i podstawy dostępności są na wysokim poziomie. Jest jednak jeden obszar wyraźnie słaby — SEO (widoczność w wyszukiwarce Google), gdzie brakuje wręcz podstawowych elementów (mapa strony, dane strukturalne, podglądy przy udostępnianiu linków). Najpoważniejsze ryzyka to: realne osłabienie ochrony przed atakami przez wstrzyknięcie złośliwego kodu (CSP z `unsafe-inline`/`unsafe-eval`), podatność formularza kontaktowego na spam botów, ciężka biblioteka grafiki 3D (Three.js, ~600 KB) spowalniająca stronę główną, niedostępność galerii i filmów z klawiatury oraz słabe SEO ograniczające pozyskiwanie klientów z Google. Powtarzający się przez wszystkie obszary błąd to niespójne dane kontaktowe (różny e-mail i telefon w różnych miejscach) — to drobiazg technicznie, ale realnie grozi utratą wiadomości od klientów. Mocną stroną jest wzorcowo zoptymalizowany hero (sekcja powitalna), bogata infrastruktura leniwego ładowania, ścisły TypeScript bez obejść oraz dobrze zbudowany formularz kontaktowy.
