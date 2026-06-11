@@ -11,6 +11,25 @@ import Link from "next/link";
 import PanoramaScroll from "./components/PanoramaScroll";
 import HomeAnimations from "./components/HomeAnimations";
 import WhyChooseMe from "./components/WhyChooseMe";
+import YouTubeGrid from "./components/YoutubeVideosGrid";
+
+const homeVideos = [
+  {
+    id: "IuAl1eqrCCA",
+    title: "Mural APIS Lublin 2025",
+    description: "Powstawanie muralu APIS w Lublinie — realizacja 2025.",
+  },
+  {
+    id: "AW7W8-9bVmg",
+    title: "Zimowe murale - AeroMat",
+    description: "Murale malowane zimą — kulisy realizacji AeroMat.",
+  },
+  {
+    id: "Y8-QLpd97bo",
+    title: "Mural EKOPAK - KomEko Lublin",
+    description: "Nagranie z prac przy 85-metrowym muralu EKOPAK — KomEko Lublin, ul. Metalurgiczna 9b.",
+  },
+];
 
 export default function Home() {
   return (
@@ -63,6 +82,13 @@ export default function Home() {
             <PanoramaScroll />
           </div>
 
+          {/* Sekcja filmów — kafelki YouTube + CTA do /filmy, po animacji panoramicznej */}
+          <YouTubeGrid
+            videos={homeVideos}
+            subtitle="Zobacz, jak powstają moje murale."
+            cta={{ href: "/filmy", label: "Zobacz wszystkie filmy" }}
+          />
+
           <WhyChooseMe />
 
           <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-0 pb-12 text-center">
@@ -76,15 +102,6 @@ export default function Home() {
 
           <TrustedBy />
           <LazyTestimonialsWithIntersection />
-
-          <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 text-center">
-            <Link
-              href="/filmy"
-              className="inline-flex items-center gap-2 text-lg font-semibold text-[#ff7302] hover:text-[#ffa858] transition-colors"
-            >
-              Zobacz filmy z realizacji <span aria-hidden="true">→</span>
-            </Link>
-          </section>
 
           <MuralsMap />
 

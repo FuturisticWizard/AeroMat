@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { Play } from "lucide-react"
+import Link from "next/link"
+import { Play, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface VideoItem {
@@ -10,6 +11,59 @@ interface VideoItem {
   title: string
   description: string
 }
+
+interface YouTubeGridProps {
+  videos?: VideoItem[]
+  title?: string
+  subtitle?: string
+  cta?: { href: string; label: string }
+}
+
+const DEFAULT_VIDEOS: VideoItem[] = [
+  {
+    id: "FpFBhlD7cOU",
+    title: "Tworzenie muralu - Lublin Stare Miasto ",
+    description: "Przegląd mojego projektu - Stare Miasto w Lublinie",
+  },
+  {
+    id: "Y8-QLpd97bo",
+    title: "Mural EKOPAK - KomeEko Lublin",
+    description: "Nagranie z prac przy 85 metrowym muralu EKOPAK - KomEko Lublin ul.Metalurgiczna 9b",
+  },
+  {
+    id: "_Ur0BpsVwQE",
+    title: "Mural Antysmogowy - LPEC Lublin",
+    description: "Nagranie z prac przy muralu Antysmogowym - LPEC Lublin ul.Puławska 28 w Lublinie",
+  },
+  {
+    id: "hNWmk-VJZ6c",
+    title: "Mural z okazji 60 lecia LPEC",
+    description: "Mural powstał z okazji 60-lecia firmy LPEC, z którą mam zaszczyt i przyjemność współpracować od ponad 10-ciu lat.",
+  },
+  {
+    id: "u6u1kGA8uGE",
+    title: "Mural z ptasiej serii pt. Początek",
+    description: "Pierwszy mural z ptasiej serii pt. Początek",
+  },
+  {
+    id: "1fEvHbd5tTI",
+    title: "Mural z ptasiej serii pt. Zmiany",
+    description: "Drugi mural z ptasiej serii pt. Zmiany",
+  },
+  {
+    id: "oE7ucKq4of8",
+    title: "Mural na przedszkolu 'Junior'",
+    description: "Mural na przedszkolu 'Junior'",
+  }, {
+    id: "nLrFVfav05g",
+    title: "Mural historyczny w Opolu Lubelskim",
+    description: "Mural poświęcony II Batalionowi 16 Pułku Piechoty Liniowej został namalowany w Opolu Lubelskim przy ul. Fabrycznej.",
+  }, {
+    id: "HBrLvcUcGfg",
+    title: "Mural z Rybą w sklepie Akwarium24",
+    description: "Realizacje wykonałem dla sklepu https://www.akwarium24.pl/",
+  },
+]
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -23,56 +77,15 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-export default function YouTubeGrid() {
+export default function YouTubeGrid({
+  videos = DEFAULT_VIDEOS,
+  title = "FILMY",
+  subtitle = "Zobacz jak powstają moje prace.",
+  cta,
+}: YouTubeGridProps = {}) {
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
   const expandedRef = useRef<HTMLDivElement>(null);
   const isDesktop = useIsDesktop();
-
-  const videos: VideoItem[] = [
-    {
-      id: "FpFBhlD7cOU",
-      title: "Tworzenie muralu - Lublin Stare Miasto ",
-      description: "Przegląd mojego projektu - Stare Miasto w Lublinie",
-    },
-    {
-      id: "Y8-QLpd97bo",
-      title: "Mural EKOPAK - KomeEko Lublin",
-      description: "Nagranie z prac przy 85 metrowym muralu EKOPAK - KomEko Lublin ul.Metalurgiczna 9b",
-    },
-    {
-      id: "_Ur0BpsVwQE",
-      title: "Mural Antysmogowy - LPEC Lublin",
-      description: "Nagranie z prac przy muralu Antysmogowym - LPEC Lublin ul.Puławska 28 w Lublinie",
-    },
-    {
-      id: "hNWmk-VJZ6c",
-      title: "Mural z okazji 60 lecia LPEC",
-      description: "Mural powstał z okazji 60-lecia firmy LPEC, z którą mam zaszczyt i przyjemność współpracować od ponad 10-ciu lat.",
-    },
-    {
-      id: "u6u1kGA8uGE",
-      title: "Mural z ptasiej serii pt. Początek",
-      description: "Pierwszy mural z ptasiej serii pt. Początek",
-    },
-    {
-      id: "1fEvHbd5tTI",
-      title: "Mural z ptasiej serii pt. Zmiany",
-      description: "Drugi mural z ptasiej serii pt. Zmiany",
-    },
-    {
-      id: "oE7ucKq4of8",
-      title: "Mural na przedszkolu 'Junior'",
-      description: "Mural na przedszkolu 'Junior'",
-    }, {
-      id: "nLrFVfav05g",
-      title: "Mural historyczny w Opolu Lubelskim",
-      description: "Mural poświęcony II Batalionowi 16 Pułku Piechoty Liniowej został namalowany w Opolu Lubelskim przy ul. Fabrycznej.",
-    }, {
-      id: "HBrLvcUcGfg",
-      title: "Mural z Rybą w sklepie Akwarium24",
-      description: "Realizacje wykonałem dla sklepu https://www.akwarium24.pl/",
-    },
-  ]
 
   // Lock body scroll when video is open
   useEffect(() => {
@@ -89,11 +102,11 @@ export default function YouTubeGrid() {
       <div className="container px-4 mx-auto relative">
         <div className="py-4">
           <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-[#ff7302]">
-          FILMY
+          {title}
           </h2>
 
           <p className="text-lg text-gray-200">
-          Zobacz jak powstają moje prace.
+          {subtitle}
           </p>
         </div>
 
@@ -109,6 +122,18 @@ export default function YouTubeGrid() {
               />
             ))}
           </div>
+
+          {cta && (
+            <div className="mt-10 flex justify-center">
+              <Link
+                href={cta.href}
+                className="group inline-flex items-center gap-3 rounded-full bg-[#ff7302] px-8 py-4 text-lg font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-[#ff7302]"
+              >
+                {cta.label}
+                <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+              </Link>
+            </div>
+          )}
 
           {/* Overlay player — na pierwszym planie, na całą szerokość */}
           <AnimatePresence>

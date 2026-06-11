@@ -86,20 +86,20 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-2 md:-translate-y-[14vh] lg:-translate-y-[20vh] xl:-translate-y-[24vh]">
             {/* bottom-left — kontakt info */}
             <ul className="space-y-3 text-white/85 md:mb-24" style={space}>
-              <li className="flex items-center gap-3 text-sm">
-                <Mail size={16} className="text-[#ff7302]" />
+              <li className="flex items-center gap-3 text-lg">
+                <Mail size={20} className="text-[#ff7302]" />
                 <a href="mailto:kontakt@aeromat.pl" className="hover:text-[#ff7302] transition">
                   aeromat88@gmail.com
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm">
-                <Phone size={16} className="text-[#ff7302]" />
+              <li className="flex items-center gap-3 text-lg">
+                <Phone size={20} className="text-[#ff7302]" />
                 <a href="tel:+48500044156" className="hover:text-[#ff7302] transition">
                   +48 500 044 156
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm">
-                <MapPin size={16} className="text-[#ff7302]" /> Lublin · cała Polska
+              <li className="flex items-center gap-3 text-lg">
+                <MapPin size={20} className="text-[#ff7302]" /> Lublin · cała Polska
               </li>
             </ul>
 
@@ -160,8 +160,8 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="group inline-flex w-full items-center justify-center gap-3 bg-[#ff7302] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-[#ff7302] disabled:opacity-60"
-                    style={bebas}
+                    className="group inline-flex w-full items-center justify-center gap-3 bg-[#ff7302] px-7 py-4 font-semibold uppercase text-white transition hover:bg-white hover:text-[#ff7302] disabled:opacity-60"
+                    style={{ ...bebas, fontSize: "1.2rem", letterSpacing: "0.25em" }}
                   >
                     {status === "sending" ? "Wysyłam…" : "Wyślij"}
                     <ArrowRight size={16} className="transition group-hover:translate-x-1" />
