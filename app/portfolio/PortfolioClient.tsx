@@ -1,21 +1,17 @@
 "use client";
 import "react-photo-album/rows.css";
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { useState } from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-// import optional lightbox plugins
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { Button } from "@/app/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { RowsPhotoAlbum } from "react-photo-album";
-import { allPhotos, portfolioPhotos } from "@/app/lib/photos";
-import Lightbox from "yet-another-react-lightbox";
+import { allPhotos } from "@/app/lib/photos";
+
+// Lightbox (~140 KB z wtyczkami + CSS) ładowany leniwie — dopiero po kliknięciu w zdjęcie.
+const PortfolioLightbox = dynamic(() => import("@/app/components/PortfolioLightbox"), {
+  ssr: false,
+});
 
 export default function PhotoPortfolio() {
   const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Inne"];
@@ -74,13 +70,13 @@ export default function PhotoPortfolio() {
                   targetRowHeight={250}
                   onClick={({ index }) => setIndex(index)}
                 />
-                <Lightbox
-                  slides={filtered}
-                  open={index >= 0}
-                  index={index}
-                  close={() => setIndex(-1)}
-                  plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
-                />
+                {index >= 0 && (
+                  <PortfolioLightbox
+                    slides={filtered}
+                    index={index}
+                    close={() => setIndex(-1)}
+                  />
+                )}
               </TabsContent>
             );
           })}
