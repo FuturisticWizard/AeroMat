@@ -262,6 +262,6 @@ export const projektySpecjalnePhotos = [
   { index: 3, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-10.webp", title: "Malowanie samochodu", category: "Projekty Specjalne", width: 2400, height: 1565, gridArea: "photo3" },
   { index: 4, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-11.webp", title: "Samochodzik", category: "Projekty Specjalne", width: 2400, height: 1592, gridArea: "photo4", objectPosition: "center 35%" },
   { index: 5, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Projekty Specjalne", width: 2400, height: 1286, gridArea: "photo5" },
-  { index: 6, src: "/Animation/Projekty_Specjalne/PortfolioCard/motyl-1a.webp", title: "Motyl", category: "Projekty Specjalne", width: 2400, height: 1539, gridArea: "photo6" },
+  { index: 6, src: "/Animation/Projekty_Specjalne/PortfolioCard/car-moro.webp", title: "Samochód w kamuflażu", category: "Projekty Specjalne", width: 2400, height: 1729, gridArea: "photo6" },
   { index: 7, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochodzik finalny", category: "Projekty Specjalne", width: 2400, height: 1529, gridArea: "photo7" },
 ];
