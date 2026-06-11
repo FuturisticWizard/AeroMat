@@ -28,12 +28,12 @@ Data: 2026-06-11
 > - **SEO-09** — `alt` na wszystkich zdjęciach galerii `/portfolio` (title→alt)
 > - **SEO-12** — `app/manifest.ts` (PWA)
 > - **QC-02** — usunięty martwy kod (FooterLight, pixelBackground, 2 nieużywane hooki)
+> - **SEO-06 / A11Y-05** — jeden H1 na stronie głównej (15→1). Tytuły kart, marquee (+aria-hidden), Intro, Outro → `h2`; zaktualizowane selektory w `globals.css`, `marquee.ts`, `HomeAnimations.tsx`. Zweryfikowano: rozmiary i wszystkie animacje (marquee, neon Intro/Outro, SplitText, pin panoramy) bez zmian.
 >
 > **↩️ Wycofane:**
 > - **PERF-01** (leniwe ładowanie PanoramaScroll) — niezgodne z animacją przyklejania (pin) ScrollTrigger; komponent musi istnieć przy inicjalizacji. Odzyskanie ~600 KB three.js wymaga innego podejścia (dynamiczny import samego three.js wewnątrz komponentu) — osobny task.
 >
 > **⏳ Odłożone (ryzykowne lub duże — wymagają dedykowanej sesji):**
-> - **SEO-06 / A11Y-05** (jeden H1) — 15 znaczników H1 na stronie głównej; 8 w animowanym marquee + tytuły kart + Intro/Outro. Zmiana `h1`→`h2` wymaga skoordynowanej edycji JSX + `globals.css` + `marquee.ts` + `HomeAnimations.tsx` + SplitText. Powierzchnia regresji (kilka systemów animacji) jak przy panoramie — osobne zadanie z pełną weryfikacją każdej animacji.
 > - **SEC-01 (pełny nonce)** — blokowane przez Next 16/Turbopack (nie dokleja nonce); wróci przy migracji na `proxy.ts` lub naprawie w Next
 > - **PERF-06** (statyczne `will-change`) — przy elementach animowanych; niska wartość, ryzyko niewidocznego „szarpnięcia" — pominięte świadomie
 > - **PERF-08** (usunięcie `transpilePackages`) — wymaga weryfikacji buildem produkcyjnym
