@@ -131,7 +131,7 @@ export default function ContactPage() {
                   {fields.map((f) => {
                     const err = form.formState.errors[f.name]?.message as string | undefined;
                     const inputCls =
-                      "w-full rounded-md border border-white/15 bg-white/[0.03] px-4 py-3 text-white outline-none transition focus:border-[#ff7302]";
+                      "w-full rounded-md border border-white/15 bg-white/[0.03] px-4 py-3 text-white outline-none transition focus:border-[#ff7302] focus:ring-2 focus:ring-[#ff7302]/50";
                     return (
                       <div key={f.name} className="flex flex-col gap-2">
                         <label

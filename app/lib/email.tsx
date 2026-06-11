@@ -71,7 +71,9 @@ export const send = async (emailForm: z.infer<typeof formSchema>) => {
       from: `AeroMat Kontakt <${process.env.RESEND_FROM_EMAIL}>`,
       to: [ownerEmail],
       replyTo: parsed.data.email,
-      subject: `Nowa wiadomość od ${parsed.data.firstName}: ${parsed.data.title}`,
+      // Usuwamy znaki nowej linii z tematu — chroni przed wstrzyknięciem nagłówków
+      // e-mail i zapobiega rozjechaniu tematu.
+      subject: `Nowa wiadomość od ${parsed.data.firstName}: ${parsed.data.title}`.replace(/[\r\n]+/g, " "),
       react: emailTemplate,
     });
 

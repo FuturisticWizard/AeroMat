@@ -191,7 +191,7 @@ const Navbar = ({ items = defaultItems }: NavbarProps) => {
               )}
             </Button>
             <Button
-              className="text-white hover:text-[#ff7302] hover:bg-transparent focus-visible:ring-0 z-[130] relative"
+              className="text-white hover:text-[#ff7302] hover:bg-transparent focus-visible:ring-2 focus-visible:ring-[#ff7302] z-[130] relative"
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
