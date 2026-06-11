@@ -16,16 +16,17 @@ Data: 2026-06-11
 > - **A11Y-02** — kafelki filmów i galerii dostępne z klawiatury
 > - **A11Y-04** — przycisk pauzy wideo w hero
 > - **A11Y-06** — komunikat formularza w `role=status`/`aria-live`
+> - **A11Y-03** — kontrast tekstu hover na białym (`#ff7302` → `#bf4d00`, ~4.9:1)
+> - **SEO-08** — metadane na `/kontakt` i `/portfolio` (rozdział serwer/klient)
+> - **SEC-01 (częściowo)** — usunięty `'unsafe-eval'` z CSP na produkcji + `object-src 'none'`, `base-uri 'self'`. Pełny nonce odrzucony: zweryfikowano buildem produkcyjnym, że Next 16 (Turbopack) nie dokleja nonce do skryptów → blokuje cały JS. `'unsafe-inline'` pozostaje.
 >
 > **↩️ Wycofane:**
 > - **PERF-01** (leniwe ładowanie PanoramaScroll) — niezgodne z animacją przyklejania (pin) ScrollTrigger; komponent musi istnieć przy inicjalizacji. Odzyskanie ~600 KB three.js wymaga innego podejścia (dynamiczny import samego three.js wewnątrz komponentu) — osobny task.
 >
 > **⏳ Odłożone (do osobnej, ostrożnej decyzji):**
-> - **SEC-01** (CSP na nonce) — najwyższe ryzyko; dedykowany task z pełnym testem regresji
+> - **SEC-01 (pełny nonce)** — pełne usunięcie `'unsafe-inline'` przez nonce wymaga obejścia ograniczenia Next 16/Turbopack (nie dokleja nonce); osobny task gdy/jeśli Next to naprawi lub przy migracji na `proxy.ts`
 > - **SEO-06 / A11Y-05** (jeden H1) — `.marquee h1` sprzężone z `marquee.ts` i GSAP; ryzyko jak przy panoramie
-> - **SEO-08** (rozdział `/kontakt` i `/portfolio` na serwer+klient dla metadanych) — refaktor
 > - **PERF-03** (leniwy lightbox na `/portfolio`)
-> - **A11Y-03** (kontrast hover `#ff7302` na białym) — wymaga decyzji o odcieniu (zmiana barwy marki)
 > - **QC-02/03/04, PERF-05/06/07/08, SEC-03, A11Y-07/08/09, SEO-09/12** — Faza 3 (dług techniczny)
 
 ## Podsumowanie wykonawcze
