@@ -515,7 +515,7 @@
   width: max-content;
 }
 
-.card-marquee .marquee h1 {
+.card-marquee .marquee h2 {
   white-space: nowrap;
   margin-right: 2rem;
 
@@ -535,7 +535,7 @@
 /* Per-phrase hover — tylko konkretny h1 pod kursorem się zapala
    (klasa `.marquee-hover` dodawana przez JS w HomeAnimations.tsx mousemove).
    Nie do pełnej bieli — ciepły szary + subtelny glow. */
-.card-marquee .marquee h1.marquee-hover {
+.card-marquee .marquee h2.marquee-hover {
   color: #8a8a8a;
   text-shadow:
     0 0 14px rgb(255 255 255 / 22%),
@@ -549,7 +549,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card-marquee .marquee h1 { transition: none; }
+  .card-marquee .marquee h2 { transition: none; }
 }
 
 /* Neon glow for intro/outro words — white core + blue outer glow */
@@ -669,7 +669,7 @@
   z-index: 10;
 }
 
-.card-content .card-title h1 {
+.card-content .card-title h2 {
   color: #fff;
   font-family: var(--font-bebas);
 
@@ -712,7 +712,7 @@
     text-align: center;
   }
 
-  .intro h1 {
+  .intro h2 {
     width: 100%;
     font-size: clamp(2.2rem, 9vw, 3.5rem);
     line-height: 1.2;
@@ -738,7 +738,7 @@
     text-align: center;
   }
 
-  .outro h1 {
+  .outro h2 {
     width: 100%;
     font-size: clamp(2.2rem, 9vw, 3.5rem);
     line-height: 1.2;
@@ -749,7 +749,7 @@
   }
 
   /* Typography tweaks for mobile Cards */
-  .card-marquee .marquee h1 {
+  .card-marquee .marquee h2 {
     font-size: clamp(2rem, 11vw, 4rem);
     letter-spacing: -0.02em;
   }
@@ -758,7 +758,7 @@
     gap: 0.75rem;
   }
 
-  .card-content .card-title h1 {
+  .card-content .card-title h2 {
     font-size: clamp(1.8rem, 8vw, 2.8rem);
     line-height: 1.1;
     letter-spacing: 0.05em;
@@ -1234,8 +1234,8 @@
     align-items: center;
   }
 
-  .intro h1,
-  .outro h1 {
+  .intro h2,
+  .outro h2 {
     width: 60%;
     text-align: center;
     line-height: 1.1;
@@ -1267,7 +1267,7 @@
     display: flex;
   }
 
-  .card-marquee .marquee h1 {
+  .card-marquee .marquee h2 {
     white-space: nowrap;
     font-size: clamp(3rem, 10vw, 8rem);
     font-weight: 600;
@@ -1325,9 +1325,14 @@
     transform: none;
   }
 
-  .card-content .card-title h1 {
+  .card-content .card-title h2 {
     width: 100%;
     color: #fff;
+    /* Rozmiar dawniej dziedziczony z bazowego h1 (zmiana h1->h2 dla SEO: jeden H1). */
+    font-size: clamp(5rem, 4vw, 7rem);
+    font-weight: 500;
+    letter-spacing: -0.1rem;
+    line-height: 1.25;
   }
 
   .card-content .card-description {
@@ -1356,7 +1361,7 @@
     justify-content: center;
   }
 
-  .card:nth-child(1) .card-title h1,
+  .card:nth-child(1) .card-title h2,
   .card:nth-child(1) .card-description {
     align-self: center;
     width: 100%;
@@ -1379,9 +1384,9 @@
     justify-content: center;
   }
 
-  .card:nth-child(2) .card-title h1,
+  .card:nth-child(2) .card-title h2,
   .card:nth-child(2) .card-description,
-  .card:nth-child(3) .card-title h1,
+  .card:nth-child(3) .card-title h2,
   .card:nth-child(3) .card-description {
     align-self: stretch;
     width: 100%;
@@ -1397,7 +1402,7 @@
     justify-content: flex-start;
   }
 
-  .card:nth-child(4) .card-title h1,
+  .card:nth-child(4) .card-title h2,
   .card:nth-child(4) .card-description {
     align-self: stretch;
     width: 100%;
@@ -1456,8 +1461,8 @@
       letter-spacing: 0;
     }
 
-    .intro h1,
-    .outro h1 {
+    .intro h2,
+    .outro h2 {
       width: 80%;
       font-size: clamp(3rem, 7vw, 5rem);
     }

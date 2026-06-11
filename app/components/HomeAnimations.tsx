@@ -97,7 +97,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     // onEnter — cuts ~585ms forced reflow from mount-time SplitText batch.
     const splitCardTitle = (cardEl: HTMLElement) => {
       if ((cardEl as HTMLElement & { __split?: boolean }).__split) return;
-      const title = cardEl.querySelector<HTMLElement>(".card-title h1");
+      const title = cardEl.querySelector<HTMLElement>(".card-title h2");
       if (!title) return;
       const split = new SplitText(title, {
         type: "chars",
@@ -612,7 +612,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     requestAnimationFrame(() => setupMarqueeAnimation());
 
     // Marquee hover — highlight phrase under cursor (throttled with rAF)
-    const marqueeH1s = gsap.utils.toArray<HTMLElement>(".card-marquee .marquee h1");
+    const marqueeH1s = gsap.utils.toArray<HTMLElement>(".card-marquee .marquee h2");
     const introCardEl = cards[0] as HTMLElement;
     let marqueeRafId = 0;
     let onMouseMove: ((e: MouseEvent) => void) | null = null;

@@ -71,16 +71,17 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
         return (
           <div className="card" key={originalIndex} data-card-index={originalIndex}>
             {card.hasMarquee && (
-              <div className="card-marquee">
+              // Dekoracyjny pasek — aria-hidden (powtarzane hasła bez wartości dla czytnika ekranu)
+              <div className="card-marquee" aria-hidden="true">
                 <div className="marquee">
                   {/* Duplicated 2× so totalWidth > viewport even on 4K/ultrawide —
                       prevents the GSAP horizontalLoop from leaving a gap that
                       makes a phrase pop into view statically after some cycles. */}
                   {[0, 1].flatMap((rep) => [
-                    <h1 key={`${rep}-0`}>Sztuka na Murach</h1>,
-                    <h1 key={`${rep}-1`}>Kolor Zmienia Przestrzeń</h1>,
-                    <h1 key={`${rep}-2`}>Tworzę z Pasją</h1>,
-                    <h1 key={`${rep}-3`}>Graffiti z Duszą</h1>,
+                    <h2 key={`${rep}-0`}>Sztuka na Murach</h2>,
+                    <h2 key={`${rep}-1`}>Kolor Zmienia Przestrzeń</h2>,
+                    <h2 key={`${rep}-2`}>Tworzę z Pasją</h2>,
+                    <h2 key={`${rep}-3`}>Graffiti z Duszą</h2>,
                   ])}
                 </div>
               </div>
@@ -100,7 +101,7 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
               <div className="card-dim" aria-hidden />
               <div className="card-content">
                 <div className="card-title">
-                  <h1>{card.title}</h1>
+                  <h2>{card.title}</h2>
                 </div>
                 <div className="card-description">
                   <p>{card.description}</p>

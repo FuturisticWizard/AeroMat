@@ -7,8 +7,8 @@ interface MarqueeConfig {
 }
 
 export default function setupMarqueeAnimation() {
-  // Pobieramy wszystkie elementy h1 z klasy .marquee h1
-  const marqueeItems = gsap.utils.toArray<HTMLElement>(".marquee h1");
+  // Pobieramy wszystkie nagłówki paska marquee (.marquee h2)
+  const marqueeItems = gsap.utils.toArray<HTMLElement>(".marquee h2");
 
   if (marqueeItems.length === 0) {
     console.warn(
