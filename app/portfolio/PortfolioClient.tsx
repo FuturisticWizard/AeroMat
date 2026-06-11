@@ -61,7 +61,7 @@ export default function PhotoPortfolio() {
                 (photo) =>
                   category === "Wszystkie" || photo.category === category,
               )
-              .map(({ title, ...rest }) => rest);
+              .map(({ title, ...rest }) => ({ ...rest, alt: title }));
 
             return (
               <TabsContent key={category} value={category} className="mt-0">

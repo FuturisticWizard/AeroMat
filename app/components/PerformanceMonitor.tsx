@@ -12,6 +12,9 @@ interface PerformanceMetrics {
 export default function PerformanceMonitor() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    // Pomiary służą tylko do logów w dev (removeConsole usuwa je z produkcji).
+    // Na produkcji nie rejestrujemy obserwatorów — oszczędza pracę bez efektu.
+    if (process.env.NODE_ENV !== 'development') return;
 
     const metrics: PerformanceMetrics = {};
 
