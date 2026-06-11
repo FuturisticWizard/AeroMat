@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Play, Pause } from "lucide-react";
 import { useAudio } from "@/app/context/AudioContext";
 import styles from "./GlitchedVideoHero.module.css";
 
@@ -9,6 +10,19 @@ const GlitchedVideoHero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoSources, setVideoSources] = useState<{ webm: string; mp4: string } | null>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play().catch(() => {});
+      setIsPaused(false);
+    } else {
+      v.pause();
+      setIsPaused(true);
+    }
+  };
 
   useEffect(() => {
     // Defer video source assignment until browser is idle.
@@ -90,6 +104,17 @@ const GlitchedVideoHero = () => {
           </>
         )}
       </video>
+
+      {videoReady && (
+        <button
+          type="button"
+          onClick={togglePlay}
+          aria-label={isPaused ? "Odtwórz wideo w tle" : "Wstrzymaj wideo w tle"}
+          className="absolute bottom-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          {isPaused ? <Play size={18} className="ml-0.5" /> : <Pause size={18} />}
+        </button>
+      )}
 
       <div className={styles.videoGrad} />
       <div className={styles.bottomFade} />
