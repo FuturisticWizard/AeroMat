@@ -193,6 +193,8 @@ export default function ContactPage() {
               </form>
             ) : (
               <div
+                role="status"
+                aria-live="polite"
                 className="ml-auto w-full max-w-md border border-white/15 bg-white/[0.06] p-7 text-center backdrop-blur-md"
                 style={{ boxShadow: "0 30px 60px -10px rgba(0,0,0,0.6)" }}
               >

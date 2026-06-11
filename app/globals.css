@@ -1546,3 +1546,20 @@
   box-shadow: 0 0 0 1000px rgb(20 20 20 / 95%) inset;
   transition: background-color 9999s ease-in-out 0s;
 }
+
+/* ==========================================================================
+   Dostępność: ograniczenie ruchu (WCAG 2.3.3).
+   Działa TYLKO, gdy użytkownik włączy w systemie "ogranicz animacje".
+   Zeruje animacje i przejścia CSS oraz płynne przewijanie. Uwaga: animacje
+   sterowane przez GSAP/JavaScript wymagają osobnej obsługi w kodzie.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
