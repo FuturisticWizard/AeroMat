@@ -67,6 +67,16 @@ export const LazyVideoPlayer = dynamic(
   }
 );
 
+// PanoramaScroll wciąga three.js (~600 KB) — ładujemy leniwie, bez renderu
+// po stronie serwera. Placeholder rezerwuje wysokość ekranu, by ograniczyć skok układu.
+export const LazyPanoramaScroll = dynamic(
+  () => import("./PanoramaScroll"),
+  {
+    ssr: false,
+    loading: () => <div className="h-screen w-full bg-[#050505]" aria-hidden="true" />
+  }
+);
+
 // High-order component for intersection observer lazy loading
 export const LazyWithIntersection = ({
   children,

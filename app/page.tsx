@@ -8,7 +8,7 @@ import Intro from "./components/Intro";
 import Outro from "./components/Outro";
 import Cards from "./components/Cards";
 import Link from "next/link";
-import PanoramaScroll from "./components/PanoramaScroll";
+import { LazyPanoramaScroll } from "./components/LazyComponents";
 import HomeAnimations from "./components/HomeAnimations";
 import WhyChooseMe from "./components/WhyChooseMe";
 import YouTubeGrid from "./components/YoutubeVideosGrid";
@@ -79,7 +79,7 @@ export default function Home() {
           </div>
 
           <div className="relative z-[90]">
-            <PanoramaScroll />
+            <LazyPanoramaScroll />
           </div>
 
           {/* Sekcja filmów — kafelki YouTube + CTA do /filmy, po animacji panoramicznej */}
