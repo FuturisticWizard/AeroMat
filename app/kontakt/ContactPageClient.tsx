@@ -161,11 +161,11 @@ export default function ContactPage() {
                             style={space}
                           />
                         )}
-                        {err && (
-                          <p className="text-xs text-red-400" style={space} role="alert">
-                            {err}
-                          </p>
-                        )}
+                        {/* Zawsze obecny wiersz na blad - rezerwuje miejsce, zeby pojawienie
+                            sie komunikatu nie zmienialo wysokosci sekcji (tlo by sie skalowalo). */}
+                        <p className="min-h-4 text-xs text-red-400" style={space} role="alert">
+                          {err ?? ""}
+                        </p>
                       </div>
                     );
                   })}
@@ -180,15 +180,17 @@ export default function ContactPage() {
                     <ArrowRight size={16} className="transition group-hover:translate-x-1" />
                   </button>
 
-                  {status === "error" && (
-                    <p
-                      className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-center text-xs text-red-300"
-                      style={space}
-                      role="alert"
-                    >
-                      {errorMsg}
-                    </p>
-                  )}
+                  {/* Stala wysokosc takze dla bledu wysylki - bez skoku ukladu. */}
+                  <div className="min-h-[2.75rem]" role="alert" aria-live="assertive">
+                    {status === "error" && (
+                      <p
+                        className="rounded-md border border-red-500/30 bg-red-500/10 p-3 text-center text-xs text-red-300"
+                        style={space}
+                      >
+                        {errorMsg}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </form>
             ) : (
