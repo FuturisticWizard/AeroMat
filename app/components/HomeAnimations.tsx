@@ -116,13 +116,36 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
       // Title was hidden with opacity: 0 in CSS to prevent pre-animation flash;
       // safe to unhide now — chars are off-screen inside overflow:hidden .char wrappers.
       gsap.set(title, { opacity: 1 });
+      // Opis karty dzielony po literce (slowa trzymaja litery razem) - ten sam
+      // maskowany wjazd co tytul, zamiast przesuniecia calego bloku.
+      const desc = cardEl.querySelector<HTMLElement>(".card-description p");
+      if (desc) {
+        const descSplit = new SplitText(desc, {
+          type: "words,chars",
+          charsClass: "char",
+          wordsClass: "word",
+          tag: "div",
+        });
+        descSplit.chars.forEach((char) => {
+          const text = char.textContent ?? "";
+          char.textContent = "";
+          const span = document.createElement("span");
+          span.textContent = text;
+          char.appendChild(span);
+        });
+        gsap.set(cardEl.querySelectorAll(".card-description .char span"), { x: "110%" });
+        // Blok opisu byl ukryty w calosci do czasu podzialu; litery sa juz
+        // zaparkowane za maska, wiec blok moze byc widoczny.
+        gsap.set(cardEl.querySelector(".card-description"), { x: 0, opacity: 1 });
+      }
       (cardEl as HTMLElement & { __split?: boolean }).__split = true;
     };
 
+    // Przed podzialem opis chowany w calosci (zapobiega blyskowi przed animacja).
+    gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
+
     // Eager split: intro only (its ScrollTrigger needs chars immediately).
     splitCardTitle(introCard);
-
-    gsap.set(".card-content .card-description", { x: "40px", opacity: 0 });
     gsap.set(".card-dim", { opacity: 0 });
 
     const cardImgWrapper = introCard.querySelector(".card-img");
@@ -144,8 +167,9 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     gsap.set(cardImg, { scale: startInnerScale });
 
     const marquee = introCard.querySelector(".card-marquee .marquee");
-    const titleChars = introCard.querySelectorAll(".card-title .char span");
-    const description = introCard.querySelector(".card-description");
+    const titleChars = introCard.querySelectorAll(
+      ".card-title .char span, .card-description .char span"
+    );
     let introTextRevealed = false;
 
     ScrollTrigger.create({
@@ -197,10 +221,10 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         const hideAt = endWrapperScale - 0.05;
         if (!introTextRevealed && imgScale >= showAt) {
           introTextRevealed = true;
-          animateContentIn(titleChars, description, introDim);
+          animateContentIn(titleChars, null, introDim, 0.6);
         } else if (introTextRevealed && imgScale <= hideAt) {
           introTextRevealed = false;
-          animateContentOut(titleChars, description, introDim);
+          animateContentOut(titleChars, null, introDim);
         }
       },
     });
@@ -236,9 +260,11 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
 
         // Remaining cards - normal pinning + text reveal. Lazy SplitText on
         // first enter to keep mount-time forced reflow off the critical path.
-        const cardDescPin = cardEl.querySelector<HTMLElement>(".card-description");
         const cardDimPin = cardEl.querySelector<HTMLElement>(".card-dim");
-        const getCharsPin = () => cardEl.querySelectorAll<HTMLElement>(".card-title .char span");
+        const getCharsPin = () =>
+          cardEl.querySelectorAll<HTMLElement>(
+            ".card-title .char span, .card-description .char span"
+          );
 
         const st = ScrollTrigger.create({
           trigger: card,
@@ -255,23 +281,23 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
             if (isPanorama) return;
             splitCardTitle(cardEl);
             const chars = getCharsPin();
-            if (chars.length) animateContentIn(chars, cardDescPin, cardDimPin);
+            if (chars.length) animateContentIn(chars, null, cardDimPin, 0.6);
           },
           onEnterBack: () => {
             if (isPanorama) return;
             splitCardTitle(cardEl);
             const chars = getCharsPin();
-            if (chars.length) animateContentIn(chars, cardDescPin, cardDimPin);
+            if (chars.length) animateContentIn(chars, null, cardDimPin, 0.6);
           },
           onLeave: () => {
             if (isPanorama) return;
             const chars = getCharsPin();
-            if (chars.length) animateContentOut(chars, cardDescPin, cardDimPin);
+            if (chars.length) animateContentOut(chars, null, cardDimPin);
           },
           onLeaveBack: () => {
             if (isPanorama) return;
             const chars = getCharsPin();
-            if (chars.length) animateContentOut(chars, cardDescPin, cardDimPin);
+            if (chars.length) animateContentOut(chars, null, cardDimPin);
           },
         });
         pins.push(st);
@@ -295,21 +321,21 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
           return;
         }
 
-        const cardDescription = card.querySelector(".card-description");
         const dimLayer = card.querySelector(".card-dim");
+        const cardCharsSelector = ".card-title .char span, .card-description .char span";
         const reveal = () => {
           if (contentRevealStates[index]) return;
           contentRevealStates[index] = true;
           if (!isIntroCard) splitCardTitle(cardEl);
-          const chars = card.querySelectorAll(".card-title .char span");
-          if (chars.length) animateContentIn(chars, cardDescription, dimLayer);
+          const chars = card.querySelectorAll(cardCharsSelector);
+          if (chars.length) animateContentIn(chars, null, dimLayer, 0.6);
           else if (dimLayer) gsap.to(dimLayer, { opacity: 1, duration: 0.45, ease: "power2.out", overwrite: true });
         };
         const hide = () => {
           if (!contentRevealStates[index]) return;
           contentRevealStates[index] = false;
-          const chars = card.querySelectorAll(".card-title .char span");
-          if (chars.length) animateContentOut(chars, cardDescription, dimLayer);
+          const chars = card.querySelectorAll(cardCharsSelector);
+          if (chars.length) animateContentOut(chars, null, dimLayer);
           else if (dimLayer) gsap.to(dimLayer, { opacity: 0, duration: 0.35, ease: "power2.out", overwrite: true });
         };
 

@@ -681,6 +681,7 @@
 /* SplitText chars for card titles must be clipped on all viewports (mobile included),
    otherwise the translated spans can still be visible and the title looks "always on". */
 .card-title .char,
+.card-description .char,
 .split-char {
   position: relative;
   overflow: hidden;
@@ -688,8 +689,15 @@
 }
 
 .card-title .char span,
+.card-description .char span,
 .split-char span {
   display: inline-block;
+}
+
+/* Slowo opisu karty dzielonego po literce - wiersze lamia sie tylko miedzy slowami. */
+.card-description .word {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* Slowo z akapitu dzielonego po literce - trzyma swoje litery w jednej linii,

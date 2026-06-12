@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import SplitTextReveal from "./SplitTextReveal";
 
 const HeadingSection = ({
   img = "orange",
@@ -22,7 +23,7 @@ const HeadingSection = ({
       </div> */}
 
       {/* Content */}
-      <div className="relative  z-[1]">
+      <SplitTextReveal className="relative z-[1]" selector="h2, h3" paragraphSelector="p">
         <h2 id="subheading" className="text-[#ff7302] text-lg font-bold uppercase tracking-wider">
           {subheading}
         </h2>
@@ -37,7 +38,7 @@ const HeadingSection = ({
             {content}
           </p>
         </div>
-      </div>
+      </SplitTextReveal>
     </div>
   );
 };
