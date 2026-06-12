@@ -106,12 +106,22 @@ const ChatPanel = ({ onClose }: { onClose: () => void }) => {
     >
       {/* naglowek */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-        <p
-          className="text-lg tracking-wide text-white"
-          style={{ fontFamily: "var(--font-bebas)" }}
-        >
-          Aero<span className="text-[#ff7302]">Bot</span>
-        </p>
+        <div>
+          <p
+            className="text-lg leading-none tracking-wide text-white"
+            style={{ fontFamily: "var(--font-bebas)" }}
+          >
+            Aero<span className="text-[#ff7302]">Bot</span>
+          </p>
+          <a
+            href="https://automatejobs.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] tracking-wide text-white/45 transition hover:text-[#ff7302]"
+          >
+            powered by: automate
+          </a>
+        </div>
         <button
           type="button"
           onClick={onClose}
