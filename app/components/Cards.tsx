@@ -44,7 +44,7 @@ const Cards = ({ startIndex = 0, endIndex }: CardsProps) => {
     },
     {
       title: "Inne",
-      description: "Realizuję niestandardowe projekty i współpraca z markami.",
+      description: "Realizuję niestandardowe projekty i współpracuję z markami.",
       hasMarquee: false,
     },
   ];
