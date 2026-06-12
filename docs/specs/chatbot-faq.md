@@ -49,9 +49,26 @@ Gość → okienko czatu → dopasowanie lokalne (0 zł)
 - `app/components/Chat/ChatPanel.tsx` — okno rozmowy
 - `tests/unit/faqMatch.test.ts` — testy dopasowania
 
+## Konfiguracja dostawcy AI (.env)
+
+Zaplecze uzywa standardowego formatu OpenAI chat/completions — dziala z kazdym
+z trzech glownych dostawcow. Ustaw w `.env`:
+
+```
+CHAT_API_KEY=...        # klucz API (bez niego warstwa AI jest wylaczona = 0 zl)
+CHAT_MODEL=gpt-4o-mini  # domyslny
+CHAT_API_URL=...        # domyslnie OpenAI
+```
+
+| Dostawca | CHAT_API_URL | przykladowy CHAT_MODEL |
+|---|---|---|
+| OpenAI (domyslny) | `https://api.openai.com/v1/chat/completions` | `gpt-4o-mini` |
+| Google Gemini | `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions` | `gemini-2.5-flash-lite` |
+| Anthropic Claude | `https://api.anthropic.com/v1/chat/completions` | `claude-haiku-4-5` |
+
 ## Koszty
 
 - Warstwa lokalna: 0 zł.
-- Warstwa AI: Haiku 4.5 — 1 USD/M tokenów wejścia, 5 USD/M wyjścia.
-  Typowa odpowiedź ≈ 1500 tokenów wejścia + 250 wyjścia ≈ 0,003 USD ≈ 1 gr.
-  Bezpiecznik dzienny 200 odpowiedzi → maks. ~2 USD/dzień (~8 zł), realnie grosze.
+- Warstwa AI: typowa odpowiedź ≈ 1500 tokenów wejścia + 250 wyjścia.
+  gpt-4o-mini / gemini flash-lite: ~0,1–0,2 gr za odpowiedź; claude-haiku-4-5: ~1 gr.
+  Bezpiecznik dzienny 200 odpowiedzi ogranicza najgorszy scenariusz do groszy/zlotowek dziennie.

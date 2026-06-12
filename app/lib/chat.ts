@@ -1,17 +1,22 @@
 "use server";
 
 import { headers } from "next/headers";
-import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 
 import { SITE_FACTS } from "./faq";
+
+/* Konfiguracja dostawcy AI przez zmienne srodowiskowe (.env):
+   CHAT_API_KEY  - klucz API (wymagany, inaczej warstwa AI wylaczona)
+   CHAT_MODEL    - nazwa modelu (domyslnie gpt-4o-mini)
+   CHAT_API_URL  - endpoint zgodny z formatem OpenAI chat/completions
+                   (domyslnie OpenAI; dziala tez Gemini i Claude - patrz docs/specs/chatbot-faq.md) */
+const CHAT_API_URL = process.env.CHAT_API_URL || "https://api.openai.com/v1/chat/completions";
+const CHAT_MODEL = process.env.CHAT_MODEL || "gpt-4o-mini";
 
 const FALLBACK_ANSWER =
   "Asystent AI jest w tej chwili niedostępny. Napisz proszę przez formularz na stronie /kontakt — odpowiadam w ciągu 24 godzin.";
 
 const questionSchema = z.string().trim().min(3).max(300);
-
-const client = new Anthropic();
 
 const SYSTEM_PROMPT = `Jesteś asystentem na stronie AeroMat (artysta malarz murali z Lublina).
 Odpowiadasz po polsku, krótko (2-4 zdania), rzeczowo i uprzejmie.
@@ -52,7 +57,8 @@ export async function askAssistant(rawQuestion: string): Promise<{ answer: strin
     return { answer: "Pytanie powinno mieć od 3 do 300 znaków." };
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  const apiKey = process.env.CHAT_API_KEY;
+  if (!apiKey) {
     return { answer: FALLBACK_ANSWER };
   }
 
@@ -83,18 +89,29 @@ export async function askAssistant(rawQuestion: string): Promise<{ answer: strin
   dailyCount++;
 
   try {
-    const response = await client.messages.create({
-      model: "claude-haiku-4-5",
-      max_tokens: 400,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: parsed.data }],
+    const response = await fetch(CHAT_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: CHAT_MODEL,
+        max_tokens: 400,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: parsed.data },
+        ],
+      }),
+      signal: AbortSignal.timeout(20_000),
     });
 
-    const answer = response.content
-      .filter((block): block is Anthropic.TextBlock => block.type === "text")
-      .map((block) => block.text)
-      .join("\n")
-      .trim();
+    if (!response.ok) {
+      return { answer: FALLBACK_ANSWER };
+    }
+
+    const data: { choices?: { message?: { content?: string } }[] } = await response.json();
+    const answer = data.choices?.[0]?.message?.content?.trim();
 
     return { answer: answer || FALLBACK_ANSWER };
   } catch {
