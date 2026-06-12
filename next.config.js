@@ -50,7 +50,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: [
       "lucide-react",
-      "@radix-ui/react-avatar",
       "@radix-ui/react-tabs",
       "@vis.gl/react-google-maps",
       "framer-motion",
