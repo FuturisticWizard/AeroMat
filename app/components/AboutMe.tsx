@@ -1,6 +1,6 @@
 import Image from "next/image";
 import SplitTextReveal from "./SplitTextReveal";
-const PHOTO = "/Portfolio/ptasie/2.webp";
+const PHOTO = "/Portfolio/ptasie/3.webp";
 const AboutMe = () => {
   return (
     <section
@@ -22,8 +22,8 @@ const AboutMe = () => {
           <Image
             src={PHOTO}
             alt="Mateusz - artysta AeroMat"
-            width={1600}
-            height={1200}
+            width={2400}
+            height={1351}
             className="w-full h-auto"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
