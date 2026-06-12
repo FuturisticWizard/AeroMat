@@ -1177,9 +1177,13 @@
 
   /* photo5/photo6 (samochodzik-3, car-moro): powiekszenie zakotwiczone w dolnej
      krawedzi - przycina dodatkowo gore zdjecia, dol zostaje w kadrze. */
-  .grid-small-7sq > [style*="grid-area: photo5"] img,
-  .grid-small-7sq > [style*="grid-area: photo6"] img {
+  .grid-small-7sq > [style*="grid-area: photo5"] img {
     transform: scale(1.2) !important;
+    transform-origin: center bottom;
+  }
+
+  .grid-small-7sq > [style*="grid-area: photo6"] img {
+    transform: scale(1.1) !important;
     transform-origin: center bottom;
   }
 
