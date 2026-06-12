@@ -118,20 +118,21 @@ const PanoramaScroll = () => {
           split.chars.forEach((char) => {
             char.innerHTML = `<span>${char.textContent}</span>`;
           });
-          // Opis dzielony slowami (te same klasy .word/.char co tytul) - dostaje
+          // Opis dzielony po literce (te same klasy .word/.char co tytul) - dostaje
           // identyczny efekt maskowanego wjazdu zamiast przesuniecia calego bloku.
           if (description) {
             const descSplit = new SplitText(description, {
-              type: "words",
-              wordsClass: "char",
+              type: "words,chars",
+              charsClass: "char",
+              wordsClass: "word",
               tag: "div",
             });
-            descSplit.words.forEach((word) => {
-              const text = word.textContent ?? "";
-              word.textContent = "";
+            descSplit.chars.forEach((char) => {
+              const text = char.textContent ?? "";
+              char.textContent = "";
               const span = document.createElement("span");
               span.textContent = text;
-              word.appendChild(span);
+              char.appendChild(span);
             });
           }
           const chars = caption.querySelectorAll<HTMLElement>(".char span");
@@ -169,8 +170,8 @@ const PanoramaScroll = () => {
           (isLast || segmentProgress < 0.75);
 
         if (shouldBeVisible && !entry.visible) {
-          // Pokaż tekst
-          animateContentIn(entry.chars);
+          // Pokaż tekst (fala 0.6 s rozlozona na wszystkie litery podpisu)
+          animateContentIn(entry.chars, null, null, 0.6);
           entry.visible = true;
         } else if (!shouldBeVisible && entry.visible) {
           // Schowaj tekst

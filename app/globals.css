@@ -692,6 +692,13 @@
   display: inline-block;
 }
 
+/* Slowo z akapitu dzielonego po literce - trzyma swoje litery w jednej linii,
+   zeby wiersze lamaly sie tylko miedzy slowami. */
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 /* SplitTextReveal wrapper is invisible until JS has split chars + parked them
    off-screen. Layout is still reserved so there's no CLS on reveal. */
 .split-pending {

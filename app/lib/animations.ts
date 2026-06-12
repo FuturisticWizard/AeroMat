@@ -5,7 +5,10 @@ type GsapTarget = gsap.TweenTarget;
 export function animateContentIn(
   titleChars: GsapTarget,
   description?: GsapTarget | null,
-  dimLayer?: GsapTarget | null
+  dimLayer?: GsapTarget | null,
+  /* Laczny czas fali (sekundy) rozlozony na wszystkie elementy; 0 = wszystkie
+     naraz (dotychczasowe zachowanie, uzywane przez tytuly kart). */
+  staggerAmount = 0
 ) {
   console.log("[AnimateIn] titleChars:", titleChars, "description:", description);
   console.log("[AnimateIn] titleChars length:", Array.isArray(titleChars) ? titleChars.length : "not array");
@@ -24,6 +27,7 @@ export function animateContentIn(
     duration: 0.75,
     ease: "power4.out",
     overwrite: true,
+    stagger: { amount: staggerAmount },
     onComplete: () => console.log("[AnimateIn] Title animation complete"),
   });
   if (description) {
