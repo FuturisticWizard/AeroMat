@@ -30,7 +30,7 @@ const AboutMe = () => {
         </div>
 
         {/* Text */}
-        <SplitTextReveal className="flex flex-col gap-4 " selector="h2, h3">
+        <SplitTextReveal className="flex flex-col gap-4 " selector="h2, h3" wordSelector="p">
           <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
           Kim jest AEROMAT?
           </h2>

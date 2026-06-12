@@ -62,7 +62,6 @@ const PanoramaScroll = () => {
     let scrollTrigger: ScrollTrigger | null = null;
     let captionEntries: Array<{
       chars: NodeListOf<HTMLElement>;
-      description: HTMLElement | null;
       visible: boolean;
     }> = [];
 
@@ -119,21 +118,32 @@ const PanoramaScroll = () => {
           split.chars.forEach((char) => {
             char.innerHTML = `<span>${char.textContent}</span>`;
           });
+          // Opis dzielony slowami (te same klasy .word/.char co tytul) - dostaje
+          // identyczny efekt maskowanego wjazdu zamiast przesuniecia calego bloku.
+          if (description) {
+            const descSplit = new SplitText(description, {
+              type: "words",
+              wordsClass: "char",
+              tag: "div",
+            });
+            descSplit.words.forEach((word) => {
+              const text = word.textContent ?? "";
+              word.textContent = "";
+              const span = document.createElement("span");
+              span.textContent = text;
+              word.appendChild(span);
+            });
+          }
           const chars = caption.querySelectorAll<HTMLElement>(".char span");
           gsap.set(chars, { x: "110%" });
-          if (description) {
-            gsap.set(description, { x: "40px", opacity: 0 });
-          }
           return {
             chars,
-            description,
             visible: false,
           };
         })
         .filter(
           (entry): entry is {
             chars: NodeListOf<HTMLElement>;
-            description: HTMLElement | null;
             visible: boolean;
           } => Boolean(entry)
         );
@@ -160,11 +170,11 @@ const PanoramaScroll = () => {
 
         if (shouldBeVisible && !entry.visible) {
           // Pokaż tekst
-          animateContentIn(entry.chars, entry.description);
+          animateContentIn(entry.chars);
           entry.visible = true;
         } else if (!shouldBeVisible && entry.visible) {
           // Schowaj tekst
-          animateContentOut(entry.chars, entry.description);
+          animateContentOut(entry.chars);
           entry.visible = false;
         }
       });
