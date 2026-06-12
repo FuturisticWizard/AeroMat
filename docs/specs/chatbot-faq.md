@@ -28,17 +28,22 @@ Gość → okienko czatu → dopasowanie lokalne (0 zł)
 
 ## Kryteria akceptacji
 
-- [ ] Przycisk czatu widoczny na każdej podstronie; kod panelu ładuje się
+- [x] Przycisk czatu widoczny na każdej podstronie; kod panelu ładuje się
       dopiero po pierwszym kliknięciu (zero wpływu na start strony).
-- [ ] Pytania z bazy FAQ (np. "ile kosztuje mural") dostają odpowiedź lokalnie,
+- [x] Pytania z bazy FAQ (np. "ile kosztuje mural") dostają odpowiedź lokalnie,
       bez żadnego zapytania sieciowego.
-- [ ] Przy słabym dopasowaniu pojawia się opcja zapytania AI.
-- [ ] Zabezpieczenia AI: limit 10 pytań/h na adres IP, limit długości pytania
+- [x] Przy słabym dopasowaniu pojawia się opcja zapytania AI.
+- [x] Zabezpieczenia AI: limit 10 pytań/h na adres IP, limit długości pytania
       (300 znaków), globalny bezpiecznik 200 odpowiedzi AI dziennie — po
       przekroczeniu bot grzecznie odsyła do formularza kontaktowego.
-- [ ] Brak klucza `ANTHROPIC_API_KEY` na serwerze nie psuje strony — warstwa AI
+- [x] Brak klucza `CHAT_API_KEY` na serwerze nie psuje strony — warstwa AI
       zwraca komunikat zastępczy z odesłaniem do /kontakt.
-- [ ] Logika dopasowania pokryta testami jednostkowymi (vitest).
+- [x] Logika dopasowania pokryta testami jednostkowymi (vitest, 11 testów).
+
+Test ręczny w przeglądarce (2026-06-12, Playwright + Edge): 12/12 sprawdzeń OK —
+otwarcie/zamknięcie panelu, odpowiedź FAQ bez zapytań sieciowych, oferta AI przy
+słabym dopasowaniu, komunikat zastępczy bez klucza, chipy szybkich pytań, Escape,
+brak błędów w konsoli, widok mobilny na /kontakt.
 
 ## Pliki
 
