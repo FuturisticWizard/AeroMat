@@ -4,6 +4,7 @@ import { Inter, Bebas_Neue, Caveat, Anton, Space_Grotesk } from "next/font/googl
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ChatWidget from "./components/Chat/ChatWidget";
 import PerformanceMonitor from "./components/PerformanceMonitor";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { AudioProvider } from "./context/AudioContext";
@@ -142,6 +143,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <ChatWidget />
         </AudioProvider>
       </body>
     </html>

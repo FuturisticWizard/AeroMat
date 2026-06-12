@@ -1,0 +1,57 @@
+# Spec: Chatbot FAQ (hybryda)
+
+Data: 2026-06-12
+
+## Co to robi
+
+Pływający przycisk czatu (prawy dolny róg, wszystkie podstrony). Po kliknięciu
+otwiera się okienko, w którym gość zadaje pytanie:
+
+1. **Warstwa darmowa ("Recepcjonista")** — pytanie dopasowywane lokalnie
+   (w przeglądarce) do bazy FAQ po słowach kluczowych. Trafienie = natychmiastowa
+   odpowiedź, 0 zł.
+2. **Warstwa AI ("Asystent")** — gdy dopasowanie jest słabe, gość może kliknąć
+   "Zapytaj asystenta AI". Pytanie idzie na serwer, który odpyta model
+   Claude Haiku 4.5 (`claude-haiku-4-5`, ~1–2 gr za odpowiedź) z wgraną wiedzą
+   o usługach AeroMat.
+
+```
+Gość → okienko czatu → dopasowanie lokalne (0 zł)
+                          │ brak trafienia
+                          ▼
+                   przycisk "Zapytaj asystenta AI"
+                          │
+                          ▼
+            akcja serwerowa askAssistant() → Claude Haiku → odpowiedź
+            (limit po IP + dzienny bezpiecznik kosztowy)
+```
+
+## Kryteria akceptacji
+
+- [ ] Przycisk czatu widoczny na każdej podstronie; kod panelu ładuje się
+      dopiero po pierwszym kliknięciu (zero wpływu na start strony).
+- [ ] Pytania z bazy FAQ (np. "ile kosztuje mural") dostają odpowiedź lokalnie,
+      bez żadnego zapytania sieciowego.
+- [ ] Przy słabym dopasowaniu pojawia się opcja zapytania AI.
+- [ ] Zabezpieczenia AI: limit 10 pytań/h na adres IP, limit długości pytania
+      (300 znaków), globalny bezpiecznik 200 odpowiedzi AI dziennie — po
+      przekroczeniu bot grzecznie odsyła do formularza kontaktowego.
+- [ ] Brak klucza `ANTHROPIC_API_KEY` na serwerze nie psuje strony — warstwa AI
+      zwraca komunikat zastępczy z odesłaniem do /kontakt.
+- [ ] Logika dopasowania pokryta testami jednostkowymi (vitest).
+
+## Pliki
+
+- `app/lib/faq.ts` — baza pytań i odpowiedzi (edytowalna ręcznie)
+- `app/lib/faqMatch.ts` — dopasowanie słów kluczowych (logika biznesowa, TDD)
+- `app/lib/chat.ts` — akcja serwerowa askAssistant() (wzorzec jak email.tsx)
+- `app/components/Chat/ChatWidget.tsx` — przycisk + leniwy panel
+- `app/components/Chat/ChatPanel.tsx` — okno rozmowy
+- `tests/unit/faqMatch.test.ts` — testy dopasowania
+
+## Koszty
+
+- Warstwa lokalna: 0 zł.
+- Warstwa AI: Haiku 4.5 — 1 USD/M tokenów wejścia, 5 USD/M wyjścia.
+  Typowa odpowiedź ≈ 1500 tokenów wejścia + 250 wyjścia ≈ 0,003 USD ≈ 1 gr.
+  Bezpiecznik dzienny 200 odpowiedzi → maks. ~2 USD/dzień (~8 zł), realnie grosze.
