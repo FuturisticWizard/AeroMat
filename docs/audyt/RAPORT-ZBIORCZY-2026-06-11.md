@@ -28,6 +28,7 @@ Data: 2026-06-11
 > - **SEO-09** — `alt` na wszystkich zdjęciach galerii `/portfolio` (title→alt)
 > - **SEO-12** — `app/manifest.ts` (PWA)
 > - **QC-02** — usunięty martwy kod (FooterLight, pixelBackground, 2 nieużywane hooki)
+> - **QC-02 cd. (2026-06-12)** — pełna analiza grafu importów (`scripts/find-dead.mjs`): usunięte 46 nieosiągalnych komponentów, 114 nieużywanych plików z `public/` (~38 MB, m.in. reel_output.mp4 15 MB) i 5 osieroconych bibliotek npm (react-icons, embla-carousel-react, @tabler/icons-react, @radix-ui/react-avatar i react-label). Oryginały .jpg przeniesione do `D:\Builds\AeroMat1.0\_oryginaly-zdjec\`. Zweryfikowano: tsc czysty, 2x build produkcyjny, wszystkie podstrony 200, 61 zasobów z HTML wszystkich stron odpowiada 200.
 > - **SEO-06 / A11Y-05** — jeden H1 na stronie głównej (15→1). Tytuły kart, marquee (+aria-hidden), Intro, Outro → `h2`; zaktualizowane selektory w `globals.css`, `marquee.ts`, `HomeAnimations.tsx`. Zweryfikowano: rozmiary i wszystkie animacje (marquee, neon Intro/Outro, SplitText, pin panoramy) bez zmian.
 >
 > **↩️ Wycofane:**
