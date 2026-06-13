@@ -59,9 +59,6 @@ const nextConfig = {
     // useLightningcss: true,
   },
 
-  // Transpile packages dla lepszej kompatybilności
-  transpilePackages: ["three", "gsap"],
-
   // Webpack optimizations (będą używane w production build)
   webpack: (config, { dev, isServer }) => {
     // SVG handling
