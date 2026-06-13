@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import type * as THREE_NS from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -35,14 +35,40 @@ const PanoramaScroll = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) {
       return;
     }
 
-    const renderer = new THREE.WebGLRenderer({
+    // three.js (~600 KB) ladowane leniwie: paczka pobierana dopiero gdy sekcja
+    // panoramy zbliza sie do ekranu (rootMargin = ~2 ekrany zapasu), zeby nie
+    // obciazac startu strony glownej. Sekcja .panorama-card renderuje sie od
+    // razu (ten komponent zwraca <section> synchronicznie), wiec przyklejanie
+    // (pin) z HomeAnimations dziala niezaleznie od tego, czy three.js juz sie
+    // wczytal. Goscie, ktorzy nie doscrolluja do panoramy, w ogole jej nie pobiora.
+    let disposed = false;
+    let loadStarted = false;
+    let cleanup3d: (() => void) | null = null;
+
+    const loadObserver = new IntersectionObserver(
+      (entries) => {
+        if (!loadStarted && entries.some((entry) => entry.isIntersecting)) {
+          loadStarted = true;
+          loadObserver.disconnect();
+          void init3d();
+        }
+      },
+      { rootMargin: "200% 0px 200% 0px", threshold: 0 }
+    );
+    loadObserver.observe(container);
+
+    const init3d = async () => {
+      const THREE = await import("three");
+      if (disposed || !container || !canvas) return;
+
+      const mm = gsap.matchMedia();
+      const renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
       alpha: false,
@@ -56,9 +82,9 @@ const PanoramaScroll = () => {
 
     let animationFrameId = 0;
     let plane:
-      | THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>
+      | THREE_NS.Mesh<THREE_NS.PlaneGeometry, THREE_NS.MeshBasicMaterial>
       | null = null;
-    let texture: THREE.Texture | null = null;
+    let texture: THREE_NS.Texture | null = null;
     let scrollTrigger: ScrollTrigger | null = null;
     let captionEntries: Array<{
       chars: NodeListOf<HTMLElement>;
@@ -261,24 +287,31 @@ const PanoramaScroll = () => {
     window.addEventListener("resize", handleResize);
     animate();
 
-    return () => {
-      mm.revert();
-      visibilityObserver.disconnect();
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
-      scrollTrigger?.kill();
-      captionEntries = [];
-      if (plane) {
-        plane.geometry.dispose();
-        const material = plane.material;
-        if (Array.isArray(material)) {
-          material.forEach((m) => m.dispose());
-        } else {
-          material.dispose();
+      cleanup3d = () => {
+        mm.revert();
+        visibilityObserver.disconnect();
+        window.removeEventListener("resize", handleResize);
+        cancelAnimationFrame(animationFrameId);
+        scrollTrigger?.kill();
+        captionEntries = [];
+        if (plane) {
+          plane.geometry.dispose();
+          const material = plane.material;
+          if (Array.isArray(material)) {
+            material.forEach((m) => m.dispose());
+          } else {
+            material.dispose();
+          }
         }
-      }
-      texture?.dispose();
-      renderer.dispose();
+        texture?.dispose();
+        renderer.dispose();
+      };
+    };
+
+    return () => {
+      disposed = true;
+      loadObserver.disconnect();
+      cleanup3d?.();
     };
   }, []);
 
