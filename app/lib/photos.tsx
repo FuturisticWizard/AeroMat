@@ -7,7 +7,7 @@ export const allPhotos = [
   { index: 4, src: "/Portfolio/murale/4.webp", title: "Mural panorama", category: "Murale", width: 2400, height: 500 },
   { index: 5, src: "/Portfolio/murale/5a.webp", title: "Mural wielkoformatowy", category: "Murale", width: 2400, height: 937 },
   { index: 6, src: "/Portfolio/murale/6.webp", title: "Mural kwadratowy", category: "Murale", width: 2571, height: 2500 },
-  { index: 7, src: "/Portfolio/murale/7A.webp", title: "Mural miejski", category: "Murale", width: 2400, height: 1344 },
+  { index: 7, src: "/Portfolio/murale/7a.webp", title: "Mural miejski", category: "Murale", width: 2400, height: 1344 },
   { index: 8, src: "/Portfolio/murale/7B.webp", title: "Mural szeroki", category: "Murale", width: 2400, height: 426 },
   { index: 9, src: "/Portfolio/murale/7c.webp", title: "Mural kolorowy", category: "Murale", width: 2400, height: 1651 },
   { index: 10, src: "/Portfolio/murale/8.webp", title: "Mural krajobrazowy", category: "Murale", width: 2400, height: 1157 },
@@ -69,10 +69,8 @@ export const allPhotos = [
   { index: 73, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-7a.webp", title: "Samochód — portret", category: "Inne", width: 1916, height: 2400 },
   { index: 74, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-10.webp", title: "Malowanie samochodu", category: "Inne", width: 2400, height: 1565 },
   { index: 75, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-11.webp", title: "Samochód", category: "Inne", width: 2400, height: 1592 },
-  { index: 76, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-3.webp", title: "Detal samochodu", category: "Inne", width: 2400, height: 1286 },
   { index: 77, src: "/Animation/Projekty_Specjalne/PortfolioCard/samochodzik-12.webp", title: "Samochód — finalny", category: "Inne", width: 2400, height: 1529 },
   // Kampery
-  { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
   { index: 72, src: "/Portfolio/Inne/garaz.webp", title: "Mural na bramie garażowej", category: "Inne", width: 2400, height: 1050 },
   // Garaże / branding
   // Pliki przeniesione przy sprzątaniu QC-02: stare wersje ze spacjami w nazwie
