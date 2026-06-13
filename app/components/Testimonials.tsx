@@ -1,5 +1,5 @@
 "use client";
-import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, animate, useReducedMotion } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/app/components/ui/card";
@@ -133,36 +133,48 @@ const MobileTestimonials = () => {
         onTouchEnd={onTouchEnd}
         className="relative w-full h-[540px] rounded-xl overflow-hidden select-none"
       >
-        <Image
-          src={t.workImage || "/placeholder.svg"}
-          alt={t.workTitle}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 0px"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
-        <div className="absolute inset-0 flex flex-col justify-end p-5">
-          <span className="inline-block bg-[#ff7302] text-white text-xs font-semibold px-2 py-0.5 rounded mb-2 self-start">
-            {t.type}
-          </span>
-          <h3 className="text-white font-bold text-lg mb-4 leading-tight">
-            {t.workTitle}
-          </h3>
-          <div className="flex items-center gap-3 mb-3">
-            <div className="min-w-0 flex-1">
-              <p className="text-white font-semibold text-sm truncate">
-                {t.name}
-              </p>
-              <p className="text-gray-300 text-xs truncate">
-                {t.role}, {t.company}
-              </p>
-              <StarRating rating={t.rating} />
+        {/* Przenikanie (fade) przy zmianie opinii — spojne z widokiem desktop */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={t.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={t.workImage || "/placeholder.svg"}
+              alt={t.workTitle}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 0px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
+            <div className="absolute inset-0 flex flex-col justify-end p-5">
+              <span className="inline-block bg-[#ff7302] text-white text-xs font-semibold px-2 py-0.5 rounded mb-2 self-start">
+                {t.type}
+              </span>
+              <h3 className="text-white font-bold text-lg mb-4 leading-tight">
+                {t.workTitle}
+              </h3>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="min-w-0 flex-1">
+                  <p className="text-white font-semibold text-sm truncate">
+                    {t.name}
+                  </p>
+                  <p className="text-gray-300 text-xs truncate">
+                    {t.role}, {t.company}
+                  </p>
+                  <StarRating rating={t.rating} />
+                </div>
+              </div>
+              <blockquote className="text-white/95 text-sm leading-relaxed italic backdrop-blur-sm bg-black/30 rounded-lg p-3 min-h-[140px]">
+                &quot;{t.content}&quot;
+              </blockquote>
             </div>
-          </div>
-          <blockquote className="text-white/95 text-sm leading-relaxed italic backdrop-blur-sm bg-black/30 rounded-lg p-3 min-h-[140px]">
-            &quot;{t.content}&quot;
-          </blockquote>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       <div className="flex justify-center gap-2 pt-1">
@@ -295,6 +307,8 @@ export default function TestimonialsCarousel3() {
   const virtualIdxRef = useRef(INITIAL_VIDX);
   const [, setTick] = useState(0);
   const tick = useCallback(() => setTick((x) => x + 1), []);
+  // Szanuj ustawienie systemowe "ogranicz animacje" — przy nim wylaczamy najazd (zoom).
+  const reduce = useReducedMotion();
 
   const activeRealIdx = ((virtualIdxRef.current % N) + N) % N;
   const t = testimonials[activeRealIdx];
@@ -353,14 +367,21 @@ export default function TestimonialsCarousel3() {
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 rounded-xl overflow-hidden"
             >
-              <Image
-                src={t.workImage || "/placeholder.svg"}
-                alt={t.workTitle}
-                fill
-                className="object-cover"
-                sizes="100vw"
-                loading="lazy"
-              />
+              <motion.div
+                initial={reduce ? false : { scale: 1.06 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={t.workImage || "/placeholder.svg"}
+                  alt={t.workTitle}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  loading="lazy"
+                />
+              </motion.div>
               <div className="absolute -inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent via-60%" />
               <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-12">
                 <Badge className="mb-4 self-start">{t.type}</Badge>
