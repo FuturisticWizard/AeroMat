@@ -28,17 +28,23 @@ const isRateLimited = (key: string, now: number): boolean => {
   return false;
 };
 
-export const send = async (emailForm: z.infer<typeof formSchema>) => {
+// Wynik akcji zwracany do klienta. Celowo NIE rzucamy wyjątków dla
+// spodziewanych błędów — Next.js na produkcji ukrywa treść rzuconych
+// wyjątków (zostaje generyczny angielski komunikat + digest). Zwracając
+// obiekt, polski komunikat dociera do użytkownika bez zmian.
+type SendResult = { ok: true } | { ok: false; message: string };
+
+export const send = async (emailForm: z.infer<typeof formSchema>): Promise<SendResult> => {
   // Honeypot — jeśli ukryte pole jest wypełnione, to bot. Udajemy sukces
   // (nie zdradzamy botowi, że został wykryty) i nie wysyłamy nic.
   if (emailForm.company && emailForm.company.trim() !== "") {
-    return;
+    return { ok: true };
   }
 
   // Server-side validation (client can be bypassed)
   const parsed = formSchema.safeParse(emailForm);
   if (!parsed.success) {
-    throw new Error("Nieprawidłowe dane formularza.");
+    return { ok: false, message: "Nieprawidłowe dane formularza. Sprawdź pola i spróbuj ponownie." };
   }
 
   // Rate limiting — najpierw po adresie IP (Cloudflare > x-real-ip > x-forwarded-for),
@@ -52,7 +58,14 @@ export const send = async (emailForm: z.infer<typeof formSchema>) => {
     "unknown";
 
   if (isRateLimited(`ip:${ip}`, now) || isRateLimited(`email:${parsed.data.email.toLowerCase()}`, now)) {
-    throw new Error("Zbyt wiele wiadomości. Spróbuj ponownie później.");
+    return { ok: false, message: "Wysłano już sporo wiadomości w krótkim czasie. Spróbuj ponownie za godzinę albo napisz bezpośrednio na podany e-mail." };
+  }
+
+  // Send to site owner (NOT to the user — prevents open relay)
+  const ownerEmail = process.env.CONTACT_EMAIL || process.env.RESEND_FROM_EMAIL;
+  if (!ownerEmail || !process.env.RESEND_FROM_EMAIL) {
+    console.error("[kontakt] Brak konfiguracji e-mail (CONTACT_EMAIL / RESEND_FROM_EMAIL)");
+    return { ok: false, message: "Wysyłka jest chwilowo niedostępna. Napisz proszę bezpośrednio na podany adres e-mail." };
   }
 
   try {
@@ -60,12 +73,6 @@ export const send = async (emailForm: z.infer<typeof formSchema>) => {
       firstName: parsed.data.firstName,
       message: parsed.data.message,
     });
-
-    // Send to site owner (NOT to the user — prevents open relay)
-    const ownerEmail = process.env.CONTACT_EMAIL || process.env.RESEND_FROM_EMAIL;
-    if (!ownerEmail) {
-      throw new Error("Konfiguracja email nie jest ustawiona.");
-    }
 
     const { error } = await resend.emails.send({
       from: `AeroMat Kontakt <${process.env.RESEND_FROM_EMAIL}>`,
@@ -78,10 +85,15 @@ export const send = async (emailForm: z.infer<typeof formSchema>) => {
     });
 
     if (error) {
-      throw new Error("Nie udało się wysłać wiadomości. Spróbuj ponownie.");
+      // Logujemy pełną treść błędu Resend (widoczna w logach serwera Vercel) —
+      // bez tego diagnoza była niemożliwa. Użytkownik dostaje przyjazny komunikat.
+      console.error("[kontakt] Resend odrzucił wysyłkę:", error);
+      return { ok: false, message: "Nie udało się wysłać wiadomości. Spróbuj ponownie za chwilę." };
     }
+
+    return { ok: true };
   } catch (e) {
-    if (e instanceof Error) throw e;
-    throw new Error("Wystąpił błąd. Spróbuj ponownie.");
+    console.error("[kontakt] Nieoczekiwany błąd wysyłki:", e);
+    return { ok: false, message: "Wystąpił nieoczekiwany błąd. Spróbuj ponownie za chwilę." };
   }
 };

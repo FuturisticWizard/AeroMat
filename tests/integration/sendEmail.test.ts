@@ -52,16 +52,16 @@ describe("send() — pulapka na boty (honeypot)", () => {
 
   it("udaje sukces (nie rzuca bledu), gdy wykryto bota", async () => {
     const send = await importSend();
-    await expect(send({ ...validForm, company: "Bot Inc." })).resolves.toBeUndefined();
+    await expect(send({ ...validForm, company: "Bot Inc." })).resolves.toEqual({ ok: true });
   });
 });
 
 describe("send() — walidacja po stronie serwera", () => {
   it("odrzuca niepoprawne dane (pomimo obejscia walidacji w przegladarce)", async () => {
     const send = await importSend();
-    await expect(send({ ...validForm, email: "bez-malpy" })).rejects.toThrow(
-      "Nieprawidłowe dane formularza."
-    );
+    const res = await send({ ...validForm, email: "bez-malpy" });
+    expect(res.ok).toBe(false);
+    expect(res).toMatchObject({ ok: false, message: expect.stringContaining("Nieprawidłowe dane") });
   });
 
   it("nie wysyla maila przy niepoprawnych danych", async () => {
@@ -72,6 +72,18 @@ describe("send() — walidacja po stronie serwera", () => {
 });
 
 describe("send() — poprawna wysylka", () => {
+  it("zwraca { ok: true } przy poprawnej wysylce", async () => {
+    const send = await importSend();
+    await expect(send(validForm)).resolves.toEqual({ ok: true });
+  });
+
+  it("zwraca { ok: false } z komunikatem, gdy Resend odrzuci wysylke", async () => {
+    sendMock.mockResolvedValueOnce({ error: { name: "validation_error", message: "rejected" } });
+    const send = await importSend();
+    const res = await send(validForm);
+    expect(res).toMatchObject({ ok: false, message: expect.stringContaining("Nie udało się wysłać") });
+  });
+
   it("wysyla maila do wlasciciela strony, nie do nadawcy (ochrona przed open relay)", async () => {
     const send = await importSend();
     await send(validForm);
@@ -97,7 +109,7 @@ describe("send() — limit zgloszen (rate limiting)", () => {
     const send = await importSend();
     await send(validForm);
     await send(validForm);
-    await expect(send(validForm)).resolves.toBeUndefined();
+    await expect(send(validForm)).resolves.toEqual({ ok: true });
   });
 
   it("blokuje 4. zgloszenie z tego samego adresu IP w ciagu godziny", async () => {
@@ -105,15 +117,17 @@ describe("send() — limit zgloszen (rate limiting)", () => {
     await send(validForm);
     await send(validForm);
     await send(validForm);
-    await expect(send(validForm)).rejects.toThrow("Zbyt wiele wiadomości.");
+    const res = await send(validForm);
+    expect(res).toMatchObject({ ok: false, message: expect.stringContaining("sporo wiadomości") });
   });
 });
 
 describe("send() — brak konfiguracji", () => {
-  it("rzuca czytelny blad, gdy nie ustawiono adresu odbiorcy", async () => {
+  it("zwraca czytelny komunikat, gdy nie ustawiono adresu odbiorcy", async () => {
     delete process.env.CONTACT_EMAIL;
     delete process.env.RESEND_FROM_EMAIL;
     const send = await importSend();
-    await expect(send(validForm)).rejects.toThrow("Konfiguracja email nie jest ustawiona.");
+    const res = await send(validForm);
+    expect(res).toMatchObject({ ok: false, message: expect.stringContaining("chwilowo niedostępna") });
   });
 });

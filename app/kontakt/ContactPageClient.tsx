@@ -49,11 +49,17 @@ export default function ContactPage() {
     setStatus("sending");
     setErrorMsg("");
     try {
-      await send(values);
-      setStatus("sent");
-    } catch (e) {
+      const res = await send(values);
+      if (res.ok) {
+        setStatus("sent");
+      } else {
+        setStatus("error");
+        setErrorMsg(res.message);
+      }
+    } catch {
+      // Wyjątek tu oznacza błąd sieci/serwera (akcja nieosiągalna), nie logikę formularza.
       setStatus("error");
-      setErrorMsg(e instanceof Error ? e.message : "Wystąpił błąd.");
+      setErrorMsg("Brak połączenia z serwerem. Sprawdź internet i spróbuj ponownie.");
     }
   });
 
