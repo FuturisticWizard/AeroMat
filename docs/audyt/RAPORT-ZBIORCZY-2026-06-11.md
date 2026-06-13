@@ -35,14 +35,23 @@ Data: 2026-06-11
 > - **PERF-01 (ROZWIĄZANE)** — Three.js (~600 KB) wyjęty z paczki startowej strony głównej. Zamiast leniwego ładowania całego komponentu (psuło pin), zastosowano dynamiczny `import("three")` wewnątrz `PanoramaScroll.tsx`, gated `IntersectionObserver` (rootMargin ~2 ekrany). Sekcja `.panorama-card` renderuje się synchronicznie, więc pin/`panorama-progress` w `HomeAnimations` działa bez zmian. Zweryfikowano: build OK, paczka three (671 KB) poza listą początkową `/`, test w przeglądarce (Playwright) — three doładowany dopiero przy panoramie, render OK, 0 błędów w konsoli. Goście, którzy nie doscrollują, w ogóle nie pobierają paczki.
 > - **QC-04 (częściowo)** — testy formularza kontaktowego: 24 testy vitest (walidacja `formSchema` + akcja `send()` z mockami resend/next-headers). Uzupełniono `.env.example` o `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` (wcześniej nieudokumentowane). Pozostaje: e2e nawigacji + reszta `any` (QC-03).
 >
+> **✅ Wdrożone cd. (2026-06-13, sesja II — produkcja Vercel + portfolio):**
+> - **PROD-01 (formularz 500)** — `/kontakt` zwracał 500 na produkcji. Trzy przyczyny: (a) brak zmiennych środowiskowych na Vercelu (`.env.local` nie trafia na serwer) — dodano 6 kluczy; (b) Vercel piecze zmienne przy buildzie — wymuszono świeży build z gita; (c) Resend w trybie testowym pozwala wysyłać tylko na adres właściciela konta (`iwhooy@gmail.com`) — odbiorca zmieniony tymczasowo. **Do zrobienia (docelowo):** weryfikacja domeny `muralelublin.pl` w Resend → powrót na `konradczerniec@gmail.com`.
+> - **PROD-02 (polskie komunikaty)** — `send()` zwraca teraz `{ ok, message }` zamiast rzucać wyjątek (Next na produkcji ukrywał treść → generyczny angielski komunikat + digest). Dodano `console.error` z pełnym błędem Resend (widoczne w logach Vercel). Testy: 12 zielonych (zaktualizowane + ścieżka błędu Resend).
+> - **CHAT-01** — asystent AI obiecywał podjęcie się zlecenia i potwierdzał wykonalność techniczną (np. mural na 50 m wysokości). Dodano regułę systemową: nigdy nie obiecuj realizacji ani wykonalności — kieruj na indywidualne ustalenie przez /kontakt. Zweryfikowane wywołaniem modelu.
+> - **IMG-01 (brakujące zdjęcia)** — 6 grafik w galerii „Wszystkie/Inne" dawało 404 (sprzątanie QC-02 usunęło pliki `/Portfolio/Brending/*.webp` ze spacjami w nazwie; `allPhotos` wciąż na nie wskazywało). 5 przekierowano na istniejące wersje w `Komunikacja_Wizualna`, wpis „Logo" usunięty (plik nie istnieje).
+> - **IMG-02 (wielkość liter)** — `7A.webp` dawał 404 na Vercel/Linux: git przechowuje plik jako `7a.webp` (Windows ignoruje wielkość liter i nie wykrył różnicy). Audyt całego `photos.tsx` vs git: to jedyny taki przypadek. Poprawiono referencję.
+> - **PERF-09 (czarne kafelki portfolio)** — galeria `react-photo-album` renderowała ~90 zdjęć w pełnej rozdzielczości (~45 MB) jako surowe `<img>` → przeciążenie równoległych pobrań → losowe czarne kafelki. Podpięto **Next/Image** przez `render.image` (avif/webp zmniejszone do rozmiaru wyświetlania; zweryfikowano: 59 KB zamiast 442 KB na zdjęcie). Częściowo realizuje też **A11Y-08** (Next/Image + react-photo-album).
+> - **PERF-08 (ROZWIĄZANE)** — usunięty `transpilePackages: ["three","gsap"]` (zbędne w Next 16). Zweryfikowano buildem lokalnym i produkcyjnym (Vercel). Animacja strony głównej do wizualnego potwierdzenia.
+> - **QC-04 cd. (tsconfig)** — naprawione błędne ścieżki `include` (startowy `/` → względne) + cross-platform `dev:turbo` (`rm -f` nie działał w PowerShell → `node fs.rmSync`).
+>
 > **↩️ Wycofane:**
 > - **PERF-01** — pierwotne podejście (leniwe ładowanie całego PanoramaScroll przez `dynamic()`) wycofane: niezgodne z animacją przyklejania (pin), bo komponent musi istnieć przy inicjalizacji. Zastąpione dynamicznym importem samego three.js — patrz „Wdrożone cd. (2026-06-13)" powyżej.
 >
 > **⏳ Odłożone (ryzykowne lub duże — wymagają dedykowanej sesji):**
 > - **SEC-01 (pełny nonce)** — blokowane przez Next 16/Turbopack (nie dokleja nonce); wróci przy migracji na `proxy.ts` lub naprawie w Next
 > - **PERF-06** (statyczne `will-change`) — przy elementach animowanych; niska wartość, ryzyko niewidocznego „szarpnięcia" — pominięte świadomie
-> - **PERF-08** (usunięcie `transpilePackages`) — wymaga weryfikacji buildem produkcyjnym
-> - **A11Y-08** (dostępność klawiaturowa miniatur w `react-photo-album` na `/portfolio`)
+> - **A11Y-08** (dostępność klawiaturowa miniatur w `react-photo-album` na `/portfolio`) — częściowo ruszone przez Next/Image (PERF-09), pełna obsługa klawiatury do dokończenia
 > - **QC-03** (`any` w hookach/komponentach), **QC-04 cd.** (tsconfig, `@layer`, unifikacja importów, **testy** e2e nawigacji — testy formularza już zrobione 2026-06-13) — dług techniczny Fazy 3
 
 ## Podsumowanie wykonawcze
