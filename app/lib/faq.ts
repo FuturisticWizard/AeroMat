@@ -14,7 +14,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
     question: "Ile kosztuje mural?",
     keywords: ["cena", "koszt", "kosztuje", "wycena", "cennik", "drogo", "zaplace", "budzet", "stawka"],
     answer:
-      "Cena zależy od powierzchni, stopnia szczegółowości projektu i lokalizacji. Każdą wycenę przygotowuję indywidualnie i bezpłatnie — napisz przez formularz na stronie /kontakt albo na aeromat.malarz@gmail.com, podaj przybliżone wymiary ściany i pomysł, a odezwę się w ciągu 24 godzin.",
+      "Cena zależy od powierzchni, stopnia szczegółowości projektu i lokalizacji. Każdą wycenę przygotowuję indywidualnie i bezpłatnie — napisz przez formularz na stronie /kontakt albo na aeromat88@gmail.com, podaj przybliżone wymiary ściany i pomysł, a odezwę się w ciągu 24 godzin.",
   },
   {
     id: "obszar",
