@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack -p 3001",
-    "dev:turbo": "rm -f .next/dev/lock && next dev -p 3001",
+    "dev:turbo": "node -e \"require('fs').rmSync('.next/dev/lock',{force:true})\" && next dev -p 3001",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
