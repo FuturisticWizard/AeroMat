@@ -21,47 +21,124 @@ interface YouTubeGridProps {
 
 const DEFAULT_VIDEOS: VideoItem[] = [
   {
+    id: "IuAl1eqrCCA",
+    title: "Mural APIS — Lublin 2025",
+    description: "Powstawanie muralu APIS w Lublinie — realizacja 2025.",
+  },
+  {
     id: "FpFBhlD7cOU",
-    title: "Tworzenie muralu - Lublin Stare Miasto ",
-    description: "Przegląd mojego projektu - Stare Miasto w Lublinie",
+    title: "Stare Miasto — mural, ul. Wiercieńskiego 5",
+    description: "Mural na lubelskim Starym Mieście, przy ul. Wiercieńskiego 5.",
   },
   {
     id: "Y8-QLpd97bo",
-    title: "Mural EKOPAK - KomeEko Lublin",
-    description: "Nagranie z prac przy 85 metrowym muralu EKOPAK - KomEko Lublin ul.Metalurgiczna 9b",
+    title: "KOM-EKO — największy mural w Lublinie",
+    description: "Realizacja największego muralu w Lublinie dla KOM-EKO, ul. Metalurgiczna 9b.",
+  },
+  {
+    id: "nLrFVfav05g",
+    title: "Mural historyczny — Opole Lubelskie",
+    description: "Mural poświęcony II Batalionowi 16 Pułku Piechoty Liniowej, Opole Lubelskie, ul. Fabryczna.",
+  },
+  {
+    id: "AW7W8-9bVmg",
+    title: "Zimowe murale — AeroMat",
+    description: "Murale malowane zimą — kulisy realizacji.",
+  },
+  {
+    id: "_Ww_hEQBIos",
+    title: "Mural w Kopenhadze — kolejka S-Train",
+    description: "Malowanie muralu na miejskiej kolejce S-Train w Kopenhadze.",
   },
   {
     id: "_Ur0BpsVwQE",
-    title: "Mural Antysmogowy - LPEC Lublin",
-    description: "Nagranie z prac przy muralu Antysmogowym - LPEC Lublin ul.Puławska 28 w Lublinie",
+    title: "Mural antysmogowy — LPEC Lublin",
+    description: "Realizacja muralu antysmogowego dla LPEC, ul. Puławska 28 w Lublinie.",
   },
   {
     id: "hNWmk-VJZ6c",
-    title: "Mural z okazji 60 lecia LPEC",
-    description: "Mural powstał z okazji 60-lecia firmy LPEC, z którą mam zaszczyt i przyjemność współpracować od ponad 10-ciu lat.",
+    title: "Mural jubileuszowy — 60-lecie LPEC",
+    description: "Mural z okazji 60-lecia firmy LPEC, z którą współpracuję od ponad 10 lat.",
+  },
+  {
+    id: "kuZWqDKxAS8",
+    title: "Grafika ścienna LPEC (4K)",
+    description: "Mural i grafika ścienna dla LPEC — nagranie w jakości 4K.",
   },
   {
     id: "u6u1kGA8uGE",
-    title: "Mural z ptasiej serii pt. Początek",
-    description: "Pierwszy mural z ptasiej serii pt. Początek",
+    title: "Ptasia seria #1 — Początek",
+    description: "Pierwszy mural z ptasiej serii pt. „Początek”.",
   },
   {
     id: "1fEvHbd5tTI",
-    title: "Mural z ptasiej serii pt. Zmiany",
-    description: "Drugi mural z ptasiej serii pt. Zmiany",
+    title: "Ptasia seria #2 — Zmiany",
+    description: "Drugi mural z ptasiej serii pt. „Zmiany”.",
   },
   {
-    id: "oE7ucKq4of8",
-    title: "Mural na przedszkolu 'Junior'",
-    description: "Mural na przedszkolu 'Junior'",
-  }, {
-    id: "nLrFVfav05g",
-    title: "Mural historyczny w Opolu Lubelskim",
-    description: "Mural poświęcony II Batalionowi 16 Pułku Piechoty Liniowej został namalowany w Opolu Lubelskim przy ul. Fabrycznej.",
-  }, {
+    id: "S6xgJKDoM0Q",
+    title: "Ptasia seria #3 — Misja",
+    description: "Trzeci mural z ptasiej serii pt. „Misja”.",
+  },
+  {
+    id: "r467BdcmIkw",
+    title: "Ptasia seria — ZKIW (cz. 1)",
+    description: "Mural z ptasiej serii zrealizowany dla ZKIW.",
+  },
+  {
+    id: "bqXd4SeSp2g",
+    title: "AeroMat kontra Covid-19",
+    description: "Mural — artystyczny komentarz do czasu pandemii.",
+  },
+  {
+    id: "iiGno5KAGdY",
+    title: "TIME — pełny proces malowania (4K)",
+    description: "Cały proces powstawania muralu „TIME”, test farb Montana Black, jakość 4K.",
+  },
+  {
     id: "HBrLvcUcGfg",
-    title: "Mural z Rybą w sklepie Akwarium24",
-    description: "Realizacje wykonałem dla sklepu https://www.akwarium24.pl/",
+    title: "Mural z rybą — Akwarium24",
+    description: "Malowanie ryby — realizacja m.in. dla sklepu Akwarium24.",
+  },
+  {
+    id: "ZUph96wwU2g",
+    title: "AeroMat kontra Real Madryt (4K)",
+    description: "Mural inspirowany Realem Madryt — nagranie w 4K.",
+  },
+  {
+    id: "5Ba1XizIDnc",
+    title: "Mural Bieluch — Chełm 2025",
+    description: "Realizacja muralu dla marki Bieluch w Chełmie, 2025.",
+  },
+  {
+    id: "CBr77uJ8fpg",
+    title: "Malowanie pejzaży",
+    description: "Tworzenie krajobrazów na ścianie.",
+  },
+  {
+    id: "IIQA7LiLM0k",
+    title: "Malowanie dla dzieci",
+    description: "Murale i dekoracje malowane z myślą o najmłodszych.",
+  },
+  {
+    id: "liI10YMbfOM",
+    title: "Raw Painting — surowy proces",
+    description: "Surowe, nieedytowane ujęcia z procesu malowania.",
+  },
+  {
+    id: "4RYEqo0gbso",
+    title: "Malowanie samochodu sprayem",
+    description: "Aranżacja nadwozia samochodu malowana sprayem.",
+  },
+  {
+    id: "8S2om75whUg",
+    title: "AeroMat — podsumowanie 2023",
+    description: "Przegląd realizacji AeroMat z 2023 roku.",
+  },
+  {
+    id: "L_t4B89pbDU",
+    title: "Malowanie kampera",
+    description: "Personalizacja kampera — malowanie nadwozia.",
   },
 ]
 
