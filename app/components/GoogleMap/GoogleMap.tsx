@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef, useCallback, Suspense, memo } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import {
   APIProvider,
   Map,
@@ -18,7 +19,8 @@ type Poi = {
   key: string;
   location: google.maps.LatLngLiteral;
   name: string; // Name of the place
-  src: string; // URL of the image
+  src?: string; // URL filmu YouTube (embed) — gdy brak, pokazujemy zdjecie z pola image
+  image?: string; // sciezka do zdjecia (zamiast filmu) — np. /Portfolio/murale/chelm1.webp
 };
 const locations: Poi[] = [
   {
@@ -108,8 +110,8 @@ const locations: Poi[] = [
   {
     key: "bieluch",
     location: { lat: 51.14572, lng: 23.48539 },
-    name: "Mural Bieluch",
-    src: "https://www.youtube.com/embed/5Ba1XizIDnc",
+    name: "Mural Bieluch — Chełm",
+    image: "/Portfolio/murale/chelm1.webp",
   },
 ];
 const PoiMarkers = memo((props: { pois: Poi[]; onSelectPoi: (poi: Poi) => void }) => {
@@ -289,15 +291,25 @@ const GoogleMapInner = memo(() => {
                   <span className="text-white text-sm font-bold">✕</span>
                 </button>
                 <div className="relative w-full pb-[56.25%] overflow-hidden">
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={selectedPoi.src}
-                    title={selectedPoi.name}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    loading="lazy"
-                  />
+                  {selectedPoi.image ? (
+                    <Image
+                      className="absolute inset-0 w-full h-full object-cover"
+                      src={selectedPoi.image}
+                      alt={selectedPoi.name}
+                      fill
+                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 480px, 560px"
+                    />
+                  ) : (
+                    <iframe
+                      className="absolute inset-0 w-full h-full"
+                      src={selectedPoi.src}
+                      title={selectedPoi.name}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  )}
                 </div>
                 <div className="px-3 py-2 sm:px-4 sm:py-3">
                   <p className="text-sm sm:text-base font-semibold text-white leading-snug">{selectedPoi.name}</p>
