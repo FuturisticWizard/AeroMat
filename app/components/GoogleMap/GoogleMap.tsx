@@ -110,7 +110,7 @@ const locations: Poi[] = [
   {
     key: "bieluch",
     location: { lat: 51.14572, lng: 23.48539 },
-    name: "Mural Bieluch — Chełm",
+    name: "Mural Niedźwiedź — Chełm",
     image: "/Portfolio/murale/chelm1.webp",
   },
 ];
