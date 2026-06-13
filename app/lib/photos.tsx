@@ -75,12 +75,14 @@ export const allPhotos = [
   { index: 70, src: "/Portfolio/Inne/kamper_2.webp", title: "Kamper — tył", category: "Inne", width: 2400, height: 1592 },
   { index: 72, src: "/Portfolio/Inne/garaz.webp", title: "Mural na bramie garażowej", category: "Inne", width: 2400, height: 1050 },
   // Garaże / branding
-  { index: 57, src: "/Portfolio/Brending/przedszkole 1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },
-  { index: 58, src: "/Portfolio/Brending/grafika 4.webp", title: "Grafika pionowa", category: "Inne", width: 1961, height: 3000 },
-  { index: 59, src: "/Portfolio/Brending/grafika 6a.webp", title: "Grafika wielkoformatowa", category: "Inne", width: 2400, height: 1388 },
-  { index: 60, src: "/Portfolio/Brending/grafika 7.webp", title: "Branding projekt", category: "Inne", width: 2400, height: 1577 },
-  { index: 61, src: "/Portfolio/Brending/grafika 8.webp", title: "Logo", category: "Inne", width: 1080, height: 898 },
-  { index: 62, src: "/Portfolio/Brending/tif 2d.webp", title: "Projekt 2D", category: "Inne", width: 2400, height: 1533 },
+  // Pliki przeniesione przy sprzątaniu QC-02: stare wersje ze spacjami w nazwie
+  // ("/Portfolio/Brending/grafika 4.webp") zostały usunięte. Te same grafiki
+  // żyją z myślnikami w /Animation/Komunikacja_Wizualna/PortfolioCard/.
+  { index: 57, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/przedszkole-1v.webp", title: "Przedszkole", category: "Inne", width: 4000, height: 1876 },
+  { index: 58, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-4.webp", title: "Grafika pionowa", category: "Inne", width: 1961, height: 3000 },
+  { index: 59, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-6a.webp", title: "Grafika wielkoformatowa", category: "Inne", width: 2400, height: 1388 },
+  { index: 60, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/grafika-7.webp", title: "Branding projekt", category: "Inne", width: 2400, height: 1577 },
+  { index: 62, src: "/Animation/Komunikacja_Wizualna/PortfolioCard/tif-2d.webp", title: "Projekt 2D", category: "Inne", width: 2400, height: 1533 },
   { index: 63, src: "/Portfolio/Brending/w2.webp", title: "Grafika naścienna", category: "Inne", width: 2400, height: 2062 },
 ];
 
