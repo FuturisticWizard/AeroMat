@@ -31,15 +31,19 @@ Data: 2026-06-11
 > - **QC-02 cd. (2026-06-12)** — pełna analiza grafu importów (`scripts/find-dead.mjs`): usunięte 46 nieosiągalnych komponentów, 114 nieużywanych plików z `public/` (~38 MB, m.in. reel_output.mp4 15 MB) i 5 osieroconych bibliotek npm (react-icons, embla-carousel-react, @tabler/icons-react, @radix-ui/react-avatar i react-label). Oryginały .jpg przeniesione do `D:\Builds\AeroMat1.0\_oryginaly-zdjec\`. Zweryfikowano: tsc czysty, 2x build produkcyjny, wszystkie podstrony 200, 61 zasobów z HTML wszystkich stron odpowiada 200.
 > - **SEO-06 / A11Y-05** — jeden H1 na stronie głównej (15→1). Tytuły kart, marquee (+aria-hidden), Intro, Outro → `h2`; zaktualizowane selektory w `globals.css`, `marquee.ts`, `HomeAnimations.tsx`. Zweryfikowano: rozmiary i wszystkie animacje (marquee, neon Intro/Outro, SplitText, pin panoramy) bez zmian.
 >
+> **✅ Wdrożone cd. (2026-06-13):**
+> - **PERF-01 (ROZWIĄZANE)** — Three.js (~600 KB) wyjęty z paczki startowej strony głównej. Zamiast leniwego ładowania całego komponentu (psuło pin), zastosowano dynamiczny `import("three")` wewnątrz `PanoramaScroll.tsx`, gated `IntersectionObserver` (rootMargin ~2 ekrany). Sekcja `.panorama-card` renderuje się synchronicznie, więc pin/`panorama-progress` w `HomeAnimations` działa bez zmian. Zweryfikowano: build OK, paczka three (671 KB) poza listą początkową `/`, test w przeglądarce (Playwright) — three doładowany dopiero przy panoramie, render OK, 0 błędów w konsoli. Goście, którzy nie doscrollują, w ogóle nie pobierają paczki.
+> - **QC-04 (częściowo)** — testy formularza kontaktowego: 24 testy vitest (walidacja `formSchema` + akcja `send()` z mockami resend/next-headers). Uzupełniono `.env.example` o `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` (wcześniej nieudokumentowane). Pozostaje: e2e nawigacji + reszta `any` (QC-03).
+>
 > **↩️ Wycofane:**
-> - **PERF-01** (leniwe ładowanie PanoramaScroll) — niezgodne z animacją przyklejania (pin) ScrollTrigger; komponent musi istnieć przy inicjalizacji. Odzyskanie ~600 KB three.js wymaga innego podejścia (dynamiczny import samego three.js wewnątrz komponentu) — osobny task.
+> - **PERF-01** — pierwotne podejście (leniwe ładowanie całego PanoramaScroll przez `dynamic()`) wycofane: niezgodne z animacją przyklejania (pin), bo komponent musi istnieć przy inicjalizacji. Zastąpione dynamicznym importem samego three.js — patrz „Wdrożone cd. (2026-06-13)" powyżej.
 >
 > **⏳ Odłożone (ryzykowne lub duże — wymagają dedykowanej sesji):**
 > - **SEC-01 (pełny nonce)** — blokowane przez Next 16/Turbopack (nie dokleja nonce); wróci przy migracji na `proxy.ts` lub naprawie w Next
 > - **PERF-06** (statyczne `will-change`) — przy elementach animowanych; niska wartość, ryzyko niewidocznego „szarpnięcia" — pominięte świadomie
 > - **PERF-08** (usunięcie `transpilePackages`) — wymaga weryfikacji buildem produkcyjnym
 > - **A11Y-08** (dostępność klawiaturowa miniatur w `react-photo-album` na `/portfolio`)
-> - **QC-03** (`any` w hookach/komponentach), **QC-04** (tsconfig, `@layer`, unifikacja importów, **testy** jednostkowe/E2E) — dług techniczny Fazy 3
+> - **QC-03** (`any` w hookach/komponentach), **QC-04 cd.** (tsconfig, `@layer`, unifikacja importów, **testy** e2e nawigacji — testy formularza już zrobione 2026-06-13) — dług techniczny Fazy 3
 
 ## Podsumowanie wykonawcze
 
