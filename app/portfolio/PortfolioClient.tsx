@@ -30,7 +30,10 @@ function renderNextImage(
         src={photo.src}
         alt={alt}
         title={title}
-        sizes="(max-width: 768px) 50vw, 33vw"
+        // Rzeczywista szerokość wyrenderowanego kafelka (react-photo-album ją liczy),
+        // zamiast sztywnego ułamka. Dzięki temu szerokie panoramy dostają wersję
+        // w pełnej szerokości (ostre), a nie rozciągniętą miniaturę.
+        sizes={`${Math.ceil(width)}px`}
         className="object-cover"
       />
     </div>
