@@ -110,7 +110,7 @@ const GlitchedVideoHero = () => {
           type="button"
           onClick={togglePlay}
           aria-label={isPaused ? "Odtwórz wideo w tle" : "Wstrzymaj wideo w tle"}
-          className="absolute bottom-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           {isPaused ? <Play size={18} className="ml-0.5" /> : <Pause size={18} />}
         </button>
