@@ -3,15 +3,39 @@ import "react-photo-album/rows.css";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/app/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
-import { RowsPhotoAlbum } from "react-photo-album";
+import { RowsPhotoAlbum, type RenderImageProps, type RenderImageContext } from "react-photo-album";
 import { allPhotos } from "@/app/lib/photos";
 
 // Lightbox (~140 KB z wtyczkami + CSS) ładowany leniwie — dopiero po kliknięciu w zdjęcie.
 const PortfolioLightbox = dynamic(() => import("@/app/components/PortfolioLightbox"), {
   ssr: false,
 });
+
+// Renderuje kafelki galerii przez Next/Image (optymalizator Next.js) zamiast
+// surowych <img>. Dzięki temu przeglądarka pobiera wersje zmniejszone do rozmiaru
+// wyświetlania (~250 px) w formacie avif/webp — ~20-100 KB zamiast 0,5-1,5 MB.
+// Eliminuje "czarne" kafelki (przeciążenie ~45 MB surowych zdjęć w zakładce
+// "Wszystkie") i mocno przyspiesza ładowanie.
+function renderNextImage(
+  { alt = "", title }: RenderImageProps,
+  { photo, width, height }: RenderImageContext,
+) {
+  return (
+    <div style={{ position: "relative", width: "100%", aspectRatio: `${width} / ${height}` }}>
+      <Image
+        fill
+        src={photo.src}
+        alt={alt}
+        title={title}
+        sizes="(max-width: 768px) 50vw, 33vw"
+        className="object-cover"
+      />
+    </div>
+  );
+}
 
 export default function PhotoPortfolio() {
   const categories = ["Wszystkie", "Murale", "Wnętrza", "Ptasia galeria", "Inne"];
@@ -68,6 +92,7 @@ export default function PhotoPortfolio() {
                 <RowsPhotoAlbum
                   photos={filtered}
                   targetRowHeight={250}
+                  render={{ image: renderNextImage }}
                   onClick={({ index }) => setIndex(index)}
                 />
                 {index >= 0 && (
