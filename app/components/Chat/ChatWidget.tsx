@@ -27,7 +27,15 @@ const ChatWidget = () => {
   useIsoEffect(() => {
     const el = btnRef.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    /* Przycisk startuje niewidoczny (klasa `invisible`), zeby przy wejsciu na
+       strone NIE mignal w docelowym rogu, zanim ruszy animacja. Pojawia sie
+       dopiero wpadajac zza gornej krawedzi. */
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Bez animacji - po prostu od razu pokazujemy go na miejscu.
+      el.style.visibility = "visible";
+      return;
+    }
 
     /* WAZNE: przycisk ma w klasach Tailwinda `transition` (dla hover), czyli
        CSS-owe przejscie na `transform`. To walczy z GSAP (przegladarka dogania
@@ -41,14 +49,17 @@ const ChatWidget = () => {
       transformPerspective: 800,
       transformOrigin: "center center",
     });
+    // Odslaniamy dopiero teraz - element jest juz poza ekranem (u gory), wiec
+    // odslona jest niewidoczna; user zobaczy go dopiero gdy zacznie spadac.
+    el.style.visibility = "visible";
 
     const tl = gsap.timeline({
       delay: 0.3,
       onComplete: () => {
-        // Czyscimy inline-transform (by hover:scale-105 z klasy mogl dzialac)
-        // i przywracamy CSS-owe przejscie. Stan koncowy == stan spoczynkowy,
-        // wiec czyszczenie jest niewidoczne (zero przeskoku).
-        gsap.set(el, { clearProps: "all" });
+        // Czyscimy tylko inline-transform (by hover:scale-105 z klasy mogl
+        // dzialac) i przywracamy CSS-owe przejscie. Widocznosc zostawiamy
+        // wlaczona. Stan koncowy == spoczynkowy -> czyszczenie niewidoczne.
+        gsap.set(el, { clearProps: "transform,transformOrigin" });
         el.style.transition = "";
       },
     });
@@ -79,7 +90,7 @@ const ChatWidget = () => {
         onClick={toggle}
         aria-label={open ? "Zamknij czat" : "Otwórz czat z pytaniami"}
         aria-expanded={open}
-        className="fixed bottom-5 right-4 z-[96] flex h-14 w-14 items-center justify-center rounded-full bg-[#ff7302] text-white shadow-lg transition hover:scale-105 hover:bg-[#e76700] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        className="invisible fixed bottom-5 right-4 z-[96] flex h-14 w-14 items-center justify-center rounded-full bg-[#ff7302] text-white shadow-lg transition hover:scale-105 hover:bg-[#e76700] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
       >
         {open ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
