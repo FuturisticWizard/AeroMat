@@ -712,6 +712,17 @@
   visibility: hidden;
 }
 
+/* Headline /kontakt: bardzo ciasny leading (leading-[0.85]) przycinal gore
+   polskich znakow (O/S/C z kreska) wewnatrz masek .split-char (overflow:hidden).
+   Dajemy pionowy oddech w masce i kompensujemy marginesem, zeby pozycja tekstu
+   i uklad sie nie zmienily. */
+.contact-hero .split-char {
+  padding-top: 0.22em;
+  margin-top: -0.22em;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
 /* IMPORTANT: this needs to be a top-level media query.
    The previous CSS had `@media (max-width: 768px)` nested inside `@media (width >= 769px)`,
    which resolves to an impossible condition and never matches on mobile. */
