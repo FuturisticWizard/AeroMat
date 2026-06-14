@@ -52,6 +52,7 @@
     "baseline-browser-mapping": "^2.8.32",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.0.10",
+    "playwright": "^1.60.0",
     "postcss": "^8.5.3",
     "postcss-nesting": "^13.0.1",
     "stylelint": "^16.19.1",
