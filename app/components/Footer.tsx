@@ -96,7 +96,7 @@ const Footer = () => {
                 alt="AutoMate"
                 width={1042}
                 height={97}
-                className="h-3 w-auto"
+                className="h-2 w-auto"
               />
             </Link>
           </p>
