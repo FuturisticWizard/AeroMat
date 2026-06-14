@@ -29,7 +29,7 @@ const HeadingSection = ({
         </h2>
         <div className="flex flex flex-col sm:flex-row order-2 sm:order-1 pb-4 lsm:pb-8 gap-4">
           <div className="sm:w-1/2">
-            <h3 className="text-2xl sm:text-2xl lsm:text-3xl font-semibold leading-snug text-white">
+            <h3 className="text-xl sm:text-2xl lsm:text-3xl font-semibold leading-relaxed text-white">
               {heading}
             </h3>
           </div>
