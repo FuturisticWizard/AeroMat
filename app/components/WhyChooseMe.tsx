@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Route, Users, ShieldCheck, Video } from "lucide-react";
+import SplitTextReveal from "./SplitTextReveal";
 
 const features = [
   {
@@ -64,16 +65,18 @@ export default function WhyChooseMe() {
       className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-16 md:py-24 lg:py-32"
       aria-labelledby="why-choose-heading"
     >
-      <h2
-        id="why-choose-heading"
-        className="text-5xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302] mb-2"
-      >
-        Co mnie wyróżnia?
-      </h2>
-      <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mb-12">
-        Ponad 25 lat doświadczenia przekutych w podejście, któremu zaufały
-        dziesiątki firm w całej Polsce.
-      </p>
+      <SplitTextReveal selector="h2" paragraphSelector="p">
+        <h2
+          id="why-choose-heading"
+          className="text-5xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302] mb-2"
+        >
+          Co mnie wyróżnia?
+        </h2>
+        <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mb-12">
+          Ponad 25 lat doświadczenia przekutych w podejście, któremu zaufały
+          dziesiątki firm w całej Polsce.
+        </p>
+      </SplitTextReveal>
 
       <div
         ref={cardsRef}

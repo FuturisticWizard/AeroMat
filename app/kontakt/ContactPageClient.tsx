@@ -10,6 +10,7 @@ import { ArrowRight, Check, Mail, Phone, MapPin } from "lucide-react";
 import { formSchema } from "../lib/schemas";
 import { send } from "../lib/email";
 import { CONTACT } from "../lib/contact";
+import SplitTextReveal from "../components/SplitTextReveal";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -81,34 +82,38 @@ export default function ContactPage() {
         <div className="relative z-10 mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl flex-col justify-between gap-12 p-6 md:p-14">
           {/* top — headline */}
           <div className="max-w-2xl">
-            <h1
-              style={bebas}
-              className="text-white leading-[0.85] text-[clamp(2.5rem,8vw,7rem)]"
-            >
-              Zacznijmy<br /> od krótkiej<br />
-              <span className="text-[#ff7302]">wiadomości.</span>
-            </h1>
+            <SplitTextReveal selector="h1">
+              <h1
+                style={bebas}
+                className="text-white leading-[0.85] text-[clamp(2.5rem,8vw,7rem)]"
+              >
+                Zacznijmy<br /> od krótkiej<br />
+                <span className="text-[#ff7302]">wiadomości.</span>
+              </h1>
+            </SplitTextReveal>
           </div>
 
           <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-2 md:-translate-y-[14vh] lg:-translate-y-[20vh] xl:-translate-y-[24vh]">
             {/* bottom-left — kontakt info */}
-            <ul className="space-y-3 text-white/85 md:mb-24" style={space}>
-              <li className="flex items-center gap-3 text-xl">
-                <Mail size={22} className="text-[#ff7302]" />
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-[#ff7302] transition">
-                  {CONTACT.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <Phone size={22} className="text-[#ff7302]" />
-                <a href={`tel:${CONTACT.phoneTel}`} className="hover:text-[#ff7302] transition">
-                  {CONTACT.phoneDisplay}
-                </a>
-              </li>
-              <li className="flex items-center gap-3 text-lg">
-                <MapPin size={20} className="text-[#ff7302]" /> {CONTACT.location}
-              </li>
-            </ul>
+            <SplitTextReveal className="md:mb-24" paragraphSelector="a, span">
+              <ul className="space-y-3 text-white/85" style={space}>
+                <li className="flex items-center gap-3 text-xl">
+                  <Mail size={22} className="text-[#ff7302]" />
+                  <a href={`mailto:${CONTACT.email}`} className="hover:text-[#ff7302] transition">
+                    {CONTACT.email}
+                  </a>
+                </li>
+                <li className="flex items-center gap-3 text-xl">
+                  <Phone size={22} className="text-[#ff7302]" />
+                  <a href={`tel:${CONTACT.phoneTel}`} className="hover:text-[#ff7302] transition">
+                    {CONTACT.phoneDisplay}
+                  </a>
+                </li>
+                <li className="flex items-center gap-3 text-lg">
+                  <MapPin size={20} className="text-[#ff7302]" /> <span>{CONTACT.location}</span>
+                </li>
+              </ul>
+            </SplitTextReveal>
 
             {/* bottom-right — floating form / success */}
             {!done ? (
@@ -118,9 +123,11 @@ export default function ContactPage() {
                 className="kontakt-form ml-auto w-full max-w-md border border-white/15 bg-white/[0.06] p-7 backdrop-blur-md"
                 style={{ boxShadow: "0 30px 60px -10px rgba(0,0,0,0.6)" }}
               >
-                <p className="mb-5 text-xs uppercase tracking-[0.32em] text-white/55" style={space}>
-                  Napisz do mnie!
-                </p>
+                <SplitTextReveal className="mb-5" paragraphSelector="p">
+                  <p className="text-xs uppercase tracking-[0.32em] text-white/55" style={space}>
+                    Napisz do mnie!
+                  </p>
+                </SplitTextReveal>
                 {/* Honeypot — ukryte pole-pułapka na boty. Niewidoczne dla ludzi
                     i pomijane przez czytniki ekranu; boty zwykle je wypełniają. */}
                 <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">

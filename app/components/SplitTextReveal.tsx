@@ -2,7 +2,6 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 
 interface Props {
@@ -31,7 +30,7 @@ const SplitTextReveal = ({
   const [ready, setReady] = useState(false);
 
   useIsoEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    gsap.registerPlugin(SplitText);
     const container = ref.current;
     if (!container) return;
 
@@ -79,22 +78,30 @@ const SplitTextReveal = ({
     gsap.set(allChars, { x: "110%" });
     setReady(true);
 
-    const trigger = ScrollTrigger.create({
-      trigger: container,
-      start: "top 80%",
-      once: true,
-      onEnter: () => {
-        gsap.to(allChars, {
-          x: "0%",
-          duration,
-          ease: "power3.out",
-          stagger: { amount: staggerAmount },
-        });
+    /* Animacja rusza dopiero gdy sekcja realnie wjedzie w widok. Uzywamy
+       IntersectionObserver (a nie ScrollTrigger), bo reaguje na faktyczna
+       widocznosc - jest odporny na przesuniecia layoutu (obrazy/lazy sekcje
+       laduja sie pozniej i zmieniaja pozycje elementow). */
+    let played = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !played) {
+          played = true;
+          observer.disconnect();
+          gsap.to(allChars, {
+            x: "0%",
+            duration,
+            ease: "power3.out",
+            stagger: { amount: staggerAmount },
+          });
+        }
       },
-    });
+      { rootMargin: "0px 0px -20% 0px", threshold: 0 }
+    );
+    observer.observe(container);
 
     return () => {
-      trigger.kill();
+      observer.disconnect();
       splits.forEach((s) => s.revert());
     };
   }, [selector, paragraphSelector, staggerAmount, duration]);

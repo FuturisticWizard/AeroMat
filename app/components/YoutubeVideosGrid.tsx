@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Play, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import SplitTextReveal from "./SplitTextReveal"
 
 interface VideoItem {
   id: string
@@ -177,7 +178,7 @@ export default function YouTubeGrid({
   return (
     <section id="w-akcji" className="py-16 md:py-24 max-w-7xl mx-auto mb-12 scroll-mt-24">
       <div className="container px-4 mx-auto relative">
-        <div className="py-4">
+        <SplitTextReveal className="py-4" selector="h2" paragraphSelector="p">
           <h2 className="text-7xl md:text-8xl font-[family-name:var(--font-bebas)] text-left tracking-tight transform origin-right whitespace-nowrap text-[#ff7302]">
           {title}
           </h2>
@@ -185,7 +186,7 @@ export default function YouTubeGrid({
           <p className="text-lg text-gray-200">
           {subtitle}
           </p>
-        </div>
+        </SplitTextReveal>
 
         <div className="relative">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
