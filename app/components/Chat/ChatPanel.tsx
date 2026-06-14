@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Send, X } from "lucide-react";
 
 import { FAQ_ENTRIES } from "../../lib/faq";
@@ -113,14 +114,6 @@ const ChatPanel = ({ onClose }: { onClose: () => void }) => {
           >
             Aero<span className="text-[#ff7302]">Bot</span>
           </p>
-          <a
-            href="https://automatejobs.online"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[10px] tracking-wide text-white/45 transition hover:text-[#ff7302]"
-          >
-            powered by: automate
-          </a>
         </div>
         <button
           type="button"
@@ -209,6 +202,23 @@ const ChatPanel = ({ onClose }: { onClose: () => void }) => {
           <Send size={16} />
         </button>
       </form>
+
+      {/* powered by - pod polem wpisywania */}
+      <a
+        href="https://automatejobs.online"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-1 pb-2 text-[9px] tracking-wide text-white/40 transition hover:opacity-70"
+      >
+        powered by:
+        <Image
+          src="/logo/automate_white_trim.webp"
+          alt="AutoMate"
+          width={1042}
+          height={97}
+          className="h-1.5 w-auto"
+        />
+      </a>
     </div>
   );
 };

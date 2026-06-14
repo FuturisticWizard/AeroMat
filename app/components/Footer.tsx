@@ -84,8 +84,21 @@ const Footer = () => {
 
         <div className=" mt-8 pt-8 text-center text-white">
           <p>© {new Date().getFullYear()} AeroMat</p>
-          <p className="text-sm">
-            Stworzone przez <Link href="https://www.linkedin.com/in/automate/" className="underline hover:text-white/70 transition-colors">AutoMate</Link>
+          <p className="flex flex-wrap items-center justify-center gap-1.5 text-sm">
+            Stworzone przez
+            <Link
+              href="https://www.linkedin.com/in/automate/"
+              aria-label="AutoMate"
+              className="inline-flex items-center transition-opacity hover:opacity-70"
+            >
+              <Image
+                src="/logo/automate_white_trim.webp"
+                alt="AutoMate"
+                width={1042}
+                height={97}
+                className="h-3 w-auto"
+              />
+            </Link>
           </p>
         </div>
       </div>
