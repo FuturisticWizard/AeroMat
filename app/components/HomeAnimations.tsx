@@ -668,11 +668,20 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
     }
 
     // Refresh after load to recompute pin-spacer heights once images/fonts are ready
+    let loadRafId = 0;
     const onLoadRefresh = () => {
       ScrollTrigger.refresh();
       revealActiveTexts();
     };
-    window.addEventListener("load", onLoadRefresh, { once: true });
+    // Zabezpieczenie wyścigu: jeśli strona JUŻ jest wczytana (readyState === "complete",
+    // np. cache / odświeżenie / szybkie łącze), zdarzenie "load" już minęło i nie odpali
+    // się ponownie. Wtedy odświeżamy od razu (po najbliższej klatce). W innym wypadku
+    // czekamy na "load". Bez tego refresh po obrazach/fontach bywa pomijany → czarny środek.
+    if (document.readyState === "complete") {
+      loadRafId = requestAnimationFrame(onLoadRefresh);
+    } else {
+      window.addEventListener("load", onLoadRefresh, { once: true });
+    }
     ScrollTrigger.addEventListener("refresh", revealActiveTexts);
 
     // (Redundant ScrollTrigger.refresh() removed — rAF-deferred refresh on
@@ -689,6 +698,7 @@ export default function HomeAnimations({ children }: { children: ReactNode }) {
         ScrollTrigger.defaults({ scroller: window });
       }
       window.removeEventListener("load", onLoadRefresh);
+      if (loadRafId) cancelAnimationFrame(loadRafId);
       ScrollTrigger.removeEventListener("refresh", revealActiveTexts);
       if (introCardEl && onMouseMove) introCardEl.removeEventListener("mousemove", onMouseMove);
       if (introCardEl && onMouseLeave) introCardEl.removeEventListener("mouseleave", onMouseLeave);
