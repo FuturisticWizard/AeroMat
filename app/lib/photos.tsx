@@ -1,6 +1,7 @@
 export const allPhotos = [
   // === Murale ===
   { index: 1, src: "/Portfolio/murale/1.webp", title: "Mural artystyczny", category: "Murale", width: 2400, height: 1920 },
+  { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
   { index: 2, src: "/Portfolio/murale/2.webp", title: "Mural dekoracyjny", category: "Murale", width: 3382, height: 2000 },
   { index: 64, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/apis_mural.webp", title: "Mural pszczoła", category: "Murale", width: 2400, height: 1733 },
   { index: 3, src: "/Portfolio/murale/3.webp", title: "Mural panoramiczny", category: "Murale", width: 2400, height: 1201 },
@@ -15,9 +16,6 @@ export const allPhotos = [
   { index: 12, src: "/Portfolio/murale/10.webp", title: "Mural detaliczny", category: "Murale", width: 3293, height: 2500 },
   { index: 13, src: "/Portfolio/murale/12.webp", title: "Mural fasadowy", category: "Murale", width: 2400, height: 1314 },
   { index: 14, src: "/Portfolio/murale/13.webp", title: "Mural szeroki 2", category: "Murale", width: 2400, height: 949 },
-  { index: 15, src: "/Portfolio/murale/1c.webp", title: "Mural portretowy", category: "Murale", width: 2000, height: 2648 },
-  { index: 65, src: "/Animation/Murale_Wielkoformatowe/PortfolioCard/komeko_mural.webp", title: "Mural Komeko", category: "Murale", width: 2400, height: 1344 },
-  { index: 78, src: "/Portfolio/murale/chelm1.webp", title: "Mural w Chełmie", category: "Murale", width: 2400, height: 1644 },
   { index: 79, src: "/Portfolio/murale/chelm2.webp", title: "Mural w Chełmie 2", category: "Murale", width: 2400, height: 1771 },
 
   // === Wnętrza ===
@@ -40,7 +38,6 @@ export const allPhotos = [
   { index: 35, src: "/Portfolio/wnetrza/P1371888.webp", title: "Malowidło P1", category: "Wnętrza", width: 2302, height: 3004 },
   { index: 36, src: "/Portfolio/wnetrza/P1371890.webp", title: "Malowidło P2", category: "Wnętrza", width: 2400, height: 1751 },
   { index: 37, src: "/Portfolio/wnetrza/P1371966.webp", title: "Malowidło P3", category: "Wnętrza", width: 4057, height: 5071 },
-  { index: 38, src: "/Portfolio/wnetrza/P1371980.webp", title: "Malowidło P4", category: "Wnętrza", width: 4098, height: 4098 },
   { index: 66, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/audi.webp", title: "Mural Audi", category: "Wnętrza", width: 2000, height: 2000 },
   { index: 67, src: "/Animation/Wnetrza_i_Dekoracje/PortfolioCard/monstertruck.webp", title: "Monster truck", category: "Wnętrza", width: 2400, height: 2164 },
 
