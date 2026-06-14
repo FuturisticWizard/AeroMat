@@ -1,6 +1,6 @@
 import Image from "next/image";
 import SplitTextReveal from "./SplitTextReveal";
-const PHOTO = "/Portfolio/ptasie/3.webp";
+const PHOTO = "/Portfolio/ptasie/1.webp";
 const AboutMe = () => {
   return (
     <section
@@ -15,37 +15,37 @@ const AboutMe = () => {
           sizes="100vw"
           className="object-cover"
         /> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 items-center">
 
         {/* Image */}
-        <div className="relative w-full mx-auto md:mx-0">
+        <div className="relative w-full mx-auto md:mx-0 md:col-span-2">
           <Image
             src={PHOTO}
             alt="Mateusz - artysta AeroMat"
             width={2400}
-            height={1351}
+            height={1168}
             className="w-full h-auto"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 
         {/* Text */}
-        <SplitTextReveal className="flex flex-col gap-4 " selector="h2, h3" paragraphSelector="p">
-          <h2 className="text-6xl md:text-7xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
+        <SplitTextReveal className="flex flex-col gap-4 md:col-span-1" selector="h2, h3" paragraphSelector="p">
+          <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-bebas)] tracking-tight text-[#ff7302]">
           Kim jest AEROMAT?
           </h2>
-          <h3 className="text-2xl md:text-3xl font-semibold leading-snug text-white">
-            Nazywam się Mateusz, malarstwo <br/> to moja pasja{" "}
+          <h3 className="text-xl md:text-2xl font-semibold leading-snug text-white">
+            Nazywam się Mateusz, malarstwo to moja pasja{" "}
             <span className="text-[#ff7302]">i sposób na życie.</span>
           </h3>
-          <p className="text-base md:text-lg text-gray-300 leading-relaxed">
+          <p className="text-sm md:text-base text-gray-300 leading-relaxed">
             Od ponad 25 lat zajmuję się tym, co kocham, i dzięki zaufaniu moich
             klientów miałem okazję sprawdzić się w różnych technikach
             i kombinacjach. Podejmowanie nowych wyzwań pozwalało mi stale
             przekraczać własne granice i odkrywać nowe obszary mojej
             kreatywności.
           </p>
-          <p className="text-base md:text-lg text-gray-400 leading-relaxed ">
+          <p className="text-sm md:text-base text-gray-400 leading-relaxed ">
             Stacjonuję w <span className="text-white font-medium">Lublinie</span>, ale
             działam na terenie <span className="text-[#ff7302] font-medium">całego kraju</span>.
           </p>
